@@ -1,0 +1,57 @@
+\name{betta_random}
+\alias{betta_random}
+\title{ modelling total diversity with random effects }
+\description{This function extends betta() to permit random effects modelling.}
+\usage{ betta_random(chats, ses, X = NA, groups) }
+\arguments{
+  \item{chats}{
+  	A vector of estimates of total diversity at different sampling locations.
+	 }
+  \item{ses}{
+	The standard errors in \samp{chats}, the diversity estimates.
+	}
+  \item{X}{
+	A numeric matrix of covariates corresponding to fixed effects. If not supplied, an intercept-only model will be fit.
+	}
+	\item{groups}{
+  A categorical variable representing the random-effects groups that each of the estimates belong to.
+	}
+}
+\value{
+	\item{table}{
+		A coefficient table for the model parameters. The columns give the parameter estimates, standard errors, and p-values, respectively. This model is only as effective as your diversity estimation procedure; for this reason please confirm that your estimates are appropriate and that your model is not misspecified. \samp{betta_pic} may be useful for this purpose.
+		}
+	\item{cov}{
+		Estimated covariance matrix of the parameter estimates.
+		}
+	\item{ssq_u}{
+		The estimate of the heterogeneity variance.
+		}
+	\item{ssq_g}{
+	  Estimates of within-group variance. The estimate will be zero for groups with only one observation.
+  	}
+	\item{homogeneity}{
+	  The test statistic and p-value for the test of homogeneity.
+	  }
+	\item{global}{
+	  The test statistic and p-value for the test of model explanatory power.
+	  }
+	\item{blups}{
+		The conditional expected values of the diversity estimates (conditional on the random effects). Estimates of variability for the random effects case are unavailable at this time; please contact the maintainer if needed.
+		}
+}
+\references{
+	Willis, A., Bunge, J., and Whitman, T. (2015). Inference for changes in biodiversity. \emph{arXiv preprint.}
+}
+\author{Amy Willis}
+\seealso{ \code{\link{betta}}; \code{\link{betta_pic}} }
+\examples{
+betta_random(c(2000, 3000, 4000, 3000), c(100, 200, 150, 180),
+             X = cbind("Int"=1, "Cont_var"=c(100, 150, 100, 50)),
+             groups = c("a", "a", "a", "b"))
+
+## handles missing data
+betta_random(c(2000, 3000, 4000, 3000), c(100, 200, 150, NA),
+             groups= c("a", NA, "b", "b"))
+}
+\keyword{ diversity }

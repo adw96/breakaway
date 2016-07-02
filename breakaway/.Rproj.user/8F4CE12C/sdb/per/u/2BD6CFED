@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "mine <- read.csv(\"/Users/adw96/Documents/Research w Bunge/4th paper - beta diversity/Nature methods/NM submission files/whitman-data.csv\")\n\nthe <- read.table(\"/Users/adw96/Downloads/otu_table_csingletons_no211_meta.txt\", header = T)\n\nmine[1:5,1:5]\nthe[1:5,1:5]\n\nmine_list <- apply(mine, 2, table)\nthe_list <- apply(the, 2, table)\n\nnames(mine_list)\nnames(the_list)\n\nmine1 <- cbind(as.numeric(rownames(as.matrix(mine_list$S009[-1]))), as.matrix(mine_list$S009[-1]))\nthe1 <- cbind(as.numeric(rownames(as.matrix(the_list$S009[-1]))), as.matrix(the_list$S009[-1]))\nthe_list$S009\n\nbreakaway(mine1)\nbreakaway(the1, plot=F)\n\nhead(mine1)\nhead(the1)\n\nmine2 <- cbind(as.numeric(rownames(as.matrix(mine_list$S222[-1]))), as.matrix(mine_list$S222[-1]))\nthe2 <- cbind(as.numeric(rownames(as.matrix(the_list$S222[-1]))), as.matrix(the_list$S222[-1]))\nhead(mine2)\nhead(the2)\n",
+    "created" : 1459343795111.000,
+    "dirty" : true,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "848341753",
+    "id" : "2BD6CFED",
+    "lastKnownWriteTime" : 6,
+    "last_content_update" : 1459344669804,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
