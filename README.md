@@ -1,0 +1,11 @@
+# R package breakaway
+Species richness with high diversity
+
+Package: breakaway
+Title: Species Richness Estimation and Modeling
+Version: 3.0
+Date: 2016-03-29
+Author: Amy Willis and John Bunge
+Maintainer: Amy Willis <adw96@cornell.edu>
+Description: Species richness estimation is an important problem in biodiversity analysis. This package provides methods for total species richness estimation (observed plus unobserved) and a method for modelling total diversity with covariates. breakaway() estimates total (observed plus unobserved) species richness. Microbial diversity datasets are characterized by a large number of rare species and a small number of highly abundant species. The class of models implemented by breakaway() is flexible enough to model both these features. breakaway_nof1() implements a similar procedure however does not require a singleton count. betta() provides a method for modelling total diversity with covariates in a way that accounts for its estimated nature and thus accounts for unobserved taxa, and betta_random() permits random effects modelling.
+License: GPL-2
