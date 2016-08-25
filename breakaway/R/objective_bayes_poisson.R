@@ -157,6 +157,7 @@ objective_bayes_poisson <- function(data, print=TRUE, plot=TRUE, answers=FALSE, 
                       median.C=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.5,names=F),
                       LCI.C=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.025,names=F),
                       UCI.C=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.975,names=F),
+                      stddev.C=sqrt(var((N[(burn.in+1):iterations]+w-w.tau))),
                       mean.D=mean.D,
                       median.D=median.D,
                       DIC)

@@ -2,7 +2,7 @@
 library(MASS)
 ## amy needs to fix this into the namespace file
 
-obayes_negbin <- function(data, print=TRUE, plot=TRUE, answers=FALSE, write=FALSE,
+objective_bayes_negbin <- function(data, print=TRUE, plot=TRUE, answers=FALSE, write=FALSE,
                           tau=10, burn.in=1000, iterations=5000, Metropolis.stdev.N=100,
                           Metropolis.start.T1=-0.8, Metropolis.stdev.T1=0.05,
                           Metropolis.start.T2=0.8, Metropolis.stdev.T2=0.05, bars=3) {
@@ -195,6 +195,7 @@ obayes_negbin <- function(data, print=TRUE, plot=TRUE, answers=FALSE, write=FALS
                       median.N=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.5,names=F),
                       LCI.N=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.025,names=F),
                       UCI.N=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.975,names=F),
+                      stddev.C=sqrt(var((N[(burn.in+1):iterations]+w-w.tau))),
                       mean.D=mean.D,
                       median.D=median.D,
                       DIC

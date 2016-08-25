@@ -1,4 +1,4 @@
-obayes_mixedgeo <- function(data, print=TRUE, plot=TRUE, answers=FALSE, write=FALSE,
+objective_bayes_mixedgeo <- function(data, print=TRUE, plot=TRUE, answers=FALSE, write=FALSE,
                              tau=10, burn.in=100, iterations=2500, Metropolis.stdev.N=100,
                              Metropolis.start.T1=1, Metropolis.stdev.T1=2,
                              Metropolis.start.T2=3, Metropolis.stdev.T2=2, bars=3) {
@@ -199,6 +199,7 @@ obayes_mixedgeo <- function(data, print=TRUE, plot=TRUE, answers=FALSE, write=FA
                       median.N=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.5,names=F),
                       LCI.N=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.025,names=F),
                       UCI.N=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.975,names=F),
+                      stddev.C=sqrt(var((N[(burn.in+1):iterations]+w-w.tau))),
                       mean.D=mean.D,
                       median.D=median.D,
                       DIC

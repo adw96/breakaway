@@ -1,4 +1,4 @@
-obayes_geometric <- function(data, print=TRUE, plot=TRUE, answers=FALSE, write=FALSE,
+objective_bayes_geometric <- function(data, print=TRUE, plot=TRUE, answers=FALSE, write=FALSE,
                            tau=10, burn.in=100, iterations=2500, Metropolis.stdev.N=75,
                            Metropolis.start.theta=1, Metropolis.stdev.theta=0.3) {
 
@@ -170,6 +170,7 @@ obayes_geometric <- function(data, print=TRUE, plot=TRUE, answers=FALSE, write=F
                       median.C=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.5,names=F),
                       LCI.C=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.025,names=F),
                       UCI.C=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.975,names=F),
+                      stddev.C=sqrt(var((N[(burn.in+1):iterations]+w-w.tau))),
                       mean.D=mean.D,
                       median.D=median.D,
                       DIC
