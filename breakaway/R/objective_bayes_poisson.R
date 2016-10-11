@@ -140,7 +140,7 @@ objective_bayes_poisson <- function(data, print=TRUE, plot=TRUE, answers=FALSE, 
   fitted.values<-data.frame(cbind(j=seq(1,tau),fits,count=freqdata[,2]))
 
   ### Step 6: results
-  hist.points<-hist(N[(burn.in+1):iterations]+w-w.tau,breaks=seq(w,max(N)+w-w.tau+1)-0.5)
+  if (plot) hist.points<-hist(N[(burn.in+1):iterations]+w-w.tau,breaks=seq(w,max(N)+w-w.tau+1)-0.5)
 
   results<-data.frame(w=w,
                       n=n,
