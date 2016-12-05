@@ -17,7 +17,7 @@ Logical: whether the data and model fit should be plotted.
 Logical: whether the function should return an argument. If \samp{FALSE}, print should be set to \samp{TRUE}.
 }
   \item{force}{
-Logical: force \samp{breakaway} to run in the presence of frequency count concatenation. \samp{breakaway} checks that the user has not concatenated multiple upper frequencies. \samp{force=TRUE} will force \samp{breakaway} to fit models in the presence of this. \samp{breakaway}'s diversity estimates cannot be considered reliable in this case.
+Logical: force \samp{breakaway} to run in the presence of frequency count concatenation, i.e. combining all species observed 27 or 28 or 29 or more into frequency count 27. \samp{force=TRUE} will force \samp{breakaway} to fit models in the presence of this. This will generally result in the model being misspecified, and \samp{breakaway}'s diversity estimates cannot be considered reliable in this case. The option \samp{force} issue does not address censoring or small data on the rare end of the frequency count tables, i.e. insufficiently many contiguous frequencies. 
 	}
 }
 \value{
@@ -44,7 +44,7 @@ Logical: force \samp{breakaway} to run in the presence of frequency count concat
 		}
 }
 \references{
-	Willis, A. and Bunge, J. (2015). Estimating diversity via frequency ratios. \emph{Biometrics.}
+	Willis, A. and Bunge, J. (2015). Estimating diversity via frequency ratios. \emph{Biometrics}, \bold{71}(4), 1042--1049. 
   
 	Rocchetti, I., Bunge, J. and Bohning, D. (2011). Population size estimation based upon ratios of recapture probabilities. \emph{Annals of Applied Statistics}, \bold{5}.
 }
