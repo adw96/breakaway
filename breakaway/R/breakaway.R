@@ -8,7 +8,7 @@ breakaway <- function(data, print=TRUE, plot=TRUE, answers=FALSE, force=FALSE) {
       if( data[1,1] !=1) data <- read.table(filename, header=1,sep=",")
     } else if (ext == "txt") {
       data <- read.table(file=filename, header=0)
-    } else cat("Please input your data as a txt or csv file,
+    } else stop("Please input your data as a txt or csv file,
                or as an R dataframe or matrix.")
   }
   if ( is.factor(data[,1]) ) {
@@ -19,7 +19,7 @@ breakaway <- function(data, print=TRUE, plot=TRUE, answers=FALSE, force=FALSE) {
 
   if(length(data)>1) {
     if (data[1,1]!=1 || data[1,2]==0) {
-      if(print) cat("You don't have an observed singleton count.\n breakaway isn't built for that data structure.\n Consider using breakaway_nof1 instead.\n")
+      if(print) stop("You don't have an observed singleton count.\n breakaway isn't built for that data structure.\n")
     } else {
       data <- data[!(data[,2]==0 | is.na(data[,2])),]
       orig_data <- data
@@ -34,9 +34,9 @@ breakaway <- function(data, print=TRUE, plot=TRUE, answers=FALSE, force=FALSE) {
       lhs <- list("x"=xs-xbar,"y"=data[2:cutoff,2]/data[1:(cutoff-1),2])
 
       if ( cutoff < 6) { ### check for unusual data structures
-        if(print) cat("You don't have enough contiguous frequencies.\n breakaway needs at least 6!\n")
+        if(print) stop(" You don't have enough contiguous frequencies.\nbreakaway needs at least 6!\n")
       } else if ((force==FALSE) && ( (data[cutoff,2]/data[cutoff-1,2])>10 )) {
-        cat("\tIt looks like you've concatenated some of your data!\n Please truncate and try again.\n")
+        stop("\tIt looks like you've concatenated some of your data! Please truncate and try again.\n")
       } else {
         weights_inv <- 1/xs
         run <- .minibreak(lhs,xs,ys,data,weights_inv)
@@ -119,7 +119,7 @@ breakaway <- function(data, print=TRUE, plot=TRUE, answers=FALSE, force=FALSE) {
             }
           }
           if( !choice$outcome) {
-            if(print) cat("Iterative reweighting didn't produce any outcomes after the first iteration, so we use 1/x\n")
+            if(print) warning("Iterative reweighting didn't produce any outcomes after the first iteration, so we use 1/x\n")
             run <- .minibreak(lhs,xs,ys,data,weights_inv)
             choice$outcome <- 1
             choice$model <- rownames(run$useful)[min(which(run$useful[,5]==1))]
