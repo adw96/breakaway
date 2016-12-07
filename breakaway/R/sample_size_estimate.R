@@ -18,4 +18,7 @@ sample_size_est <- function(control_group_est, se_est, diff = 5, alpha = 0.05, p
     n <- n + precision
   }
   cat("Sample size needed: ", n - precision, "\n") ## bc incremented
+  cat("Note: This is number of women *per group* i.e.", n-precision, "from the control", 
+      "group and", n-precision, "from the test group. It should be considered a lower bound",
+      "at best! Please consult Amy with any questions. ")
 }
