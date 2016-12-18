@@ -6,7 +6,7 @@ betta_pic <- function(y, se, x=1:length(y), ylimu=NA, myy=NA, mymain=NA, mycol=r
   for (i in 1:n) {
     if(!is.na(y[i]) & !is.na(x[i])) {
       points(x[i], y[i], pch=mypch[i], col=mycol[i])
-      lines(c(x[i], x[i]), c(max(0, y[i]-1.96*se[i], na.rm = T), y[i]+1.96*se[i]), col=mycol[i])
+      lines(c(x[i], x[i]), c(max(0, y[i]-1.96*se[i], na.rm = T), min(y[i]+1.96*se[i], ylimu)), col=mycol[i])
     }
   }
   if(!is.na(labs)) axis(1, at=1:length(y), labels=labs, las=2, cex=0.8)
