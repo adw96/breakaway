@@ -1,0 +1,11 @@
+Total Number of Observed Species = 620,Model,Tau,Observed Sp,Estimated Total Sp,SE,Lower CB,Upper CB,GOF0,GOF5
+Best Model     ,
+Model 2a       ,Poisson,4,260,698.9,13.6,676.4,730.3,0.0051,0.0124,
+Model 2b       ,Poisson,4,260,698.9,13.6,676.4,730.3,0.0051,0.0124,
+Model 2c       ,Poisson,4,260,698.9,13.6,676.4,730.3,0.0051,0.0124,
+WLRM           ,LogTransf,9,370,741.0,22.2,704.6,792.9,0.0394,,
+Non-P 1        ,Chao1,2,385,714.1,22.7,679.1,769.9,
+Non-P 2        ,ACE,10,385,712.2,17.4,684.0,752.9,
+Parm Max Tau   ,
+WLRM Max Tau   ,LogTransf,24,501,692.4,15.1,668.3,728.6,,,
+Non-P Max Tau  ,ACE1,26,620,756.9,24.7,716.4,814.3,
