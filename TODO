@@ -1,0 +1,17 @@
+Amy's To Do List
+
+Goal: Turn the distribution on github into a fully-fledged CRAN-compatible distribution
+
+ Steps (approximately in order of necessity)
+- create man files for everything using roxygen  commenting (http://r-pkgs.had.co.nz/man.html)
+- fix the NAMESPACE file
+- fix the importing MASS issue in order to get mvrnorm (probably a better way to use it only for negative binomial version)
+-  turn stamps lab into vignette
+
+Other important things to do
+- move all objective bayes files into streamlined functions
+- move all betta drawing files into streamlined functions
+- move all wlrm files into streamlined file
+-  consider moving breakaway files into streamlined version
+- integrate phyloseq objects as inputs
+- probably way more things that will occur to me as soon as I move on to something else :)
