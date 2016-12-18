@@ -1,6 +1,13 @@
 # Amy's Misc *
 ##############
 hadleystutorial.R
+breakaway.Rproj
+
+# R files #
+###########
+*.RData
+*.Rhistory
+*.Rbuildignore
 
 # Packages #
 ############
@@ -30,3 +37,4 @@ hadleystutorial.R
 .Trashes
 ehthumbs.db
 Thumbs.db
+.Rproj.user
