@@ -1,0 +1,86 @@
+---
+title: "Getting started with breakaway"
+author: "Amy Willis"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{getting-started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+`breakaway` is a package for species richness estimation and modelling. As the package has grown and users have requested more functionality, it contains some basic generalisations of the statistical philosophy that underpins `breakaway` to the general alpha diversity case. Because of the flexibility of the modelling strategies, most users of breakaway are microbial ecologists with very large OTU tables, however, nothing should exclude a macroecologist from using the same tools. If you have a macroecology dataset and want to use this package, I would love to hear from you so please feel free to contact me (email or via Github's Issues/Projects infrastructure).
+
+## Vignette Info
+
+This vignette will lead you through
+
+- loading in your data and covariate information
+- creating frequency tables
+- using `breakaway` to estimate species richness
+- using the objective bayes methods to estimate species richness
+- estimating various alpha diversity indices and providing a very basic resample-based method for ascribing variability to them
+- using `betta` to model changes in alpha diversity with covariates
+
+If there is something that you would like explained please feel free to request it!
+
+## Loading in your data
+
+For now, we will load data from the package itself.
+
+Gah! Need to make sure this all exports properly first!
+```{r}
+data(toy_otu)
+data(toy_covariate)
+```
+
+It is important that the column names of the OTU table is the same as the rownames of the covariate information. Remember to reorder them if they don't match!  You can check this with
+
+```{r}
+colnames(toy_otu) == rownames(toy_covariate)
+```
+(Need check that all of these are true)
+
+## Creating frequency tables
+
+## Estimating species richness
+
+## Estimating alpha diversity
+
+## Modelling alpha diversity
+
+The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
+
+    output: 
+      rmarkdown::html_vignette:
+        css: mystyles.css
+
+## Figures
+
+The figure sizes have been customised so that you can easily put two images side-by-side. 
+
+```{r, fig.show='hold'}
+plot(1:10)
+plot(10:1)
+```
+
+You can enable figure captions by `fig_caption: yes` in YAML:
+
+    output:
+      rmarkdown::html_vignette:
+        fig_caption: yes
+
+Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
+
+## More Examples
+
+You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
+
+```{r, echo=FALSE, results='asis'}
+knitr::kable(head(mtcars, 10))
+```
+
+Also a quote using `>`:
+
+> "He who gives up [code] safety for [code] speed deserves neither."
+([via](https://twitter.com/hadleywickham/status/504368538874703872))

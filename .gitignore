@@ -8,7 +8,6 @@ breakaway.Rproj
 *.RData
 *.Rhistory
 *.Rbuildignore
-
 # Packages #
 ############
 # it's better to unpack these files and commit the raw source
@@ -21,15 +20,12 @@ breakaway.Rproj
 *.rar
 *.tar
 *.zip
-
 # Logs and databases #
 ######################
 *.log
 *.sql
 *.sqlite
-
 # OS generated files #
-######################
 .DS_Store
 .DS_Store?
 ._*
@@ -38,3 +34,4 @@ breakaway.Rproj
 ehthumbs.db
 Thumbs.db
 .Rproj.user
+inst/doc
