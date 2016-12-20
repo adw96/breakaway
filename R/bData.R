@@ -19,11 +19,6 @@
 #' orchards did not adversely alter the soil bacteria communities. 
 #' \emph{Frontiers in Microbiology} \bold{4}, 383.
 #'
-#' @name apples
-#' @docType data
-#' @keywords data
-#' @examples
-#' data(apples)
 ################################################################################
-NA
+"apples"
 ################################################################################
