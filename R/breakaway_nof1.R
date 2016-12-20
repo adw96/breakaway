@@ -114,7 +114,7 @@ breakaway_nof1 <- function(data, print=TRUE, plot=TRUE, answers=FALSE, force=FAL
         cat("\tIt looks like you've concatenated some of your data!\n Please truncate and try again.\n")
       } else {
         weights_inv <- 1/xs
-        run <- .minibreak_nof1(lhs,xs,ys,data,weights_inv)
+        run <- minibreak_nof1(lhs,xs,ys,data,weights_inv)
         result <- list()
         choice <- list()
 
@@ -183,11 +183,11 @@ breakaway_nof1 <- function(data, print=TRUE, plot=TRUE, answers=FALSE, force=FAL
               weights1 <- 1/ratiovars
             }
 
-            run <- try ( .minibreak_nof1(lhs,xs,ys,data,1/ratiovars), silent = 1)
+            run <- try ( minibreak_nof1(lhs,xs,ys,data,1/ratiovars), silent = 1)
 
             if ( class(run) == "try-error") {
               ratiovars <- (p[-1]^2/p[-cutoff]^3 + p[-1]/p[-cutoff]^2)/C
-              run <- try ( .minibreak_nof1(lhs,xs,ys,data,1/ratiovars), silent = 1)
+              run <- try ( minibreak_nof1(lhs,xs,ys,data,1/ratiovars), silent = 1)
               if ( class(run) == "try-error") {
                 if(print) {print("Numerical errors result in non-convergence") }
               }
@@ -210,7 +210,7 @@ breakaway_nof1 <- function(data, print=TRUE, plot=TRUE, answers=FALSE, force=FAL
           }
           if( !choice$outcome) {
             if(print) cat("Iterative reweighting didn't produce any outcomes after the first iteration, so we use 1/x\n")
-            run <- .minibreak_nof1(lhs,xs,ys,data,weights_inv)
+            run <- minibreak_nof1(lhs,xs,ys,data,weights_inv)
             choice$outcome <- 1
             choice$model <- rownames(run$useful)[min(which(run$useful[,5]==1))]
             choice$full <-  run[[noquote(choice$model)]]
@@ -319,7 +319,7 @@ breakaway_nof1 <- function(data, print=TRUE, plot=TRUE, answers=FALSE, force=FAL
   }
 }
 
-.minibreak_nof1 <- function(lhs, xs, ys, data, myweights) {
+minibreak_nof1 <- function(lhs, xs, ys, data, myweights) {
   structure_1_0 <- function(x,beta0,beta1) (beta0+beta1*x)/(1+x)
   structure_1_1 <- function(x,beta0,beta1,alpha1) (beta0+beta1*x)/(1+alpha1*x)
   structure_2_1 <- function(x,beta0,beta1,alpha1,beta2) (beta0+beta1*x+beta2*x^2)/(1+alpha1*x)
@@ -405,10 +405,10 @@ breakaway_nof1 <- function(data, print=TRUE, plot=TRUE, answers=FALSE, force=FAL
 
   f0est <- as.numeric(f1est)/as.numeric(b0est)
 
-  rootsokay <- as.logical(lapply(workinginfo,.rootcheck,lhs,nof1=TRUE))
+  rootsokay <- as.logical(lapply(workinginfo,rootcheck,lhs,nof1=TRUE))
 
-  sqerrors <- lapply(workinginfo,.sqerror,lhs)
-  residses <- lapply(workinginfo,.residse)
+  sqerrors <- lapply(workinginfo,sqerror,lhs)
+  residses <- lapply(workinginfo,residse)
 
   useable <- rootsokay & (f0est>0) & (f1est>0)
 

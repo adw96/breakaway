@@ -148,7 +148,7 @@ breakaway <- function(my_data, print=TRUE, plot=TRUE, answers=FALSE, force=FALSE
   } 
   
   weights_inv <- 1/xs
-  run <- .minibreak(lhs,xs,ys,my_data,weights_inv)
+  run <- minibreak(lhs,xs,ys,my_data,weights_inv)
   result <- list()
   choice <- list()
   
@@ -390,10 +390,10 @@ minibreak <- function(lhs, xs, ys, my_data, myweights) {
   if (length(b0est$model_1_0)!=0) b0est$model_1_0 <- predict(workinginfo$model_1_0,list(x=0))
   f0est <- lapply(b0est,function(x) my_data[1,2]/x)
   
-  rootsokay <- as.logical(lapply(workinginfo,.rootcheck,lhs,nof1=FALSE))
+  rootsokay <- as.logical(lapply(workinginfo,rootcheck,lhs,nof1=FALSE))
   
-  sqerrors <- lapply(workinginfo,.sqerror,lhs)
-  residses <- lapply(workinginfo,.residse)
+  sqerrors <- lapply(workinginfo,sqerror,lhs)
+  residses <- lapply(workinginfo,residse)
   
   useable <- rootsokay & (f0est>0)
   
