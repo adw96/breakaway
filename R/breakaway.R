@@ -210,11 +210,11 @@ breakaway <- function(my_data, print=TRUE, plot=TRUE, answers=FALSE, force=FALSE
         weights1 <- 1/ratiovars
       }
       
-      run <- try ( .minibreak(lhs,xs,ys,my_data,1/ratiovars), silent = 1)
+      run <- try ( minibreak(lhs,xs,ys,my_data,1/ratiovars), silent = 1)
       
       if ( class(run) == "try-error") {
         ratiovars <- (p[-1]^2/p[-cutoff]^3 + p[-1]/p[-cutoff]^2)/C
-        run <- try ( .minibreak(lhs,xs,ys,my_data,1/ratiovars), silent = 1)
+        run <- try ( minibreak(lhs,xs,ys,my_data,1/ratiovars), silent = 1)
         if ( class(run) == "try-error") {
           if(print) {print("Numerical errors result in non-convergence") }
         }
@@ -237,7 +237,7 @@ breakaway <- function(my_data, print=TRUE, plot=TRUE, answers=FALSE, force=FALSE
     }
     if( !choice$outcome) {
       if(print) cat("We used 1/x weighting. \n")
-      run <- .minibreak(lhs,xs,ys,my_data,weights_inv)
+      run <- minibreak(lhs,xs,ys,my_data,weights_inv)
       choice$outcome <- 1
       choice$model <- rownames(run$useful)[min(which(run$useful[,5]==1))]
       choice$full <-  run[[noquote(choice$model)]]
