@@ -1,57 +1,87 @@
+% Please edit documentation in R/betta.R
 \name{betta}
 \alias{betta}
-\title{ modelling total diversity  }
-\description{This function tests for heterogeneity of total diversity (observed plus unobserved) across multiple sites. It can account or test for fixed effects that may explain diversity. It returns the significance of the covariates in explaining diversity and a hypothesis test for heterogeneity.}
-\usage{ betta(chats, ses, X = NA) }
+\title{modelling total diversity}
+\usage{
+betta(chats, ses, X = NA)
+}
 \arguments{
-  \item{chats}{
-  	A vector of estimates of total diversity at different sampling locations. \samp{breakaway} estimates are suggested in the high-diversity case but not enforced.
-	 }
-  \item{ses}{
-	The standard errors in \samp{chats}, the diversity estimates.
-	}
-  \item{X}{
-	A numeric matrix of covariates. If not supplied, an intercept-only model will be fit.
-	}
+\item{chats}{A vector of estimates of total diversity at different sampling
+locations. \samp{breakaway} estimates are suggested in the high-diversity
+case but not enforced.}
+
+\item{ses}{The standard errors in \samp{chats}, the diversity estimates.}
+
+\item{X}{A numeric matrix of covariates. If not supplied, an intercept-only
+model will be fit.}
 }
 \value{
-	\item{table}{
-		A coefficient table for the model parameters. The columns give the parameter estimates, standard errors, and p-values, respectively. This model is only as effective as your diversity estimation procedure; for this reason please confirm that your estimates are appropriate and that your model is not misspecified. \samp{betta_pic} may be useful for this purpose.
-		}
-	\item{cov}{
-		Estimated covariance matrix of the parameter estimates.
-		}
-	\item{ssq_u}{
-		The estimate of the heterogeneity variance.
-		}
-	\item{homogeneity}{
-	  The test statistic and p-value for the test of homogeneity.
-	  }
-	  \item{global}{
-	  The test statistic and p-value for the test of model explanatory power.
-	  }
-	  \item{blups}{
-		The conditional expected values of the diversity estimates (conditional on the random effects). The authors propose that if the practitioner believes that information from one diversity estimator may inform the others, then using the \samp{condfits} as estimators of total diversity rather than \samp{Chats} may reduce variance of diversity estimates by ``sharing strength'' across the samples.
-		}
-		\item{blupses}{
-		The estimated standard deviation (standard errors) in the blups.
-		}
+\item{table}{ A coefficient table for the model parameters. The
+columns give the parameter estimates, standard errors, and p-values,
+respectively. This model is only as effective as your diversity estimation
+procedure; for this reason please confirm that your estimates are
+appropriate and that your model is not misspecified. \samp{betta_pic} may be
+useful for this purpose.  } \item{cov}{ Estimated covariance matrix of the
+parameter estimates.  } \item{ssq_u}{ The estimate of the heterogeneity
+variance.  } \item{homogeneity}{ The test statistic and p-value for the test
+of homogeneity.  } \item{global}{ The test statistic and p-value for the
+test of model explanatory power.  } \item{blups}{ The conditional expected
+values of the diversity estimates (conditional on the random effects). The
+authors propose that if the practitioner believes that information from one
+diversity estimator may inform the others, then using the \samp{condfits} as
+estimators of total diversity rather than \samp{Chats} may reduce variance
+of diversity estimates by ``sharing strength'' across the samples.  }
+\item{blupses}{ The estimated standard deviation (standard errors) in the
+blups.  }
 }
-\references{
-	Willis, A., Bunge, J., and Whitman, T. (2015). Inference for changes in biodiversity. \emph{arXiv preprint.}
-
-	Willis, A. and Bunge, J. (2015). Estimating diversity via frequency ratios. \emph{Biometrics.}
-	}
-	\author{Amy Willis}
-\note{ Ecologists who are interested in the way species richness varies with covariate information often run a regression-type analysis on the observed diversity using their covariate information as predictors. However, in many settings (especially microbial), rare and unobserved taxa play a hugely important role in explaining the subtleties of the ecosystem, however, a regression analysis on the observed diversity level fails to account for these unobserved taxa. By predicting the total level of diversity (for example, via \code{\link{breakaway}}) and estimating the standard error in the estimate, one can take account of these unobserved, but important, taxa. In order to account for the estimated nature of the response, a mixed model approach is taken, whereby the varying levels of confidence in the estimates contributes to a diagonal but heteroscedastic covariance matrix. Given covariates constitute the fixed effects in the mixed model, and significance of the random effect term ``sigsq_u'' reflects heterogeneity in the sample, that is, variability that cannot be explained by only the covariates. The authors believe this to be the first attempt at modelling total diversity in a way that accounts for its estimated nature.
-		}
-\seealso{ \code{\link{breakaway}}; \code{\link{breakaway_nof1}}; \code{\link{betta_pic}}; \code{\link{apples}} }
-\examples{betta(c(2000, 3000, 4000, 3000), c(100, 200, 150, 180), cbind(1, c(100, 150, 100, 50)))
+\description{
+This function tests for heterogeneity of total diversity (observed plus
+unobserved) across multiple sites. It can account or test for fixed effects
+that may explain diversity. It returns the significance of the covariates in
+explaining diversity and a hypothesis test for heterogeneity.
+}
+\note{
+Ecologists who are interested in the way species richness varies with
+covariate information often run a regression-type analysis on the observed
+diversity using their covariate information as predictors. However, in many
+settings (especially microbial), rare and unobserved taxa play a hugely
+important role in explaining the subtleties of the ecosystem, however, a
+regression analysis on the observed diversity level fails to account for
+these unobserved taxa. By predicting the total level of diversity (for
+example, via \code{\link{breakaway}}) and estimating the standard error in
+the estimate, one can take account of these unobserved, but important, taxa.
+In order to account for the estimated nature of the response, a mixed model
+approach is taken, whereby the varying levels of confidence in the estimates
+contributes to a diagonal but heteroscedastic covariance matrix. Given
+covariates constitute the fixed effects in the mixed model, and significance
+of the random effect term ``sigsq_u'' reflects heterogeneity in the sample,
+that is, variability that cannot be explained by only the covariates. The
+authors believe this to be the first attempt at modelling total diversity in
+a way that accounts for its estimated nature.
+}
+\examples{
+betta(c(2000, 3000, 4000, 3000), c(100, 200, 150, 180), cbind(1, c(100, 150, 100, 
+    50)))
 
 ## handles missing data
 betta(c(2000, 3000, 4000, 3000), c(100, 200, 150, NA))
 
 ## A test for heterogeneity of apples diversity estimates vs butterfly estimates
-betta(c(1552,1500,884),c(305,675,205), cbind(1,c(0,0,1)))
+betta(c(1552, 1500, 884), c(305, 675, 205), cbind(1, c(0, 0, 1)))
+
 }
-\keyword{ diversity }
+\author{
+Amy Willis
+}
+\references{
+Willis, A., Bunge, J., and Whitman, T. (2015). Inference for
+changes in biodiversity. \emph{arXiv preprint.}
+
+Willis, A. and Bunge, J. (2015). Estimating diversity via frequency ratios.
+\emph{Biometrics.}
+}
+\seealso{
+\code{\link{breakaway}}; \code{\link{breakaway_nof1}};
+\code{\link{betta_pic}}; \code{\link{apples}}
+}
+\keyword{diversity}

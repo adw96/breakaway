@@ -1,3 +1,34 @@
+#' function for species richness estimation
+#' 
+#' This function implements the untransformed version of the species richness
+#' estimation procedure outlined in Rocchetti, Bunge and Bohning (2011).
+#' 
+#' 
+#' @param data The sample frequency count table for the population of interest.
+#' See \samp{breakaway} for details.
+#' @param print Logical: whether the results should be printed to screen.
+#' @param plot Logical: whether the data and model fit should be plotted.
+#' @param answers Logical: whether the function should return an argument.
+#' @param cutoff The maximum frequency count to use for prediction. Defaults to
+#' maximal.
+#' @return \item{name}{ The ``name'' of the model.  } \item{para}{ Estimated
+#' model parameters and standard errors.  } \item{est}{ The estimate of total
+#' (observed plus unobserved) diversity.  } \item{seest}{ The standard error in
+#' the diversity estimate.  } \item{full}{ The chosen linear model for
+#' frequency ratios.  } \item{ci}{ An asymmetric 95\% confidence interval for
+#' diversity.  }
+#' @note This estimator is based on the negative binomial model and for that
+#' reason generally produces poor fits to microbial data. The result is usually
+#' artificially low standard errors. Caution is advised.
+#' @author Amy Willis
+#' @seealso \code{\link{breakaway}}; \code{\link{apples}};
+#' \code{\link{wlrm_transformed}}
+#' @references Rocchetti, I., Bunge, J. and Bohning, D. (2011). Population size
+#' estimation based upon ratios of recapture probabilities. \emph{Annals of
+#' Applied Statistics}, \bold{5}.
+#' @keywords diversity models
+#' @examples
+#' wlrm_untransformed(apples)
 wlrm_untransformed  <- function(data, print=TRUE, plot=FALSE, answers=FALSE, cutoff=NA) {
 
   if( !(is.matrix(data) || is.data.frame(data))) {

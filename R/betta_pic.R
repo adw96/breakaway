@@ -1,3 +1,32 @@
+#' function for plotting total diversity
+#' 
+#' A simple plotting interface for comparing total diversity across samples or
+#' a covariate gradient.
+#' 
+#' 
+#' @param y A vector of estimates of total diversity. Other parameter estimates
+#' are accessible; this method may be used for plotting any parameter
+#' estimates..
+#' @param se The standard errors in \samp{y}, the diversity (or other
+#' parameter's) estimates.
+#' @param x A vector of covariates to form the x-coordinates of the intervals.
+#' If no argument is given, defaults to the order.
+#' @param ylimu The upper endpoint of the y-axis.
+#' @param myy A label for the y-axis. Default is none.
+#' @param mymain A main title for the plot. Default is none.
+#' @param mycol Colors for the plotting points. Default is black.
+#' @param labs x-axis labels. Default is none (non x-axis plotted).
+#' @param mypch Plotting characters for the estimates. Defaults to circles.
+#' @param myxlim A vector of x-axis limits. Default is 0 to 10\% greater than
+#' the maximum x value.
+#' @author Amy Willis
+#' @seealso \code{\link{betta}}
+#' @references Willis, A., Bunge, J., and Whitman, T. (2015). Inference for
+#' changes in biodiversity. arXiv preprint.
+#' @keywords diversity
+#' @examples
+#' betta_pic(c(1552,1500,884),c(305,675,205),mymain="Example title")
+#' 	
 betta_pic <- function(y, se, x=1:length(y), ylimu=NA, myy=NA, mymain=NA, mycol=rep("black", length(y)), labs=NA, mypch=rep(16, length(y)), myxlim=c(0.8*min(x, na.rm=T), 1.2*max(x, na.rm=T))) {
   n <- length(y)
   ylimu <- ifelse(is.na(ylimu), max(y+2*se, na.rm = T), ylimu)

@@ -30,14 +30,14 @@ For now, we will load data from the package itself.
 
 Gah! Need to make sure this all exports properly first!
 ```{r}
-data(toy_otu)
-data(toy_covariate)
+#data(toy_otu)
+#data(toy_covariate)
 ```
 
 It is important that the column names of the OTU table is the same as the rownames of the covariate information. Remember to reorder them if they don't match!  You can check this with
 
 ```{r}
-colnames(toy_otu) == rownames(toy_covariate)
+#colnames(toy_otu) == rownames(toy_covariate)
 ```
 (Need check that all of these are true)
 
