@@ -1,3 +1,4 @@
+#' @export
 objective_bayes_geometric <- function(data, print=TRUE, plot=TRUE, answers=FALSE, write=FALSE,
                            tau=10, burn.in=100, iterations=2500, Metropolis.stdev.N=75,
                            Metropolis.start.theta=1, Metropolis.stdev.theta=0.3) {

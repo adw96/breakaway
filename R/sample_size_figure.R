@@ -1,3 +1,4 @@
+#' @export
 sample_size_figure <- function(control_group_est, se_est, diff = 5, samples = 20) {
   nn <- seq(5, 50, length.out = 10)
   pvalues <- rep(NA, samples)

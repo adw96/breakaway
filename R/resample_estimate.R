@@ -1,5 +1,6 @@
 # a function to resample otu vector and recalculate the value
 # of an estimate
+#' @export
 resample_estimate <- function(my_data, my_function, my_sample_size=NA, ...) {
   # assume  my_data is a list of frequencies from an otu table
   if (max(my_data) < 1) {

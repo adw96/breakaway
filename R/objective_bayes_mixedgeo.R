@@ -1,3 +1,4 @@
+#' @export
 objective_bayes_mixedgeo <- function(data, print=TRUE, plot=TRUE, answers=FALSE, write=FALSE,
                              tau=10, burn.in=100, iterations=2500, Metropolis.stdev.N=100,
                              Metropolis.start.T1=1, Metropolis.stdev.T1=2,

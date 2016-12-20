@@ -2,7 +2,7 @@
 % Please edit documentation in R/breakaway.R
 \name{breakaway}
 \alias{breakaway}
-\title{function for species richness estimation}
+\title{#' function for species richness estimation}
 \usage{
 breakaway(my_data, print = TRUE, plot = TRUE, answers = FALSE,
   force = FALSE, useAll = FALSE)

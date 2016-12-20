@@ -7,6 +7,7 @@ Goal: Turn the distribution on github into a fully-fledged CRAN-compatible distr
 - fix the NAMESPACE file
 - fix the importing MASS issue in order to get mvrnorm (probably a better way to use it only for negative binomial version)
 -  turn stamps lab into vignette
+- create estimator S4 class and put breakaway, chao, etc, into this
 
 Other important things to do
 - move all objective bayes files into streamlined functions

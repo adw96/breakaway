@@ -40,6 +40,7 @@
 #' betta_random(c(2000, 3000, 4000, 3000), c(100, 200, 150, NA),
 #'              groups= c("a", NA, "b", "b"))
 #' 
+#' @export
 betta_random <- function(chats, ses, X=NA, groups) {
   if (isTRUE(is.na(X))) { X <- matrix(rep(1,length(chats)),ncol=1) }
   consider <- !(is.na(chats) | is.na(ses) | is.na(groups) | apply(is.na(X),1,sum))

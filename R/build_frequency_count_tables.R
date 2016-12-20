@@ -1,3 +1,4 @@
+#' @export
 build_frequency_count_tables <- function(otu_table) {
   if (dim(otu_table)[1] < dim(otu_table)[2]) warning('More columns then rows. You probably need to transpose your data.')
   

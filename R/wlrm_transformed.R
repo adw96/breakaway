@@ -31,6 +31,7 @@
 #' wlrm_transformed(apples)
 #' wlrm_transformed(apples,plot=FALSE,print=FALSE,answers=TRUE)
 #'   
+#' @export
 wlrm_transformed <- function(data, print=TRUE, plot=FALSE, answers=FALSE, cutoff=NA) {
 
   if( !(is.matrix(data) || is.data.frame(data))) {

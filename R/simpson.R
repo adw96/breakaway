@@ -1,3 +1,4 @@
+#' @export
 simpson <- function(data) {
   if (class(data) %in% c("data.frame", "matrix") ) {
     if (ncol(data) == 2) {

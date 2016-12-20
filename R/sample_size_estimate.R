@@ -1,4 +1,5 @@
-sample_size_est <- function(control_group_est, se_est, diff = 5, alpha = 0.05, prop = 0.8, samples = 20, precision = 5) {
+#' @export
+sample_size_estimate <- function(control_group_est, se_est, diff = 5, alpha = 0.05, prop = 0.8, samples = 20, precision = 5) {
   n <- 5
   pvalues <- rep(1, samples)
   

@@ -29,6 +29,7 @@
 #' @keywords diversity models
 #' @examples
 #' wlrm_untransformed(apples)
+#' @export
 wlrm_untransformed  <- function(data, print=TRUE, plot=FALSE, answers=FALSE, cutoff=NA) {
 
   if( !(is.matrix(data) || is.data.frame(data))) {

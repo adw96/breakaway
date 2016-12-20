@@ -1,3 +1,4 @@
+#' @export
 betta_points <- function(y, se, x=1:length(y), ylimu=NA, myy=NA, mymain=NA, mycol=rep("black", length(y)), labs=NA, mypch=rep(16, length(y)), myxlim=c(0.8*min(x, na.rm=T), 1.2*max(x, na.rm=T))) {
   n <- length(y)
   #ylimu <- ifelse(is.na(ylimu), max(y+2*se), ylimu)

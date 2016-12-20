@@ -64,6 +64,7 @@
 #' ## A test for heterogeneity of apples diversity estimates vs butterfly estimates
 #' betta(c(1552,1500,884),c(305,675,205), cbind(1,c(0,0,1)))
 #' 
+#' @export
 betta <- function(chats,ses,X=NA) {
   if (isTRUE(is.na(X))) { X <- matrix(rep(1,length(chats)),ncol=1) }
   consider <- !(is.na(chats) | is.na(ses) | apply(is.na(X),1,sum))

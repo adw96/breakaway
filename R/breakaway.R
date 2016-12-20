@@ -1,4 +1,4 @@
-#' function for species richness estimation
+#' #' function for species richness estimation
 #' 
 #' This function implements the species richness estimation procedure outlined
 #' in Willis & Bunge (2015). The diversity estimate, standard error, estimated
@@ -70,6 +70,7 @@
 #' breakaway(apples)
 #' breakaway(apples,plot=FALSE,print=FALSE,answers=TRUE) 
 #' 
+#' @export
 breakaway <- function(my_data, print=TRUE, plot=TRUE, answers=FALSE, force=FALSE, useAll=FALSE) {
   
   ## read in data
@@ -309,7 +310,7 @@ breakaway <- function(my_data, print=TRUE, plot=TRUE, answers=FALSE, force=FALSE
   }
 }
 
-.minibreak <- function(lhs, xs, ys, my_data, myweights) {
+minibreak <- function(lhs, xs, ys, my_data, myweights) {
   structure_1_0 <- function(x,beta0,beta1) (beta0+beta1*x)/(1+x)
   structure_1_1 <- function(x,beta0,beta1,alpha1) (beta0+beta1*x)/(1+alpha1*x)
   structure_2_1 <- function(x,beta0,beta1,alpha1,beta2) (beta0+beta1*x+beta2*x^2)/(1+alpha1*x)
@@ -400,7 +401,7 @@ breakaway <- function(my_data, print=TRUE, plot=TRUE, answers=FALSE, force=FALSE
   return(workinginfo)
 }
 
-.rootcheck <- function(model,lhs,nof1=FALSE) {
+rootcheck <- function(model,lhs,nof1=FALSE) {
   if(length(coef(model))==2)  {
     root <- -coef(model)[1]/coef(model)[2]
   } else {
@@ -417,11 +418,11 @@ breakaway <- function(my_data, print=TRUE, plot=TRUE, answers=FALSE, force=FALSE
   return(outcome)
 }
 
-.sqerror <- function(model, lhs) {
+sqerror <- function(model, lhs) {
   fits <- fitted(model)
   return(sum(((lhs$y-fits)^2)/fits))
 }
 
-.residse <- function(model) {
+residse <- function(model) {
   return(summary(model)$sigma)
 }

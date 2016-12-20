@@ -72,6 +72,7 @@
 #' breakaway_nof1(apples[-1,])
 #' breakaway_nof1(apples[-1,],plot=FALSE,print=FALSE,answers=TRUE) 
 #' 
+#' @export
 breakaway_nof1 <- function(data, print=TRUE, plot=TRUE, answers=FALSE, force=FALSE) {
 
   if( !(is.matrix(data) || is.data.frame(data))) {
