@@ -1,3 +1,18 @@
+#' Chao-Bunge species richness estimator
+#' 
+#' This function implements the species richness estimation procedure outlined
+#' in Chao & Bunge (2002). 
+#' 
+#' @param data The sample frequency count table for the population of interest.
+#' See dataset apples for sample formatting.
+#' @param print Logical: whether the results should be printed to screen. 
+#' @param cutoff The maximum frequency to use in fitting.
+#' @param answers Should the answers be returned as a list?
+#' @return The results of the estimator, including standard error.
+#' @examples
+#' chao_bunge(apples)
+#' @author Amy Willis
+#' 
 #' @export
 chao_bunge <- function(data, cutoff=10, print=TRUE, answers=FALSE) {
   
@@ -52,6 +67,23 @@ chao_bunge <- function(data, cutoff=10, print=TRUE, answers=FALSE) {
   }
 }
 
+#' Chao1 species richness estimator
+#' 
+#' This function implements the Chao1 richness estimate,  which is often mistakenly
+#' referred to as an index.
+#' 
+#' @param data The sample frequency count table for the population of interest.
+#' See dataset apples for sample formatting.
+#' @param print Logical: whether the results should be printed to screen. 
+#' @param answers Should the answers be returned as a list?
+#' @return The results of the estimator, including standard error.
+#' @examples
+#' chao1(apples)
+#' @author Amy Willis
+#' @note The authors of this package strongly discourage the use of this estimator.
+#'  It is only valid when you wish to assume that every taxa has equal
+#'  probability of being observed. You don't really think that's possible, do you?
+#' 
 #' @export
 chao1 <- function(data, print=TRUE, answers=FALSE) {
 
@@ -101,6 +133,23 @@ chao1 <- function(data, print=TRUE, answers=FALSE) {
   }
 }
 
+#' Bias-corrected Chao1 species richness estimator
+#' 
+#' This function implements the bias-corrected Chao1 richness estimate.
+#' 
+#' @param data The sample frequency count table for the population of interest.
+#' See dataset apples for sample formatting.
+#' @param print Logical: whether the results should be printed to screen. 
+#' @param answers Should the answers be returned as a list?
+#' @return The results of the estimator, including standard error.
+#' @examples
+#' chao1_bc(apples)
+#' @author Amy Willis
+#' @note The authors of this package strongly discourage the use of this 
+#'  estimator. It is underpinned by totally implausible assumptions
+#'  that are not made by other richness estimators.  Bias correcting Chao1
+#'  is the least of your problems.
+#'  
 #' @export
 chao1_bc <- function(data, print=TRUE, answers=FALSE) {
   

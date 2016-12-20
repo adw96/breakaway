@@ -1,7 +1,7 @@
 Package: breakaway
 Title: Species Richness Estimation and Modeling
-Version: 4.0
-Date: 2016-12-18
+Version: 4.1
+Date: 2016-12-20
 Author: Amy Willis, Kathryn Barger, and John Bunge
 Maintainer: Amy Willis <adw96@cornell.edu>
 Description: Species richness estimation is an important problem in biodiversity
@@ -19,7 +19,12 @@ License: GPL-2
 BugReports: https://github.com/adw96/breakaway/issues
 LazyData: true
 RoxygenNote: 5.0.1
-Suggests: MASS,
-    knitr,
+Depends:
+    R (>= 2.10)
+Imports: MASS,
+    stats,
+    utils,
+    graphics
+Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr
