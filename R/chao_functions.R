@@ -1,3 +1,4 @@
+#' @export
 chao_bunge <- function(data, cutoff=10, print=TRUE, answers=FALSE) {
   
   if( !(is.matrix(data) || is.data.frame(data))) {
@@ -51,7 +52,7 @@ chao_bunge <- function(data, cutoff=10, print=TRUE, answers=FALSE) {
   }
 }
 
-
+#' @export
 chao1 <- function(data, print=TRUE, answers=FALSE) {
 
   if( !(is.matrix(data) || is.data.frame(data))) {
@@ -100,6 +101,7 @@ chao1 <- function(data, print=TRUE, answers=FALSE) {
   }
 }
 
+#' @export
 chao1_bc <- function(data, print=TRUE, answers=FALSE) {
   
   if( !(is.matrix(data) || is.data.frame(data))) {

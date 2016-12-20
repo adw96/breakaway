@@ -17,6 +17,7 @@ Description: Species richness estimation is an important problem in biodiversity
     unobserved taxa, and betta_random() permits random effects modelling.
 License: GPL-2
 BugReports: https://github.com/adw96/breakaway/issues
+LazyData: true
 RoxygenNote: 5.0.1
 Suggests: MASS,
     knitr,
