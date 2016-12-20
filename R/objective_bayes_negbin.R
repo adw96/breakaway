@@ -1,3 +1,4 @@
+#' @importFrom MASS mvrnorm
 #' @export
 objective_bayes_negbin <- function(data, print=TRUE, plot=TRUE, answers=FALSE, write=FALSE,
                           tau=10, burn.in=1000, iterations=5000, Metropolis.stdev.N=100,
@@ -57,7 +58,7 @@ objective_bayes_negbin <- function(data, print=TRUE, plot=TRUE, answers=FALSE, w
 
     ## propose value T1T2 from a bivariate normal dist.; make sure T1T2.new > {-1,0}
     repeat {
-      T1T2.new <- MASS::mvrnorm(1, c(T1T2[i-1,1],T1T2[i-1,2]),matrix(c(Metropolis.stdev.T1,0,0,Metropolis.stdev.T2),nrow=2))
+      T1T2.new <- mvrnorm(1, c(T1T2[i-1,1],T1T2[i-1,2]),matrix(c(Metropolis.stdev.T1,0,0,Metropolis.stdev.T2),nrow=2))
       if(T1T2.new[1]>(-1) & T1T2.new[2]>0)
         break
     }
