@@ -4,6 +4,7 @@ hadleystutorial.R
 breakaway.Rproj
 .RData
 data/.Rapp.history
+make-data-files.R
 
 # R files #
 ###########
