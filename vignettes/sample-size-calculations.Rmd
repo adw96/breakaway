@@ -1,0 +1,119 @@
+---
+title: "Sample size calculations for alpha diversity"
+author: "Amy Willis"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{sample-size-calculations}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+This is a really quick introduction to using the sample size calculation tools provided in `breakaway`. It assumes reasonable familiarity with both `R` and `breakaway`.
+
+## Loading the package and your data
+
+Download the latest version of the package from github.
+
+```{r}
+### Run the first two lines at home! ####
+# install.packages("devtools")
+# devtools::install_github("adw96/breakaway")
+library(breakaway)
+```
+
+Let's consider some example OTU tables, taxonomy information, and covariate information. 
+```{r}
+my_table <- data(toy_otu_table)
+my_taxonomy <- data(toy_taxonomy)
+meta <- data(toy_metadata)
+```
+
+Suppose we are interested in the species richness of cyanobacteria, and whether or not it changes with a cyanobacteria bloom event. (You could easily generalise this to toxin-forming genera, if that was your target of interest (Amy to @Sarah)...)
+
+The data is probably noisy and so we may not have a strong enough signal to detect a difference in richness with bloom. The point of these tools is to help you find an *estimate*  of how many samples you might need to detect such a difference.
+
+First set up the species richness and bloom variables.
+
+```{r}
+## Find how many otus are in the cyanobacteria genus
+
+grepl("Cyano", toy_taxonomy)
+dim(toy_taxonomy)
+cyano_nodes <- apply(my_table[grepl("Cyano", my_taxonomy), ], 2, function(x) sum(x>0))
+cyano_nodes <- cyano_nodes
+
+bloom1 <- meta[, "bloom2"]
+bloom <- bloom1 == "yes"
+```
+
+Let's start by drawing a picture. Could a difference even be possible?
+
+```{r, fig.show='hold'}
+plot(1:length(bloom), c(cyano_nodes[bloom], cyano_nodes[!bloom]), 
+     pch=c(rep(16, sum(bloom)), rep(1, sum(!bloom)))) ## Hmmm ambiguous
+```
+
+Fascinating! We observe much more low richnesses for non-bloom samples, but it's really quite ambiguous. 
+
+An important consideration is that our samples are not exhaustive: each of these cyanobacteria richness values are estimated and not, in fact,  correct. There almost certainly were more  genera present than we observed. Estimating the total genera  richness is a great problem for `breakaway`. Actually, it's probably better for CatchAll, because there's not that much richness (only around 20 genera per sample). Let's come back to estimating the total genera richness another time and focus instead on finding the required sample size to detect a difference when there is noise. 
+
+I'm going to make a big leap now and pretend that I know that the standard deviation in the bloom richnesses is 2,  and the standard deviation in non-bloom richnesses is 5. How would the above picture change? Sounds like a good problem for ``betta_pic``
+
+
+```{r, fig.show='hold'}
+betta_pic(c(cyano_nodes[bloom], cyano_nodes[!bloom]), se = c(rep(2, sum(bloom)), rep(5, sum(!bloom))), mypch = c(rep(16, sum(bloom)), rep(1, sum(!bloom))))
+```
+
+Ooooo, difficult! With this picture suggest a difference? Maybe. We definitely need more samples. I wonder how many? (That's the point of this tutorial, FYI)
+
+
+Why would the standard deviation change the necessary sample size? Let's suppose that both groups have the same standard error. How do the differences between the groups change?
+
+```{r, echo=FALSE}
+breakaway::betta(cyano_nodes, se = rep(1, length(bloom)), X = cbind(1, bloom))$table
+breakaway::betta(cyano_nodes, se = rep(20, length(bloom)), X = cbind(1, bloom))$table
+breakaway::betta(cyano_nodes, se = rep(40, length(bloom)), X = cbind(1, bloom))$table
+## can see how it flips with more variability
+```
+So larger standard errors lead to less precise estimates. Note that the estimate of the difference (in genera richnesses) between the groups doesn't change, but its standard error does, which changes the p-value. 
+
+Okay, let's start by estimating the standard errors as the within group standard deviations.
+
+```{r}
+sd(cyano_nodes[bloom])
+sd(cyano_nodes[!bloom])
+```
+
+This is kind of primitive but not that bad to start.
+ 
+I'd prefer to be conservative and choose a larger standard error... the maximum of both groups would suit me fine. So for my simulation I'm going to choose a standard error of 10, common to both groups.  So I set `se_est = 10`. 
+
+Suppose that 6 more genera  is concerning,  that is, a difference 6 in the of species richness  is the difference I want to detect. So I set `diff = 6`.
+
+For no good reason, suppose I want to test at the 5% level. `alpha = 0.05`.
+ 
+Power of 80%? Why not?! `prop = 0.8` 
+TODO:  Amy to rename this to `power`
+
+I've got time to go make myself a coffee, and I care a lot about precision, so I will set `samples = 500`. Only have time for a sneeze? Set `samples = 100`. Big boozy lunch? `samples = 2000`. Scales linearly. It's pretty fast! (No thanks to me...)
+
+```{r, echo=FALSE}
+## Confirm behaviour with se: should take more samples
+set.seed(1)
+sample_size_estimate(control_group_est = 20, se_est = 10, diff = 6, alpha = 0.05, prop = 0.8, samples = 500, precision = 1)
+```
+
+Wooohooo! 30 bloom and 30 non-bloom samples are needed. *As an estimate!* 
+
+## Coming soon...
+
+Is almost certainly possible to find a closed form expression for this. What is implemented here is a really, really primitive way of doing it. I will come back to the math approach ASAP. (Sorry, I have a thesis to write!)
+
+## How to pick your standard error
+
+Good question! Vignette coming soon... (Write to me to tell me to hurry up if you need it! Is anyone actually reading this?)
+
+## More complex experimental designs...
+
+Oooooo I love this question! Feel free to modify the code to match your experiment design. If you don't know how to do this or think that your design is broadly relevant, send me an email and I will implement it. (Free of charge!)
