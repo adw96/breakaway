@@ -178,7 +178,7 @@ objective_bayes_negbin <- function(data, print=TRUE, plot=TRUE, answers=FALSE,
   
   
   ### Step 6: results
-  if (plot) hist.points<-hist(N[(burn.in+1):iterations]+w-w.tau,breaks=seq(w,max(N)+w-w.tau+1)-0.5)
+  hist.points<-hist(N[(burn.in+1):iterations]+w-w.tau,breaks=seq(w,max(N)+w-w.tau+1)-0.5, plot = plot)
   
   results<-data.frame(w=w,
                       n=n,
@@ -394,7 +394,7 @@ objective_bayes_poisson <- function(data, print=TRUE, plot=TRUE, answers=FALSE,
   fitted.values<-data.frame(cbind(j=seq(1,tau),fits,count=freqdata[,2]))
   
   ### Step 6: results
-  if (plot) hist.points<-hist(N[(burn.in+1):iterations]+w-w.tau,breaks=seq(w,max(N)+w-w.tau+1)-0.5)
+  hist.points<-hist(N[(burn.in+1):iterations]+w-w.tau,breaks=seq(w,max(N)+w-w.tau+1)-0.5, plot = plot)
   
   results<-data.frame(w=w,
                       n=n,
@@ -655,7 +655,7 @@ objective_bayes_mixedgeo <- function(data, print=TRUE, plot=TRUE, answers=FALSE,
   fitted.values<-data.frame(cbind(j=seq(1,tau),fits,count=freqdata[,2]))
   
   ### Step 6: results
-  if (plot) hist.points<-hist(N[(burn.in+1):iterations]+w-w.tau,breaks=seq(w,max(N)+w-w.tau+1)-0.5)
+  hist.points<-hist(N[(burn.in+1):iterations]+w-w.tau,breaks=seq(w,max(N)+w-w.tau+1)-0.5, plot = plot)
   
   results<-data.frame(w=w,
                       n=n,
@@ -880,7 +880,7 @@ objective_bayes_geometric <- function(data, print=TRUE, plot=TRUE, answers=FALSE
   
   
   ### Step 6: results
-  if (plot) hist.points<-hist(N[(burn.in+1):iterations]+w-w.tau,breaks=seq(w,max(N)+w-w.tau+1)-0.5)
+  hist.points<-hist(N[(burn.in+1):iterations]+w-w.tau,breaks=seq(w,max(N)+w-w.tau+1)-0.5, plot = plot)
   
   
   results<-data.frame(w=w,

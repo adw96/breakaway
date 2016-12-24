@@ -24,64 +24,35 @@ This vignette will lead you through
 
 If there is something that you would like explained please feel free to request it!
 
-## Loading in your data
+## Loading the package and data
 
-For now, we will load data from the package itself.
+Download the latest version of the package from github.
 
-Gah! Need to make sure this all exports properly first!
 ```{r}
+### Run the first two lines at home! ####
+# install.packages("devtools")
+# devtools::install_github("adw96/breakaway")
 library(breakaway)
-breakaway(apples)
-#data(toy_otu)
-#data(toy_covariate)
+data(toy_otu_table)
+data(toy_metadata)
+
+## For historical reasons we going to call them:
+data <- toy_otu_table
+metadata <- toy_metadata
 ```
 
 It is important that the column names of the OTU table is the same as the rownames of the covariate information. Remember to reorder them if they don't match!  You can check this with
 
 ```{r}
-#colnames(toy_otu) == rownames(toy_covariate)
+colnames(data) == rownames(metadata)
 ```
-(Need check that all of these are true)
+
+Let's quickly peruse the covariate information. 
 
 ## Creating frequency tables
 
 ```{r}
-###### bettademo.R, a script to introduce you to the package "breakaway"
-###### for alpha diversity estimation and comparison
-###### Software authors: Amy Willis and Kathryn Barger
-###### Theory & paper authors: Amy Willis, Kathryn Barger & John Bunge, 2013-15
 
-## Start by checking what directory you are in with
-getwd()
-## Set it to your local copy of diversitylab with setwd("[folder/diversitylab]")
-
-## Load the package we need. It's called breakaway. It's awesome.
-## Conflicts of interest alert: I wrote it.
-## An old version is available via CRAN using install.packages("breakaway")
-## The latest version is EXCLUSIVELY available to you RIGHT HERE
-## at STAMPS. You can load it using
-install.packages("breakaway_4.0.tar.gz", type="source", repos=NULL)
-require("breakaway")
-## If the above didn't work, check that the file is in the same location
-## as getwd()
-## If that didn't work, check you can connect to the internet, have
-## a look at your CRAN mirror settings...
-## If you're still having trouble, call a TA over!
-
-#### Load the species abundance table and metadata
-data <- read.table("mask_data.txt",header=T)
-metadata <- read.table("mask_meta.txt",header=T)
-## If an error was thrown, that means that the data was not in the
-## working directory. Ensure that the data is in filepath specified by
-## getwd(), or setwd([where you have saved your data])
-
-## This is data from 63 different lakes.
-
-## Have a look at the first few rows/columns your data and your metadata
-data[1:4,1:4]
-metadata[1:4,]
-## data is very big! To see how big, go
-dim(data)
 
 ## Huh? Levels? What type of object is Year, anyway?
 class(metadata$Year)
@@ -97,18 +68,19 @@ Year_num
 
 ## Take a moment to congratulate yourself on loading a package,
 ## opening data, and exploring the dataset! That's huge! Woohoo!
+```
 
-##### CREATE FREQUENCY TABLES
+## Creating frequency tables
+We're now going to "collapse" the data's columns (samples) into frequency tables. We use several functions here: table, apply, as.data.frame and lapply.  If you're interested, you should explore these later. We want to analyse the data right now!
 
-## We're now going to "collapse" the data's columns (samples) into frequency tables
-## We use several functions here: table, apply, as.data.frame and lapply
-## If you're interested, you should explore these later. We want to analyse
-## the data right now!
+```{r}
 frequencytablelist <- lapply(apply(data,2,table),as.data.frame)
 frequencytablelist <- lapply(frequencytablelist,function(x) x[x[,1]!=0,])
+```
 
 ## Have a look at the frequency tables ("frequency count data"). I've put them
 ## in a list so we need to use double square brackets [[63]] to refer to the 63rd one
+```{r}
 frequencytablelist[[63]]
 ## Interpretation: In this sample, there were 57 different species observed
 ## only once (singletons), 25 different species observed only twice, ...,
@@ -434,46 +406,11 @@ betta(estimates_catchall[,1], estimates_catchall[,2])$table
 ## THANKS FOR STAYING THROUGH TO THE END! I'd love to hear if you
 ## hated it/loved it/worst day ever -- please give me feedback to 
 ## better help you!! :) Amy
-
 ```
+
 ## Estimating species richness
 
 ## Estimating alpha diversity
 
 ## Modelling alpha diversity
 
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
-
-<!--     output:  -->
-<!--       rmarkdown::html_vignette: -->
-<!--         css: mystyles.css -->
-
-<!-- ## Figures -->
-
-<!-- The figure sizes have been customised so that you can easily put two images side-by-side.  -->
-
-<!-- ```{r, fig.show='hold'} -->
-<!-- plot(1:10) -->
-<!-- plot(10:1) -->
-<!-- ``` -->
-
-<!-- You can enable figure captions by `fig_caption: yes` in YAML: -->
-
-<!--     output: -->
-<!--       rmarkdown::html_vignette: -->
-<!--         fig_caption: yes -->
-
-<!-- Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**. -->
-
-<!-- ## More Examples -->
-
-<!-- You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`. -->
-
-<!-- ```{r, echo=FALSE, results='asis'} -->
-<!-- knitr::kable(head(mtcars, 10)) -->
-<!-- ``` -->
-
-<!-- Also a quote using `>`: -->
-
-<!-- > "He who gives up [code] safety for [code] speed deserves neither." -->
-<!-- ([via](https://twitter.com/hadleywickham/status/504368538874703872)) -->

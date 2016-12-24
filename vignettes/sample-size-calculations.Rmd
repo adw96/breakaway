@@ -56,7 +56,7 @@ plot(1:length(bloom), c(cyano_nodes[bloom], cyano_nodes[!bloom]),
 
 Fascinating! We observe much more low richnesses for non-bloom samples, but it's really quite ambiguous. 
 
-An important consideration is that our samples are not exhaustive: each of these cyanobacteria richness values are estimated and not, in fact,  correct. There almost certainly were more  genera present than we observed. Estimating the total genera  richness is a great problem for `breakaway`. Actually, it's probably better for CatchAll, because there's not that much richness (only around 20 genera per sample). Let's come back to estimating the total genera richness another time and focus instead on finding the required sample size to detect a difference when there is noise. 
+An important consideration is that our samples are not exhaustive: each of these cyanobacteria richness values are estimated and not, in fact,  correct. There almost certainly were more  phyla present than we observed. Estimating the total phyla  richness is a great problem for `breakaway`. Actually, it's probably better for CatchAll, because there's not that much richness (only around 20 phyla per sample). Let's come back to estimating the total phyla richness another time and focus instead on finding the required sample size to detect a difference when there is noise. 
 
 I'm going to make a big leap now and pretend that I know that the standard deviation in the bloom richnesses is 2,  and the standard deviation in non-bloom richnesses is 5. How would the above picture change? Sounds like a good problem for ``betta_pic``
 
@@ -76,7 +76,7 @@ breakaway::betta(cyano_nodes, se = rep(20, length(bloom)), X = cbind(1, bloom))$
 breakaway::betta(cyano_nodes, se = rep(40, length(bloom)), X = cbind(1, bloom))$table
 ## can see how it flips with more variability
 ```
-So larger standard errors lead to less precise estimates. Note that the estimate of the difference (in genera richnesses) between the groups doesn't change, but its standard error does, which changes the p-value. 
+So larger standard errors lead to less precise estimates. Note that the estimate of the difference (in phyla richnesses) between the groups doesn't change, but its standard error does, which changes the p-value. 
 
 Okay, let's start by estimating the standard errors as the within group standard deviations.
 
@@ -89,7 +89,7 @@ This is kind of primitive but not that bad to start.
  
 I'd prefer to be conservative and choose a larger standard error... the maximum of both groups would suit me fine. So for my simulation I'm going to choose a standard error of 10, common to both groups.  So I set `se_est = 10`. 
 
-Suppose that 6 more genera  is concerning,  that is, a difference 6 in the of species richness  is the difference I want to detect. So I set `diff = 6`.
+Suppose that 6 more phyla  is concerning,  that is, a difference 6 in the of species richness  is the difference I want to detect. So I set `diff = 6`.
 
 For no good reason, suppose I want to test at the 5% level. `alpha = 0.05`.
  
