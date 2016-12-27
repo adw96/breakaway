@@ -4,12 +4,13 @@ Goal: Turn the distribution on github into a fully-fledged CRAN-compatible distr
 
  Steps (approximately in order of necessity)
 - create man files for objective Bayes fns
-- streamline breakaway, nof1
-- streamline OB fns
 - turn stamps lab into vignette
 - create estimator S4 class and put breakaway, chao, etc, into this
+- phyloseq-breakaway vignette
 
 Other important things to do
 - move all objective bayes files into streamlined functions
 - integrate phyloseq objects as inputs
 - probably way more things that will occur to me as soon as I move on to something else :)
+- streamline breakaway, nof1
+- streamline OB fns
