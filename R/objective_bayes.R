@@ -189,12 +189,12 @@ objective_bayes_negbin <- function(data, print=TRUE, plot=TRUE, answers=FALSE,
                       iterations=iterations,
                       burn.in=burn.in,
                       acceptance.rate.T1T2=a1/iterations,
-                      acceptance.rate.N=a2/iterations,
-                      mode.N=hist.points$mids[which.max(hist.points$density)],
-                      mean.N=mean(N[(burn.in+1):iterations])+w-w.tau,
-                      median.N=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.5,names=F),
-                      LCI.N=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.025,names=F),
-                      UCI.N=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.975,names=F),
+                      acceptance.rate.C=a2/iterations,
+                      mode.C=hist.points$mids[which.max(hist.points$density)],
+                      mean.C=mean(N[(burn.in+1):iterations])+w-w.tau,
+                      median.C=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.5,names=F),
+                      LCI.C=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.025,names=F),
+                      UCI.C=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.975,names=F),
                       stddev.C=sqrt(var((N[(burn.in+1):iterations]+w-w.tau))),
                       mean.D=mean.D,
                       median.D=median.D,
@@ -666,12 +666,12 @@ objective_bayes_mixedgeo <- function(data, print=TRUE, plot=TRUE, answers=FALSE,
                       iterations=iterations,
                       burn.in=burn.in,
                       acceptance.rate.T1T2=1,
-                      acceptance.rate.N=a1/iterations,
-                      mode.N=hist.points$mids[which.max(hist.points$density)],
-                      mean.N=mean(N[(burn.in+1):iterations])+w-w.tau,
-                      median.N=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.5,names=F),
-                      LCI.N=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.025,names=F),
-                      UCI.N=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.975,names=F),
+                      acceptance.rate.C=a1/iterations,
+                      mode.C=hist.points$mids[which.max(hist.points$density)],
+                      mean.C=mean(N[(burn.in+1):iterations])+w-w.tau,
+                      median.C=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.5,names=F),
+                      LCI.C=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.025,names=F),
+                      UCI.C=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.975,names=F),
                       stddev.C=sqrt(var((N[(burn.in+1):iterations]+w-w.tau))),
                       mean.D=mean.D,
                       median.D=median.D,
@@ -904,7 +904,7 @@ objective_bayes_geometric <- function(data, print=TRUE, plot=TRUE, answers=FALSE
                       DIC
   )
   
-  final_results <- list()
+  final_ list()
   final_results$results <- t(results)
   final_results$fits <- fitted.values
   

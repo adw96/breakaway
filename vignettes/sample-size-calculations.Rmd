@@ -24,9 +24,9 @@ library(breakaway)
 
 Let's consider some example OTU tables, taxonomy information, and covariate information. 
 ```{r}
-my_table <- data(toy_otu_table)
-my_taxonomy <- data(toy_taxonomy)
-meta <- data(toy_metadata)
+#my_table <- data(toy_otu_table)
+#my_taxonomy <- data(toy_taxonomy)
+#meta <- data(toy_metadata)
 ```
 
 Suppose we are interested in the species richness of cyanobacteria, and whether or not it changes with a cyanobacteria bloom event. (You could easily generalise this to toxin-forming genera, if that was your target of interest (Amy to @Sarah)...)
@@ -37,13 +37,10 @@ First set up the species richness and bloom variables.
 
 ```{r}
 ## Find how many otus are in the cyanobacteria genus
-
-grepl("Cyano", toy_taxonomy)
-dim(toy_taxonomy)
-cyano_nodes <- apply(my_table[grepl("Cyano", my_taxonomy), ], 2, function(x) sum(x>0))
+cyano_nodes <- apply(toy_otu_table[grepl("Cyano", toy_taxonomy), ], 2, function(x) sum(x>0))
 cyano_nodes <- cyano_nodes
 
-bloom1 <- meta[, "bloom2"]
+bloom1 <- toy_metadata[, "bloom2"]
 bloom <- bloom1 == "yes"
 ```
 

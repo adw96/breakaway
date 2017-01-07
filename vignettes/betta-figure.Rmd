@@ -1,0 +1,59 @@
+---
+  title: "Comparing samples visually with betta"
+author: "Amy Willis"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{getting-started}
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteEncoding{UTF-8}
+---
+  
+  `betta` is useful for formally testing differences between communities with respect to their alpha diversity. However, before ever doing any inferential test, it's best to try to visualise the difference that you are looking for. Here is a example to show you how to do that using `betta_pic`. 
+
+
+```{r}
+### Run the first two lines at home! ####
+# install.packages("devtools")
+# devtools::install_github("adw96/breakaway")
+library(breakaway)
+```
+
+
+```{r}
+
+frequencytablelist <- lapply(apply(toy_otu_table, 2, table), as.data.frame)
+frequencytablelist <- lapply(frequencytablelist, function(x) x[x[,1]!=0,])
+
+ob_results <- lapply(frequencytablelist[1:15], objective_bayes_negbin, answers = T, plot=F)
+
+lower <- unlist(lapply(ob_results, function(x) x$results["LCI.C", ]))
+upper <- unlist(lapply(ob_results, function(x) x$results["UCI.C", ]))
+means <- unlist(lapply(ob_results, function(x) x$results["mean.C", ]))
+standard_deviations <- unlist(lapply(ob_results, function(x) x$results["stddev.C", ]))
+
+## Find how many otus are in the cyanobacteria genus
+cyano_nodes <- apply(toy_otu_table[grepl("Cyano", toy_taxonomy), ], 2, function(x) sum(x>0))
+cyano_nodes <- cyano_nodes
+
+bloom1 <- toy_metadata[, "bloom2"]
+bloom <- bloom1 == "yes"
+```
+
+The following is the default option for plotting. It shows the mean estimates with lines up to +/-2  standard deviations. In this way, it is a visual mimic of the procedure that underpins `betta`. Feel free to pull apart the source code  to optimise it for your purposes. It uses base graphics.
+
+```{r, fig.show='hold'}
+betta_pic(means, standard_deviations, mypch = ifelse(bloom, 16, 1))
+```
+
+The following is a nice option if you would like to use ggplot. 
+
+```{r, fig.show='hold'}
+require(ggplot2)
+plot_data_frame <- data.frame("index" = 1:15, lower, upper, means, standard_deviations, "bloom"=bloom[1:15])
+plot_data_frame
+
+ggplot(plot_data_frame, aes(x = index, y = means, col = bloom)) +
+  geom_segment(aes(x = index, xend = index, y = lower, yend = upper, col = bloom), lwd = 1.25) +
+  geom_point(aes(x = index, y = means)) + xlab("Samples") + ylab("Richness estimates (Objective Bayes)")
+```
