@@ -48,7 +48,7 @@ betta_pic(means, standard_deviations, mypch = ifelse(bloom, 16, 1))
 
 The following is a nice option if you would like to use ggplot. 
 
-```{r, fig.show='hold'}
+```{r, fig.show='asis'}
 require(ggplot2)
 plot_data_frame <- data.frame("index" = 1:15, lower, upper, means, standard_deviations, "bloom"=bloom[1:15])
 plot_data_frame
