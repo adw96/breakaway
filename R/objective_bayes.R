@@ -904,7 +904,7 @@ objective_bayes_geometric <- function(data, print=TRUE, plot=TRUE, answers=FALSE
                       DIC
   )
   
-  final_ list()
+  final_results <- list()
   final_results$results <- t(results)
   final_results$fits <- fitted.values
   
