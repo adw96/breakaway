@@ -70,9 +70,10 @@ Why would the standard deviation change the necessary sample size? Let's suppose
 ```{r, echo=FALSE}
 breakaway::betta(cyano_nodes, se = rep(1, length(bloom)), X = cbind(1, bloom))$table
 breakaway::betta(cyano_nodes, se = rep(20, length(bloom)), X = cbind(1, bloom))$table
-breakaway::betta(cyano_nodes, se = rep(40, length(bloom)), X = cbind(1, bloom))$table
+breakaway::betta(cyano_nodes, se = rep(35, length(bloom)), X = cbind(1, bloom))$table
 ## can see how it flips with more variability
 ```
+
 So larger standard errors lead to less precise estimates. Note that the estimate of the difference (in phyla richnesses) between the groups doesn't change, but its standard error does, which changes the p-value. 
 
 Okay, let's start by estimating the standard errors as the within group standard deviations.

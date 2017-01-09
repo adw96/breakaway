@@ -56,6 +56,7 @@ frequencytablelist <- lapply(apply(otu_data,2,table),as.data.frame)
 frequencytablelist <- lapply(frequencytablelist,function(x) x[x[,1]!=0,])
 frequencytablelist[[63]]
 ```
+
 Interpretation: In this sample, there were 57 different species observed only once (singletons), 25 different species observed only twice, ..., 1 species observed 171 times.
 
 
@@ -66,6 +67,7 @@ Let's run breakaway on the first frequency count table
 ```{r}
 breakaway(frequencytablelist[[1]])
 ```
+
 You should get some output to screen, including your estimate & s.e., and a plot of the fits to the ratios. Note that it is not a fit to the frequencies, it is a fit to the ratios of frequencies. You would never need to include this type of plot in one of your papers. It is solely for you to check for model misspecification. What's model misspecification? If the black diamonds don't remotely follow the pattern of the white circles, that's model misspecification.
 
 Sometimes, breakaway's usual procedure doesn't work, that is, it gives a negative estimate, which is of course silly. In that case, breakaway returns a different model's result. It's called the WLRM. There isn't a picture. Here is an example of a case where breakaway returns the WLRM.
@@ -73,6 +75,7 @@ Sometimes, breakaway's usual procedure doesn't work, that is, it gives a negativ
 ```{r}
 breakaway(frequencytablelist[[60]])
 ```
+
 breakaway can defer to the WLRM for several reasons. Perhaps there are too many singletons. Perhaps there isn't a long enough tail. Perhaps there is false diversity. In this case, there was probably not enough data. Let's see if this failure was sensitive to the singleton count by running
 breakaway_nof1. This requires no singleton count (implicit is that the singleton count was erroneous) and predicts it from the other frequencies.
 ```{r}
@@ -144,11 +147,13 @@ BTW, you can use the above to look sample size variability as well. If you have 
 ns <- unlist(lapply(frequencytablelist, function(x) sum(x[,2])))
 hist(ns)
 ```
+
 Well, but a lot of variability! Lets account for it in looking at our distribution of Shannon diversity estimates
 ```{r}
 set.seed(8)
 hist(replicate(500, resample_estimate(otu_data[,1], shannon, my_sample_size = ns)))
 ```
+
 That's a lot more variability than we saw originally!
 
 Going forward with your analyses, don't forget to account for variability in your estimates. Bootstrap standard errors are better than nothing!
@@ -189,24 +194,26 @@ The following plotting command may be different to ones you have seen before. It
 ```{r}
 betta_pic(estimates_shannon[,1], estimates_shannon[,2])
 ```
+
 No obvious outliers here.
 
 Lets look at the effect of summer samples
 ```{r}
-col_by_seasons <- ifelse(meta_data$Season=="Autum","black",ifelse(meta_data$Season=="Spring","pink","red"))
+col_by_seasons <- ifelse(meta_data$Period=="Autum","black",ifelse(meta_data$Period=="Spring","pink","red"))
 betta_pic(estimates_shannon[,1], estimates_shannon[,2], mycol = col_by_seasons)
 legend("bottom",c("Spring","Summer","Autumn"),col=c("pink","red","black"),cex=0.8,lwd=3,box.col=F)
 ```
+
 Don't forget that because we are plotting diversity *estimates*, we need to plot *lines* (i.e. confidence intervals) not points (point estimates). That's very important.
 
 
 We're now going to create our "design" matrix, a.k.a. "X matrix." To do this we're going to cheat a little. We're going to use an existing R method, lm, to save us the hassle. We are going to investigate the effect of temperature and site
 ```{r}
-covar_matrix <- model.matrix(lm(rnorm(dim(meta_data)[1])~meta_data$Site*(meta_data$Season=="Summ")))
+covar_matrix <- model.matrix(lm(rnorm(dim(meta_data)[1])~(meta_data$Site)*(meta_data$Period)))
 head(covar_matrix)
-colnames(covar_matrix) <- c("Int", "SiteP", "Summer", "SitePSummer")
+colnames(covar_matrix) <- c("Int", "SiteP", "Spring", "Summer", "SitePSpring", "SitePSummer")
 ```
-Details (skip if uninterested): lm(y~x+z) is a function that fits a regression line to y using the variables x and z. It has a very nice interface that saves you doing the hard work (aka "math") to create your design matrix. The function we are going to use has no such nice interface. For that reason, we steal the design matrix out of lm()'s implementation. lm(y~x*z) looks at interactions. In this case, we are seeing if the evenness trend as a function of temperature changes depending on the site
+Details (skip if uninterested): lm(y~x+z) is a function that fits a regression line to y using the variables x and z. It has a very nice interface that saves you doing the hard work (aka "math") to create your design matrix. The function we are going to use has no such nice interface. For that reason, we steal the design matrix out of lm()'s implementation. lm(y~x*z) looks at interactions. In this case, we are seeing if the evenness trend as a function of temperature changes depending on the site.
 
 Easter egg: if you can put your own data (from your own research) in the *exact* same form as the above example, you don't need to understand what happens below. You can just copy it :) Hint: The biggest problem you may have in implementing the above is the ordering of the data and the metadata. The following:
 ```{r}
@@ -224,14 +231,14 @@ results$table
 Interpretation is idential to regression.
 
 Here are some things to quickly note:
-Firstly, significance of Summer means that the average Shannon diversity of the summer samples is significantly less than non-summer AT SITE L. It's less by 0.42 on average.
+Firstly, significance of Spring means that the average Shannon diversity of the Spring samples is significantly higher than non-Spring AT SITE L. It's more by 0.40 on average.
 
 The non-signif of the SiteP variables means there is no significant difference between Sites P and L, in both summer and not... AFTER ACCOUNTING FOR  ESTIMATION ERROR!
 
-Notice that a regression on the Shannon estimates notes more evidence against the "site has no affect" null:
+Notice that a regression on the Shannon estimates notes more evidence against the "site has no effect" null:
 
 ```{r}
-summary(lm(estimates_shannon[,1] ~ meta_data$Site*(meta_data$Season=="Summ")))$coef[,c(1,4)]
+summary(lm(estimates_shannon[,1] ~ meta_data$Site*(meta_data$Period=="Summ")))$coef[,c(1,4)]
 ```
 
 Not such a big deal in this case, but may be with more, marginal results/more variables.
@@ -261,7 +268,7 @@ Exercise: define a function to calculate the inverse of the plug-in Simpson inde
 To estimate the bootstrap mean and standard error of the simpson index, we do the following
 
 ```{r}
-simpson_resamples <- replicate(100, resample_estimate(data[,1], simpson))
+simpson_resamples <- replicate(100, resample_estimate(otu_data[,1], simpson))
 hist(simpson_resamples)
 mean(simpson_resamples)
 sd(simpson_resamples)

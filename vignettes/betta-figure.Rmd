@@ -1,12 +1,12 @@
 ---
-  title: "Comparing samples visually with betta"
+title: "Comparing samples visually with betta"
 author: "Amy Willis"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{getting-started}
-%\VignetteEngine{knitr::rmarkdown}
-%\VignetteEncoding{UTF-8}
+  %\VignetteIndexEntry{betta-figure}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
   
   `betta` is useful for formally testing differences between communities with respect to their alpha diversity. However, before ever doing any inferential test, it's best to try to visualise the difference that you are looking for. Here is a example to show you how to do that using `betta_pic`. 
