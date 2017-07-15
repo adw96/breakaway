@@ -10,7 +10,12 @@ hill <- function(data, q) {
     data <- data/sum(data)
   }
   data <- data[data>0]
-  -sum(data*log2(data))
+  if (q == 1) {
+    shannon(data)
+  } else {
+    (sum(data^q))^(1/(1-q))
+  }
+  
 }
 
 #' @export
@@ -25,11 +30,8 @@ shannon <- function(data) {
     data <- data/sum(data)
   }
   data <- data[data>0]
-  if (q == 1) {
-    shannon(data)
-  } else {
-    (sum(data^q))^(1/(1-q))
-  }
+  -sum(data*log2(data))
+  
 }
 
 #' @export
