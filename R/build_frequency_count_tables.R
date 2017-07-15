@@ -23,3 +23,12 @@ convert_freq_indices <- function(frequency_table) {
   }
   checked_frequency_table
 }
+
+#' @export
+proportions_instead <- function(otu_table) {
+  if (is.null(dim(otu_table)) | is.vector(otu_table)) {
+    otu_table/sum(otu_table)
+  } else {
+    otu_table[, 2]/sum(otu_table[, 2])
+  }
+}
