@@ -1,5 +1,5 @@
 #' @export
-shannon <- function(data) {
+hill <- function(data, q) {
   if (class(data) %in% c("data.frame", "matrix") ) {
     if (ncol(data) == 2) {
       data <- data[,2]
@@ -11,6 +11,25 @@ shannon <- function(data) {
   }
   data <- data[data>0]
   -sum(data*log2(data))
+}
+
+#' @export
+shannon <- function(data) {
+  if (class(data) %in% c("data.frame", "matrix") ) {
+    if (ncol(data) == 2) {
+      data <- data[,2]
+    }
+  }
+  if (max(data) > 1) {
+    # normalize if not proportions
+    data <- data/sum(data)
+  }
+  data <- data[data>0]
+  if (q == 1) {
+    shannon(data)
+  } else {
+    (sum(data^q))^(1/(1-q))
+  }
 }
 
 #' @export
