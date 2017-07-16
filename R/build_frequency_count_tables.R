@@ -26,9 +26,12 @@ convert_freq_indices <- function(frequency_table) {
 
 #' @export
 proportions_instead <- function(otu_table) {
-  if (is.null(dim(otu_table)) | is.vector(otu_table)) {
-    otu_table/sum(otu_table)
+  if (!(is.null(dim(otu_table)) | is.vector(otu_table))) {
+    #  is in frequency count form; convert to long form
+    long_form <- rep(otu_table[, 1], times = otu_table[, 2])
+    long_form/sum(long_form)
   } else {
-    otu_table[, 2]/sum(otu_table[, 2])
+    ## must be a list of counts
+    otu_table/sum(otu_table)
   }
 }

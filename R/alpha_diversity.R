@@ -65,5 +65,5 @@ simpson <- function(data) {
     data <- data/sum(data)
   }
   data <- data[data>0]
-  sum(data^2)
+  1/sum(data^2)
 }
