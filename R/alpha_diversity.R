@@ -2,14 +2,15 @@
 hill <- function(data, q) {
   if (class(data) %in% c("data.frame", "matrix") ) {
     if (ncol(data) == 2) {
-      data <- data[,2]
+      # convert to long form
+      data <- rep(data[, 1], times = data[, 2])
     }
   }
+  data <- data[data>0]
   if (max(data) > 1) {
     # normalize if not proportions
     data <- data/sum(data)
   }
-  data <- data[data>0]
   if (q == 1) {
     shannon(data)
   } else {
@@ -22,7 +23,7 @@ hill <- function(data, q) {
 shannon <- function(data) {
   if (class(data) %in% c("data.frame", "matrix") ) {
     if (ncol(data) == 2) {
-      data <- data[,2]
+      data <- rep(data[, 1], times = data[, 2])
     }
   }
   if (max(data) > 1) {
@@ -38,7 +39,7 @@ shannon <- function(data) {
 shannon_e  <- function(data) {
   if (class(data) %in% c("data.frame", "matrix") ) {
     if (ncol(data) == 2) {
-      data <- data[,2]
+      data <- rep(data[, 1], times = data[, 2])
     }
   }
   if (max(data) > 1) {
@@ -57,7 +58,7 @@ shannon_e  <- function(data) {
 simpson <- function(data) {
   if (class(data) %in% c("data.frame", "matrix") ) {
     if (ncol(data) == 2) {
-      data <- data[,2]
+      data <- rep(data[, 1], times = data[, 2])
     }
   }
   if (max(data) > 1) {
