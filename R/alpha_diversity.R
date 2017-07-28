@@ -1,70 +1,75 @@
-#' @export
-hill <- function(data, q) {
-  if (class(data) %in% c("data.frame", "matrix") ) {
-    if (ncol(data) == 2) {
-      # convert to long form
-      data <- rep(data[, 1], times = data[, 2])
+frequency_count_or_proportion_or_column <- function(input) {
+  if (class(input) %in% c("data.frame", "matrix")) {
+    if (ncol(input) == 2) {
+      if (all(input[,2] %% 1 == 0)) {
+        "frequency count"
+      } else {
+        "?"
+      }
+    } else {
+      "?"
     }
-  }
-  data <- data[data>0]
-  if (max(data) > 1) {
-    # normalize if not proportions
-    data <- data/sum(data)
-  }
-  if (q == 1) {
-    shannon(data)
   } else {
-    (sum(data^q))^(1/(1-q))
+    if (all(input %% 1 == 0)) {
+      "column"
+    } else {
+      "proportion"
+    }
   }
+}
+
+#' @export
+shannon2 <- function(input) {
   
-}
-
-#' @export
-shannon <- function(data) {
-  if (class(data) %in% c("data.frame", "matrix") ) {
-    if (ncol(data) == 2) {
-      data <- rep(data[, 1], times = data[, 2])
-    }
-  }
-  if (max(data) > 1) {
-    # normalize if not proportions
-    data <- data/sum(data)
-  }
-  data <- data[data>0]
-  -sum(data*log2(data))
+  type <- frequency_count_or_proportion_or_column(input)
   
+  if (type == "frequency count") {
+    total_reads <- sum(input[, 2]*input[,1])
+    relative_abundance <- input[, 1] / total_reads
+    -sum(input[, 2] * relative_abundance*log(relative_abundance))
+  } else if (type == "proportion") {
+    input_nonzero <- input[input>0]
+    -sum(input_nonzero*log(input_nonzero))
+  } else if (type == "column") {
+    input <- input/sum(input)
+    input_nonzero <- input[input>0]
+    -sum(input_nonzero*log(input_nonzero))
+  } else {
+    error("Invalid input")
+  }
 }
 
 #' @export
-shannon_e  <- function(data) {
-  if (class(data) %in% c("data.frame", "matrix") ) {
-    if (ncol(data) == 2) {
-      data <- rep(data[, 1], times = data[, 2])
-    }
+hill <- function(input, q) {
+  type <- frequency_count_or_proportion_or_column(input)
+  
+  if (type == "frequency count") {
+    total_reads <- sum(input[, 2]*input[,1])
+    relative_abundance <- input[, 1] / total_reads
+    sum(input[, 2] * relative_abundance^q)^(1/(1-q))
+  } else if (type == "proportion") {
+    input_nonzero <- input[input>0]
+    (sum(input_nonzero^q))^(1/(1-q))
+  } else if (type == "column") {
+    input <- input/sum(input)
+    input_nonzero <- input[input>0]
+    (sum(input_nonzero^q))^(1/(1-q))
+  } else {
+    error("Invalid input")
   }
-  if (max(data) > 1) {
-    # normalize if not proportions
-    data <- data/sum(data)
-  }
-  data <- data[data>0]
-  -sum(data*log2(data))/log2(length(data)) 
-  ## is this the best way to do it? I'm not sure
-  ## really need to scale up with the unseen data
-  ## i.e. number of observed species is the worst possible estimate for total species
-  ## please be very careful;  this function is in development
 }
 
 #' @export
-simpson <- function(data) {
-  if (class(data) %in% c("data.frame", "matrix") ) {
-    if (ncol(data) == 2) {
-      data <- rep(data[, 1], times = data[, 2])
-    }
-  }
-  if (max(data) > 1) {
-    # normalize if not proportions
-    data <- data/sum(data)
-  }
-  data <- data[data>0]
-  1/sum(data^2)
+inverse_simpson <- function(input) {
+  hill(input, 2)
+}
+
+#' @export
+simpson <- function(input) {
+  1/hill(input, 2)
+}
+
+#' @export
+gini <- function(input) {
+  1-simpson(input)
 }
