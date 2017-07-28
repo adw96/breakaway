@@ -19,7 +19,7 @@ frequency_count_or_proportion_or_column <- function(input) {
 }
 
 #' @export
-shannon2 <- function(input) {
+shannon <- function(input) {
   
   type <- frequency_count_or_proportion_or_column(input)
   
