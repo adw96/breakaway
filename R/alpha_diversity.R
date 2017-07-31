@@ -116,8 +116,9 @@ alpha_better <-  function(input, q, ccc = NA) {
     ccc <- round(baway$est)
   }
   
-  cc <- sum(hawaii[,2])
+  cc <- sum(input[,2])
   unobs <- ccc-cc
+  print(unobs)
   
   unobs_props <- rep(1/ccc, unobs)
   obs_props <- cc/ccc * proportions
