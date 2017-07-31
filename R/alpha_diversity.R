@@ -118,7 +118,6 @@ alpha_better <-  function(input, q, ccc = NA) {
   
   cc <- sum(input[,2])
   unobs <- ccc-cc
-  print(unobs)
   
   unobs_props <- rep(1/ccc, unobs)
   obs_props <- cc/ccc * proportions
