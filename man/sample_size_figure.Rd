@@ -21,4 +21,3 @@ A plot of the power with the sample size
 \description{
 Plot the power obtained with sample size
 }
-

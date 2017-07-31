@@ -8,6 +8,17 @@ breakaway(my_data, print = TRUE, plot = TRUE, answers = FALSE,
   force = FALSE, useAll = FALSE)
 }
 \arguments{
+\item{my_data}{The sample frequency count table for the population of interest.
+The first row must correspond to the singletons. Acceptable formats include
+a matrix, data frame, or file path (csv or txt). The standard frequency
+count table format is used: two columns, the first of which contains the
+frequency of interest (eg. 1 for singletons, species observed once, 2 for
+doubletons, species observed twice, etc.) and the second of which contains
+the number of species observed this many times. Frequencies (first column)
+should be ordered least to greatest. At least 6 contiguous frequencies are
+necessary. Do not concatenate large frequencies. See dataset apples for
+sample formatting.}
+
 \item{print}{Logical: whether the results should be printed to screen. If
 \samp{FALSE}, answers should be set to \samp{TRUE} so that results will be
 returned.}
@@ -26,17 +37,6 @@ estimates cannot be considered reliable in this case. The option
 \samp{force} issue does not address censoring or small data on the rare end
 of the frequency count tables, i.e. insufficiently many contiguous
 frequencies.}
-
-\item{data}{The sample frequency count table for the population of interest.
-The first row must correspond to the singletons. Acceptable formats include
-a matrix, data frame, or file path (csv or txt). The standard frequency
-count table format is used: two columns, the first of which contains the
-frequency of interest (eg. 1 for singletons, species observed once, 2 for
-doubletons, species observed twice, etc.) and the second of which contains
-the number of species observed this many times. Frequencies (first column)
-should be ordered least to greatest. At least 6 contiguous frequencies are
-necessary. Do not concatenate large frequencies. See dataset apples for
-sample formatting.}
 }
 \value{
 \item{code}{ A category representing algorithm behaviour.
@@ -80,9 +80,6 @@ breakaway(apples,plot=FALSE,print=FALSE,answers=TRUE)
 
 
 }
-\author{
-Amy Willis
-}
 \references{
 Willis, A. and Bunge, J. (2015). Estimating diversity via
 frequency ratios. \emph{Biometrics}, \bold{71}(4), 1042--1049.
@@ -94,8 +91,10 @@ Statistics}, \bold{5}.
 \seealso{
 \code{\link{breakaway_nof1}}; \code{\link{apples}}
 }
+\author{
+Amy Willis
+}
 \keyword{diversity}
 \keyword{microbial}
 \keyword{models}
 \keyword{nonlinear}
-

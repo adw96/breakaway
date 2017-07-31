@@ -28,4 +28,3 @@ An estimate of the necessary sample size and some details
 \description{
 Estimate the sample size needed to do an unpaired one-way test using betta
 }
-

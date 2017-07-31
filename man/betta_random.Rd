@@ -49,9 +49,6 @@ betta_random(c(2000, 3000, 4000, 3000), c(100, 200, 150, NA),
              groups= c("a", NA, "b", "b"))
 
 }
-\author{
-Amy Willis
-}
 \references{
 Willis, A., Bunge, J., and Whitman, T. (2015). Inference for
 changes in biodiversity. \emph{arXiv preprint.}
@@ -59,5 +56,7 @@ changes in biodiversity. \emph{arXiv preprint.}
 \seealso{
 \code{\link{betta}}; \code{\link{betta_pic}}
 }
+\author{
+Amy Willis
+}
 \keyword{diversity}
-

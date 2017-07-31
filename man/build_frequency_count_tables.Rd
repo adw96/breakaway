@@ -15,4 +15,3 @@ A list of frequency count tables corresponding to the columns.
 \description{
 Build frequency count tables from an OTU table
 }
-

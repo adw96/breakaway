@@ -25,4 +25,3 @@ frequency ratios. \emph{Biometrics}, \bold{71}(4), 1042--1049.
 \url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
 }
 \keyword{datasets}
-

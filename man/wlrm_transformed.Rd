@@ -42,9 +42,6 @@ wlrm_transformed(apples)
 wlrm_transformed(apples,plot=FALSE,print=FALSE,answers=TRUE)
   
 }
-\author{
-Amy Willis
-}
 \references{
 Rocchetti, I., Bunge, J. and Bohning, D. (2011). Population size
 estimation based upon ratios of recapture probabilities. \emph{Annals of
@@ -54,6 +51,8 @@ Applied Statistics}, \bold{5}.
 \code{\link{breakaway}}; \code{\link{apples}};
 \code{\link{wlrm_untransformed}}
 }
+\author{
+Amy Willis
+}
 \keyword{diversity}
 \keyword{models}
-

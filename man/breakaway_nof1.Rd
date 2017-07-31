@@ -4,11 +4,11 @@
 \alias{breakaway_nof1}
 \title{species richness estimation without singletons}
 \usage{
-breakaway_nof1(data, print = TRUE, plot = TRUE, answers = FALSE,
+breakaway_nof1(my_data, print = TRUE, plot = TRUE, answers = FALSE,
   force = FALSE)
 }
 \arguments{
-\item{data}{The sample frequency count table for the population of interest.
+\item{my_data}{The sample frequency count table for the population of interest.
 The first row must correspond to the doubletons. Acceptable formats include
 a matrix, data frame, or file path (csv or txt). The standard frequency
 count table format is used: two columns, the first of which contains the
@@ -82,9 +82,6 @@ breakaway_nof1(apples[-1,])
 breakaway_nof1(apples[-1,],plot=FALSE,print=FALSE,answers=TRUE) 
 
 }
-\author{
-Amy Willis
-}
 \references{
 Willis, A. (2015). Species richness estimation with high
 diversity but spurious singletons. \emph{Under review.}
@@ -95,9 +92,11 @@ Willis, A. and Bunge, J. (2015). Estimating diversity via frequency ratios.
 \seealso{
 \code{\link{breakaway}}; \code{\link{apples}}
 }
+\author{
+Amy Willis
+}
 \keyword{diversity}
 \keyword{error}
 \keyword{microbial}
 \keyword{models}
 \keyword{nonlinear}
-

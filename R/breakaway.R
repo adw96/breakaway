@@ -10,7 +10,7 @@
 #' model coefficients, model details and plot of the fitted model are returned.
 #' 
 #' 
-#' @param data The sample frequency count table for the population of interest.
+#' @param my_data The sample frequency count table for the population of interest.
 #' The first row must correspond to the singletons. Acceptable formats include
 #' a matrix, data frame, or file path (csv or txt). The standard frequency
 #' count table format is used: two columns, the first of which contains the
@@ -445,7 +445,7 @@ residse <- function(model) {
 #' plot of the fitted model are returned.
 #' 
 #' 
-#' @param data The sample frequency count table for the population of interest.
+#' @param my_data The sample frequency count table for the population of interest.
 #' The first row must correspond to the doubletons. Acceptable formats include
 #' a matrix, data frame, or file path (csv or txt). The standard frequency
 #' count table format is used: two columns, the first of which contains the
@@ -508,55 +508,55 @@ residse <- function(model) {
 #' breakaway_nof1(apples[-1,],plot=FALSE,print=FALSE,answers=TRUE) 
 #' 
 #' @export
-breakaway_nof1 <- function(data, print=TRUE, plot=TRUE, answers=FALSE, force=FALSE) {
+breakaway_nof1 <- function(my_data, print=TRUE, plot=TRUE, answers=FALSE, force=FALSE) {
   
-  if( !(is.matrix(data) || is.data.frame(data))) {
-    filename <- data
+  if( !(is.matrix(my_data) || is.data.frame(my_data))) {
+    filename <- my_data
     ext <- substr(filename, nchar(filename)-2, nchar(filename))
     if (ext == "csv") {
-      data <- read.table(file=filename, header=0,sep=",")
-      if( data[1,1] !=1) data <- read.table(filename, header=1,sep=",")
+      my_data <- read.table(file=filename, header=0,sep=",")
+      if( my_data[1,1] !=1) my_data <- read.table(filename, header=1,sep=",")
     } else if (ext == "txt") {
-      data <- read.table(file=filename, header=0)
+      my_data <- read.table(file=filename, header=0)
     } else cat("Please input your data as a txt or csv file,
                or as an R dataframe or matrix.")
   }
-  if ( is.factor(data[,1]) ) {
-    fs <- as.numeric(as.character(data[,1]))
-    data <- cbind(fs,data[,2])
-    data <- data[data[,1]!=0,]
+  if ( is.factor(my_data[,1]) ) {
+    fs <- as.numeric(as.character(my_data[,1]))
+    my_data <- cbind(fs,my_data[,2])
+    my_data <- my_data[my_data[,1]!=0,]
   }
   
-  if(length(data)>1) {
-    if (data[1,1]!=2 || data[1,2]==0) {
+  if(length(my_data)>1) {
+    if (my_data[1,1]!=2 || my_data[1,2]==0) {
       if(print) cat("breakaway_nof1 is for when you have no singleton count.\nYou need a leading doubleton count!\n")
     } else {
-      data <- data[!(data[,2]==0 | is.na(data[,2])),]
-      orig_data <- data
-      n <- sum(orig_data[,2])
-      f2 <- data[1,2]
+      my_data <- my_data[!(my_data[,2]==0 | is.na(my_data[,2])),]
+      orig_my_data <- my_data
+      n <- sum(orig_my_data[,2])
+      f2 <- my_data[1,2]
       
-      cutoff <- ifelse(is.na(which(data[-1,1]-data[-length(data[,1]),1]>1)[1]),length(data[,1]),which(data[-1,1]-data[-length(data[,1]),1]>1)[1])
-      data <- data[1:cutoff,]
-      ys <- (data[1:(cutoff-1),1]+1)*data[2:cutoff,2]/data[1:(cutoff-1),2]
+      cutoff <- ifelse(is.na(which(my_data[-1,1]-my_data[-length(my_data[,1]),1]>1)[1]),length(my_data[,1]),which(my_data[-1,1]-my_data[-length(my_data[,1]),1]>1)[1])
+      my_data <- my_data[1:cutoff,]
+      ys <- (my_data[1:(cutoff-1),1]+1)*my_data[2:cutoff,2]/my_data[1:(cutoff-1),2]
       xs <- 2:cutoff
       xbar <- mean(c(1,xs))
-      lhs <- list("x"=xs-xbar,"y"=data[2:cutoff,2]/data[1:(cutoff-1),2])
+      lhs <- list("x"=xs-xbar,"y"=my_data[2:cutoff,2]/my_data[1:(cutoff-1),2])
       
       if ( cutoff < 5) { ### check for unusual data structures
         if(print) cat("You don't have enough contiguous frequencies.\n breakaway needs at least 6!\n")
-      } else if ((force==FALSE) && ( (data[cutoff,2]/data[cutoff-1,2])>10 )) {
-        cat("\tIt looks like you've concatenated some of your data!\n Please truncate and try again.\n")
+      } else if ((force==FALSE) && ( (my_data[cutoff,2]/my_data[cutoff-1,2])>10 )) {
+        cat("\tIt looks like you've concatenated some of your my_data!\n Please truncate and try again.\n")
       } else {
         weights_inv <- 1/xs
-        run <- minibreak_nof1(lhs,xs,ys,data,weights_inv)
+        run <- minibreak_nof1(lhs,xs,ys,my_data,weights_inv)
         result <- list()
         choice <- list()
         
         if (sum(as.numeric(run$useful[,5]))==0) {
           choice$outcome <- 0
           if(print) cat("No breakaway models converged.")
-          weights_trans <- (1/data[-1,2]+1/data[-cutoff,2])^-1
+          weights_trans <- (1/my_data[-1,2]+1/my_data[-cutoff,2])^-1
           lm1 <- lm(log(ys)~xs,weights=weights_trans)
           b0_hat <- summary(lm1)$coef[1,1]
           b0_se <- summary(lm1)$coef[1,2]
@@ -618,11 +618,11 @@ breakaway_nof1 <- function(data, print=TRUE, plot=TRUE, answers=FALSE, force=FAL
               weights1 <- 1/ratiovars
             }
             
-            run <- try ( minibreak_nof1(lhs,xs,ys,data,1/ratiovars), silent = 1)
+            run <- try ( minibreak_nof1(lhs,xs,ys,my_data,1/ratiovars), silent = 1)
             
             if ( class(run) == "try-error") {
               ratiovars <- (p[-1]^2/p[-cutoff]^3 + p[-1]/p[-cutoff]^2)/C
-              run <- try ( minibreak_nof1(lhs,xs,ys,data,1/ratiovars), silent = 1)
+              run <- try ( minibreak_nof1(lhs,xs,ys,my_data,1/ratiovars), silent = 1)
               if ( class(run) == "try-error") {
                 if(print) {print("Numerical errors result in non-convergence") }
               }
@@ -645,7 +645,7 @@ breakaway_nof1 <- function(data, print=TRUE, plot=TRUE, answers=FALSE, force=FAL
           }
           if( !choice$outcome) {
             if(print) cat("Iterative reweighting didn't produce any outcomes after the first iteration, so we use 1/x\n")
-            run <- minibreak_nof1(lhs,xs,ys,data,weights_inv)
+            run <- minibreak_nof1(lhs,xs,ys,my_data,weights_inv)
             choice$outcome <- 1
             choice$model <- rownames(run$useful)[min(which(run$useful[,5]==1))]
             choice$full <-  run[[noquote(choice$model)]]
@@ -754,7 +754,7 @@ breakaway_nof1 <- function(data, print=TRUE, plot=TRUE, answers=FALSE, force=FAL
   }
 }
 
-minibreak_nof1 <- function(lhs, xs, ys, data, myweights) {
+minibreak_nof1 <- function(lhs, xs, ys, my_data, myweights) {
   structure_1_0 <- function(x,beta0,beta1) (beta0+beta1*x)/(1+x)
   structure_1_1 <- function(x,beta0,beta1,alpha1) (beta0+beta1*x)/(1+alpha1*x)
   structure_2_1 <- function(x,beta0,beta1,alpha1,beta2) (beta0+beta1*x+beta2*x^2)/(1+alpha1*x)
@@ -836,7 +836,7 @@ minibreak_nof1 <- function(lhs, xs, ys, data, myweights) {
   firstratioest <- lapply(workinginfo,predict,list(x=-xbar+1))
   if (length(firstratioest$model_1_0)!=0) firstratioest$model_1_0 <- predict(workinginfo$model_1_0,list(x=1))
   
-  f1est <- lapply(firstratioest,function(x) data[1,2]/x)
+  f1est <- lapply(firstratioest,function(x) my_data[1,2]/x)
   
   f0est <- as.numeric(f1est)/as.numeric(b0est)
   

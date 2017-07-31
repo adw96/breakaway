@@ -32,4 +32,3 @@ chao1_bc(apples)
 \author{
 Amy Willis
 }
-

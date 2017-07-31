@@ -42,9 +42,6 @@ a covariate gradient.
 betta_pic(c(1552,1500,884),c(305,675,205),mymain="Example title")
 	
 }
-\author{
-Amy Willis
-}
 \references{
 Willis, A., Bunge, J., and Whitman, T. (2015). Inference for
 changes in biodiversity. arXiv preprint.
@@ -52,5 +49,7 @@ changes in biodiversity. arXiv preprint.
 \seealso{
 \code{\link{betta}}
 }
+\author{
+Amy Willis
+}
 \keyword{diversity}
-

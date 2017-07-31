@@ -29,4 +29,3 @@ chao_bunge(apples)
 \author{
 Amy Willis
 }
-

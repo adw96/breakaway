@@ -70,9 +70,6 @@ betta(c(2000, 3000, 4000, 3000), c(100, 200, 150, NA))
 betta(c(1552,1500,884),c(305,675,205), cbind(1,c(0,0,1)))
 
 }
-\author{
-Amy Willis
-}
 \references{
 Willis, A., Bunge, J., and Whitman, T. (2015). Inference for
 changes in biodiversity. \emph{arXiv preprint.}
@@ -84,5 +81,7 @@ Willis, A. and Bunge, J. (2015). Estimating diversity via frequency ratios.
 \code{\link{breakaway}}; \code{\link{breakaway_nof1}};
 \code{\link{betta_pic}}; \code{\link{apples}}
 }
+\author{
+Amy Willis
+}
 \keyword{diversity}
-
