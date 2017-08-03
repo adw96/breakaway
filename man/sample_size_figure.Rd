@@ -7,13 +7,16 @@
 sample_size_figure(control_group_est, se_est, diff = 5, samples = 20)
 }
 \arguments{
-\item{control_group_est}{An estimate of the alpha diversity parameter for the control group}
+\item{control_group_est}{An estimate of the alpha diversity parameter for
+the control group}
 
 \item{se_est}{An estimate of the (common) standard deviation}
 
-\item{diff}{An estimate of the difference between the control and non-control groups}
+\item{diff}{An estimate of the difference between the control and
+non-control groups}
 
-\item{samples}{Number of bootstrap resamples used to estimate the sample size. Increase for a more accurate estimate.}
+\item{samples}{Number of bootstrap resamples used to estimate the sample
+size. Increase for a more accurate estimate.}
 }
 \value{
 A plot of the power with the sample size

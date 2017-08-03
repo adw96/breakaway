@@ -39,8 +39,10 @@ A simple plotting interface for comparing total diversity across samples or
 a covariate gradient.
 }
 \examples{
+
 betta_pic(c(1552,1500,884),c(305,675,205),mymain="Example title")
 	
+
 }
 \references{
 Willis, A., Bunge, J., and Whitman, T. (2015). Inference for

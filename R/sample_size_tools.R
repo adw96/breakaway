@@ -1,14 +1,21 @@
-#' Estimate the sample size needed to do an unpaired one-way test using betta 
-#'
-#' @param control_group_est An estimate of the alpha diversity parameter for the control group
+#' Estimate the sample size needed to do an unpaired one-way test using betta
+#' 
+#' Estimate the sample size needed to do an unpaired one-way test using betta
+#' 
+#' 
+#' @param control_group_est An estimate of the alpha diversity parameter for
+#' the control group
 #' @param se_est An estimate of the (common) standard deviation
-#' @param diff An estimate of the difference between the control and non-control groups
+#' @param diff An estimate of the difference between the control and
+#' non-control groups
 #' @param alpha Minimum significance level desired
 #' @param prop Desired power
-#' @param samples Number of bootstrap resamples used to estimate the sample size. Increase for a more accurate estimate.
-#' @param precision How much to increment the sample size as we try to increase the power
+#' @param samples Number of bootstrap resamples used to estimate the sample
+#' size. Increase for a more accurate estimate.
+#' @param precision How much to increment the sample size as we try to increase
+#' the power
 #' @return An estimate of the necessary sample size and some details
-#' @export
+#' @export sample_size_estimate
 sample_size_estimate <- function(control_group_est, se_est, diff = 5, 
                                  alpha = 0.05, prop = 0.8, samples = 20, 
                                  precision = 5) {
@@ -36,15 +43,22 @@ sample_size_estimate <- function(control_group_est, se_est, diff = 5,
       "at best! Please consult Amy with any questions. ")
 }
 
-#' Plot the power obtained with sample size 
+
+
+#' Plot the power obtained with sample size
 #' 
-#' @param control_group_est An estimate of the alpha diversity parameter for the control group
+#' Plot the power obtained with sample size
+#' 
+#' 
+#' @param control_group_est An estimate of the alpha diversity parameter for
+#' the control group
 #' @param se_est An estimate of the (common) standard deviation
-#' @param diff An estimate of the difference between the control and non-control groups
-#' @param samples Number of bootstrap resamples used to estimate the sample size. Increase for a more accurate estimate.
+#' @param diff An estimate of the difference between the control and
+#' non-control groups
+#' @param samples Number of bootstrap resamples used to estimate the sample
+#' size. Increase for a more accurate estimate.
 #' @return A plot of the power with the sample size
-#' 
-#' @export
+#' @export sample_size_figure
 sample_size_figure <- function(control_group_est, se_est, diff = 5, samples = 20) {
   nn <- seq(5, 50, length.out = 10)
   pvalues <- rep(NA, samples)

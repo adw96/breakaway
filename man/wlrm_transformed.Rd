@@ -38,9 +38,11 @@ misspecified. The result is usually implausible diversity estimates with
 artificially low standard errors. Extreme caution is advised.
 }
 \examples{
+
 wlrm_transformed(apples)
 wlrm_transformed(apples,plot=FALSE,print=FALSE,answers=TRUE)
   
+
 }
 \references{
 Rocchetti, I., Bunge, J. and Bohning, D. (2011). Population size

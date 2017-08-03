@@ -52,13 +52,16 @@ hill_under <- function(input, q) {
   
 }
 
-#' @title  Plug-in Hill numbers
+
+
+#' Plug-in Hill numbers
 #' 
-#' @description  TODO
+#' TODO
+#' 
 #' 
 #' @param input TODO
 #' @param q TODO
-#' @export
+#' @export hill
 hill <- function(input, q) {
   
   if (length(q) > 1) {
@@ -68,44 +71,56 @@ hill <- function(input, q) {
   }
 }
 
-#' @title  Plug-in Hill numbers
+
+
+#' Plug-in Hill numbers
 #' 
-#' @description  TODO
+#' TODO
+#' 
 #' 
 #' @param input TODO
-#' @export
+#' @export inverse_simpson
 inverse_simpson <- function(input) {
   hill(input, 2)
 }
 
-#' @title  Plug-in Simpson
+
+
+#' Plug-in Simpson
 #' 
-#' @description  TODO
+#' TODO
+#' 
 #' 
 #' @param input TODO
-#' @export
+#' @export simpson
 simpson <- function(input) {
   1/hill(input, 2)
 }
 
-#' @title  Plug-in Gini-Simpson
+
+
+#' Plug-in Gini-Simpson
 #' 
-#' @description  TODO
+#' TODO
+#' 
 #' 
 #' @param input TODO
-#' @export
+#' @export gini
 gini <- function(input) {
   1-simpson(input)
 }
 
-#' @title  alpha diversity estimates
+
+
+#' alpha diversity estimates
 #' 
-#' @description  TODO
+#' TODO
+#' 
 #' 
 #' @param input TODO
 #' @param q TODO
 #' @param ccc TODO
-#' @export
+#' @export alpha_better
 alpha_better <-  function(input, q, ccc = NA) {
     
   type <- frequency_count_or_proportion_or_column(input)

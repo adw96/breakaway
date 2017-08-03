@@ -28,10 +28,12 @@
 #' Applied Statistics}, \bold{5}.
 #' @keywords diversity models
 #' @examples
+#' 
 #' wlrm_transformed(apples)
 #' wlrm_transformed(apples,plot=FALSE,print=FALSE,answers=TRUE)
 #'   
-#' @export
+#' 
+#' @export wlrm_transformed
 wlrm_transformed <- function(data, print=TRUE, plot=FALSE, answers=FALSE, cutoff=NA) {
 
   if( !(is.matrix(data) || is.data.frame(data))) {

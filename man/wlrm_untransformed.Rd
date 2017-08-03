@@ -38,7 +38,9 @@ reason generally produces poor fits to microbial data. The result is usually
 artificially low standard errors. Caution is advised.
 }
 \examples{
+
 wlrm_untransformed(apples)
+
 }
 \references{
 Rocchetti, I., Bunge, J. and Bohning, D. (2011). Population size

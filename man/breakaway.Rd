@@ -8,16 +8,16 @@ breakaway(my_data, print = TRUE, plot = TRUE, answers = FALSE,
   force = FALSE, useAll = FALSE)
 }
 \arguments{
-\item{my_data}{The sample frequency count table for the population of interest.
-The first row must correspond to the singletons. Acceptable formats include
-a matrix, data frame, or file path (csv or txt). The standard frequency
-count table format is used: two columns, the first of which contains the
-frequency of interest (eg. 1 for singletons, species observed once, 2 for
-doubletons, species observed twice, etc.) and the second of which contains
-the number of species observed this many times. Frequencies (first column)
-should be ordered least to greatest. At least 6 contiguous frequencies are
-necessary. Do not concatenate large frequencies. See dataset apples for
-sample formatting.}
+\item{my_data}{The sample frequency count table for the population of
+interest. The first row must correspond to the singletons. Acceptable
+formats include a matrix, data frame, or file path (csv or txt). The
+standard frequency count table format is used: two columns, the first of
+which contains the frequency of interest (eg. 1 for singletons, species
+observed once, 2 for doubletons, species observed twice, etc.) and the
+second of which contains the number of species observed this many times.
+Frequencies (first column) should be ordered least to greatest. At least 6
+contiguous frequencies are necessary. Do not concatenate large frequencies.
+See dataset apples for sample formatting.}
 
 \item{print}{Logical: whether the results should be printed to screen. If
 \samp{FALSE}, answers should be set to \samp{TRUE} so that results will be
@@ -75,8 +75,10 @@ dataset may contain these errors, and recommend the use of
 \code{\link{breakaway_nof1}} as an exploratory tool in this case.
 }
 \examples{
+
 breakaway(apples)
 breakaway(apples,plot=FALSE,print=FALSE,answers=TRUE) 
+
 
 
 }

@@ -24,7 +24,9 @@ This function implements the species richness estimation procedure outlined
 in Chao & Bunge (2002).
 }
 \examples{
+
 chao_bunge(apples)
+
 }
 \author{
 Amy Willis

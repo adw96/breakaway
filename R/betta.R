@@ -1,6 +1,6 @@
-#' @title Modelling total diversity with betta
+#' Modelling total diversity with betta
 #' 
-#' @description This function tests for heterogeneity of total diversity (observed plus
+#' This function tests for heterogeneity of total diversity (observed plus
 #' unobserved) across multiple sites. It can account or test for fixed effects
 #' that may explain diversity. It returns the significance of the covariates in
 #' explaining diversity and a hypothesis test for heterogeneity.
@@ -56,6 +56,7 @@
 #' \emph{Biometrics.}
 #' @keywords diversity
 #' @examples
+#' 
 #' betta(c(2000, 3000, 4000, 3000), c(100, 200, 150, 180), cbind(1, c(100, 150, 100, 50)))
 #' 
 #' ## handles missing data
@@ -64,7 +65,8 @@
 #' ## A test for heterogeneity of apples diversity estimates vs butterfly estimates
 #' betta(c(1552,1500,884),c(305,675,205), cbind(1,c(0,0,1)))
 #' 
-#' @export
+#' 
+#' @export betta
 betta <- function(chats,ses,X=NA) {
   if (isTRUE(is.na(X))) { X <- matrix(rep(1,length(chats)),ncol=1) }
   consider <- !(is.na(chats) | is.na(ses) | apply(is.na(X),1,sum))
@@ -138,6 +140,8 @@ betta_points <- function(y, se, x=1:length(y), ylimu=NA, myy=NA, mymain=NA, myco
   #  if(!is.na(labs)) axis(1, at=1:length(y), labels=labs, las=2, cex=0.8)
 }
 
+
+
 #' modelling total diversity with random effects
 #' 
 #' This function extends betta() to permit random effects modelling.
@@ -172,6 +176,7 @@ betta_points <- function(y, se, x=1:length(y), ylimu=NA, myy=NA, mymain=NA, myco
 #' @keywords diversity
 #' @examples
 #' 
+#' 
 #' betta_random(c(2000, 3000, 4000, 3000), c(100, 200, 150, 180),
 #'              X = cbind("Int"=1, "Cont_var"=c(100, 150, 100, 50)),
 #'              groups = c("a", "a", "a", "b"))
@@ -180,7 +185,8 @@ betta_points <- function(y, se, x=1:length(y), ylimu=NA, myy=NA, mymain=NA, myco
 #' betta_random(c(2000, 3000, 4000, 3000), c(100, 200, 150, NA),
 #'              groups= c("a", NA, "b", "b"))
 #' 
-#' @export
+#' 
+#' @export betta_random
 betta_random <- function(chats, ses, X=NA, groups) {
   if (isTRUE(is.na(X))) { X <- matrix(rep(1,length(chats)),ncol=1) }
   consider <- !(is.na(chats) | is.na(ses) | is.na(groups) | apply(is.na(X),1,sum))

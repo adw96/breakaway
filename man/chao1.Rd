@@ -18,16 +18,19 @@ See dataset apples for sample formatting.}
 The results of the estimator, including standard error.
 }
 \description{
-This function implements the Chao1 richness estimate,  which is often mistakenly
-referred to as an index.
+This function implements the Chao1 richness estimate, which is often
+mistakenly referred to as an index.
 }
 \note{
-The authors of this package strongly discourage the use of this estimator.
- It is only valid when you wish to assume that every taxa has equal
- probability of being observed. You don't really think that's possible, do you?
+The authors of this package strongly discourage the use of this
+estimator.  It is only valid when you wish to assume that every taxa has
+equal probability of being observed. You don't really think that's possible,
+do you?
 }
 \examples{
+
 chao1(apples)
+
 }
 \author{
 Amy Willis

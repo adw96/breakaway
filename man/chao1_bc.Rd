@@ -21,13 +21,15 @@ The results of the estimator, including standard error.
 This function implements the bias-corrected Chao1 richness estimate.
 }
 \note{
-The authors of this package strongly discourage the use of this 
- estimator. It is underpinned by totally implausible assumptions
- that are not made by other richness estimators.  Bias correcting Chao1
- is the least of your problems.
+The authors of this package strongly discourage the use of this
+estimator. It is underpinned by totally implausible assumptions that are not
+made by other richness estimators.  Bias correcting Chao1 is the least of
+your problems.
 }
 \examples{
+
 chao1_bc(apples)
+
 }
 \author{
 Amy Willis

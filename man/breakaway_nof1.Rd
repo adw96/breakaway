@@ -8,16 +8,16 @@ breakaway_nof1(my_data, print = TRUE, plot = TRUE, answers = FALSE,
   force = FALSE)
 }
 \arguments{
-\item{my_data}{The sample frequency count table for the population of interest.
-The first row must correspond to the doubletons. Acceptable formats include
-a matrix, data frame, or file path (csv or txt). The standard frequency
-count table format is used: two columns, the first of which contains the
-frequency of interest (eg. 1 for singletons, species observed once; 2 for
-doubletons, species observed twice, etc.) and the second of which contains
-the number of species observed this many times. Frequencies (first column)
-should be ordered least to greatest. At least 6 contiguous frequencies are
-necessary. Do not concatenate large frequencies. See dataset
-\code{\link{apples}} for sample formatting.}
+\item{my_data}{The sample frequency count table for the population of
+interest. The first row must correspond to the doubletons. Acceptable
+formats include a matrix, data frame, or file path (csv or txt). The
+standard frequency count table format is used: two columns, the first of
+which contains the frequency of interest (eg. 1 for singletons, species
+observed once; 2 for doubletons, species observed twice, etc.) and the
+second of which contains the number of species observed this many times.
+Frequencies (first column) should be ordered least to greatest. At least 6
+contiguous frequencies are necessary. Do not concatenate large frequencies.
+See dataset \code{\link{apples}} for sample formatting.}
 
 \item{print}{Logical: whether the results should be printed to screen. If
 \samp{FALSE}, \samp{answers} should be set to \samp{TRUE} so that results
@@ -78,8 +78,10 @@ be less stable than \samp{breakaway} due to predicting based on a reduced
 dataset, and have greater standard errors.
 }
 \examples{
+
 breakaway_nof1(apples[-1,])
 breakaway_nof1(apples[-1,],plot=FALSE,print=FALSE,answers=TRUE) 
+
 
 }
 \references{

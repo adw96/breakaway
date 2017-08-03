@@ -1,25 +1,20 @@
-#' @importFrom graphics axis hist layout legend lines par plot plot.new points
-#' @importFrom stats coef dexp dgeom dnbinom dpois fitted lm nls optim pchisq pnorm predict quantile rbeta rbinom rnbinom rnorm runif sd var vcov
-#' @importFrom utils read.table write.csv
+#' Species richness estimation with breakaway
 #' 
-#' 
-#' @title  Species richness estimation with breakaway
-#' 
-#' @description   This function implements the species richness estimation procedure outlined
+#' This function implements the species richness estimation procedure outlined
 #' in Willis & Bunge (2015). The diversity estimate, standard error, estimated
 #' model coefficients, model details and plot of the fitted model are returned.
 #' 
 #' 
-#' @param my_data The sample frequency count table for the population of interest.
-#' The first row must correspond to the singletons. Acceptable formats include
-#' a matrix, data frame, or file path (csv or txt). The standard frequency
-#' count table format is used: two columns, the first of which contains the
-#' frequency of interest (eg. 1 for singletons, species observed once, 2 for
-#' doubletons, species observed twice, etc.) and the second of which contains
-#' the number of species observed this many times. Frequencies (first column)
-#' should be ordered least to greatest. At least 6 contiguous frequencies are
-#' necessary. Do not concatenate large frequencies. See dataset apples for
-#' sample formatting.
+#' @param my_data The sample frequency count table for the population of
+#' interest. The first row must correspond to the singletons. Acceptable
+#' formats include a matrix, data frame, or file path (csv or txt). The
+#' standard frequency count table format is used: two columns, the first of
+#' which contains the frequency of interest (eg. 1 for singletons, species
+#' observed once, 2 for doubletons, species observed twice, etc.) and the
+#' second of which contains the number of species observed this many times.
+#' Frequencies (first column) should be ordered least to greatest. At least 6
+#' contiguous frequencies are necessary. Do not concatenate large frequencies.
+#' See dataset apples for sample formatting.
 #' @param print Logical: whether the results should be printed to screen. If
 #' \samp{FALSE}, answers should be set to \samp{TRUE} so that results will be
 #' returned.
@@ -72,11 +67,13 @@
 #' Statistics}, \bold{5}.
 #' @keywords diversity microbial models nonlinear
 #' @examples
+#' 
 #' breakaway(apples)
 #' breakaway(apples,plot=FALSE,print=FALSE,answers=TRUE) 
 #' 
 #' 
-#' @export
+#' 
+#' @export breakaway
 breakaway <- function(my_data, print=TRUE, plot=TRUE, answers=FALSE, force=FALSE, useAll=FALSE) {
   
   ## read in data
@@ -433,6 +430,8 @@ residse <- function(model) {
   return(summary(model)$sigma)
 }
 
+
+
 #' species richness estimation without singletons
 #' 
 #' This function permits estimation of total diversity based on a sample
@@ -445,16 +444,16 @@ residse <- function(model) {
 #' plot of the fitted model are returned.
 #' 
 #' 
-#' @param my_data The sample frequency count table for the population of interest.
-#' The first row must correspond to the doubletons. Acceptable formats include
-#' a matrix, data frame, or file path (csv or txt). The standard frequency
-#' count table format is used: two columns, the first of which contains the
-#' frequency of interest (eg. 1 for singletons, species observed once; 2 for
-#' doubletons, species observed twice, etc.) and the second of which contains
-#' the number of species observed this many times. Frequencies (first column)
-#' should be ordered least to greatest. At least 6 contiguous frequencies are
-#' necessary. Do not concatenate large frequencies. See dataset
-#' \code{\link{apples}} for sample formatting.
+#' @param my_data The sample frequency count table for the population of
+#' interest. The first row must correspond to the doubletons. Acceptable
+#' formats include a matrix, data frame, or file path (csv or txt). The
+#' standard frequency count table format is used: two columns, the first of
+#' which contains the frequency of interest (eg. 1 for singletons, species
+#' observed once; 2 for doubletons, species observed twice, etc.) and the
+#' second of which contains the number of species observed this many times.
+#' Frequencies (first column) should be ordered least to greatest. At least 6
+#' contiguous frequencies are necessary. Do not concatenate large frequencies.
+#' See dataset \code{\link{apples}} for sample formatting.
 #' @param print Logical: whether the results should be printed to screen. If
 #' \samp{FALSE}, \samp{answers} should be set to \samp{TRUE} so that results
 #' will be returned.
@@ -502,12 +501,14 @@ residse <- function(model) {
 #' 
 #' Willis, A. and Bunge, J. (2015). Estimating diversity via frequency ratios.
 #' \emph{Biometrics.}
-#' @keywords diversity microbial error models nonlinear
+#' @keywords diversity error microbial models nonlinear
 #' @examples
+#' 
 #' breakaway_nof1(apples[-1,])
 #' breakaway_nof1(apples[-1,],plot=FALSE,print=FALSE,answers=TRUE) 
 #' 
-#' @export
+#' 
+#' @export breakaway_nof1
 breakaway_nof1 <- function(my_data, print=TRUE, plot=TRUE, answers=FALSE, force=FALSE) {
   
   if( !(is.matrix(my_data) || is.data.frame(my_data))) {
