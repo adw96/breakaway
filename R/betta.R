@@ -57,6 +57,8 @@
 #' @keywords diversity
 #' @examples
 #' 
+#' 
+#' 
 #' betta(c(2000, 3000, 4000, 3000), c(100, 200, 150, 180), cbind(1, c(100, 150, 100, 50)))
 #' 
 #' ## handles missing data
@@ -64,6 +66,8 @@
 #' 
 #' ## A test for heterogeneity of apples diversity estimates vs butterfly estimates
 #' betta(c(1552,1500,884),c(305,675,205), cbind(1,c(0,0,1)))
+#' 
+#' 
 #' 
 #' 
 #' @export betta
@@ -142,6 +146,10 @@ betta_points <- function(y, se, x=1:length(y), ylimu=NA, myy=NA, mymain=NA, myco
 
 
 
+
+
+
+
 #' modelling total diversity with random effects
 #' 
 #' This function extends betta() to permit random effects modelling.
@@ -177,6 +185,8 @@ betta_points <- function(y, se, x=1:length(y), ylimu=NA, myy=NA, mymain=NA, myco
 #' @examples
 #' 
 #' 
+#' 
+#' 
 #' betta_random(c(2000, 3000, 4000, 3000), c(100, 200, 150, 180),
 #'              X = cbind("Int"=1, "Cont_var"=c(100, 150, 100, 50)),
 #'              groups = c("a", "a", "a", "b"))
@@ -184,6 +194,8 @@ betta_points <- function(y, se, x=1:length(y), ylimu=NA, myy=NA, mymain=NA, myco
 #' ## handles missing data
 #' betta_random(c(2000, 3000, 4000, 3000), c(100, 200, 150, NA),
 #'              groups= c("a", NA, "b", "b"))
+#' 
+#' 
 #' 
 #' 
 #' @export betta_random

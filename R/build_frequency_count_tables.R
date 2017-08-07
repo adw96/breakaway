@@ -19,6 +19,18 @@ build_frequency_count_tables <- function(otu_table) {
   frequencytablelist
 }
 
+
+
+#' Draw frequency count subtables from an OTU table
+#' 
+#' Draw frequency count subtables from an OTU table
+#' 
+#' 
+#' @export make_frequency_count_table
+make_frequency_count_table <- function(labels) {
+  as.data.frame(table(table(labels)))
+}
+
 convert_freq_indices <- function(frequency_table) {
   checked_frequency_table <- frequency_table
   if (is.factor(frequency_table[, 1])) {

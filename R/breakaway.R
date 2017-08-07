@@ -68,8 +68,12 @@
 #' @keywords diversity microbial models nonlinear
 #' @examples
 #' 
+#' 
+#' 
 #' breakaway(apples)
 #' breakaway(apples,plot=FALSE,print=FALSE,answers=TRUE) 
+#' 
+#' 
 #' 
 #' 
 #' 
@@ -432,6 +436,10 @@ residse <- function(model) {
 
 
 
+
+
+
+
 #' species richness estimation without singletons
 #' 
 #' This function permits estimation of total diversity based on a sample
@@ -504,8 +512,12 @@ residse <- function(model) {
 #' @keywords diversity error microbial models nonlinear
 #' @examples
 #' 
+#' 
+#' 
 #' breakaway_nof1(apples[-1,])
 #' breakaway_nof1(apples[-1,],plot=FALSE,print=FALSE,answers=TRUE) 
+#' 
+#' 
 #' 
 #' 
 #' @export breakaway_nof1

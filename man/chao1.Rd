@@ -29,7 +29,11 @@ do you?
 }
 \examples{
 
+
+
 chao1(apples)
+
+
 
 }
 \author{

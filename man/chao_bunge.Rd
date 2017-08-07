@@ -25,7 +25,11 @@ in Chao & Bunge (2002).
 }
 \examples{
 
+
+
 chao_bunge(apples)
+
+
 
 }
 \author{

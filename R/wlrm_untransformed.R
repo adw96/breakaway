@@ -29,7 +29,11 @@
 #' @keywords diversity models
 #' @examples
 #' 
+#' 
+#' 
 #' wlrm_untransformed(apples)
+#' 
+#' 
 #' 
 #' @export wlrm_untransformed
 wlrm_untransformed  <- function(data, print=TRUE, plot=FALSE, answers=FALSE, cutoff=NA) {

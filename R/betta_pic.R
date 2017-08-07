@@ -26,8 +26,12 @@
 #' @keywords diversity
 #' @examples
 #' 
+#' 
+#' 
 #' betta_pic(c(1552,1500,884),c(305,675,205),mymain="Example title")
 #' 	
+#' 
+#' 
 #' 
 #' @export betta_pic
 betta_pic <- function(y, se, x=1:length(y), ylimu=NA, myy=NA, mymain=NA, mycol=rep("black", length(y)), labs=NA, mypch=rep(16, length(y)), myxlim=c(0.8*min(x, na.rm=T), 1.2*max(x, na.rm=T))) {
@@ -43,3 +47,40 @@ betta_pic <- function(y, se, x=1:length(y), ylimu=NA, myy=NA, mymain=NA, mycol=r
   }
   if(!is.na(labs)) axis(1, at=1:length(y), labels=labs, las=2, cex=0.8)
 }
+
+
+#' @export hill_pic
+hill_pic <- function(input, res = 20, method = "resample") {
+  
+  xx <- seq(from = 0, to = 4, length.out = res)
+  my_results <- alpha_better(input = input, xx)
+  raw <- hill(input = input, q = xx)
+  ests <- my_results$Estimate
+  
+  if (method  == "delta") {
+    ses <- my_results$StdError
+    upper <- ests + 2 * ses
+    lower <- ests - 2 * ses
+  } else {
+    if (method != "resample") warning("Using resampled standard errors")
+    my_sample_size <- sum(my_data[, 1] * my_data[,2])
+    y1 <- replicate(n = 20, 
+                    subsample_otu(input), 
+                    simplify = "list")
+    y2 <- apply(y1, 2, function(x) data.frame("Index"=as.numeric(as.character(unlist(x[1]))), "Freq"=as.numeric(as.character(unlist(x[2])))))
+    y3 <- lapply(y2, alpha_better, q = xx)
+    y4 <- lapply(y3, function(x) x[,2])
+    y5 <- do.call(rbind, y4)
+    ests <- apply(y5, 2, function(x) quantile(x, 0.5))
+    lower <- apply(y5, 2, function(x) quantile(x, 0.025))
+    upper <- apply(y5, 2, function(x) quantile(x, 0.975))
+  }
+  
+  plot(c(xx, xx), c(lower, upper), type = "n", xlab = "q", ylab = "Hill Number estimate")
+  points(xx, ests, pch = 16)
+  lines(xx, lower, lty = 2)
+  lines(xx, upper, lty = 2)
+  points(xx, raw, pch = 16, col = "red")
+}
+
+

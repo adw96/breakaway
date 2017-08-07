@@ -28,7 +28,11 @@ your problems.
 }
 \examples{
 
+
+
 chao1_bc(apples)
+
+
 
 }
 \author{

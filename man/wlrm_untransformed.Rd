@@ -4,8 +4,7 @@
 \alias{wlrm_untransformed}
 \title{function for species richness estimation}
 \usage{
-wlrm_untransformed(data, print = TRUE, plot = FALSE, answers = FALSE,
-  cutoff = NA)
+wlrm_untransformed(data, print = TRUE, plot = FALSE, answers = FALSE, cutoff = NA)
 }
 \arguments{
 \item{data}{The sample frequency count table for the population of interest.
@@ -39,7 +38,11 @@ artificially low standard errors. Caution is advised.
 }
 \examples{
 
+
+
 wlrm_untransformed(apples)
+
+
 
 }
 \references{

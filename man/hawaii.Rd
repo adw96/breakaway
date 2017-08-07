@@ -15,11 +15,20 @@
 \url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
 
 \url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
+
+\url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
+
+\url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
 }
 \usage{
 hawaii
 }
 \description{
+(Data) Frequency count table of soil microbes in Hawaii.
+
+(Data) Frequency count table of soil microbes in Hawaii.
+}
+\details{
 (Data) Frequency count table of soil microbes in Hawaii.
 
 (Data) Frequency count table of soil microbes in Hawaii.
@@ -31,6 +40,14 @@ frequency ratios. \emph{Biometrics}, \bold{71}(4), 1042--1049.
 
 Willis, A. and Bunge, J. (2015). Estimating diversity via
 frequency ratios. \emph{Biometrics}, \bold{71}(4), 1042--1049.
+\url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
+
+Willis, A. and Bunge, J. (2015). Estimating diversity via frequency ratios.
+\emph{Biometrics}, \bold{71}(4), 1042--1049.
+\url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
+
+Willis, A. and Bunge, J. (2015). Estimating diversity via frequency ratios.
+\emph{Biometrics}, \bold{71}(4), 1042--1049.
 \url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
 }
 \keyword{datasets}

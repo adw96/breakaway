@@ -44,13 +44,15 @@ shannon <- function(input) {
   -sum(proportions*log(proportions))
 }
 
-hill_under <- function(input, q) {
-  type <- frequency_count_or_proportion_or_column(input)
-  proportions <- to_proportions(input, type)
-  
-  (sum(proportions^q))^(1/(1-q))
-  
-}
+# hill_under <- function(input, q) {
+#   type <- frequency_count_or_proportion_or_column(input)
+#   proportions <- to_proportions(input, type)
+#   
+#   (sum(proportions^q))^(1/(1-q))
+#   
+# }
+
+
 
 
 
@@ -65,11 +67,18 @@ hill_under <- function(input, q) {
 hill <- function(input, q) {
   
   if (length(q) > 1) {
-    sapply(q, FUN = hill_under, input = input)
+    #  sapply(q, FUN = hill_under, input = input)
+    sapply(q, FUN = hill, input = input)
   } else {
-    hill_under(input, q)
+    type <- frequency_count_or_proportion_or_column(input)
+    proportions <- to_proportions(input, type)
+    
+    (sum(proportions^q))^(1/(1-q))
+    #    hill_under(input, q)
   }
 }
+
+
 
 
 
@@ -86,6 +95,10 @@ inverse_simpson <- function(input) {
 
 
 
+
+
+
+
 #' Plug-in Simpson
 #' 
 #' TODO
@@ -96,6 +109,8 @@ inverse_simpson <- function(input) {
 simpson <- function(input) {
   1/hill(input, 2)
 }
+
+
 
 
 
@@ -112,6 +127,10 @@ gini <- function(input) {
 
 
 
+
+
+
+
 #' alpha diversity estimates
 #' 
 #' TODO
@@ -121,14 +140,15 @@ gini <- function(input) {
 #' @param q TODO
 #' @param ccc TODO
 #' @export alpha_better
-alpha_better <-  function(input, q, ccc = NA) {
-    
+alpha_better <-  function(input, q = 0, ccc = NA, ccc_se = NA) {
+  
   type <- frequency_count_or_proportion_or_column(input)
   proportions <- to_proportions(input, type)
   
   if ((is.na(ccc) | is.null(ccc)) & type == "frequency count") {
     baway <- breakaway(input, print = F, answers = T, plot = F)
     ccc <- round(baway$est)
+    ccc_se <- round(baway$seest)
   }
   
   cc <- sum(input[,2])
@@ -138,5 +158,45 @@ alpha_better <-  function(input, q, ccc = NA) {
   obs_props <- cc/ccc * proportions
   new_props <- c(unobs_props, obs_props)
   
-  hill(new_props, q)
+  if (length(q) > 1) {
+    estimates <- sapply(X = q, FUN = hill, input = new_props)
+    ses <- mapply(FUN = hill_se, 
+                  q = q, 
+                  Dest = estimates,
+                  MoreArgs = list(Cest = ccc, Cse = ccc_se,
+                                  props = obs_props, c = cc))
+    
+  } else {
+    estimates <- hill(new_props, q)
+    ses <- hill_se(Cest = ccc, Cse = ccc_se, 
+                   q, props = obs_props, Dest = estimates, 
+                   c = cc)
+  }
+  data.frame("q" = q, "Estimate" = estimates, "StdError" = ses)
+  
+}
+
+
+
+
+
+#' alpha diversity std errors
+#' 
+#' TODO
+#' 
+#' 
+#' @param Cest TODO
+#' @param Cse TODO
+#' @param q TODO
+#' @param props TODO
+#' @param Dest TODO
+#' @param c TODO
+#' @export hill_se
+hill_se <- function(Cest, Cse, q, props, Dest, c) {
+  
+  derivative <- (Dest^q) / (1-q) * 
+    ((1-q) * Cest^-q + c * q * Cest^(-q-1)  - q * c^q * Cest^(-q-1) * sum(props^q))
+  
+  variance_est <- derivative ^ 2 * Cse^2 
+  sqrt(variance_est)
 }

@@ -4,7 +4,7 @@
 \alias{alpha_better}
 \title{alpha diversity estimates}
 \usage{
-alpha_better(input, q, ccc = NA)
+alpha_better(input, q = 0, ccc = NA, ccc_se = NA)
 }
 \arguments{
 \item{input}{TODO}
