@@ -15,7 +15,7 @@ devtools::install_github("adw96/breakaway")
 
 Authors: Amy Willis, Kathryn Barger and John Bunge
 
-Maintainer: Amy Willis adw96@cornell.edu
+Maintainer: Amy Willis (adwillis(at)uw(dot)edu)
 
 ## Example
 
