@@ -63,7 +63,7 @@ hill_pic <- function(input, res = 20, method = "resample") {
     lower <- ests - 2 * ses
   } else {
     if (method != "resample") warning("Using resampled standard errors")
-    my_sample_size <- sum(my_data[, 1] * my_data[,2])
+    my_sample_size <- sum(input[, 1] * input[,2])
     y1 <- replicate(n = 20, 
                     subsample_otu(input), 
                     simplify = "list")
