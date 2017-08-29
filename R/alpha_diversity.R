@@ -1,3 +1,4 @@
+#' @export
 frequency_count_or_proportion_or_column <- function(input) {
   if (class(input) %in% c("data.frame", "matrix")) {
     if (ncol(input) == 2) {
