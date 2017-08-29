@@ -45,13 +45,7 @@ shannon <- function(input) {
   -sum(proportions*log(proportions))
 }
 
-# hill_under <- function(input, q) {
-#   type <- frequency_count_or_proportion_or_column(input)
-#   proportions <- to_proportions(input, type)
-#   
-#   (sum(proportions^q))^(1/(1-q))
-#   
-# }
+
 
 
 
@@ -76,6 +70,7 @@ hill <- function(input, q) {
     } else {
       type <- frequency_count_or_proportion_or_column(input)
       proportions <- to_proportions(input, type)
+      (sum(proportions^q))^(1/(1-q))
     }
   }
 }
