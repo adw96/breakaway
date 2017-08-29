@@ -70,11 +70,12 @@ hill <- function(input, q) {
     #  sapply(q, FUN = hill_under, input = input)
     sapply(q, FUN = hill, input = input)
   } else {
-    type <- frequency_count_or_proportion_or_column(input)
-    proportions <- to_proportions(input, type)
-    
-    (sum(proportions^q))^(1/(1-q))
-    #    hill_under(input, q)
+    if (q == 1) {
+      exp(shannon(input))
+    } else {
+      type <- frequency_count_or_proportion_or_column(input)
+      proportions <- to_proportions(input, type)
+    }
   }
 }
 
