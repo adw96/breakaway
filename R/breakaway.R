@@ -70,15 +70,25 @@
 #' 
 #' 
 #' 
+#' 
+#' 
+#' 
+#' 
+#' 
 #' breakaway(apples)
-#' breakaway(apples,plot=FALSE,print=FALSE,answers=TRUE) 
+#' breakaway(apples, plot = FALSE, print = FALSE, answers = TRUE)
+#' 
+#' 
+#' 
+#' 
+#' 
 #' 
 #' 
 #' 
 #' 
 #' 
 #' @export breakaway
-breakaway <- function(my_data, print=TRUE, plot=TRUE, answers=FALSE, force=FALSE, useAll=FALSE) {
+breakaway <- function(my_data, print=TRUE, plot=FALSE, answers=FALSE, force=FALSE, useAll=FALSE) {
   
   ## read in data
   if( !(is.matrix(my_data) || is.data.frame(my_data))) {
@@ -440,6 +450,16 @@ residse <- function(model) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 #' species richness estimation without singletons
 #' 
 #' This function permits estimation of total diversity based on a sample
@@ -514,8 +534,18 @@ residse <- function(model) {
 #' 
 #' 
 #' 
-#' breakaway_nof1(apples[-1,])
-#' breakaway_nof1(apples[-1,],plot=FALSE,print=FALSE,answers=TRUE) 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' breakaway_nof1(apples[-1, ])
+#' breakaway_nof1(apples[-1, ], plot = FALSE, print = FALSE, answers = TRUE)
+#' 
+#' 
+#' 
+#' 
+#' 
 #' 
 #' 
 #' 

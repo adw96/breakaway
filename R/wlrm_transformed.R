@@ -31,9 +31,18 @@
 #' 
 #' 
 #' 
+#' 
+#' 
+#' 
+#' 
+#' 
 #' wlrm_transformed(apples)
-#' wlrm_transformed(apples,plot=FALSE,print=FALSE,answers=TRUE)
-#'   
+#' wlrm_transformed(apples, plot = FALSE, print = FALSE, answers = TRUE)
+#' 
+#' 
+#' 
+#' 
+#' 
 #' 
 #' 
 #' 

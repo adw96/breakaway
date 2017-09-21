@@ -13,9 +13,6 @@ vignette: >
 
 
 ```{r}
-### Run the first two lines at home! ####
-# install.packages("devtools")
-# devtools::install_github("adw96/breakaway")
 library(breakaway)
 ```
 
@@ -25,7 +22,7 @@ library(breakaway)
 frequencytablelist <- lapply(apply(toy_otu_table, 2, table), as.data.frame)
 frequencytablelist <- lapply(frequencytablelist, function(x) x[x[,1]!=0,])
 
-ob_results <- lapply(frequencytablelist[1:15], objective_bayes_negbin, answers = T, plot=F)
+ob_results <- lapply(frequencytablelist[1:15], objective_bayes_negbin, answers = T, plot=F, print = F)
 
 lower <- unlist(lapply(ob_results, function(x) x$results["LCI.C", ]))
 upper <- unlist(lapply(ob_results, function(x) x$results["UCI.C", ]))

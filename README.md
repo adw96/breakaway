@@ -1,15 +1,20 @@
-# breakaway
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+breakaway
+=========
 
 Understanding the drivers of microbial diversity is an important frontier of microbial ecology, and investigating the diversity of samples from microbial ecosystems is a common step in any microbiome analysis. breakaway is the premier package for statistical analysis of microbial diversity. breakaway implements the latest and greatest estimates of different alpha diversity metrics, as well as the most commonly used estimates.
 
 breakaway is undergoing substantial renovations. Please submit an issue if it is interfering with your work!
 
-## Installation
+Installation
+------------
 
 ### Development version
+
 You can install breakaway from github with:
 
-```R
+``` r
 install.packages("devtools")
 devtools::install_github("adw96/breakaway")
 ```
@@ -19,25 +24,28 @@ breakaway is actively maintained and continually expanding and developing its sc
 ### CRAN
 
 For now, breakaway is no longer being updated on CRAN. You can access v3.0 on CRAN [here](https://cran.r-project.org/web/packages/breakaway/index.html) or with
-```R
+
+``` r
 install.packages("breakaway")
 ```
 
-## Humans
-Maintainer: [Amy Willis]((http://faculty.washington.edu/adwillis/)
+Humans
+------
+
+Maintainer: [Amy Willis](http://faculty.washington.edu/adwillis/)
 
 Authors: [Amy Willis](http://faculty.washington.edu/adwillis/), [Kathryn Barger](http://hnrca.tufts.edu/kathryn-barger-ph-d/) and [John Bunge](https://stat.cornell.edu/people/faculty/john-bunge)
 
+Upcoming features
+-----------------
 
-## Upcoming features
-
-- extended tutorials
-- phyloseq integration
-- CatchAll in R
-- better unit testing
-- longitudinal models for the microbiome
-- better graphics
-- automated estimator selection based on data structure
-- new format for modelling functions
+-   extended tutorials
+-   phyloseq integration
+-   CatchAll in R
+-   better unit testing
+-   longitudinal models for the microbiome
+-   better graphics
+-   automated estimator selection based on data structure
+-   new format for modelling functions
 
 Do you have a request for us? Let us know!

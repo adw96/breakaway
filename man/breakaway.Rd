@@ -4,8 +4,8 @@
 \alias{breakaway}
 \title{Species richness estimation with breakaway}
 \usage{
-breakaway(my_data, print = TRUE, plot = TRUE, answers = FALSE, force = FALSE, 
-    useAll = FALSE)
+breakaway(my_data, print = TRUE, plot = FALSE, answers = FALSE,
+  force = FALSE, useAll = FALSE)
 }
 \arguments{
 \item{my_data}{The sample frequency count table for the population of
@@ -78,8 +78,18 @@ dataset may contain these errors, and recommend the use of
 
 
 
+
+
+
+
+
 breakaway(apples)
 breakaway(apples, plot = FALSE, print = FALSE, answers = TRUE)
+
+
+
+
+
 
 
 

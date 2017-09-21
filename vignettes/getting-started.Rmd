@@ -45,7 +45,7 @@ head(meta_data)
 It is important that the column names of the OTU table is the same as the rownames of the covariate information. Remember to reorder them if they don't match!  You can check this with
 
 ```{r}
-colnames(otu_data) == rownames(meta_data)
+head(colnames(otu_data) == rownames(meta_data))
 ```
 
 ## Creating frequency tables
@@ -54,7 +54,7 @@ We're now going to "collapse" the otu_data's columns (samples) into frequency ta
 ```{r}
 frequencytablelist <- lapply(apply(otu_data,2,table),as.data.frame)
 frequencytablelist <- lapply(frequencytablelist,function(x) x[x[,1]!=0,])
-frequencytablelist[[63]]
+head(frequencytablelist[[63]])
 ```
 
 Interpretation: In this sample, there were 57 different species observed only once (singletons), 25 different species observed only twice, ..., 1 species observed 171 times.

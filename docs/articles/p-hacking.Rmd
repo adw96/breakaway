@@ -1,0 +1,17 @@
+---
+title: "What does p-hacking look like in microbial ecology studies?"
+author: "Amy Willis"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{p-hacking}
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteEncoding{UTF-8}
+---
+  
+To the great detriment of science, p-values are often used to persuade the audience that a certain finding is scientifically interesting. 
+
+
+```{r}
+library(breakaway)
+```
