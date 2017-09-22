@@ -1,0 +1,26 @@
+url: http://adw96.github.io/breakaway
+theme: jekyll-theme-leap-day
+
+reference:
+  - title: Richness
+    desc:  Species richness estimators.
+    contents:
+    - starts_with("richness_")
+  - title: alpha
+    desc: Other alpha diversity estimators.
+    contents:
+    - starts_with("alpha_")
+  - title: Variance
+    desc: Variance estimates for alpha diversity estimators.
+    contents:
+    - starts_with("variance_")
+  - title: Models
+    desc: Models and testing for alpha diversity.
+    contents:
+    - starts_with("model_")
+  - title: Tools
+    desc: Miscellaneous helpful tools.
+    contents:
+    - starts_with("plot_")
+    - starts_with("tools_")
+    

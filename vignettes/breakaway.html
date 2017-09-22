@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Amy Willis" />
+
+<meta name="date" content="2017-09-21" />
+
+<title>Introducing breakaway</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Introducing breakaway</h1>
+<h4 class="author"><em>Amy Willis</em></h4>
+<h4 class="date"><em>2017-09-21</em></h4>
+
+
+
+<p>The introduction to alpha diversity workshop that I teach at STAMPS at the Marine Biological Laboratory. Lots of problems that I need to fix! Hence all of the comments.</p>
+<p>Start by checking what directory you are in with, and load the species abundance table and metadata</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data1 &lt;-<span class="st"> </span><span class="kw">data</span>(toy_otu_table)</code></pre></div>
+<pre><code>## Warning in data(toy_otu_table): data set 'toy_otu_table' not found</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(data1)</code></pre></div>
+<pre><code>## [1] &quot;toy_otu_table&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># metadata &lt;- read.table(&quot;mask_meta.txt&quot;,header=T)</span>
+<span class="co"># ## If an error was thrown, that means that the data was not in the</span>
+<span class="co"># ## working directory. Ensure that the data is in filepath specified by</span>
+<span class="co"># ## getwd(), or setwd([where you have saved your data])</span>
+<span class="co"># </span>
+<span class="co"># ## This is data from 63 different lakes.</span>
+<span class="co"># </span>
+<span class="co"># ## Have a look at the first few rows/columns your data and your metadata</span>
+<span class="co"># data[1:4,1:4]</span>
+<span class="co"># metadata[1:4,]</span>
+<span class="co"># ## data is very big! To see how big, go</span>
+<span class="co"># dim(data)</span>
+<span class="co"># </span>
+<span class="co"># ## Huh? Levels? What type of object is Year, anyway?</span>
+<span class="co"># class(metadata$Year)</span>
+<span class="co"># ## Year is what's called a &quot;Factor,&quot; i.e. a categorical variable. But</span>
+<span class="co"># ## what if we want to consider it as a continuous variable? We need to</span>
+<span class="co"># ## force it into a numeric. We do this as follows</span>
+<span class="co"># Year_num &lt;- as.numeric(substr(as.character(metadata$Year),4,5))</span>
+<span class="co"># Year_num</span>
+<span class="co"># ## Feel like you're falling behind? Don't stress! If you want to learn the</span>
+<span class="co"># ## details you can go back later and figure out exactly what the functions</span>
+<span class="co"># ## as.character, substr, and as.numeric all do, and why I chose to combine</span>
+<span class="co"># ## them in this way.</span>
+<span class="co"># </span>
+<span class="co"># ## Take a moment to congratulate yourself on loading a package,</span>
+<span class="co"># ## opening data, and exploring the dataset! That's huge! Woohoo!</span>
+<span class="co"># </span>
+<span class="co"># ##### CREATE FREQUENCY TABLES</span>
+<span class="co"># </span>
+<span class="co"># ## We're now going to &quot;collapse&quot; the data's columns (samples) into frequency tables</span>
+<span class="co"># ## We use several functions here: table, apply, as.data.frame and lapply</span>
+<span class="co"># ## If you're interested, you should explore these later. We want to analyse</span>
+<span class="co"># ## the data right now!</span>
+<span class="co"># frequencytablelist &lt;- lapply(apply(data,2,table),as.data.frame)</span>
+<span class="co"># frequencytablelist &lt;- lapply(frequencytablelist,function(x) x[x[,1]!=0,])</span>
+<span class="co"># </span>
+<span class="co"># ## Have a look at the frequency tables (&quot;frequency count data&quot;). I've put them</span>
+<span class="co"># ## in a list so we need to use double square brackets [[63]] to refer to the 63rd one</span>
+<span class="co"># frequencytablelist[[63]]</span>
+<span class="co"># ## Interpretation: In this sample, there were 57 different species observed</span>
+<span class="co"># ## only once (singletons), 25 different species observed only twice, ...,</span>
+<span class="co"># ## 1 species observed 171 times</span>
+<span class="co"># </span>
+<span class="co"># ##### ESTIMATE SPECIES RICHNESS</span>
+<span class="co"># ## Let's run breakaway on the first frequency count table</span>
+<span class="co"># breakaway(frequencytablelist[[1]])</span>
+<span class="co"># ## You should get some output to screen, including your estimate &amp; s.e., and a</span>
+<span class="co"># ## plot of the fits to the ratios. Note that it is not a fit to the frequencies,</span>
+<span class="co"># ## it is a fit to the ratios of frequencies. You would never need to include</span>
+<span class="co"># ## this type of plot in one of your papers. It is solely for you to check</span>
+<span class="co"># ## for model misspecification. What's model misspecification? If the black</span>
+<span class="co"># ## diamonds don't remotely follow the pattern of the white circles, that's</span>
+<span class="co"># ## model misspecification.</span>
+<span class="co"># </span>
+<span class="co"># ## The reference for breakaway is</span>
+<span class="co"># ## Willis, A. and Bunge, J. (2015). Estimating Diversity via Frequency Ratios. Biometrics 71 1042-1049.</span>
+<span class="co"># ## Feel free to email me with questions!</span>
+<span class="co"># </span>
+<span class="co"># ## Sometimes, breakaway's usual procedure doesn't work, that is, it gives</span>
+<span class="co"># ## a negative estimate, which is of course silly. In that case, breakaway</span>
+<span class="co"># ## returns a different model's result. It's called the WLRM. There isn't a</span>
+<span class="co"># ## picture. Here is an example of a case where breakaway returns the WLRM.</span>
+<span class="co"># breakaway(frequencytablelist[[60]])</span>
+<span class="co"># ## breakaway can defer to the WLRM for several reasons. Perhaps there are</span>
+<span class="co"># ## too many singletons. Perhaps there isn't a long enough tail. Perhaps</span>
+<span class="co"># ## there is false diversity. In this case, there was probably not enough data.</span>
+<span class="co"># ## Let's see if this failure was sensitive to the singleton count by running</span>
+<span class="co"># ## breakaway_nof1. This requires no singleton count (implicit is that the</span>
+<span class="co"># ## singleton count was erroneous) and predicts it from the other frequencies.</span>
+<span class="co"># ## Here is an example.</span>
+<span class="co"># breakaway_nof1(frequencytablelist[[60]][-1,])</span>
+<span class="co"># </span>
+<span class="co"># ## The reference for this method:</span>
+<span class="co"># ## Willis, A. (2016). Species richness estimation with high diversity but spurious singletons.</span>
+<span class="co"># </span>
+<span class="co"># ## breakaway_nof1 is an exploratory tool for assessing sensitivity of</span>
+<span class="co"># ## breakaway to the singleton count. You should not use it for diversity</span>
+<span class="co"># ## estimation -- only diversity *exploration* :)</span>
+<span class="co"># </span>
+<span class="co"># </span>
+<span class="co"># </span>
+<span class="co"># </span>
+<span class="co"># ## Let's move on to looking at the Objective Bayes procedures of</span>
+<span class="co"># ## Kathryn Barger. It's the latest and greatest in diversity estimation!</span>
+<span class="co"># </span>
+<span class="co"># ## There are 4 different types of objective bayes estimates, due to</span>
+<span class="co"># ## 4 different models. If you have time play with all of them!</span>
+<span class="co"># ## For now we are just going to look at the negative binomial.</span>
+<span class="co"># </span>
+<span class="co"># #objective_bayes_poisson(frequencytablelist[[60]])$results</span>
+<span class="co"># #objective_bayes_geometric(frequencytablelist[[60]])$results</span>
+<span class="co"># #objective_bayes_mixedgeo(frequencytablelist[[60]])$results</span>
+<span class="co"># </span>
+<span class="co"># install.packages(&quot;MASS&quot;); require(MASS) ## you need MASS for this to work</span>
+<span class="co"># objective_bayes_negbin(frequencytablelist[[1]])</span>
+<span class="co"># ## (Don't worry about those warnings. We're working on them -- sorry!)</span>
+<span class="co"># </span>
+<span class="co"># ## That's a lot of information! Bayesians are very good at generating</span>
+<span class="co"># ## a lot of information. This is because rather than a single estimate</span>
+<span class="co"># ## you see the distribution of estimates (remember that the Bayesian</span>
+<span class="co"># ## paradigm believes the parameter to be random =&gt; it has a distribution)</span>
+<span class="co"># </span>
+<span class="co"># </span>
+<span class="co"># ## Let's talk about some of the information:</span>
+<span class="co"># # $results mode.N/mean.N/median.N : the mode/mean / median estimate</span>
+<span class="co"># # $results L/UCI.N:  A 95% percent interval estimate for the richness</span>
+<span class="co"># # The picture at the bottom: The distribution of estimates</span>
+<span class="co"># </span>
+<span class="co"># ## The reference for this method is</span>
+<span class="co"># ## Barger &amp; Bunge. (2010). Objective Bayesian estimation for the number</span>
+<span class="co"># ##    of species. Bayesian Analysis. 5(4), 765-785.</span>
+<span class="co"># </span>
+<span class="co"># ## EVENNESS</span>
+<span class="co"># </span>
+<span class="co"># ## The above discussion focused exclusively on richness. Let's look at</span>
+<span class="co"># ## the variability of evenness estimates</span>
+<span class="co"># </span>
+<span class="co"># ## Let's calculate the plug in estimate of Shannon diversity</span>
+<span class="co"># shannon(frequencytablelist[[1]])</span>
+<span class="co"># </span>
+<span class="co"># ## 4.95, huh? Let's look at how variable it is</span>
+<span class="co"># set.seed(2) # the following functions are random, so let's set the seed (allows reproducibility)</span>
+<span class="co"># resample_estimate(data[,1], shannon)</span>
+<span class="co"># resample_estimate(data[,1], shannon)</span>
+<span class="co"># resample_estimate(data[,1], shannon)</span>
+<span class="co"># </span>
+<span class="co"># ## Hmmm, doesn't look too variable! Let's look at a lot of them</span>
+<span class="co"># par(mfrow=c(1,1))</span>
+<span class="co"># hist(replicate(200, resample_estimate(data[,1], shannon)))</span>
+<span class="co"># ## (replicate says: &quot;do this 200 times&quot;)</span>
+<span class="co"># ## Yikes, that's some negative skew! That suggests that we have</span>
+<span class="co"># ## risks in randomly observing really low Shannon diversity estimates</span>
+<span class="co"># ## This is an important thing to keep in mind when analysing data</span>
+<span class="co"># ## eg. Did we just have bad luck with the sample from the patient</span>
+<span class="co"># ##     taking the drug? Or is the drug causing the effect?</span>
+<span class="co"># </span>
+<span class="co"># ## BTW, you can use the above to look sample size variability as well</span>
+<span class="co"># ## If you have very different numbers of reads across samples, this can$</span>
+<span class="co"># ## introduce additional variability. Let's look at the distribution</span>
+<span class="co"># ## of reads in the current dataset.</span>
+<span class="co"># ns &lt;- unlist(lapply(frequencytablelist, function(x) sum(x[,2])))</span>
+<span class="co"># hist(ns)</span>
+<span class="co"># ## Well, but a lot of variability! Lets account for it in looking at</span>
+<span class="co"># ## our distribution of Shannon diversity estimates</span>
+<span class="co"># set.seed(8)</span>
+<span class="co"># hist(replicate(500, resample_estimate(data[,1], shannon, my_sample_size = ns)))</span>
+<span class="co"># ## That's a lot more variability than we saw originally!</span>
+<span class="co"># </span>
+<span class="co"># ## Going forward with your analyses, don't forget to account for</span>
+<span class="co"># ## variability in your estimates. Bootstrap standard errors are better</span>
+<span class="co"># ## than nothing!</span>
+<span class="co"># sd(replicate(500, resample_estimate(data[,1], shannon, my_sample_size = ns)))</span>
+<span class="co"># </span>
+<span class="co"># </span>
+<span class="co"># ###### COMPARISONS</span>
+<span class="co"># </span>
+<span class="co"># ## We spent a lot of time looking at each sample'salpha diversity values</span>
+<span class="co"># </span>
+<span class="co"># ## Let's do some comparisons across samples... accounting for variability</span>
+<span class="co"># ## of course!</span>
+<span class="co"># </span>
+<span class="co"># ## We're going to do this procedure for shannon evenness, and estimate</span>
+<span class="co"># ## it using the plug-in estimate. This is not meant to imply that you should </span>
+<span class="co"># ## be interested in Shannon! Just that some people are.</span>
+<span class="co"># </span>
+<span class="co"># ## Feel free to substitute in whatever alpha diversity/evenness/richness</span>
+<span class="co"># ## procedure you're interested in!</span>
+<span class="co"># </span>
+<span class="co"># ## To do this we will start by iterating on Shannon on every one of our samples.</span>
+<span class="co"># ## It may take a minute or two to run. Feel like a stretch? Go ahead!</span>
+<span class="co"># </span>
+<span class="co"># ## This section may take a while. Do you know if your neighbour likes bagels?</span>
+<span class="co"># ## Would they order a croissant over a bagel? Now is a great time to find out!</span>
+<span class="co"># estimates_shannon &lt;- matrix(NA,nrow=dim(data)[2],ncol=4)</span>
+<span class="co"># rownames(estimates_shannon) &lt;- colnames(data)</span>
+<span class="co"># colnames(estimates_shannon) &lt;- c(&quot;shannon_est&quot;,&quot;shannon_seest&quot;,&quot;shannon_lcb&quot;,&quot;shannon_ucb&quot;)</span>
+<span class="co"># for (i in 1:dim(data)[2]) {</span>
+<span class="co">#   #resample_estimate(data[,i], shannon, my_sample_size = ns)</span>
+<span class="co">#   samples &lt;- replicate(500, resample_estimate(data[,i], shannon, my_sample_size = ns))</span>
+<span class="co">#   estimates_shannon[i,1] &lt;- mean(samples)</span>
+<span class="co">#   estimates_shannon[i,2] &lt;- sd(samples)</span>
+<span class="co">#   estimates_shannon[i,3:4] &lt;- quantile(samples, c(0.025, 0.975))</span>
+<span class="co"># }</span>
+<span class="co"># ## Here gives us our estimates and standard errors so we can have a look</span>
+<span class="co"># estimates_shannon[,1:2]</span>
+<span class="co"># ## We can even (normal-ish) plot intervals. The x-axis is just against the</span>
+<span class="co"># ## enumeration of the lakes. It is not meaningful.</span>
+<span class="co"># ## The following plotting command may be different to ones you have seen</span>
+<span class="co"># ## before. It's a really quick way of visualizing the error in your samples</span>
+<span class="co"># ## and quickly spotting outliers. NOTE: Outliers have SMALL LINES, which means</span>
+<span class="co"># ## high precision, and are generally far away from points near them.</span>
+<span class="co"># betta_pic(estimates_shannon[,1], estimates_shannon[,2])</span>
+<span class="co"># </span>
+<span class="co"># ## No obvious outliers here.</span>
+<span class="co"># </span>
+<span class="co"># ## Lets look at the effect of summer samples</span>
+<span class="co"># col_by_seasons &lt;- ifelse(metadata$Season==&quot;Autum&quot;,&quot;black&quot;,ifelse(metadata$Season==&quot;Spring&quot;,&quot;pink&quot;,&quot;red&quot;))</span>
+<span class="co"># betta_pic(estimates_shannon[,1], estimates_shannon[,2], mycol = col_by_seasons)</span>
+<span class="co"># legend(&quot;bottom&quot;,c(&quot;Spring&quot;,&quot;Summer&quot;,&quot;Autumn&quot;),col=c(&quot;pink&quot;,&quot;red&quot;,&quot;black&quot;),cex=0.8,lwd=3,box.col=F)</span>
+<span class="co"># ## Don't forget that because we are plotting diversity *estimates*, we</span>
+<span class="co"># ## need to plot *lines* (i.e. confidence intervals) not points (point</span>
+<span class="co"># ## estimates). That's very important.</span>
+<span class="co"># </span>
+<span class="co"># </span>
+<span class="co"># ## We're now going to create our &quot;design&quot; matrix, a.k.a. &quot;X matrix.&quot;</span>
+<span class="co"># ## To do this we're going to cheat a little. We're going to use an</span>
+<span class="co"># ## existing R method, lm, to save us the hassle.</span>
+<span class="co"># ## We are going to investigate the effect of temperature and site</span>
+<span class="co"># covar_matrix &lt;- model.matrix(lm(rnorm(dim(metadata)[1])~metadata$Site*(metadata$Season==&quot;Summ&quot;)))</span>
+<span class="co"># head(covar_matrix)</span>
+<span class="co"># colnames(covar_matrix) &lt;- c(&quot;Int&quot;, &quot;SiteP&quot;, &quot;Summer&quot;, &quot;SitePSummer&quot;)</span>
+<span class="co"># ## Details (skip if uninterested): lm(y~x+z) is a function that fits a</span>
+<span class="co"># ## regression line to y using the variables x and z. It has a very nice</span>
+<span class="co"># ## interface that saves you doing the hard work (aka &quot;math&quot;) to create your</span>
+<span class="co"># ## design matrix. The function we are going to use has no such nice interface.</span>
+<span class="co"># ## For that reason, we steal the design matrix out of lm()'s implementation.</span>
+<span class="co"># ## lm(y~x*z) looks at interactions. In this case, we are seeing if the</span>
+<span class="co"># ## evenness trend as a function of temperature changes depending on the site</span>
+<span class="co"># </span>
+<span class="co"># ## Easter egg: if you can put your own data (from your own research) in the</span>
+<span class="co"># ## *exact* same form as the above example, you don't need to understand what</span>
+<span class="co"># ## happens below. You can just copy it :)</span>
+<span class="co"># ## Hint: The biggest problem you may have in implementing the above is</span>
+<span class="co"># ## the ordering of the data and the metadata. The following:</span>
+<span class="co"># colnames(data)==rownames(metadata)</span>
+<span class="co"># ## being true in every spot is a necessary but not sufficient condition for</span>
+<span class="co"># ## the following to work properly.</span>
+<span class="co"># </span>
+<span class="co"># #### MODEL SPECIES RICHNESS, TEST SIGNIFICANCE, INTERPRET RESULTS</span>
+<span class="co"># ## Let's go ahead and try to fit our model</span>
+<span class="co"># results &lt;- betta(estimates_shannon[,1],estimates_shannon[,2],covar_matrix)</span>
+<span class="co"># ## Let's take a look at the results</span>
+<span class="co"># results$table</span>
+<span class="co"># ## Interpretation is idential to regression.</span>
+<span class="co"># </span>
+<span class="co"># ## Here are some things to quickly note:</span>
+<span class="co"># ## Firstly, significance of Summer means that the average</span>
+<span class="co"># ## Shannon diversity of the summer samples is significantly</span>
+<span class="co"># ## less than non-summer AT SITE L. It's less by 0.42 on</span>
+<span class="co"># ## average.</span>
+<span class="co"># </span>
+<span class="co"># ## The non-signif of the SiteP variables means there</span>
+<span class="co"># ## is no significant difference between Sites P and L,</span>
+<span class="co"># ## in both summer and not... AFTER ACCOUNTING FOR </span>
+<span class="co"># ## ESTIMATION ERROR!</span>
+<span class="co"># </span>
+<span class="co"># ## Notice that a regression on the Shannon estimates</span>
+<span class="co"># ## notes more evidence against the &quot;site has no affect&quot; null:</span>
+<span class="co"># summary(lm(estimates_shannon[,1] ~ metadata$Site*(metadata$Season==&quot;Summ&quot;)))$coef[,c(1,4)]</span>
+<span class="co"># ## Not such a big deal in this case, but may be with more</span>
+<span class="co"># ## marginal results/more variables.</span>
+<span class="co"># </span>
+<span class="co"># ## You should always use betta() when modelling and doing</span>
+<span class="co"># ## inference on functions of your OTU table!</span>
+<span class="co"># </span>
+<span class="co"># ## sigsq_u (in full results output) being significant means there is still *heterogeneity*</span>
+<span class="co"># ## in the lakes. &quot;Not all lakes have the same Shannon diversity</span>
+<span class="co"># ## even after accounting for season &amp; site.&quot;</span>
+<span class="co"># ##  (microscale heterogeneity, pH, chemical factors, depth...?)</span>
+<span class="co"># </span>
+<span class="co"># </span>
+<span class="co"># ## If you are unfamiliar with regression analysis, we would recommend</span>
+<span class="co"># ## taking an introductory course in regression analysis. You will</span>
+<span class="co"># ## not regret it (after some period of time)!</span>
+<span class="co"># </span>
+<span class="co"># ####### Congratulations! You have finished almost all of the tutorial!</span>
+<span class="co"># </span>
+<span class="co"># ## An important note: I'm not pushing Shannon.</span>
+<span class="co"># ## You can repeat all of the above analysis with your own</span>
+<span class="co"># ## favourite index. Suppose I am more interested in</span>
+<span class="co"># ## Simpson, or inverse Simpson, or Shannon adjusted for population size.</span>
+<span class="co"># ## Here is how I would do this:</span>
+<span class="co"># </span>
+<span class="co"># ## Define a function to take otu columns and estimate</span>
+<span class="co"># ## the Simpson index using the plug-in estimate</span>
+<span class="co"># simpson  &lt;-  function(data) {</span>
+<span class="co">#   data &lt;- data/sum(data)</span>
+<span class="co">#   sum(data^2)</span>
+<span class="co"># }</span>
+<span class="co"># </span>
+<span class="co"># ## Exercise: define a function to calculate the inverse</span>
+<span class="co"># ## of the plug-in Simpson index  estimate</span>
+<span class="co"># </span>
+<span class="co"># ## To estimate the bootstrap mean and standard error</span>
+<span class="co"># ## of the simpson index, we do the following</span>
+<span class="co"># simpson_resamples &lt;- replicate(100, resample_estimate(data[,1], simpson))</span>
+<span class="co"># hist(simpson_resamples)</span>
+<span class="co"># mean(simpson_resamples)</span>
+<span class="co"># sd(simpson_resamples)</span>
+<span class="co"># </span>
+<span class="co"># ## this is just for the first column</span>
+<span class="co"># ## you would do this for every sample (in a loop)</span>
+<span class="co"># ## then use these as inputs to betta</span>
+<span class="co"># </span>
+<span class="co"># ## The below shows you how to run CatchAll and read the output into R</span>
+<span class="co"># ## CatchAll is very fussy, because it was built for an outdated operating system</span>
+<span class="co"># ##</span>
+<span class="co"># </span>
+<span class="co"># ##### CATCHALL</span>
+<span class="co"># ## CatchAll is computionally intensive. For this reason, we will run it</span>
+<span class="co"># ## on only 4 of the samples.</span>
+<span class="co"># ## We are going to create a directory to write our frequency tables to,</span>
+<span class="co"># ## write our frequency tables, run CatchAll on them, read the CatchAll</span>
+<span class="co"># ## output back into R, then analyze the same data again using the</span>
+<span class="co"># ## CatchAll richness estimates</span>
+<span class="co"># </span>
+<span class="co"># ## We are going to be clever and run command line commands via</span>
+<span class="co"># ## R. So the below command is equivalent to writing &quot;mkdir catchalltables&quot;</span>
+<span class="co"># ## in the command line.</span>
+<span class="co"># system(&quot;mkdir catchalltables&quot;)</span>
+<span class="co"># for (i in 1:4) {</span>
+<span class="co">#   tmp &lt;- frequencytablelist[[i]] ## catchall is really fussy! Need numbers not strings/factors</span>
+<span class="co">#   tmp2 &lt;- cbind(as.numeric(levels(tmp[,1]))[-1],tmp[,2])</span>
+<span class="co">#   write.table(tmp2,paste(getwd(), &quot;/catchalltables/&quot;,</span>
+<span class="co">#                          names(frequencytablelist)[i],&quot;.csv&quot;,sep=&quot;&quot;),sep=&quot;,&quot;,row.names = FALSE,col.names = FALSE)</span>
+<span class="co"># }</span>
+<span class="co"># system(&quot;cp runcatchall.sh catchalltables&quot;)</span>
+<span class="co"># system(&quot;cp CatchAllCmdL.exe catchalltables&quot;)</span>
+<span class="co"># ## This next step runs CatchAll on every file; it may take a few minutes</span>
+<span class="co"># system(&quot;cd catchalltables; ./runcatchall.sh&quot;)</span>
+<span class="co"># </span>
+<span class="co"># ### IF THIS DIDN'T WORK *and* YOU WANT TO LEARN TO USE CATCHALL**</span>
+<span class="co"># ## 1. If you're on a Ma/Unix: You probably don't have mono (an emulator)</span>
+<span class="co"># ##    Go to http://www.mono-project.com/ and install it. </span>
+<span class="co"># ## 2. If you're on Windows: Hmmm. You're going to need a different version. </span>
+<span class="co"># ##    Download CatchAllcmdW.exe from http://www.northeastern.edu/catchall/downloads.html</span>
+<span class="co"># ##    Then run CatchAllcmdW.exe [inputfilename] [outputpath]</span>
+<span class="co"># ## 3. If neither of the above help: Sorry! Call me/a TA over. Or, come back to</span>
+<span class="co"># ##    it later and open up butterfly_BestModelsAnalysis.csv (an example output)</span>
+<span class="co"># ##    to see</span>
+<span class="co"># </span>
+<span class="co"># ## ** If CatchAll isn't so important, feel free to check out. You've learnt</span>
+<span class="co"># ## a lot already!</span>
+<span class="co"># </span>
+<span class="co"># ## We just ran CatchAll without interfacing with the command line.</span>
+<span class="co"># ## Woohoo! Now we'll read them in.</span>
+<span class="co"># </span>
+<span class="co"># ## We tell R to search in the directory &quot;catchalltables&quot; for any files ending</span>
+<span class="co"># ## in &quot;*BestModelsAnalysis.csv&quot; We then pull out the relevant columns</span>
+<span class="co"># ## into a matrix called estimates_catchall</span>
+<span class="co"># txt.sources = list.files(path=paste(getwd(),&quot;/catchalltables/&quot;,sep=&quot;&quot;),</span>
+<span class="co">#                          pattern=&quot;*BestModelsAnalysis.csv&quot;,recursive=TRUE)</span>
+<span class="co"># myread &lt;- function(x)  {</span>
+<span class="co">#   y &lt;- read.csv(paste(&quot;catchalltables/&quot;,x,sep=&quot;&quot;),stringsAsFactors=FALSE)</span>
+<span class="co">#   return(as.numeric(y[1,4:7]))</span>
+<span class="co"># }</span>
+<span class="co"># estimates_catchall &lt;- matrix(sapply(txt.sources,myread),byrow=TRUE,ncol=4)</span>
+<span class="co"># rownames(estimates_catchall) &lt;- paste(&quot;Sample&quot;, 1:4, sep=&quot;&quot;)</span>
+<span class="co"># colnames(estimates_catchall) &lt;- c(&quot;catchall_est&quot;,&quot;catchall_seest&quot;,&quot;catchall_lcb&quot;,&quot;catchall_ucb&quot;)</span>
+<span class="co"># estimates_catchall</span>
+<span class="co"># </span>
+<span class="co"># ## We can now run betta in the same way!</span>
+<span class="co"># betta(estimates_catchall[,1], estimates_catchall[,2])$table</span>
+<span class="co"># ## Note that these estimates are homogeneous (all the same!)</span>
+<span class="co"># ## probably because there are only 4</span>
+<span class="co"># ## Here we haven't included any covariates (it's unlikely that we</span>
+<span class="co"># ## could find anything meaningful with 4 data points), but if you did</span>
+<span class="co"># ## this with your own data you would include covariates in the same</span>
+<span class="co"># ## way that we did for breakaway.</span>
+<span class="co"># </span>
+<span class="co"># ## THANKS FOR STAYING THROUGH TO THE END! I'd love to hear if you</span>
+<span class="co"># ## hated it/loved it/worst day ever -- please give me feedback to </span>
+<span class="co"># ## better help you!! :) Amy</span></code></pre></div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

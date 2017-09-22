@@ -11,29 +11,13 @@ vignette: >
 
 The introduction to alpha diversity workshop that I teach at STAMPS at the Marine Biological Laboratory. Lots of problems that I need to fix! Hence all of the comments.
 
+
+Start by checking what directory you are in with, and load the species abundance table and metadata
+
 ```{r}
-library(breakaway)
 
-###### bettademo.R, a script to introduce you to the package "breakaway"
-###### for alpha diversity estimation and comparison
-###### Software authors: Amy Willis and Kathryn Barger
-###### Theory & paper authors: Amy Willis, Kathryn Barger & John Bunge, 2013-15
-
-## Start by checking what directory you are in with
-getwd()
-## Set it to your local copy of diversitylab with setwd("[folder/diversitylab]")
-
-## Load the package we need. It's called breakaway. It's awesome.
-## Conflicts of interest alert: I wrote it.
-require("breakaway")
-## If the above didn't work, check that the file is in the same location
-## as getwd()
-## If that didn't work, check you can connect to the internet, have
-## a look at your CRAN mirror settings...
-## If you're still having trouble, call a TA over!
-
-# #### Load the species abundance table and metadata
-# data <- read.table("mask_data.txt",header=T)
+data(toy_otu_table)
+head(toy_otu_table)
 # metadata <- read.table("mask_meta.txt",header=T)
 # ## If an error was thrown, that means that the data was not in the
 # ## working directory. Ensure that the data is in filepath specified by
