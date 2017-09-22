@@ -1,0 +1,9 @@
+urls:
+  reference: http://adw96.github.io/breakaway/reference
+  article: http://adw96.github.io/breakaway/articles
+articles:
+  betta-figure: betta-figure.html
+  breakaway: breakaway.html
+  resample-estimates: resample-estimates.html
+  sample-size-calculations: sample-size-calculations.html
+

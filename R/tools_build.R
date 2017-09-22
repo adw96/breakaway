@@ -33,6 +33,16 @@ build_frequency_count_tables <- function(otu_table) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 #' Draw frequency count subtables from an OTU table
 #' 
 #' Draw frequency count subtables from an OTU table

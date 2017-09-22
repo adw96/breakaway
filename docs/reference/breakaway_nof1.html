@@ -74,7 +74,7 @@
       <a href="../articles/betta-figure.html">Comparing samples visually with betta</a>
     </li>
     <li>
-      <a href="../articles/getting-started.html">Getting started with breakaway</a>
+      <a href="../articles/resample-estimates.html">Variance of alpha diversity estimates</a>
     </li>
     <li>
       <a href="../articles/sample-size-calculations.html">Sample size calculations for alpha diversity</a>
@@ -113,8 +113,7 @@ The diversity estimate, standard error, estimated model coefficients and
 plot of the fitted model are returned.</p>
     
 
-    <pre class="usage"><span class='fu'>breakaway_nof1</span>(<span class='no'>my_data</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>answers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>breakaway_nof1</span>(<span class='no'>my_data</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>answers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -216,6 +215,12 @@ diversity but spurious singletons. <em>Under review.</em></p>
 
 
 
+
+
+
+
+
+
 <span class='fu'>breakaway_nof1</span>(<span class='no'>apples</span>[-<span class='fl'>1</span>, ])</div><div class='output co'>#&gt; Iterative reweighting didn't produce any outcomes after the first iteration, so we use 1/x
 #&gt; ################## breakaway ##################
 #&gt; 	The best estimate of total diversity is 1500 
@@ -227,7 +232,7 @@ diversity but spurious singletons. <em>Under review.</em></p>
 #&gt; beta0      1.20078845      0.18102489
 #&gt; beta1      0.05614293      0.04800126
 #&gt; alpha1     0.02874888      0.05381204
-#&gt; xbar			 16.5</div><div class='img'><img src='breakaway_nof1-13.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>breakaway_nof1</span>(<span class='no'>apples</span>[-<span class='fl'>1</span>, ], <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>answers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; $code
+#&gt; xbar			 16.5</div><div class='img'><img src='breakaway_nof1-8.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>breakaway_nof1</span>(<span class='no'>apples</span>[-<span class='fl'>1</span>, ], <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>answers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; $code
 #&gt; [1] 3
 #&gt; 
 #&gt; $name
@@ -261,6 +266,12 @@ diversity but spurious singletons. <em>Under review.</em></p>
 #&gt;       beta0       beta0 
 #&gt;    724.8861 139032.6457 
 #&gt; </div><div class='input'>
+
+
+
+
+
+
 
 
 

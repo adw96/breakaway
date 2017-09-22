@@ -87,8 +87,18 @@ dataset, and have greater standard errors.
 
 
 
+
+
+
+
+
 breakaway_nof1(apples[-1, ])
 breakaway_nof1(apples[-1, ], plot = FALSE, print = FALSE, answers = TRUE)
+
+
+
+
+
 
 
 

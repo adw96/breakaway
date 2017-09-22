@@ -1,5 +1,44 @@
-# a function to resample otu vector and recalculate the value
-# of an estimate
+#' Resampling-based estimates of alpha diversity
+#' 
+#' This function resamples OTUs to a specified read count, then calculates a
+#' given alpha diversity metric based on the resample. Useful for determining
+#' variance of alpha diversity estimates.
+#' 
+#' 
+#' @param my_data The columns of your otu table, giving the number of counts
+#' for each taxa
+#' @param my_function The alpha diversity metric that you're interested in
+#' (e.g. Shannon)
+#' @param my_sample_size The number of reads that you want to resample. Common
+#' estimates of alpha diversity (such as the plug-in estimate of Shannon
+#' diversity) are very sensitive to sample size. To gauge the effect of
+#' differing sample sizes on the variance in estimating alpha diversity, it is
+#' (currently) advisable to include multiple different sample sizes in your
+#' resampling
+#' @return A (independent-bootstrap resampled) estimate of the alpha diversity
+#' metric given by my_function
+#' @author Amy Willis
+#' @examples
+#' 
+#' 
+#' 
+#' # Bootstrap observations to calculate a re-sample estimate of the Shannon index
+#' resample_estimate(toy_otu_table[,1], shannon)
+#' 
+#' # To see the sampling distribution of the resample estimates, repeat this 200 times
+#' shannon_estimates <- replicate(200, resample_estimate(toy_otu_table[,1], shannon))
+#' hist(shannon_estimates)
+#' 
+#' # To investigate the effect of sample size on the resample estimate of the Shannon index,
+#' # re-sample over multiple sample sizes; in this case, the number of reads
+#' ns <- apply(toy_otu_table, 2, sum)
+#' shannon_estimates <- replicate(200, resample_estimate(toy_otu_table[,1], shannon, my_sample_size = ns))
+#' 
+#' hist(shannon_estimates)
+#' sd(shannon_estimates) # a not too terrible estimate of the standard error in estimating Shannon
+#' 
+#' 
+#' 
 #' @export resample_estimate
 resample_estimate <- function(my_data, my_function, my_sample_size=NA, ...) {
   # assume  my_data is a list of frequencies from an otu table
@@ -18,6 +57,15 @@ resample_estimate <- function(my_data, my_function, my_sample_size=NA, ...) {
   }
 }
 
+
+#' Resampling the taxa of your OTU table
+#' 
+#' This function resamples OTUs to a specified read count
+#' 
+#' @param my_data The columns of your OTU table, giving the number of counts
+#' for each taxa
+#' @param my_sample_size The number of reads of the bootstrap.
+#' @return A independent-bootstrap resampled OTU frequencies, in frequency count table form.
 #' @export subsample_otu
 subsample_otu <- function(my_data, my_sample_size=NA, ...) {
   # assume  my_data is an OTU table

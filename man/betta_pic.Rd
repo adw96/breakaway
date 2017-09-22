@@ -48,7 +48,17 @@ a covariate gradient.
 
 
 
+
+
+
+
+
 betta_pic(c(1552, 1500, 884), c(305, 675, 205), mymain = "Example title")
+
+
+
+
+
 
 
 

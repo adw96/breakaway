@@ -30,6 +30,16 @@ rnbinomtable <- function(C, size, probability) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 #' beta version: Zero-truncated negative binomially distributed frequency count
 #' tables.
 #' 

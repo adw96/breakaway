@@ -29,6 +29,16 @@
 \url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
 
 \url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
+
+\url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
+
+\url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
+
+\url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
+
+\url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
+
+\url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
 }
 \usage{
 apples
@@ -39,6 +49,16 @@ apples
 (Data) Frequency count table of soil microbes in an apples orchard.
 }
 \details{
+(Data) Frequency count table of soil microbes in an apples orchard.
+
+(Data) Frequency count table of soil microbes in an apples orchard.
+
+(Data) Frequency count table of soil microbes in an apples orchard.
+
+(Data) Frequency count table of soil microbes in an apples orchard.
+
+(Data) Frequency count table of soil microbes in an apples orchard.
+
 (Data) Frequency count table of soil microbes in an apples orchard.
 
 (Data) Frequency count table of soil microbes in an apples orchard.
@@ -64,6 +84,46 @@ orchards did not adversely alter the soil bacteria communities.
 
 Willis, A. and Bunge, J. (2015). Estimating diversity via
 frequency ratios. \emph{Biometrics}, \bold{71}(4), 1042--1049.
+\url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
+
+Walsh, F. et al. (2014). (2014). Restricted streptomycin use in apple
+orchards did not adversely alter the soil bacteria communities.
+\emph{Frontiers in Microbiology} \bold{4}, 383.
+
+Willis, A. and Bunge, J. (2015). Estimating diversity via frequency ratios.
+\emph{Biometrics}, \bold{71}(4), 1042--1049.
+\url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
+
+Walsh, F. et al. (2014). (2014). Restricted streptomycin use in apple
+orchards did not adversely alter the soil bacteria communities.
+\emph{Frontiers in Microbiology} \bold{4}, 383.
+
+Willis, A. and Bunge, J. (2015). Estimating diversity via frequency ratios.
+\emph{Biometrics}, \bold{71}(4), 1042--1049.
+\url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
+
+Walsh, F. et al. (2014). (2014). Restricted streptomycin use in apple
+orchards did not adversely alter the soil bacteria communities.
+\emph{Frontiers in Microbiology} \bold{4}, 383.
+
+Willis, A. and Bunge, J. (2015). Estimating diversity via frequency ratios.
+\emph{Biometrics}, \bold{71}(4), 1042--1049.
+\url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
+
+Walsh, F. et al. (2014). (2014). Restricted streptomycin use in apple
+orchards did not adversely alter the soil bacteria communities.
+\emph{Frontiers in Microbiology} \bold{4}, 383.
+
+Willis, A. and Bunge, J. (2015). Estimating diversity via frequency ratios.
+\emph{Biometrics}, \bold{71}(4), 1042--1049.
+\url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
+
+Walsh, F. et al. (2014). (2014). Restricted streptomycin use in apple
+orchards did not adversely alter the soil bacteria communities.
+\emph{Frontiers in Microbiology} \bold{4}, 383.
+
+Willis, A. and Bunge, J. (2015). Estimating diversity via frequency ratios.
+\emph{Biometrics}, \bold{71}(4), 1042--1049.
 \url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
 
 Walsh, F. et al. (2014). (2014). Restricted streptomycin use in apple

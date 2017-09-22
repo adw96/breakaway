@@ -84,8 +84,18 @@ dataset may contain these errors, and recommend the use of
 
 
 
+
+
+
+
+
 breakaway(apples)
 breakaway(apples, plot = FALSE, print = FALSE, answers = TRUE)
+
+
+
+
+
 
 
 

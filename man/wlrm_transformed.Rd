@@ -47,8 +47,18 @@ artificially low standard errors. Extreme caution is advised.
 
 
 
+
+
+
+
+
 wlrm_transformed(apples)
 wlrm_transformed(apples, plot = FALSE, print = FALSE, answers = TRUE)
+
+
+
+
+
 
 
 

@@ -21,7 +21,17 @@
 #' 
 #' 
 #' 
+#' 
+#' 
+#' 
+#' 
+#' 
 #' chao_bunge(apples)
+#' 
+#' 
+#' 
+#' 
+#' 
 #' 
 #' 
 #' 
@@ -103,6 +113,16 @@ chao_bunge <- function(data, cutoff=10, print=TRUE, answers=FALSE) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 #' Chao1 species richness estimator
 #' 
 #' This function implements the Chao1 richness estimate, which is often
@@ -129,7 +149,17 @@ chao_bunge <- function(data, cutoff=10, print=TRUE, answers=FALSE) {
 #' 
 #' 
 #' 
+#' 
+#' 
+#' 
+#' 
+#' 
 #' chao1(apples)
+#' 
+#' 
+#' 
+#' 
+#' 
 #' 
 #' 
 #' 
@@ -206,6 +236,16 @@ chao1 <- function(data, print=TRUE, answers=FALSE) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 #' Bias-corrected Chao1 species richness estimator
 #' 
 #' This function implements the bias-corrected Chao1 richness estimate.
@@ -231,7 +271,17 @@ chao1 <- function(data, print=TRUE, answers=FALSE) {
 #' 
 #' 
 #' 
+#' 
+#' 
+#' 
+#' 
+#' 
 #' chao1_bc(apples)
+#' 
+#' 
+#' 
+#' 
+#' 
 #' 
 #' 
 #' 

@@ -74,7 +74,7 @@
       <a href="../articles/betta-figure.html">Comparing samples visually with betta</a>
     </li>
     <li>
-      <a href="../articles/getting-started.html">Getting started with breakaway</a>
+      <a href="../articles/resample-estimates.html">Variance of alpha diversity estimates</a>
     </li>
     <li>
       <a href="../articles/sample-size-calculations.html">Sample size calculations for alpha diversity</a>
@@ -108,8 +108,8 @@ a covariate gradient.</p>
     
 
     <pre class="usage"><span class='fu'>betta_pic</span>(<span class='no'>y</span>, <span class='no'>se</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fu'>length</span>(<span class='no'>y</span>), <span class='kw'>ylimu</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>myy</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>mymain</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>mycol</span> <span class='kw'>=</span> <span class='fu'>rep</span>(<span class='st'>"black"</span>, <span class='fu'>length</span>(<span class='no'>y</span>)), <span class='kw'>labs</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>mypch</span> <span class='kw'>=</span> <span class='fu'>rep</span>(<span class='fl'>16</span>, <span class='fu'>length</span>(<span class='no'>y</span>)),
-  <span class='kw'>myxlim</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.8</span> * <span class='fu'>min</span>(<span class='no'>x</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='no'>T</span>), <span class='fl'>1.2</span> * <span class='fu'>max</span>(<span class='no'>x</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='no'>T</span>)))</pre>
+    <span class='kw'>mycol</span> <span class='kw'>=</span> <span class='fu'>rep</span>(<span class='st'>"black"</span>, <span class='fu'>length</span>(<span class='no'>y</span>)), <span class='kw'>labs</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>mypch</span> <span class='kw'>=</span> <span class='fu'>rep</span>(<span class='fl'>16</span>, <span class='fu'>length</span>(<span class='no'>y</span>)),
+    <span class='kw'>myxlim</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.8</span> * <span class='fu'>min</span>(<span class='no'>x</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='no'>T</span>), <span class='fl'>1.2</span> * <span class='fu'>max</span>(<span class='no'>x</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='no'>T</span>)))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -180,7 +180,19 @@ changes in biodiversity. arXiv preprint.</p>
 
 
 
-<span class='fu'>betta_pic</span>(<span class='fu'>c</span>(<span class='fl'>1552</span>, <span class='fl'>1500</span>, <span class='fl'>884</span>), <span class='fu'>c</span>(<span class='fl'>305</span>, <span class='fl'>675</span>, <span class='fl'>205</span>), <span class='kw'>mymain</span> <span class='kw'>=</span> <span class='st'>"Example title"</span>)</div><div class='img'><img src='betta_pic-13.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+
+
+
+
+
+
+<span class='fu'>betta_pic</span>(<span class='fu'>c</span>(<span class='fl'>1552</span>, <span class='fl'>1500</span>, <span class='fl'>884</span>), <span class='fu'>c</span>(<span class='fl'>305</span>, <span class='fl'>675</span>, <span class='fl'>205</span>), <span class='kw'>mymain</span> <span class='kw'>=</span> <span class='st'>"Example title"</span>)</div><div class='img'><img src='betta_pic-8.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+
+
+
+
+
+
 
 
 

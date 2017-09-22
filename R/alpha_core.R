@@ -63,6 +63,16 @@ shannon <- function(input) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 #' Plug-in Hill numbers
 #' 
 #' TODO
@@ -86,6 +96,16 @@ hill <- function(input, q) {
     }
   }
 }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -132,6 +152,16 @@ inverse_simpson <- function(input) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 #' Plug-in Simpson
 #' 
 #' TODO
@@ -159,6 +189,16 @@ simpson <- function(input) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 #' Plug-in Gini-Simpson
 #' 
 #' TODO
@@ -169,6 +209,16 @@ simpson <- function(input) {
 gini <- function(input) {
   1-simpson(input)
 }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -232,6 +282,16 @@ alpha_better <-  function(input, q = 0, ccc = NA, ccc_se = NA) {
   data.frame("q" = q, "Estimate" = estimates, "StdError" = ses)
   
 }
+
+
+
+
+
+
+
+
+
+
 
 
 
