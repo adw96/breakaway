@@ -94,11 +94,11 @@ get_point <- function(ecosystem, read, label) {
   
   shannon_estimate <- subsample %>% make_frequency_count_table  %>% shannon_better
   
-  names(shannon_estimate)[3:4] <- c("shannon", "shannon_max")
+  #names(shannon_estimate)[4:5] <- c("shannon", "shannon_max")
   print(shannon_estimate)
   estimate <- data.frame("reads" = read, 
                          "richness" = richness_estimate[1], "richness_max" = richness_estimate[2],
-                         "shannon" = shannon_estimate[3], "shannon_max" = shannon_estimate[4],
+                         "shannon" = shannon_estimate[1,4], "shannon_max" = shannon_estimate[1,5],
                          "ecosystem" = ecosystem_name, "type" = paste("estimate", label, sep=""))
   
   rbind(point, rarefied_sample, estimate)

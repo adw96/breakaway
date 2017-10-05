@@ -128,7 +128,7 @@ shannon_better <- function(input, ccc = NA, ccc_se = NA, quantile = 0.95) {
   estimates <- shannon(amended_proportions)
   ses <- sqrt(sum((1 + log(amended_proportions))^2 * amended_proportions * (1-amended_proportions)/nn) )
   
-  warning("Confidence intervals and standard errors are approximate!")           
+  warning("Confidence intervals and standard errors are approximate!\n")           
   
   data.frame("index"  = "shannon", "estimate" = estimates, "standard_error" = ses, 
              "lower" = estimates-qnorm(1-(1-quantile)/2)*ses, "upper" = estimates+qnorm(1-(1-quantile)/2)*ses)

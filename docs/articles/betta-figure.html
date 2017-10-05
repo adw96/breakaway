@@ -80,7 +80,7 @@
       <h1>Comparing samples visually with betta</h1>
                         <h4 class="author">Amy Willis</h4>
             
-            <h4 class="date">2017-10-04</h4>
+            <h4 class="date">2017-10-05</h4>
           </div>
 
     
@@ -113,21 +113,21 @@ bloom &lt;-<span class="st"> </span>bloom1 ==<span class="st"> "yes"</span></cod
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot_data_frame &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">"index"</span> =<span class="st"> </span><span class="dv">1</span>:<span class="dv">15</span>, lower, upper, means, standard_deviations, <span class="st">"bloom"</span>=bloom[<span class="dv">1</span>:<span class="dv">15</span>])
 plot_data_frame</code></pre></div>
 <pre><code>##                index   lower   upper    means standard_deviations bloom
-## Sample1.LCI.C      1 274.000 417.000 317.6778           34.878218 FALSE
-## Sample2.LCI.C      2 304.000 551.000 363.6732           57.131032 FALSE
-## Sample3.LCI.C      3 219.000 347.000 254.1172           30.852362 FALSE
-## Sample4.LCI.C      4 231.000 612.000 342.6804           99.753093 FALSE
-## Sample5.LCI.C      5 349.000 487.025 386.7960           33.756615 FALSE
-## Sample6.LCI.C      6 363.000 442.000 385.9588           19.025832 FALSE
-## Sample7.LCI.C      7 361.000 412.000 377.4926           12.545797  TRUE
-## Sample8.LCI.C      8 399.000 448.000 414.1020           12.596370  TRUE
-## Sample9.LCI.C      9 347.000 406.025 369.3022           15.716153 FALSE
-## Sample10.LCI.C    10 326.975 449.000 370.3822           31.172226 FALSE
-## Sample11.LCI.C    11 315.000 447.050 359.5958           40.525386 FALSE
-## Sample12.LCI.C    12 372.000 491.000 409.4900           29.350376 FALSE
-## Sample13.LCI.C    13 384.000 438.000 404.1558           14.302854 FALSE
-## Sample14.LCI.C    14 376.000 413.000 390.5944            9.725534  TRUE
-## Sample15.LCI.C    15 252.000 359.000 285.9378           29.178057  TRUE</code></pre>
+## Sample1.LCI.C      1 277.000 407.000 319.6466           32.162596 FALSE
+## Sample2.LCI.C      2 309.000 566.025 384.3426           68.820716 FALSE
+## Sample3.LCI.C      3 227.000 413.050 270.5362           44.773475 FALSE
+## Sample4.LCI.C      4 222.000 472.000 333.6008           69.420384 FALSE
+## Sample5.LCI.C      5 348.000 428.000 376.3898           20.877937 FALSE
+## Sample6.LCI.C      6 363.975 427.000 386.6990           15.903351 FALSE
+## Sample7.LCI.C      7 362.000 408.000 378.8310           11.952649  TRUE
+## Sample8.LCI.C      8 400.000 436.000 413.2944            9.483191  TRUE
+## Sample9.LCI.C      9 345.000 411.000 371.2606           17.691594 FALSE
+## Sample10.LCI.C    10 326.000 429.050 363.5450           26.136132 FALSE
+## Sample11.LCI.C    11 321.000 484.025 379.4162           43.941679 FALSE
+## Sample12.LCI.C    12 373.000 542.025 407.6708           37.480451 FALSE
+## Sample13.LCI.C    13 386.000 442.000 405.7816           14.265546 FALSE
+## Sample14.LCI.C    14 376.000 418.000 391.2666           10.503694  TRUE
+## Sample15.LCI.C    15 251.975 349.000 285.9512           25.441279  TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(plot_data_frame, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> index, <span class="dt">y =</span> means, <span class="dt">col =</span> bloom)) +
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_segment">geom_segment</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> index, <span class="dt">xend =</span> index, <span class="dt">y =</span> lower, <span class="dt">yend =</span> upper, <span class="dt">col =</span> bloom), <span class="dt">lwd =</span> <span class="fl">1.25</span>) +
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> index, <span class="dt">y =</span> means)) +<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Samples"</span>) +<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Richness estimates (Objective Bayes)"</span>)</code></pre></div>

@@ -80,7 +80,7 @@
       <h1>Variance of alpha diversity estimates</h1>
                         <h4 class="author">Amy Willis</h4>
             
-            <h4 class="date">2017-10-04</h4>
+            <h4 class="date">2017-10-05</h4>
           </div>
 
     
@@ -99,7 +99,7 @@
 <span class="kw"><a href="../reference/shannon.html">shannon</a></span>(toy_otu_table[,<span class="dv">1</span>])</code></pre></div>
 <pre><code>## [1] 4.220773</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/resample_estimate.html">resample_estimate</a></span>(toy_otu_table[,<span class="dv">1</span>], shannon)</code></pre></div>
-<pre><code>## [1] 4.204289</code></pre>
+<pre><code>## [1] 4.220589</code></pre>
 <p>The function resample_estimate takes on a column of your OTU table, bootstraps the OTUs that were observed, and calculates the plug-in estimate of the alpha diversity function on that bootstrapped sample.</p>
 <p>Great! How do we use that to get an estimate of the variance of the plug-in Shannon estimate? We do it lots of times!</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">shannon_estimates &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">200</span>, <span class="kw"><a href="../reference/resample_estimate.html">resample_estimate</a></span>(toy_otu_table[,<span class="dv">1</span>], shannon))
@@ -117,14 +117,14 @@
 <p><img src="resample-estimates_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
 <p>That’s a lot more variability than we initially saw! How about the standard deviation?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(shannon_estimates_n)</code></pre></div>
-<pre><code>## [1] 0.05970193</code></pre>
+<pre><code>## [1] 0.07578316</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(shannon_estimates)</code></pre></div>
-<pre><code>## [1] 0.04276082</code></pre>
+<pre><code>## [1] 0.05926301</code></pre>
 <p>Okay that’s not that different. But since current practices pretending that the standard deviation is zero (no error bars on alpha diversity!), it’s way better than pretending that the variance is zero.</p>
 <p>Similarly, this isn’t a great solution to constructing confidence intervals for Shannon, but it’s a start!</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">quantile</span>(shannon_estimates_n, <span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</code></pre></div>
 <pre><code>##     2.5%    97.5% 
-## 4.071491 4.228874</code></pre>
+## 3.887958 4.228322</code></pre>
 <p>Watch this space for better ways to construct confidence intervals for alpha diversity!</p>
 <p>(Obviously this tutorial applies to any other diversity index, not just Shannon, but hopefully was helpful to make this discussion more concrete.)</p>
 <p>By the way – it’s much better, in my opinion, to use non-bootstrapped standard errors for species richness estimates. This is because there are certain regularity conditions that are necessary for the bootstrap to give reasonable estimates of variance, and these definitely don’t hold for species richness estimation.</p>

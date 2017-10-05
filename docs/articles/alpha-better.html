@@ -80,7 +80,7 @@
       <h1>alpha diversity, properly</h1>
                         <h4 class="author">Amy Willis</h4>
             
-            <h4 class="date">2017-10-04</h4>
+            <h4 class="date">2017-10-05</h4>
           </div>
 
     
@@ -176,11 +176,11 @@ get_point &lt;-<span class="st"> </span>function(ecosystem, read, label) {
   
   shannon_estimate &lt;-<span class="st"> </span>subsample %&gt;%<span class="st"> </span>make_frequency_count_table  %&gt;%<span class="st"> </span>shannon_better
   
-  <span class="kw">names</span>(shannon_estimate)[<span class="dv">3</span>:<span class="dv">4</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"shannon"</span>, <span class="st">"shannon_max"</span>)
+  <span class="co">#names(shannon_estimate)[4:5] &lt;- c("shannon", "shannon_max")</span>
   <span class="kw">print</span>(shannon_estimate)
   estimate &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">"reads"</span> =<span class="st"> </span>read, 
                          <span class="st">"richness"</span> =<span class="st"> </span>richness_estimate[<span class="dv">1</span>], <span class="st">"richness_max"</span> =<span class="st"> </span>richness_estimate[<span class="dv">2</span>],
-                         <span class="st">"shannon"</span> =<span class="st"> </span>shannon_estimate[<span class="dv">3</span>], <span class="st">"shannon_max"</span> =<span class="st"> </span>shannon_estimate[<span class="dv">4</span>],
+                         <span class="st">"shannon"</span> =<span class="st"> </span>shannon_estimate[<span class="dv">1</span>,<span class="dv">4</span>], <span class="st">"shannon_max"</span> =<span class="st"> </span>shannon_estimate[<span class="dv">1</span>,<span class="dv">5</span>],
                          <span class="st">"ecosystem"</span> =<span class="st"> </span>ecosystem_name, <span class="st">"type"</span> =<span class="st"> </span><span class="kw">paste</span>(<span class="st">"estimate"</span>, label, <span class="dt">sep=</span><span class="st">""</span>))
   
   <span class="kw">rbind</span>(point, rarefied_sample, estimate)
@@ -220,50 +220,39 @@ observations &lt;-<span class="st"> </span><span class="kw">rbind</span>(<span c
                       <span class="kw">get_point</span>(<span class="dv">1</span>, <span class="dv">7500</span>, <span class="dv">4</span>),
                       <span class="kw">get_point</span>(<span class="dv">1</span>, <span class="dv">4500</span>, <span class="dv">5</span>),
                       <span class="kw">get_point</span>(<span class="dv">1</span>, <span class="dv">3000</span>, <span class="dv">6</span>))</code></pre></div>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are
-## approximate!</code></pre>
-<pre><code>##     index estimate    shannon shannon_max    upper
-## 1 shannon 8.394009 0.04684391    8.302197 8.485822</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are
-## approximate!</code></pre>
-<pre><code>##     index estimate    shannon shannon_max    upper
-## 1 shannon 8.371503 0.06743262    8.239337 8.503668</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are
-## approximate!</code></pre>
-<pre><code>##     index estimate    shannon shannon_max    upper
-## 1 shannon 8.380738 0.08267669    8.218695 8.542782</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are
-## approximate!</code></pre>
-<pre><code>##     index estimate   shannon shannon_max    upper
-## 1 shannon 8.396488 0.0885631    8.222908 8.570069</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are
-## approximate!</code></pre>
-<pre><code>##     index estimate    shannon shannon_max    upper
-## 1 shannon 8.374706 0.05842253      8.2602 8.489212</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are
-## approximate!</code></pre>
-<pre><code>##     index estimate  shannon shannon_max    upper
-## 1 shannon 8.334576 0.082179    8.173508 8.495644</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are
-## approximate!</code></pre>
-<pre><code>##     index estimate    shannon shannon_max    upper
-## 1 shannon 8.452712 0.06313501    8.328969 8.576454</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are
-## approximate!</code></pre>
-<pre><code>##     index estimate   shannon shannon_max    upper
-## 1 shannon 8.451211 0.1055248    8.244386 8.658036</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are
-## approximate!</code></pre>
-<pre><code>##     index estimate    shannon shannon_max    upper
-## 1 shannon 8.376672 0.08535505     8.20938 8.543965</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are
-## approximate!</code></pre>
-<pre><code>##     index estimate   shannon shannon_max    upper
-## 1 shannon 8.301616 0.1090084    8.087963 8.515269</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are
-## approximate!</code></pre>
-<pre><code>##     index estimate   shannon shannon_max    upper
-## 1 shannon 8.370372 0.1346813    8.106401 8.634342</code></pre>
+<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!</code></pre>
+<pre><code>##     index estimate standard_error    lower    upper
+## 1 shannon 8.394009     0.04684391 8.302197 8.485822</code></pre>
+<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!</code></pre>
+<pre><code>##     index estimate standard_error    lower    upper
+## 1 shannon 8.371503     0.06743262 8.239337 8.503668</code></pre>
+<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!</code></pre>
+<pre><code>##     index estimate standard_error    lower    upper
+## 1 shannon 8.380738     0.08267669 8.218695 8.542782</code></pre>
+<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!</code></pre>
+<pre><code>##     index estimate standard_error    lower    upper
+## 1 shannon 8.396488      0.0885631 8.222908 8.570069</code></pre>
+<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!</code></pre>
+<pre><code>##     index estimate standard_error  lower    upper
+## 1 shannon 8.374706     0.05842253 8.2602 8.489212</code></pre>
+<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!</code></pre>
+<pre><code>##     index estimate standard_error    lower    upper
+## 1 shannon 8.334576       0.082179 8.173508 8.495644</code></pre>
+<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!</code></pre>
+<pre><code>##     index estimate standard_error    lower    upper
+## 1 shannon 8.452712     0.06313501 8.328969 8.576454</code></pre>
+<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!</code></pre>
+<pre><code>##     index estimate standard_error    lower    upper
+## 1 shannon 8.451211      0.1055248 8.244386 8.658036</code></pre>
+<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!</code></pre>
+<pre><code>##     index estimate standard_error   lower    upper
+## 1 shannon 8.376672     0.08535505 8.20938 8.543965</code></pre>
+<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!</code></pre>
+<pre><code>##     index estimate standard_error    lower    upper
+## 1 shannon 8.301616      0.1090084 8.087963 8.515269</code></pre>
+<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!</code></pre>
+<pre><code>##     index estimate standard_error    lower    upper
+## 1 shannon 8.370372      0.1346813 8.106401 8.634342</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rarefaction_level &lt;-<span class="st"> </span>observations %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(type ==<span class="st"> "observation"</span>) %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(reads) %&gt;%<span class="st"> </span>min
 
 rarefaction_table &lt;-<span class="st"> </span><span class="kw">rbind</span>(observations, truth)
