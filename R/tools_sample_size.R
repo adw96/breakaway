@@ -71,6 +71,24 @@ sample_size_estimate <- function(control_group_est, se_est, diff = 5,
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #' Plot the power obtained with sample size
 #' 
 #' Plot the power obtained with sample size

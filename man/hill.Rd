@@ -7,10 +7,18 @@
 hill(input, q)
 }
 \arguments{
-\item{input}{TODO}
+\item{input}{A frequency count table, vector of abundances, or vector of
+proportions.}
 
-\item{q}{TODO}
+\item{q}{The Hill number of interest. q = 0 corresponds to species richness, q = 2 corresponds to inverse Simpson, etc.}
+}
+\value{
+The Hill number of the population given by input.
 }
 \description{
-TODO
+Plug-in Hill numbers, for population-level data.
+}
+\note{
+This function is intended for population-level data. If you are
+dealing with a microbial sample, use \code{\link{hill_better}} instead.
 }

@@ -52,7 +52,21 @@ artificially low standard errors. Caution is advised.
 
 
 
+
+
+
+
+
+
+
 wlrm_untransformed(apples)
+
+
+
+
+
+
+
 
 
 

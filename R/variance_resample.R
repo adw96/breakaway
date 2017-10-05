@@ -22,6 +22,13 @@
 #' 
 #' 
 #' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
 #' # Bootstrap observations to calculate a re-sample estimate of the Shannon index
 #' resample_estimate(toy_otu_table[,1], shannon)
 #' 
@@ -36,6 +43,13 @@
 #' 
 #' hist(shannon_estimates)
 #' sd(shannon_estimates) # a not too terrible estimate of the standard error in estimating Shannon
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
 #' 
 #' 
 #' 
@@ -58,14 +72,34 @@ resample_estimate <- function(my_data, my_function, my_sample_size=NA, ...) {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #' Resampling the taxa of your OTU table
 #' 
 #' This function resamples OTUs to a specified read count
 #' 
+#' 
 #' @param my_data The columns of your OTU table, giving the number of counts
 #' for each taxa
 #' @param my_sample_size The number of reads of the bootstrap.
-#' @return A independent-bootstrap resampled OTU frequencies, in frequency count table form.
+#' @return A independent-bootstrap resampled OTU frequencies, in frequency
+#' count table form.
 #' @export subsample_otu
 subsample_otu <- function(my_data, my_sample_size=NA, ...) {
   # assume  my_data is an OTU table

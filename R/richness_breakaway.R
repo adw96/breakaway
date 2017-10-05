@@ -81,8 +81,22 @@
 #' 
 #' 
 #' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
 #' breakaway(apples)
 #' breakaway(apples, plot = FALSE, print = FALSE, answers = TRUE)
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
 #' 
 #' 
 #' 
@@ -170,6 +184,25 @@ breakaway <- function(my_data, print=TRUE, plot=FALSE, answers=FALSE, force=FALS
   
   if (cutoff < 6) { ## check for unusual data structures
     stop("You don't have enough contiguous frequencies.\nbreakaway needs at least 6!\n")
+    # warning("You don't have enough contiguous frequencies.\nbreakaway needs at least 6!\nUsing Chao-Bunge instead...\n")
+    # 
+    # result <- chao_bunge(data, answers = T, print = F)
+    # if(print) {
+    #   cat("################## breakaway ##################\n")
+    #   cat("\tThe best estimate of total diversity is", round(result$est),
+    #       "\n \t with std error",round(result$seest),"\n")
+    #   cat("\tThe model employed was Chao-Bunge (Negative binomial) \n")
+    # }
+    # 
+    # if(answers) {
+    #   result$name <- "Chao-Bunge"
+    #   result$est <- result$est
+    #   result$seest <- result$seest
+    #   d <- exp(1.96*sqrt(log(1+result$seest^2/f0)))
+    #   result$ci <- c(n+f0/d,n+f0*d)
+    #   return(result)
+    # }
+    # 
   } 
   
   if ( !force && ( (my_data[cutoff,2]/my_data[cutoff-1,2])>10 )) {
@@ -484,6 +517,24 @@ residse <- function(model) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #' species richness estimation without singletons
 #' 
 #' This function permits estimation of total diversity based on a sample
@@ -569,8 +620,22 @@ residse <- function(model) {
 #' 
 #' 
 #' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
 #' breakaway_nof1(apples[-1, ])
 #' breakaway_nof1(apples[-1, ], plot = FALSE, print = FALSE, answers = TRUE)
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
 #' 
 #' 
 #' 

@@ -36,7 +36,29 @@ to_proportions <- function(input, type) {
   }
 }
 
-#' @export
+
+
+
+
+
+
+
+
+
+
+
+
+#' Plug-in Shannon index
+#' 
+#' Plug-in Shannon index, for population-level data.
+#' 
+#' 
+#' @param input A frequency count table, vector of abundances, or vector of
+#' proportions.
+#' @return The Shannon index of the population given by input.
+#' @note This function is intended for population-level data. If you are
+#' dealing with a microbial sample, use \code{\link{shannon_better}} instead.
+#' @export shannon
 shannon <- function(input) {
   
   type <- frequency_count_or_proportion_or_column(input)
@@ -73,13 +95,34 @@ shannon <- function(input) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #' Plug-in Hill numbers
 #' 
-#' TODO
+#' Plug-in Hill numbers, for population-level data.
 #' 
-#' 
-#' @param input TODO
-#' @param q TODO
+#' @param input A frequency count table, vector of abundances, or vector of
+#' proportions.
+#' @param q The Hill number of interest. q = 0 corresponds to species richness, q = 2 corresponds to inverse Simpson, etc.
+#' @return The Hill number of the population given by input.
+#' @note This function is intended for population-level data. If you are
+#' dealing with a microbial sample, use \code{\link{hill_better}} instead.
 #' @export hill
 hill <- function(input, q) {
   
@@ -123,12 +166,33 @@ hill <- function(input, q) {
 
 
 
-#' Plug-in Hill numbers
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#' Plug-in Inverse Simpson index
 #' 
-#' TODO
+#' Plug-in Inverse Simpson index, for population-level data.
 #' 
-#' 
-#' @param input TODO
+#' @param input A frequency count table, vector of abundances, or vector of
+#' proportions.
+#' @return The inverse-Simpson index of the population given by input.
+#' @note This function is intended for population-level data. If you are
+#' dealing with a microbial sample, use \code{\link{inverse_simpson_better}} instead.
 #' @export inverse_simpson
 inverse_simpson <- function(input) {
   hill(input, 2)
@@ -162,12 +226,32 @@ inverse_simpson <- function(input) {
 
 
 
-#' Plug-in Simpson
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#' Plug-in Simpson index
 #' 
-#' TODO
+#' Plug-in Simpson index, for population-level data.
 #' 
-#' 
-#' @param input TODO
+#' @param input A frequency count table, vector of abundances, or vector of
+#' proportions.
+#' @return The Simpson index of the population given by input.
+#' @note This function is intended for population-level data. If you are
+#' dealing with a microbial sample, use \code{\link{simpson_better}} instead.
 #' @export simpson
 simpson <- function(input) {
   1/hill(input, 2)
@@ -199,12 +283,33 @@ simpson <- function(input) {
 
 
 
-#' Plug-in Gini-Simpson
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#' Plug-in Gini-Simpson index
 #' 
-#' TODO
+#' Plug-in Gini-Simpson index, for population-level data.
 #' 
-#' 
-#' @param input TODO
+#' @param input A frequency count table, vector of abundances, or vector of
+#' proportions.
+#' @return The Gini-Simpson index of the population given by input.
+#' @note This function is intended for population-level data. If you are
+#' dealing with a microbial sample, use \code{\link{gini_better}} instead.
 #' @export gini
 gini <- function(input) {
   1-simpson(input)
@@ -238,94 +343,7 @@ gini <- function(input) {
 
 
 
-#' alpha diversity estimates
-#' 
-#' TODO
-#' 
-#' 
-#' @param input TODO
-#' @param q TODO
-#' @param ccc TODO
-#' @export alpha_better
-alpha_better <-  function(input, q = 0, ccc = NA, ccc_se = NA) {
-  
-  type <- frequency_count_or_proportion_or_column(input)
-  proportions <- to_proportions(input, type)
-  
-  if ((is.na(ccc) | is.null(ccc)) & type == "frequency count") {
-    baway <- breakaway(input, print = F, answers = T, plot = F)
-    ccc <- round(baway$est)
-    ccc_se <- round(baway$seest)
-  }
-  
-  cc <- sum(input[,2])
-  unobs <- ccc-cc
-  
-  unobs_props <- rep(1/ccc, unobs)
-  obs_props <- cc/ccc * proportions
-  new_props <- c(unobs_props, obs_props)
-  
-  if (length(q) > 1) {
-    estimates <- sapply(X = q, FUN = hill, input = new_props)
-    ses <- mapply(FUN = hill_se, 
-                  q = q, 
-                  Dest = estimates,
-                  MoreArgs = list(Cest = ccc, Cse = ccc_se,
-                                  props = obs_props, c = cc))
-    
-  } else {
-    estimates <- hill(new_props, q)
-    ses <- hill_se(Cest = ccc, Cse = ccc_se, 
-                   q, props = obs_props, Dest = estimates, 
-                   c = cc)
-  }
-  data.frame("q" = q, "Estimate" = estimates, "StdError" = ses)
-  
-}
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#' alpha diversity std errors
-#' 
-#' TODO
-#' 
-#' 
-#' @param Cest TODO
-#' @param Cse TODO
-#' @param q TODO
-#' @param props TODO
-#' @param Dest TODO
-#' @param c TODO
-#' @export hill_se
-hill_se <- function(Cest, Cse, q, props, Dest, c) {
-  
-  derivative <- (Dest^q) / (1-q) * 
-    ((1-q) * Cest^-q + c * q * Cest^(-q-1)  - q * c^q * Cest^(-q-1) * sum(props^q))
-  
-  variance_est <- derivative ^ 2 * Cse^2 
-  sqrt(variance_est)
-}

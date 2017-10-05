@@ -2,13 +2,21 @@
 % Please edit documentation in R/alpha_core.R
 \name{inverse_simpson}
 \alias{inverse_simpson}
-\title{Plug-in Hill numbers}
+\title{Plug-in Inverse Simpson index}
 \usage{
 inverse_simpson(input)
 }
 \arguments{
-\item{input}{TODO}
+\item{input}{A frequency count table, vector of abundances, or vector of
+proportions.}
+}
+\value{
+The inverse-Simpson index of the population given by input.
 }
 \description{
-TODO
+Plug-in Inverse Simpson index, for population-level data.
+}
+\note{
+This function is intended for population-level data. If you are
+dealing with a microbial sample, use \code{\link{inverse_simpson_better}} instead.
 }

@@ -1,4 +1,5 @@
 url: http://adw96.github.io/breakaway
+
 theme: jekyll-theme-leap-day
 
 reference:
@@ -23,4 +24,3 @@ reference:
     contents:
     - starts_with("plot_")
     - starts_with("tools_")
-    

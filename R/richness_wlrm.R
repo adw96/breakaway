@@ -42,8 +42,22 @@
 #' 
 #' 
 #' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
 #' wlrm_transformed(apples)
 #' wlrm_transformed(apples, plot = FALSE, print = FALSE, answers = TRUE)
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
 #' 
 #' 
 #' 
@@ -146,6 +160,24 @@ wlrm_transformed <- function(data, print=TRUE, plot=FALSE, answers=FALSE, cutoff
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #' function for species richness estimation
 #' 
 #' This function implements the untransformed version of the species richness
@@ -190,7 +222,21 @@ wlrm_transformed <- function(data, print=TRUE, plot=FALSE, answers=FALSE, cutoff
 #' 
 #' 
 #' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
 #' wlrm_untransformed(apples)
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
+#' 
 #' 
 #' 
 #' 

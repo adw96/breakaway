@@ -2,13 +2,21 @@
 % Please edit documentation in R/alpha_core.R
 \name{simpson}
 \alias{simpson}
-\title{Plug-in Simpson}
+\title{Plug-in Simpson index}
 \usage{
 simpson(input)
 }
 \arguments{
-\item{input}{TODO}
+\item{input}{A frequency count table, vector of abundances, or vector of
+proportions.}
+}
+\value{
+The Simpson index of the population given by input.
 }
 \description{
-TODO
+Plug-in Simpson index, for population-level data.
+}
+\note{
+This function is intended for population-level data. If you are
+dealing with a microbial sample, use \code{\link{simpson_better}} instead.
 }

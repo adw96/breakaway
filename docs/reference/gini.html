@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plug-in Gini-Simpson — gini • breakaway</title>
+<title>Plug-in Gini-Simpson index — gini • breakaway</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -71,6 +71,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/alpha-better.html">alpha diversity, properly</a>
+    </li>
+    <li>
       <a href="../articles/betta-figure.html">Comparing samples visually with betta</a>
     </li>
     <li>
@@ -99,11 +102,11 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plug-in Gini-Simpson</h1>
+    <h1>Plug-in Gini-Simpson index</h1>
     </div>
 
     
-    <p>TODO</p>
+    <p>Plug-in Gini-Simpson index, for population-level data.</p>
     
 
     <pre class="usage"><span class='fu'>gini</span>(<span class='no'>input</span>)</pre>
@@ -113,9 +116,19 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>input</th>
-      <td><p>TODO</p></td>
+      <td><p>A frequency count table, vector of abundances, or vector of
+proportions.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>The Gini-Simpson index of the population given by input.</p>
+    
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>This function is intended for population-level data. If you are
+dealing with a microbial sample, use <code><a href='gini_better.html'>gini_better</a></code> instead.</p>
     
 
   </div>
@@ -123,7 +136,11 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#note">Note</a></li>
+          </ul>
 
   </div>
 </div>

@@ -2,13 +2,21 @@
 % Please edit documentation in R/alpha_core.R
 \name{gini}
 \alias{gini}
-\title{Plug-in Gini-Simpson}
+\title{Plug-in Gini-Simpson index}
 \usage{
 gini(input)
 }
 \arguments{
-\item{input}{TODO}
+\item{input}{A frequency count table, vector of abundances, or vector of
+proportions.}
+}
+\value{
+The Gini-Simpson index of the population given by input.
 }
 \description{
-TODO
+Plug-in Gini-Simpson index, for population-level data.
+}
+\note{
+This function is intended for population-level data. If you are
+dealing with a microbial sample, use \code{\link{gini_better}} instead.
 }

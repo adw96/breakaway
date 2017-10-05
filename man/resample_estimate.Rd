@@ -33,6 +33,13 @@ variance of alpha diversity estimates.
 
 
 
+
+
+
+
+
+
+
 # Bootstrap observations to calculate a re-sample estimate of the Shannon index
 resample_estimate(toy_otu_table[,1], shannon)
 
@@ -47,6 +54,13 @@ shannon_estimates <- replicate(200, resample_estimate(toy_otu_table[,1], shannon
 
 hist(shannon_estimates)
 sd(shannon_estimates) # a not too terrible estimate of the standard error in estimating Shannon
+
+
+
+
+
+
+
 
 
 

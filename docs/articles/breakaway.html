@@ -48,6 +48,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/alpha-better.html">alpha diversity, properly</a>
+    </li>
+    <li>
       <a href="../articles/betta-figure.html">Comparing samples visually with betta</a>
     </li>
     <li>
@@ -77,7 +80,7 @@
       <h1>Getting started with breakaway</h1>
                         <h4 class="author">Amy Willis</h4>
             
-            <h4 class="date">2017-09-22</h4>
+            <h4 class="date">2017-10-04</h4>
           </div>
 
     
@@ -197,7 +200,7 @@ frequencytablelist &lt;-<span class="st"> </span><span class="kw">lapply</span>(
 <a href="#estimating-alpha-diversity" class="anchor"></a>Estimating alpha diversity</h2>
 <p>The above discussion focused exclusively on richness. Let’s look at the variability of evenness estimates</p>
 <p>Let’s calculate the plug in estimate of Shannon diversity</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shannon</span>(frequencytablelist[[<span class="dv">1</span>]])</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/shannon.html">shannon</a></span>(frequencytablelist[[<span class="dv">1</span>]])</code></pre></div>
 <pre><code>## Warning in Ops.factor(input[, 2], input[, 1]): '*' not meaningful for
 ## factors</code></pre>
 <pre><code>## Warning in Ops.factor(input[, 1], total_reads): '/' not meaningful for
@@ -205,15 +208,15 @@ frequencytablelist &lt;-<span class="st"> </span><span class="kw">lapply</span>(
 <pre><code>## [1] NA</code></pre>
 <p>4.95, huh? Let’s look at how variable it is</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">2</span>) <span class="co"># the following functions are random, so let's set the seed (allows reproducibility)</span>
-<span class="kw">resample_estimate</span>(otu_data[,<span class="dv">1</span>], shannon)</code></pre></div>
+<span class="kw"><a href="../reference/resample_estimate.html">resample_estimate</a></span>(otu_data[,<span class="dv">1</span>], shannon)</code></pre></div>
 <pre><code>## [1] 4.192225</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">resample_estimate</span>(otu_data[,<span class="dv">1</span>], shannon)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/resample_estimate.html">resample_estimate</a></span>(otu_data[,<span class="dv">1</span>], shannon)</code></pre></div>
 <pre><code>## [1] 4.195559</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">resample_estimate</span>(otu_data[,<span class="dv">1</span>], shannon)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/resample_estimate.html">resample_estimate</a></span>(otu_data[,<span class="dv">1</span>], shannon)</code></pre></div>
 <pre><code>## [1] 4.209098</code></pre>
 <p>Hmmm, doesn’t look too variable! Let’s look at a lot of them</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))
-<span class="kw">hist</span>(<span class="kw">replicate</span>(<span class="dv">200</span>, <span class="kw">resample_estimate</span>(otu_data[,<span class="dv">1</span>], shannon)))</code></pre></div>
+<span class="kw">hist</span>(<span class="kw">replicate</span>(<span class="dv">200</span>, <span class="kw"><a href="../reference/resample_estimate.html">resample_estimate</a></span>(otu_data[,<span class="dv">1</span>], shannon)))</code></pre></div>
 <p><img src="breakaway_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
 <p>(replicate says: “do this 200 times”) Yikes, that’s some negative skew! That suggests that we have risks in randomly observing really low Shannon diversity estimates. This is an important thing to keep in mind when analysing data. eg. Did we just have bad luck with the sample from the patient taking the drug? Or is the drug causing the effect?</p>
 <p>BTW, you can use the above to look sample size variability as well. If you have very different numbers of reads across samples, this can introduce additional variability. Let’s look at the distribution of reads in the current dataset.</p>
@@ -222,11 +225,11 @@ frequencytablelist &lt;-<span class="st"> </span><span class="kw">lapply</span>(
 <p><img src="breakaway_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
 <p>Well, but a lot of variability! Lets account for it in looking at our distribution of Shannon diversity estimates</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">8</span>)
-<span class="kw">hist</span>(<span class="kw">replicate</span>(<span class="dv">500</span>, <span class="kw">resample_estimate</span>(otu_data[,<span class="dv">1</span>], shannon, <span class="dt">my_sample_size =</span> ns)))</code></pre></div>
+<span class="kw">hist</span>(<span class="kw">replicate</span>(<span class="dv">500</span>, <span class="kw"><a href="../reference/resample_estimate.html">resample_estimate</a></span>(otu_data[,<span class="dv">1</span>], shannon, <span class="dt">my_sample_size =</span> ns)))</code></pre></div>
 <p><img src="breakaway_files/figure-html/unnamed-chunk-12-1.png" width="672"></p>
 <p>That’s a lot more variability than we saw originally!</p>
 <p>Going forward with your analyses, don’t forget to account for variability in your estimates. Bootstrap standard errors are better than nothing!</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(<span class="kw">replicate</span>(<span class="dv">500</span>, <span class="kw">resample_estimate</span>(otu_data[,<span class="dv">1</span>], shannon, <span class="dt">my_sample_size =</span> ns)))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(<span class="kw">replicate</span>(<span class="dv">500</span>, <span class="kw"><a href="../reference/resample_estimate.html">resample_estimate</a></span>(otu_data[,<span class="dv">1</span>], shannon, <span class="dt">my_sample_size =</span> ns)))</code></pre></div>
 <pre><code>## [1] 0.1147657</code></pre>
 </div>
 <div id="modelling-alpha-diversity" class="section level2">
@@ -243,7 +246,7 @@ frequencytablelist &lt;-<span class="st"> </span><span class="kw">lapply</span>(
 <span class="kw">colnames</span>(estimates_shannon) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"shannon_est"</span>,<span class="st">"shannon_seest"</span>,<span class="st">"shannon_lcb"</span>,<span class="st">"shannon_ucb"</span>)
 for (i in <span class="dv">1</span>:<span class="kw">dim</span>(otu_data)[<span class="dv">2</span>]) {
   <span class="co">#resample_estimate(otu_data[,i], shannon, my_sample_size = ns)</span>
-  samples &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">500</span>, <span class="kw">resample_estimate</span>(otu_data[,i], shannon, <span class="dt">my_sample_size =</span> ns))
+  samples &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">500</span>, <span class="kw"><a href="../reference/resample_estimate.html">resample_estimate</a></span>(otu_data[,i], shannon, <span class="dt">my_sample_size =</span> ns))
   estimates_shannon[i,<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">mean</span>(samples)
   estimates_shannon[i,<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">sd</span>(samples)
   estimates_shannon[i,<span class="dv">3</span>:<span class="dv">4</span>] &lt;-<span class="st"> </span><span class="kw">quantile</span>(samples, <span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))
@@ -334,7 +337,7 @@ results$table</code></pre></div>
 }</code></pre></div>
 <p>Exercise: define a function to calculate the inverse of the plug-in Simpson index estimate</p>
 <p>To estimate the bootstrap mean and standard error of the simpson index, we do the following</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">simpson_resamples &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">100</span>, <span class="kw">resample_estimate</span>(otu_data[,<span class="dv">1</span>], simpson))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">simpson_resamples &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">100</span>, <span class="kw"><a href="../reference/resample_estimate.html">resample_estimate</a></span>(otu_data[,<span class="dv">1</span>], simpson))
 <span class="kw">hist</span>(simpson_resamples)</code></pre></div>
 <p><img src="breakaway_files/figure-html/unnamed-chunk-22-1.png" width="672"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(simpson_resamples)</code></pre></div>

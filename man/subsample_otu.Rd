@@ -13,7 +13,8 @@ for each taxa}
 \item{my_sample_size}{The number of reads of the bootstrap.}
 }
 \value{
-A independent-bootstrap resampled OTU frequencies, in frequency count table form.
+A independent-bootstrap resampled OTU frequencies, in frequency
+count table form.
 }
 \description{
 This function resamples OTUs to a specified read count

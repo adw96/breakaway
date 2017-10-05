@@ -71,6 +71,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/alpha-better.html">alpha diversity, properly</a>
+    </li>
+    <li>
       <a href="../articles/betta-figure.html">Comparing samples visually with betta</a>
     </li>
     <li>
@@ -144,6 +147,13 @@ metric given by my_function</p>
     <pre class="examples"><div class='input'>
 
 
+
+
+
+
+
+
+
 <span class='co'># Bootstrap observations to calculate a re-sample estimate of the Shannon index</span>
 <span class='fu'>resample_estimate</span>(<span class='no'>toy_otu_table</span>[,<span class='fl'>1</span>], <span class='no'>shannon</span>)</div><div class='output co'>#&gt; [1] 4.174315</div><div class='input'>
 <span class='co'># To see the sampling distribution of the resample estimates, repeat this 200 times</span>
@@ -155,6 +165,13 @@ metric given by my_function</p>
 <span class='no'>shannon_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'>replicate</span>(<span class='fl'>200</span>, <span class='fu'>resample_estimate</span>(<span class='no'>toy_otu_table</span>[,<span class='fl'>1</span>], <span class='no'>shannon</span>, <span class='kw'>my_sample_size</span> <span class='kw'>=</span> <span class='no'>ns</span>))
 
 <span class='fu'>hist</span>(<span class='no'>shannon_estimates</span>)</div><div class='img'><img src='resample_estimate-6.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>sd</span>(<span class='no'>shannon_estimates</span>) <span class='co'># a not too terrible estimate of the standard error in estimating Shannon</span></div><div class='output co'>#&gt; [1] 0.07059159</div><div class='input'>
+
+
+
+
+
+
+
 
 
 </div></pre>
