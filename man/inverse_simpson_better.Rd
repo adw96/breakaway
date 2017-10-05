@@ -11,8 +11,6 @@ inverse_simpson_better(input)
 }
 \value{
 An estimate, standard error, and confidence set of the index.
-
-inverse_simpson_better
 }
 \description{
 In many ecological surveys, only a small fraction of the total ecosystem is

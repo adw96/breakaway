@@ -11,6 +11,7 @@
 #' @param ccc An estimate of the total species richness of the community under
 #' study. If none is given, \code{\link{breakaway}} is used
 #' @param ccc_se The standard error in the estimate of ccc.
+#' @param quantile The desired coverage of the confidence interval. Defaults to 0.95. Note all confidence intervals are approximate.
 #' @return An estimate, standard error, and confidence set of the Hill number.
 #' @examples 
 #'
@@ -93,6 +94,7 @@ hill_se <- function(Cest, Cse, q, proportions, Dest, c) {
 #' @param ccc An estimate of the total species richness of the community under
 #' study. If none is given, \code{\link{breakaway}} is used
 #' @param ccc_se The standard error in the estimate of ccc.
+#' @param quantile The desired coverage of the confidence interval. Defaults to 0.95. Note all confidence intervals are approximate.
 #' @return An estimate, standard error, and confidence set of the index.
 #' @examples
 #' 
@@ -175,9 +177,9 @@ shannon_better <- function(input, ccc = NA, ccc_se = NA, quantile = 0.95) {
 #' 
 #' inverse_simpson_better(apples)
 #' 
-#' @return inverse_simpson_better
+#' @export inverse_simpson_better
 inverse_simpson_better <- function(input) {
-  alpha_better(input, 2)
+  hill_better(input, 2)
 }
 
 

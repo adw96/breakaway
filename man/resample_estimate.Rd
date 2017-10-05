@@ -19,6 +19,8 @@ diversity) are very sensitive to sample size. To gauge the effect of
 differing sample sizes on the variance in estimating alpha diversity, it is
 (currently) advisable to include multiple different sample sizes in your
 resampling}
+
+\item{...}{Other arguments to pass to \code{my_function}}
 }
 \value{
 A (independent-bootstrap resampled) estimate of the alpha diversity

@@ -30,6 +30,7 @@
 #' \samp{force} issue does not address censoring or small data on the rare end
 #' of the frequency count tables, i.e. insufficiently many contiguous
 #' frequencies.
+#' @param useAll Forces all data to be used. Otherwise breakaway determines the optimal cutoff.
 #' @return \item{code}{ A category representing algorithm behaviour.
 #' \samp{code=1} indicates no nonlinear models converged and the transformed
 #' WLRM diversity estimate of Rocchetti et. al. (2011) is returned.

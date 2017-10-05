@@ -15,6 +15,7 @@
 #' differing sample sizes on the variance in estimating alpha diversity, it is
 #' (currently) advisable to include multiple different sample sizes in your
 #' resampling
+#' @param ... Other arguments to pass to \code{my_function}
 #' @return A (independent-bootstrap resampled) estimate of the alpha diversity
 #' metric given by my_function
 #' @author Amy Willis
@@ -98,6 +99,7 @@ resample_estimate <- function(my_data, my_function, my_sample_size=NA, ...) {
 #' @param my_data The columns of your OTU table, giving the number of counts
 #' for each taxa
 #' @param my_sample_size The number of reads of the bootstrap.
+#' @param ... Other arguments, which are ignored.
 #' @return A independent-bootstrap resampled OTU frequencies, in frequency
 #' count table form.
 #' @export subsample_otu

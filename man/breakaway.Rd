@@ -37,6 +37,8 @@ estimates cannot be considered reliable in this case. The option
 \samp{force} issue does not address censoring or small data on the rare end
 of the frequency count tables, i.e. insufficiently many contiguous
 frequencies.}
+
+\item{useAll}{Forces all data to be used. Otherwise breakaway determines the optimal cutoff.}
 }
 \value{
 \item{code}{ A category representing algorithm behaviour.

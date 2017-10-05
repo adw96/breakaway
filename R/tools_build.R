@@ -65,19 +65,21 @@ build_frequency_count_tables <- function(otu_table) {
 #' 
 #' Draw frequency count subtables from an OTU table
 #' 
+#' @param labels A vector of counts of the taxa; i.e. a vector giving the number of times each taxon was observed.
 #' 
 #' @export make_frequency_count_table
 make_frequency_count_table <- function(labels) {
   x <- as.data.frame(table(table(labels)))
   x[, 1] <- as.numeric(as.character(x[, 1]))
+  x[, 2] <- as.numeric(as.character(x[, 2]))
   x
 }
 
 convert_freq_indices <- function(frequency_table) {
   checked_frequency_table <- frequency_table
-  if (is.factor(frequency_table[, 1])) {
+  if (!is.numeric(frequency_table[, 1])) {
     fs <- as.numeric(as.character(frequency_table[, 1]))
-    checked_frequency_table <- cbind("Index"=fs, "Frequency" = frequency_table[, 2])
+    checked_frequency_table <- cbind("Index"=fs, "Frequency" = as.numeric(as.character(frequency_table[, 2])))
   }
   checked_frequency_table
 }
