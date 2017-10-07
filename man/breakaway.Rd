@@ -4,8 +4,8 @@
 \alias{breakaway}
 \title{Species richness estimation with breakaway}
 \usage{
-breakaway(my_data, print = TRUE, plot = FALSE, answers = FALSE,
-  force = FALSE, useAll = FALSE)
+breakaway(my_data, output = TRUE, plot = FALSE, answers = FALSE, force = FALSE, 
+    useAll = FALSE)
 }
 \arguments{
 \item{my_data}{The sample frequency count table for the population of
@@ -19,14 +19,14 @@ Frequencies (first column) should be ordered least to greatest. At least 6
 contiguous frequencies are necessary. Do not concatenate large frequencies.
 See dataset apples for sample formatting.}
 
-\item{print}{Logical: whether the results should be printed to screen. If
+\item{output}{Logical: whether the results should be printed to screen. If
 \samp{FALSE}, answers should be set to \samp{TRUE} so that results will be
 returned.}
 
 \item{plot}{Logical: whether the data and model fit should be plotted.}
 
 \item{answers}{Logical: whether the function should return an argument. If
-\samp{FALSE}, print should be set to \samp{TRUE}.}
+\samp{FALSE}, output should be set to \samp{TRUE}.}
 
 \item{force}{Logical: force \samp{breakaway} to run in the presence of
 frequency count concatenation, i.e. combining all species observed 27 or 28
@@ -99,7 +99,7 @@ dataset may contain these errors, and recommend the use of
 
 
 breakaway(apples)
-breakaway(apples, plot = FALSE, print = FALSE, answers = TRUE)
+breakaway(apples, plot = FALSE, output = FALSE, answers = TRUE)
 
 
 

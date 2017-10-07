@@ -12,7 +12,7 @@
 
 <meta name="author" content="Amy Willis" />
 
-<meta name="date" content="2017-10-05" />
+<meta name="date" content="2017-10-06" />
 
 <title>alpha diversity, properly</title>
 
@@ -70,11 +70,32 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">alpha diversity, properly</h1>
 <h4 class="author"><em>Amy Willis</em></h4>
-<h4 class="date"><em>2017-10-05</em></h4>
+<h4 class="date"><em>2017-10-06</em></h4>
 
 
 
-<p>An unfinished tutorial to demonstrate <code>shannon_better</code> and other alpha diversity estimates that adjust for missing taxa!</p>
+<p>** Introduction to <code>breakaway</code> **</p>
+<p>It is most often the case that only a small fraction of the entire microbial population of interest is sampled in microbiome studies. While scientists are typically interested in the entire microbial population, they only have some small sample which which represents it. Unfortunately it is typical to not adjust for the inexhaustive experiment, and to analyse only the sequences that were observed without any adjustment for missing data. This practice is no more pronounced than in the setting of alpha diversity.</p>
+<p>Alpha diversity is special because common alpha diversity estimates are highly dependent on sample size. For example, increasing the number of sequences (library size) generally increases the diversity. This is paradoxical, because true diversity of the ecosystem exists regardless of the experiment, and sampled ecosystems. The mission of <code>breakaway</code> is to provide the statistical tools to adjust for inexhaustive sampling in microbiome experiments.</p>
+<p>This tutorial covers using <code>breakaway</code> to estimate the Shannon index when sequencing or sampling was inexhaustive and taxa may be missing.</p>
+<p>** Standard errors on Shannon index estimates **</p>
+<p>TODO: Finish this!</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(breakaway)
+<span class="kw">head</span>(apples)</code></pre></div>
+<pre><code>##   index frequency
+## 1     1       277
+## 2     2       159
+## 3     3       128
+## 4     4        59
+## 5     5        42
+## 6     6        51</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shannon_better</span>(apples)</code></pre></div>
+<pre><code>## Warning in shannon_better(apples): Confidence intervals and standard errors are approximate!</code></pre>
+<pre><code>##     index estimate standard_error   lower    upper
+## 1 shannon 6.551956     0.05263679 6.44879 6.655122</code></pre>
+<ul>
+<li>Standard errors on Shannon index estimates *</li>
+</ul>
 <p>TODO: Finish this!</p>
 <p>Let’s start by writing some functions to invent fake communities. This is so we can validate the idea on fake data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(breakaway)
@@ -160,12 +181,10 @@ get_point &lt;-<span class="st"> </span>function(ecosystem, read, label) {
                                       <span class="dt">ecosystem =</span> ecosystem_name)
   rarefied_sample$type &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;rarefied_sample&quot;</span>, label, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)
   
-  richness_estimate &lt;-<span class="st"> </span>subsample %&gt;%<span class="st"> </span>make_frequency_count_table %&gt;%<span class="st"> </span><span class="kw">breakaway</span>(<span class="dt">print =</span> F, <span class="dt">answers =</span> T, <span class="dt">plot =</span> F) %$%<span class="st"> </span>ci 
+  richness_estimate &lt;-<span class="st"> </span>subsample %&gt;%<span class="st"> </span>make_frequency_count_table %&gt;%<span class="st"> </span><span class="kw">breakaway</span>( <span class="dt">output =</span> F, <span class="dt">answers =</span> T, <span class="dt">plot =</span> F) %$%<span class="st"> </span>ci 
   
   shannon_estimate &lt;-<span class="st"> </span>subsample %&gt;%<span class="st"> </span>make_frequency_count_table  %&gt;%<span class="st"> </span>shannon_better
   
-  <span class="co">#names(shannon_estimate)[4:5] &lt;- c(&quot;shannon&quot;, &quot;shannon_max&quot;)</span>
-  <span class="kw">print</span>(shannon_estimate)
   estimate &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&quot;reads&quot;</span> =<span class="st"> </span>read, 
                          <span class="st">&quot;richness&quot;</span> =<span class="st"> </span>richness_estimate[<span class="dv">1</span>], <span class="st">&quot;richness_max&quot;</span> =<span class="st"> </span>richness_estimate[<span class="dv">2</span>],
                          <span class="st">&quot;shannon&quot;</span> =<span class="st"> </span>shannon_estimate[<span class="dv">1</span>,<span class="dv">4</span>], <span class="st">&quot;shannon_max&quot;</span> =<span class="st"> </span>shannon_estimate[<span class="dv">1</span>,<span class="dv">5</span>],
@@ -208,50 +227,27 @@ observations &lt;-<span class="st"> </span><span class="kw">rbind</span>(<span c
                       <span class="kw">get_point</span>(<span class="dv">1</span>, <span class="dv">7500</span>, <span class="dv">4</span>),
                       <span class="kw">get_point</span>(<span class="dv">1</span>, <span class="dv">4500</span>, <span class="dv">5</span>),
                       <span class="kw">get_point</span>(<span class="dv">1</span>, <span class="dv">3000</span>, <span class="dv">6</span>))</code></pre></div>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are
-## approximate!</code></pre>
-<pre><code>##     index estimate standard_error    lower    upper
-## 1 shannon 8.394009     0.04684391 8.302197 8.485822</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are
-## approximate!</code></pre>
-<pre><code>##     index estimate standard_error    lower    upper
-## 1 shannon 8.371503     0.06743262 8.239337 8.503668</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are
-## approximate!</code></pre>
-<pre><code>##     index estimate standard_error    lower    upper
-## 1 shannon 8.380738     0.08267669 8.218695 8.542782</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are
-## approximate!</code></pre>
-<pre><code>##     index estimate standard_error    lower    upper
-## 1 shannon 8.396488      0.0885631 8.222908 8.570069</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are
-## approximate!</code></pre>
-<pre><code>##     index estimate standard_error  lower    upper
-## 1 shannon 8.374706     0.05842253 8.2602 8.489212</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are
-## approximate!</code></pre>
-<pre><code>##     index estimate standard_error    lower    upper
-## 1 shannon 8.334576       0.082179 8.173508 8.495644</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are
-## approximate!</code></pre>
-<pre><code>##     index estimate standard_error    lower    upper
-## 1 shannon 8.452712     0.06313501 8.328969 8.576454</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are
-## approximate!</code></pre>
-<pre><code>##     index estimate standard_error    lower    upper
-## 1 shannon 8.451211      0.1055248 8.244386 8.658036</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are
-## approximate!</code></pre>
-<pre><code>##     index estimate standard_error   lower    upper
-## 1 shannon 8.376672     0.08535505 8.20938 8.543965</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are
-## approximate!</code></pre>
-<pre><code>##     index estimate standard_error    lower    upper
-## 1 shannon 8.301616      0.1090084 8.087963 8.515269</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are
-## approximate!</code></pre>
-<pre><code>##     index estimate standard_error    lower    upper
-## 1 shannon 8.370372      0.1346813 8.106401 8.634342</code></pre>
+<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
+
+## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
+
+## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
+
+## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
+
+## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
+
+## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
+
+## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
+
+## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
+
+## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
+
+## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
+
+## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rarefaction_level &lt;-<span class="st"> </span>observations %&gt;%<span class="st"> </span><span class="kw">filter</span>(type ==<span class="st"> &quot;observation&quot;</span>) %&gt;%<span class="st"> </span><span class="kw">select</span>(reads) %&gt;%<span class="st"> </span>min
 
 rarefaction_table &lt;-<span class="st"> </span><span class="kw">rbind</span>(observations, truth)

@@ -9,8 +9,28 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
   
+** Introduction to `breakaway` **
  
-An unfinished tutorial to demonstrate `shannon_better` and other alpha diversity estimates that adjust for missing taxa!
+It is most often the case that only a small fraction of the entire microbial population of interest is sampled in microbiome studies. While scientists are typically interested in the entire microbial population, they only have some small sample which which represents it. Unfortunately it is typical to not adjust for the inexhaustive experiment, and to analyse only the sequences that were observed without any adjustment for missing data. This practice is no more pronounced than in the setting of alpha diversity.
+
+Alpha diversity is special because common alpha diversity estimates are highly dependent on sample size. For example, increasing the number of sequences (library size) generally increases the diversity. This is paradoxical, because true diversity of the ecosystem exists regardless of the experiment, and sampled ecosystems. The mission of `breakaway` is to provide the statistical tools to adjust for inexhaustive sampling in microbiome experiments.
+
+This tutorial covers using `breakaway` to estimate the Shannon index when sequencing or sampling was inexhaustive and taxa may be missing. 
+
+** Standard errors on Shannon index estimates **
+
+TODO: Finish this!
+
+```{r}
+library(breakaway)
+head(apples)
+```
+
+```{r}
+shannon_better(apples)
+```
+
+* Standard errors on Shannon index estimates *
 
 TODO: Finish this!
 
@@ -90,12 +110,10 @@ get_point <- function(ecosystem, read, label) {
                                       ecosystem = ecosystem_name)
   rarefied_sample$type <- paste("rarefied_sample", label, sep="")
   
-  richness_estimate <- subsample %>% make_frequency_count_table %>% breakaway(print = F, answers = T, plot = F) %$% ci 
+  richness_estimate <- subsample %>% make_frequency_count_table %>% breakaway( output = F, answers = T, plot = F) %$% ci 
   
   shannon_estimate <- subsample %>% make_frequency_count_table  %>% shannon_better
   
-  #names(shannon_estimate)[4:5] <- c("shannon", "shannon_max")
-  print(shannon_estimate)
   estimate <- data.frame("reads" = read, 
                          "richness" = richness_estimate[1], "richness_max" = richness_estimate[2],
                          "shannon" = shannon_estimate[1,4], "shannon_max" = shannon_estimate[1,5],

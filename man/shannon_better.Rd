@@ -13,6 +13,8 @@ shannon_better(input, ccc = NA, ccc_se = NA, quantile = 0.95)
 study. If none is given, \code{\link{breakaway}} is used}
 
 \item{ccc_se}{The standard error in the estimate of ccc.}
+
+\item{quantile}{The desired coverage of the confidence interval. Defaults to 0.95. Note all confidence intervals are approximate.}
 }
 \value{
 An estimate, standard error, and confidence set of the index.

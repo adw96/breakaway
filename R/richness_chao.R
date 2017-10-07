@@ -7,7 +7,7 @@
 #' @param data The sample frequency count table for the population of interest.
 #' See dataset apples for sample formatting.
 #' @param cutoff The maximum frequency to use in fitting.
-#' @param print Logical: whether the results should be printed to screen.
+#' @param output Logical: whether the results should be printed to screen.
 #' @param answers Should the answers be returned as a list?
 #' @return The results of the estimator, including standard error.
 #' @author Amy Willis
@@ -56,7 +56,7 @@
 #' 
 #' 
 #' @export chao_bunge
-chao_bunge <- function(data, cutoff=10, print=TRUE, answers=FALSE) {
+chao_bunge <- function(data, cutoff=10, output=TRUE, answers=FALSE) {
   
   if( !(is.matrix(data) || is.data.frame(data))) {
     filename <- data
@@ -86,14 +86,28 @@ chao_bunge <- function(data, cutoff=10, print=TRUE, answers=FALSE) {
   k <- 2:cutoff
   m <- 1:cutoff
   numerator <- frequency_index[k]
-  denominator <- 1 - f1*sum(m^ 2*frequency_index[m])/(sum(m*frequency_index[m]))^ 2
+  denominator <- 1 - f1*sum(m^ 2*frequency_index[m])/(sum(m*frequency_index[m]))^ 2 # 
   diversity  <- d_a + sum(numerator /denominator)
   f0 <- diversity - sum(frequency_index)
   
   ## standard error is to be made available in version 3.1; please contact the author with requests
-  diversity_se <- NA
+  fs <- data[m,2]
+  n_tau <- sum(data[m,1]*data[m,2])
+  s_tau <- sum(data[m, 2])
+  H <- sum(m^2*data[m,2])
+  derivatives <- n_tau*(n_tau^3 + f1*n_tau*m^2*s_tau - n_tau*f1*H - f1^2*n_tau*m^2 - 2*f1*H*m*s_tau + 2*f1^2*H*m)/(n_tau^2 - f1*H)^2
+  derivatives[1] <- n_tau*(s_tau - f1)*(f1*n_tau - 2*f1*H + n_tau*H)/(n_tau^2 - f1*H)^2
+  covariance <- diag(rep(0, cutoff))
+  for(i in 1:(cutoff-1)) {
+    covariance[i, (i+1):cutoff] <- -fs[i]*fs[(i+1):cutoff]/diversity
+  }
+  covariance <- t(covariance) +  covariance
+  diag(covariance) <- fs*(1-fs/diversity)
   
-  if(print) {
+  
+  diversity_se <- sqrt(derivatives %*% covariance %*% derivatives)
+  
+  if(output) {
     cat("################## Chao-Bunge ##################\n")
     cat("\tThe estimate of total diversity is", round(diversity),
         "\n \t with std error",round(diversity_se),"\n")
@@ -153,8 +167,6 @@ chao_bunge <- function(data, cutoff=10, print=TRUE, answers=FALSE) {
 
 
 
-
-
 #' Chao1 species richness estimator
 #' 
 #' This function implements the Chao1 richness estimate, which is often
@@ -163,7 +175,7 @@ chao_bunge <- function(data, cutoff=10, print=TRUE, answers=FALSE) {
 #' 
 #' @param data The sample frequency count table for the population of interest.
 #' See dataset apples for sample formatting.
-#' @param print Logical: whether the results should be printed to screen.
+#' @param output Logical: whether the results should be printed to screen.
 #' @param answers Should the answers be returned as a list?
 #' @return The results of the estimator, including standard error.
 #' @note The authors of this package strongly discourage the use of this
@@ -216,7 +228,7 @@ chao_bunge <- function(data, cutoff=10, print=TRUE, answers=FALSE) {
 #' 
 #' 
 #' @export chao1
-chao1 <- function(data, print=TRUE, answers=FALSE) {
+chao1 <- function(data, output=TRUE, answers=FALSE) {
 
   if( !(is.matrix(data) || is.data.frame(data))) {
     filename <- data
@@ -248,10 +260,11 @@ chao1 <- function(data, print=TRUE, answers=FALSE) {
 
   diversity_se <- sqrt(f2*(0.5*(f1/f2)^2 + (f1/f2)^3 + 0.25*(f1/f2)^4))
 
-  if(print) {
+  if(output) {
     cat("################## Chao1 ##################\n")
     cat("\tThe estimate of total diversity is", round(diversity),
         "\n \t with std error",round(diversity_se),"\n")
+    cat("You know that this estimate is only valid if all taxa are equally abundant, right?\n")
   }
   if(answers) {
     result <- list()
@@ -317,7 +330,7 @@ chao1 <- function(data, print=TRUE, answers=FALSE) {
 #' 
 #' @param data The sample frequency count table for the population of interest.
 #' See dataset apples for sample formatting.
-#' @param print Logical: whether the results should be printed to screen.
+#' @param output Logical: whether the results should be printed to screen.
 #' @param answers Should the answers be returned as a list?
 #' @return The results of the estimator, including standard error.
 #' @note The authors of this package strongly discourage the use of this
@@ -370,7 +383,7 @@ chao1 <- function(data, print=TRUE, answers=FALSE) {
 #' 
 #' 
 #' @export chao1_bc
-chao1_bc <- function(data, print=TRUE, answers=FALSE) {
+chao1_bc <- function(data, output=TRUE, answers=FALSE) {
   
   if( !(is.matrix(data) || is.data.frame(data))) {
     filename <- data
@@ -402,7 +415,7 @@ chao1_bc <- function(data, print=TRUE, answers=FALSE) {
   
   diversity_se <- sqrt(f1*(f1-1)/(2*(f2+1)) + f1*(2*f1-1)^2/(4*(f2+1)^2) + f1^2*f2*(f1-1)^2/(4*(f2+1)^4))
   
-  if(print) {
+  if(output) {
     cat("################## Bias-corrected Chao1 ##################\n")
     cat("\tThe estimate of total diversity is", round(diversity),
         "\n \t with std error",round(diversity_se),"\n")

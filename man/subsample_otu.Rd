@@ -11,6 +11,8 @@ subsample_otu(my_data, my_sample_size = NA, ...)
 for each taxa}
 
 \item{my_sample_size}{The number of reads of the bootstrap.}
+
+\item{...}{Other arguments, which are ignored.}
 }
 \value{
 A independent-bootstrap resampled OTU frequencies, in frequency

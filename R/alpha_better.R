@@ -24,7 +24,7 @@ hill_better <-  function(input, q = 0, ccc = NA, ccc_se = NA, quantile = 0.95) {
   proportions <- to_proportions(input, type)
   
   if ((is.na(ccc) | is.null(ccc)) & type == "frequency count") {
-    baway <- breakaway(input, print = F, answers = T, plot = F)
+    baway <- breakaway(input,  output = F, answers = T, plot = F)
     ccc <- round(baway$est)
     ccc_se <- round(baway$seest)
   }
@@ -115,7 +115,7 @@ shannon_better <- function(input, ccc = NA, ccc_se = NA, quantile = 0.95) {
   nn <- sum(input[, 1]*input[, 2])
   
   if ((is.na(ccc) | is.null(ccc))) {
-    baway <- breakaway(input, print = F, answers = T, plot = F)
+    baway <- breakaway(input,  output = F, answers = T, plot = F)
     ccc <- round(baway$est)
     ccc_se <- round(baway$seest)
   }

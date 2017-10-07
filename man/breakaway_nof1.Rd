@@ -4,8 +4,7 @@
 \alias{breakaway_nof1}
 \title{species richness estimation without singletons}
 \usage{
-breakaway_nof1(my_data, print = TRUE, plot = TRUE, answers = FALSE,
-  force = FALSE)
+breakaway_nof1(my_data, output = TRUE, plot = TRUE, answers = FALSE, force = FALSE)
 }
 \arguments{
 \item{my_data}{The sample frequency count table for the population of
@@ -19,14 +18,14 @@ Frequencies (first column) should be ordered least to greatest. At least 6
 contiguous frequencies are necessary. Do not concatenate large frequencies.
 See dataset \code{\link{apples}} for sample formatting.}
 
-\item{print}{Logical: whether the results should be printed to screen. If
+\item{output}{Logical: whether the results should be printed to screen. If
 \samp{FALSE}, \samp{answers} should be set to \samp{TRUE} so that results
 will be returned.}
 
 \item{plot}{Logical: whether the data and model fit should be plotted.}
 
 \item{answers}{Logical: whether the function should return an argument. If
-\samp{FALSE}, \samp{print} should be set to \samp{TRUE}.}
+\samp{FALSE}, \samp{output} should be set to \samp{TRUE}.}
 
 \item{force}{Logical: force the procedure to run in the presence of
 frequency count concatenation. A basic check procedure confirms that the
@@ -100,7 +99,7 @@ dataset, and have greater standard errors.
 
 
 breakaway_nof1(apples[-1, ])
-breakaway_nof1(apples[-1, ], plot = FALSE, print = FALSE, answers = TRUE)
+breakaway_nof1(apples[-1, ], plot = FALSE, output = FALSE, answers = TRUE)
 
 
 

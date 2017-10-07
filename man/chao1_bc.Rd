@@ -4,13 +4,13 @@
 \alias{chao1_bc}
 \title{Bias-corrected Chao1 species richness estimator}
 \usage{
-chao1_bc(data, print = TRUE, answers = FALSE)
+chao1_bc(data, output = TRUE, answers = FALSE)
 }
 \arguments{
 \item{data}{The sample frequency count table for the population of interest.
 See dataset apples for sample formatting.}
 
-\item{print}{Logical: whether the results should be printed to screen.}
+\item{output}{Logical: whether the results should be printed to screen.}
 
 \item{answers}{Should the answers be returned as a list?}
 }

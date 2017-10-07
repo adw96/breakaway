@@ -2,7 +2,7 @@
 #' @importFrom stats acf
 #' 
 #' @export
-objective_bayes_negbin <- function(data, print=TRUE, plot=TRUE, answers=FALSE, 
+objective_bayes_negbin <- function(data, output=TRUE, plot=TRUE, answers=FALSE, 
                                    tau=10, burn.in=1000, iterations=5000, Metropolis.stdev.N=100,
                                    Metropolis.start.T1=-0.8, Metropolis.stdev.T1=0.05,
                                    Metropolis.start.T2=0.8, Metropolis.stdev.T2=0.05, bars=3) {
@@ -205,8 +205,8 @@ objective_bayes_negbin <- function(data, print=TRUE, plot=TRUE, answers=FALSE,
   final_results$results <- t(results)
   final_results$fits <- fitted.values
   
-  if (print) {
-    # print results and fitted values
+  if (output) {
+    # output results and fitted values
     print(final_results)
   }
   
@@ -252,7 +252,7 @@ objective_bayes_negbin <- function(data, print=TRUE, plot=TRUE, answers=FALSE,
 }
 
 #' @export
-objective_bayes_poisson <- function(data, print=TRUE, plot=TRUE, answers=FALSE, 
+objective_bayes_poisson <- function(data, output=TRUE, plot=TRUE, answers=FALSE, 
                                     tau=10, burn.in=100, iterations=2500, Metropolis.stdev.N=75,
                                     Metropolis.start.lambda=1, Metropolis.stdev.lambda=0.3, bars=3) {
   
@@ -425,8 +425,8 @@ objective_bayes_poisson <- function(data, print=TRUE, plot=TRUE, answers=FALSE,
   final_results$fits <- fitted.values
   final_results$diagnostics<-c("acceptance rate N"=results$acceptance.rate.N,"acceptance rate lambda"=results$acceptance.rate.lambda)
   
-  if (print) {
-    # print results and fitted values
+  if (output) {
+    # output results and fitted values
     print(final_results)
   }
   
@@ -471,7 +471,7 @@ objective_bayes_poisson <- function(data, print=TRUE, plot=TRUE, answers=FALSE,
 }
 
 #' @export
-objective_bayes_mixedgeo <- function(data, print=TRUE, plot=TRUE, answers=FALSE, 
+objective_bayes_mixedgeo <- function(data, output=TRUE, plot=TRUE, answers=FALSE, 
                                      tau=10, burn.in=100, iterations=2500, Metropolis.stdev.N=100,
                                      Metropolis.start.T1=1, Metropolis.stdev.T1=2,
                                      Metropolis.start.T2=3, Metropolis.stdev.T2=2, bars=3) {
@@ -682,8 +682,8 @@ objective_bayes_mixedgeo <- function(data, print=TRUE, plot=TRUE, answers=FALSE,
   final_results$results <- t(results)
   final_results$fits <- fitted.values
   
-  if (print) {
-    # print results and fitted values
+  if (output) {
+    # output results and fitted values
     print(final_results)
   }
   
@@ -726,7 +726,7 @@ objective_bayes_mixedgeo <- function(data, print=TRUE, plot=TRUE, answers=FALSE,
 }
 
 #' @export
-objective_bayes_geometric <- function(data, print=TRUE, plot=TRUE, answers=FALSE,
+objective_bayes_geometric <- function(data, output=TRUE, plot=TRUE, answers=FALSE,
                                       tau=10, burn.in=100, iterations=2500, Metropolis.stdev.N=75,
                                       Metropolis.start.theta=1, Metropolis.stdev.theta=0.3) {
   
@@ -908,8 +908,8 @@ objective_bayes_geometric <- function(data, print=TRUE, plot=TRUE, answers=FALSE
   final_results$results <- t(results)
   final_results$fits <- fitted.values
   
-  if (print) {
-    # print results and fitted values
+  if (output) {
+    # output results and fitted values
     print(final_results)
   }
   

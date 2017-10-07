@@ -15,12 +15,12 @@
 #' Frequencies (first column) should be ordered least to greatest. At least 6
 #' contiguous frequencies are necessary. Do not concatenate large frequencies.
 #' See dataset apples for sample formatting.
-#' @param print Logical: whether the results should be printed to screen. If
+#' @param output Logical: whether the results should be printed to screen. If
 #' \samp{FALSE}, answers should be set to \samp{TRUE} so that results will be
 #' returned.
 #' @param plot Logical: whether the data and model fit should be plotted.
 #' @param answers Logical: whether the function should return an argument. If
-#' \samp{FALSE}, print should be set to \samp{TRUE}.
+#' \samp{FALSE}, output should be set to \samp{TRUE}.
 #' @param force Logical: force \samp{breakaway} to run in the presence of
 #' frequency count concatenation, i.e. combining all species observed 27 or 28
 #' or 29 or more into frequency count 27. \samp{force=TRUE} will force
@@ -90,7 +90,7 @@
 #' 
 #' 
 #' breakaway(apples)
-#' breakaway(apples, plot = FALSE, print = FALSE, answers = TRUE)
+#' breakaway(apples, plot = FALSE, output = FALSE, answers = TRUE)
 #' 
 #' 
 #' 
@@ -115,7 +115,7 @@
 #' 
 #' 
 #' @export breakaway
-breakaway <- function(my_data, print=TRUE, plot=FALSE, answers=FALSE, force=FALSE, useAll=FALSE) {
+breakaway <- function(my_data, output=TRUE, plot=FALSE, answers=FALSE, force=FALSE, useAll=FALSE) {
   
   ## read in data
   if( !(is.matrix(my_data) || is.data.frame(my_data))) {
@@ -187,8 +187,8 @@ breakaway <- function(my_data, print=TRUE, plot=FALSE, answers=FALSE, force=FALS
     stop("You don't have enough contiguous frequencies.\nbreakaway needs at least 6!\n")
     # warning("You don't have enough contiguous frequencies.\nbreakaway needs at least 6!\nUsing Chao-Bunge instead...\n")
     # 
-    # result <- chao_bunge(data, answers = T, print = F)
-    # if(print) {
+    # result <- chao_bunge(data, answers = T, output = F)
+    # if(output) {
     #   cat("################## breakaway ##################\n")
     #   cat("\tThe best estimate of total diversity is", round(result$est),
     #       "\n \t with std error",round(result$seest),"\n")
@@ -222,7 +222,7 @@ breakaway <- function(my_data, print=TRUE, plot=FALSE, answers=FALSE, force=FALS
     if (useAll) {
       stop("No models converged. Your dataset may be too small for breakaway's model set, or too irregular.")
     } else {
-      if(print) cat("No breakaway models converged.")
+      if(output) cat("No breakaway models converged.")
       weights_trans <- (1/my_data[-1,2]+1/my_data[-cutoff,2])^-1
       lm1 <- lm(log(ys)~xs,weights=weights_trans)
       b0_hat <- summary(lm1)$coef[1,1]; b0_se <- summary(lm1)$coef[1,2]
@@ -231,7 +231,7 @@ breakaway <- function(my_data, print=TRUE, plot=FALSE, answers=FALSE, force=FALS
       f0_se <- sqrt( (exp(-b0_hat))^2*f1*(b0_se^2*f1+1) )  #consistent with rbbo
       diversity_se <- sqrt(f0_se^2+n*f0/(n+f0))
       
-      if(print) {
+      if(output) {
         cat("################## breakaway ##################\n")
         cat("\tThe best estimate of total diversity is", round(diversity),
             "\n \t with std error",round(diversity_se),"\n")
@@ -279,7 +279,7 @@ breakaway <- function(my_data, print=TRUE, plot=FALSE, answers=FALSE, force=FALS
         ratiovars <- (p[-1]^2/p[-cutoff]^3 + p[-1]/p[-cutoff]^2)/C
         run <- try ( minibreak(lhs,xs,ys,my_data,1/ratiovars), silent = 1)
         if ( class(run) == "try-error") {
-          if(print) {print("Numerical errors result in non-convergence") }
+          if(output) {print("Numerical errors result in non-convergence") }
         }
       }
       
@@ -299,7 +299,7 @@ breakaway <- function(my_data, print=TRUE, plot=FALSE, answers=FALSE, force=FALS
       }
     }
     if( !choice$outcome) {
-      if(print) cat("We used 1/x weighting. \n")
+      if(output) cat("We used 1/x weighting. \n")
       run <- minibreak(lhs,xs,ys,my_data,weights_inv)
       choice$outcome <- 1
       choice$model <- rownames(run$useful)[min(which(run$useful[,5]==1))]
@@ -340,7 +340,7 @@ breakaway <- function(my_data, print=TRUE, plot=FALSE, answers=FALSE, force=FALS
     parameter_table <-  coef(summary(choice$full))[,1:2]
     colnames(parameter_table) <- c("Coef estimates","Coef std errors")
     
-    if(print) {
+    if(output) {
       cat("################## breakaway ##################\n")
       cat("\tThe best estimate of total diversity is", round(diversity),
           "\n \t with std error",round(diversity_se),"\n")
@@ -558,12 +558,12 @@ residse <- function(model) {
 #' Frequencies (first column) should be ordered least to greatest. At least 6
 #' contiguous frequencies are necessary. Do not concatenate large frequencies.
 #' See dataset \code{\link{apples}} for sample formatting.
-#' @param print Logical: whether the results should be printed to screen. If
+#' @param output Logical: whether the results should be printed to screen. If
 #' \samp{FALSE}, \samp{answers} should be set to \samp{TRUE} so that results
 #' will be returned.
 #' @param plot Logical: whether the data and model fit should be plotted.
 #' @param answers Logical: whether the function should return an argument. If
-#' \samp{FALSE}, \samp{print} should be set to \samp{TRUE}.
+#' \samp{FALSE}, \samp{output} should be set to \samp{TRUE}.
 #' @param force Logical: force the procedure to run in the presence of
 #' frequency count concatenation. A basic check procedure confirms that the
 #' user has not appeared to concatenate multiple upper frequencies.
@@ -629,7 +629,7 @@ residse <- function(model) {
 #' 
 #' 
 #' breakaway_nof1(apples[-1, ])
-#' breakaway_nof1(apples[-1, ], plot = FALSE, print = FALSE, answers = TRUE)
+#' breakaway_nof1(apples[-1, ], plot = FALSE, output = FALSE, answers = TRUE)
 #' 
 #' 
 #' 
@@ -653,7 +653,7 @@ residse <- function(model) {
 #' 
 #' 
 #' @export breakaway_nof1
-breakaway_nof1 <- function(my_data, print=TRUE, plot=TRUE, answers=FALSE, force=FALSE) {
+breakaway_nof1 <- function(my_data, output=TRUE, plot=TRUE, answers=FALSE, force=FALSE) {
   
   if( !(is.matrix(my_data) || is.data.frame(my_data))) {
     filename <- my_data
@@ -674,7 +674,7 @@ breakaway_nof1 <- function(my_data, print=TRUE, plot=TRUE, answers=FALSE, force=
   
   if(length(my_data)>1) {
     if (my_data[1,1]!=2 || my_data[1,2]==0) {
-      if(print) cat("breakaway_nof1 is for when you have no singleton count.\nYou need a leading doubleton count!\n")
+      if(output) cat("breakaway_nof1 is for when you have no singleton count.\nYou need a leading doubleton count!\n")
     } else {
       my_data <- my_data[!(my_data[,2]==0 | is.na(my_data[,2])),]
       orig_my_data <- my_data
@@ -689,7 +689,7 @@ breakaway_nof1 <- function(my_data, print=TRUE, plot=TRUE, answers=FALSE, force=
       lhs <- list("x"=xs-xbar,"y"=my_data[2:cutoff,2]/my_data[1:(cutoff-1),2])
       
       if ( cutoff < 5) { ### check for unusual data structures
-        if(print) cat("You don't have enough contiguous frequencies.\n breakaway needs at least 6!\n")
+        if(output) cat("You don't have enough contiguous frequencies.\n breakaway needs at least 6!\n")
       } else if ((force==FALSE) && ( (my_data[cutoff,2]/my_data[cutoff-1,2])>10 )) {
         cat("\tIt looks like you've concatenated some of your my_data!\n Please truncate and try again.\n")
       } else {
@@ -700,7 +700,7 @@ breakaway_nof1 <- function(my_data, print=TRUE, plot=TRUE, answers=FALSE, force=
         
         if (sum(as.numeric(run$useful[,5]))==0) {
           choice$outcome <- 0
-          if(print) cat("No breakaway models converged.")
+          if(output) cat("No breakaway models converged.")
           weights_trans <- (1/my_data[-1,2]+1/my_data[-cutoff,2])^-1
           lm1 <- lm(log(ys)~xs,weights=weights_trans)
           b0_hat <- summary(lm1)$coef[1,1]
@@ -723,7 +723,7 @@ breakaway_nof1 <- function(my_data, print=TRUE, plot=TRUE, answers=FALSE, force=
           
           diversity_se <- sqrt(f0plusf1_var+n*(f0_pred+f1_pred)/(n+f0_pred+f1_pred))
           
-          if(print) {
+          if(output) {
             cat("################## breakaway ##################\n")
             cat("\tThe best estimate of total diversity is", round(diversity),
                 "\n \t with std error",round(diversity_se),"\n")
@@ -769,7 +769,7 @@ breakaway_nof1 <- function(my_data, print=TRUE, plot=TRUE, answers=FALSE, force=
               ratiovars <- (p[-1]^2/p[-cutoff]^3 + p[-1]/p[-cutoff]^2)/C
               run <- try ( minibreak_nof1(lhs,xs,ys,my_data,1/ratiovars), silent = 1)
               if ( class(run) == "try-error") {
-                if(print) {print("Numerical errors result in non-convergence") }
+                if(output) {print("Numerical errors result in non-convergence") }
               }
             }
             
@@ -789,7 +789,7 @@ breakaway_nof1 <- function(my_data, print=TRUE, plot=TRUE, answers=FALSE, force=
             }
           }
           if( !choice$outcome) {
-            if(print) cat("Iterative reweighting didn't produce any outcomes after the first iteration, so we use 1/x\n")
+            if(output) cat("Iterative reweighting didn't produce any outcomes after the first iteration, so we use 1/x\n")
             run <- minibreak_nof1(lhs,xs,ys,my_data,weights_inv)
             choice$outcome <- 1
             choice$model <- rownames(run$useful)[min(which(run$useful[,5]==1))]
@@ -863,7 +863,7 @@ breakaway_nof1 <- function(my_data, print=TRUE, plot=TRUE, answers=FALSE, force=
           parameter_table <-  coef(summary(choice$full))[,1:2]
           colnames(parameter_table) <- c("Coef estimates","Coef std errors")
           
-          if(print) {
+          if(output) {
             cat("################## breakaway ##################\n")
             cat("\tThe best estimate of total diversity is", round(diversity),
                 "\n \t with std error",round(diversity_se),"\n")
