@@ -11,8 +11,8 @@
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/united/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -83,9 +83,6 @@
       <a href="../articles/sample-size-calculations.html">Sample size calculations for alpha diversity</a>
     </li>
   </ul>
-</li>
-<li>
-  <a href="../news/index.html">News</a>
 </li>
       </ul>
       
@@ -159,14 +156,16 @@ metric given by my_function</p>
 
 
 <span class='co'># Bootstrap observations to calculate a re-sample estimate of the Shannon index</span>
-<span class='fu'>resample_estimate</span>(<span class='no'>toy_otu_table</span>[,<span class='fl'>1</span>], <span class='no'>shannon</span>)</div><div class='output co'>#&gt; <span class='error'>Error: $ operator is invalid for atomic vectors</span></div><div class='input'>
+<span class='fu'>resample_estimate</span>(<span class='no'>toy_otu_table</span>[,<span class='fl'>1</span>], <span class='no'>shannon</span>)</div><div class='output co'>#&gt; [1] 4.174315</div><div class='input'>
 <span class='co'># To see the sampling distribution of the resample estimates, repeat this 200 times</span>
-<span class='no'>shannon_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'>replicate</span>(<span class='fl'>200</span>, <span class='fu'>resample_estimate</span>(<span class='no'>toy_otu_table</span>[,<span class='fl'>1</span>], <span class='no'>shannon</span>))</div><div class='output co'>#&gt; <span class='error'>Error: $ operator is invalid for atomic vectors</span></div><div class='input'><span class='fu'>hist</span>(<span class='no'>shannon_estimates</span>)</div><div class='output co'>#&gt; <span class='error'>Error in hist(shannon_estimates): object 'shannon_estimates' not found</span></div><div class='input'>
+<span class='no'>shannon_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'>replicate</span>(<span class='fl'>200</span>, <span class='fu'>resample_estimate</span>(<span class='no'>toy_otu_table</span>[,<span class='fl'>1</span>], <span class='no'>shannon</span>))
+<span class='fu'>hist</span>(<span class='no'>shannon_estimates</span>)</div><div class='img'><img src='resample_estimate-7.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># To investigate the effect of sample size on the resample estimate of the Shannon index,</span>
 <span class='co'># re-sample over multiple sample sizes; in this case, the number of reads</span>
 <span class='no'>ns</span> <span class='kw'>&lt;-</span> <span class='fu'>apply</span>(<span class='no'>toy_otu_table</span>, <span class='fl'>2</span>, <span class='no'>sum</span>)
-<span class='no'>shannon_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'>replicate</span>(<span class='fl'>200</span>, <span class='fu'>resample_estimate</span>(<span class='no'>toy_otu_table</span>[,<span class='fl'>1</span>], <span class='no'>shannon</span>, <span class='kw'>my_sample_size</span> <span class='kw'>=</span> <span class='no'>ns</span>))</div><div class='output co'>#&gt; <span class='error'>Error: $ operator is invalid for atomic vectors</span></div><div class='input'>
-<span class='fu'>hist</span>(<span class='no'>shannon_estimates</span>)</div><div class='output co'>#&gt; <span class='error'>Error in hist(shannon_estimates): object 'shannon_estimates' not found</span></div><div class='input'><span class='fu'>sd</span>(<span class='no'>shannon_estimates</span>) <span class='co'># a not too terrible estimate of the standard error in estimating Shannon</span></div><div class='output co'>#&gt; <span class='error'>Error in is.data.frame(x): object 'shannon_estimates' not found</span></div><div class='input'>
+<span class='no'>shannon_estimates</span> <span class='kw'>&lt;-</span> <span class='fu'>replicate</span>(<span class='fl'>200</span>, <span class='fu'>resample_estimate</span>(<span class='no'>toy_otu_table</span>[,<span class='fl'>1</span>], <span class='no'>shannon</span>, <span class='kw'>my_sample_size</span> <span class='kw'>=</span> <span class='no'>ns</span>))
+
+<span class='fu'>hist</span>(<span class='no'>shannon_estimates</span>)</div><div class='img'><img src='resample_estimate-8.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>sd</span>(<span class='no'>shannon_estimates</span>) <span class='co'># a not too terrible estimate of the standard error in estimating Shannon</span></div><div class='output co'>#&gt; [1] 0.07059159</div><div class='input'>
 
 
 

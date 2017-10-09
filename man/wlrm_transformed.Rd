@@ -4,7 +4,8 @@
 \alias{wlrm_transformed}
 \title{function for species richness estimation}
 \usage{
-wlrm_transformed(data, print = TRUE, plot = FALSE, answers = FALSE, cutoff = NA)
+wlrm_transformed(data, print = TRUE, plot = FALSE, answers = FALSE,
+  cutoff = NA)
 }
 \arguments{
 \item{data}{The sample frequency count table for the population of interest.

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>alpha diversity, properly • breakaway</title>
-<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/united/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -61,9 +61,6 @@
     </li>
   </ul>
 </li>
-<li>
-  <a href="../news/index.html">News</a>
-</li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
 </div>
@@ -80,19 +77,44 @@
       <h1>alpha diversity, properly</h1>
                         <h4 class="author">Amy Willis</h4>
             
-            <h4 class="date">2017-10-06</h4>
+            <h4 class="date">2017-10-07</h4>
           </div>
 
     
     
 <div class="contents">
-<p>An unfinished tutorial to demonstrate <code>shannon_better</code> and other alpha diversity estimates that adjust for missing taxa!</p>
+<div id="introduction-to-estimating-alpha-diversity" class="section level2">
+<h2 class="hasAnchor">
+<a href="#introduction-to-estimating-alpha-diversity" class="anchor"></a>Introduction to estimating alpha diversity</h2>
+<p>It is most often the case that only a small fraction of the entire microbial population of interest is sampled in microbiome studies. While scientists are typically interested in the entire microbial population, they only have some small sample which which represents it. Unfortunately it is typical to not adjust for the inexhaustive experiment, and to analyse only the sequences that were observed without any adjustment for missing data. This practice is no more pronounced than in the setting of alpha diversity.</p>
+<p>Alpha diversity is special because common alpha diversity estimates are highly dependent on sample size. For example, increasing the number of sequences (library size) generally increases the diversity. This is paradoxical, because true diversity of the ecosystem exists regardless of the experiment, and sampled ecosystems. The mission of <code>breakaway</code> is to provide the statistical tools to adjust for inexhaustive sampling in microbiome experiments.</p>
+<p>This tutorial covers using <code>breakaway</code> to estimate the Shannon index when sequencing or sampling was inexhaustive and taxa may be missing.</p>
+</div>
+<div id="standard-errors-on-shannon-index-estimates" class="section level2">
+<h2 class="hasAnchor">
+<a href="#standard-errors-on-shannon-index-estimates" class="anchor"></a>Standard errors on Shannon index estimates</h2>
+<p>TODO: Finish this!</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(breakaway)
+<span class="kw">head</span>(apples)</code></pre></div>
+<pre><code>##   index frequency
+## 1     1       277
+## 2     2       159
+## 3     3       128
+## 4     4        59
+## 5     5        42
+## 6     6        51</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/shannon_better.html">shannon_better</a></span>(apples)</code></pre></div>
+<pre><code>## Warning in shannon_better(apples): Confidence intervals and standard errors are approximate!</code></pre>
+<pre><code>##     index estimate standard_error   lower    upper
+## 1 shannon 6.551956     0.05263679 6.44879 6.655122</code></pre>
 <p>TODO: Finish this!</p>
 <p>Let’s start by writing some functions to invent fake communities. This is so we can validate the idea on fake data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(breakaway)
 <span class="kw">library</span>(ggplot2)
 <span class="kw">library</span>(gridExtra)
 <span class="kw">library</span>(dplyr)</code></pre></div>
+<pre><code>## Warning: Installed Rcpp (0.12.13) different from Rcpp used to build dplyr (0.12.11).
+## Please reinstall dplyr to avoid random crashes or undefined behavior.</code></pre>
 <pre><code>## 
 ## Attaching package: 'dplyr'</code></pre>
 <pre><code>## The following object is masked from 'package:gridExtra':
@@ -172,12 +194,10 @@ get_point &lt;-<span class="st"> </span>function(ecosystem, read, label) {
                                       <span class="dt">ecosystem =</span> ecosystem_name)
   rarefied_sample$type &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">"rarefied_sample"</span>, label, <span class="dt">sep=</span><span class="st">""</span>)
   
-  richness_estimate &lt;-<span class="st"> </span>subsample %&gt;%<span class="st"> </span>make_frequency_count_table %&gt;%<span class="st"> </span><span class="kw"><a href="../reference/breakaway.html">breakaway</a></span>(<span class="dt">print =</span> F, <span class="dt">answers =</span> T, <span class="dt">plot =</span> F) %$%<span class="st"> </span>ci 
+  richness_estimate &lt;-<span class="st"> </span>subsample %&gt;%<span class="st"> </span>make_frequency_count_table %&gt;%<span class="st"> </span><span class="kw"><a href="../reference/breakaway.html">breakaway</a></span>( <span class="dt">output =</span> F, <span class="dt">answers =</span> T, <span class="dt">plot =</span> F) %$%<span class="st"> </span>ci 
   
   shannon_estimate &lt;-<span class="st"> </span>subsample %&gt;%<span class="st"> </span>make_frequency_count_table  %&gt;%<span class="st"> </span>shannon_better
   
-  <span class="co">#names(shannon_estimate)[4:5] &lt;- c("shannon", "shannon_max")</span>
-  <span class="kw">print</span>(shannon_estimate)
   estimate &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">"reads"</span> =<span class="st"> </span>read, 
                          <span class="st">"richness"</span> =<span class="st"> </span>richness_estimate[<span class="dv">1</span>], <span class="st">"richness_max"</span> =<span class="st"> </span>richness_estimate[<span class="dv">2</span>],
                          <span class="st">"shannon"</span> =<span class="st"> </span>shannon_estimate[<span class="dv">1</span>,<span class="dv">4</span>], <span class="st">"shannon_max"</span> =<span class="st"> </span>shannon_estimate[<span class="dv">1</span>,<span class="dv">5</span>],
@@ -220,39 +240,27 @@ observations &lt;-<span class="st"> </span><span class="kw">rbind</span>(<span c
                       <span class="kw">get_point</span>(<span class="dv">1</span>, <span class="dv">7500</span>, <span class="dv">4</span>),
                       <span class="kw">get_point</span>(<span class="dv">1</span>, <span class="dv">4500</span>, <span class="dv">5</span>),
                       <span class="kw">get_point</span>(<span class="dv">1</span>, <span class="dv">3000</span>, <span class="dv">6</span>))</code></pre></div>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!</code></pre>
-<pre><code>##     index estimate standard_error    lower    upper
-## 1 shannon 8.394009     0.04684391 8.302197 8.485822</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!</code></pre>
-<pre><code>##     index estimate standard_error    lower    upper
-## 1 shannon 8.371503     0.06743262 8.239337 8.503668</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!</code></pre>
-<pre><code>##     index estimate standard_error    lower    upper
-## 1 shannon 8.380738     0.08267669 8.218695 8.542782</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!</code></pre>
-<pre><code>##     index estimate standard_error    lower    upper
-## 1 shannon 8.396488      0.0885631 8.222908 8.570069</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!</code></pre>
-<pre><code>##     index estimate standard_error  lower    upper
-## 1 shannon 8.374706     0.05842253 8.2602 8.489212</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!</code></pre>
-<pre><code>##     index estimate standard_error    lower    upper
-## 1 shannon 8.334576       0.082179 8.173508 8.495644</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!</code></pre>
-<pre><code>##     index estimate standard_error    lower    upper
-## 1 shannon 8.452712     0.06313501 8.328969 8.576454</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!</code></pre>
-<pre><code>##     index estimate standard_error    lower    upper
-## 1 shannon 8.451211      0.1055248 8.244386 8.658036</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!</code></pre>
-<pre><code>##     index estimate standard_error   lower    upper
-## 1 shannon 8.376672     0.08535505 8.20938 8.543965</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!</code></pre>
-<pre><code>##     index estimate standard_error    lower    upper
-## 1 shannon 8.301616      0.1090084 8.087963 8.515269</code></pre>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!</code></pre>
-<pre><code>##     index estimate standard_error    lower    upper
-## 1 shannon 8.370372      0.1346813 8.106401 8.634342</code></pre>
+<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
+
+## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
+
+## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
+
+## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
+
+## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
+
+## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
+
+## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
+
+## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
+
+## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
+
+## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
+
+## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rarefaction_level &lt;-<span class="st"> </span>observations %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(type ==<span class="st"> "observation"</span>) %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(reads) %&gt;%<span class="st"> </span>min
 
 rarefaction_table &lt;-<span class="st"> </span><span class="kw">rbind</span>(observations, truth)
@@ -388,11 +396,20 @@ plot_6_e &lt;-<span class="st"> </span>plot_base +<span class="st">  </span>
 
 <span class="kw"><a href="http://www.rdocumentation.org/packages/gridExtra/topics/arrangeGrob">grid.arrange</a></span>(<span class="dt">grobs =</span> <span class="kw">list</span>(plot_6_b, plot_6_e, plot_14_a, plot_14_b), 
              <span class="dt">layout_matrix =</span>  <span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), <span class="dt">nrow =</span> <span class="dv">2</span>))</code></pre></div>
-<p><img src="alpha-better_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
+<p><img src="alpha-better_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
+</div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+        <div id="tocnav">
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+<li><a href="#introduction-to-estimating-alpha-diversity">Introduction to estimating alpha diversity</a></li>
+      <li><a href="#standard-errors-on-shannon-index-estimates">Standard errors on Shannon index estimates</a></li>
+      </ul>
+</div>
       </div>
 
 </div>

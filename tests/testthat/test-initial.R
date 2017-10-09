@@ -5,22 +5,29 @@ library("breakaway")
 library("testthat")
 
 ################################################################################
-test_that("Nothing stupid happens with the apples dataset", {
+test_that("alpha diversity for the inbuilt datasets", {
   data("apples")
-  breakaway_apples <- breakaway(apples, print = F, answers = T, plot = F)
-  
-  expect_that(breakaway_apples$est > 0, is_true(),
-              "a species richness estimate is negative!")
-  expect_that(breakaway_apples$seest > 0, is_true(),
-              "a species richness standard error is negative!")
-})
-
-test_that("Nothing stupid happens with the hawaii dataset", {
   data("hawaii")
-  breakaway_hawaii <- breakaway(hawaii, print = F, answers = T, plot = F)
+  data("toy_otu_table")
+  tables <- apply(toy_otu_table[,1:5], 2, make_frequency_count_table)
   
-  expect_that(breakaway_hawaii$est > 0, is_true(),
-              "a species richness estimate is negative!")
-  expect_that(breakaway_hawaii$seest > 0, is_true(),
-              "a species richness standard error is negative!")
+  datasets <- list(apples, hawaii)
+  datasets <- append(datasets, tables)
+  for (i in 1:length(datasets)) {
+    dataset <- datasets[[i]]
+    breakaway_dataset <- breakaway(dataset, output = F, answers = T, plot = F)
+    lower_bound <- sum(dataset[,2])
+    shannon_dataset <- shannon_better(dataset)
+    
+    expect_that(breakaway_dataset$est > lower_bound, is_true(),
+                "a species richness estimate is negative!")
+    expect_that(breakaway_dataset$seest > 0, is_true(),
+                "a species richness standard error is negative!")
+    expect_that(breakaway_dataset$seest > breakaway_dataset$est*0.05, is_true(),
+                "a species richness standard error is too low!")
+    expect_that(shannon_dataset$estimate > 0, is_true(),
+                "a Shannon diversity estimate is negative!")
+    expect_that(shannon_dataset$standard_error > 0, is_true(),
+                "a Shannon diversity standard error is negative!")
+  }
 })

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Comparing samples visually with betta • breakaway</title>
-<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/united/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -61,9 +61,6 @@
     </li>
   </ul>
 </li>
-<li>
-  <a href="../news/index.html">News</a>
-</li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
 </div>
@@ -80,7 +77,7 @@
       <h1>Comparing samples visually with betta</h1>
                         <h4 class="author">Amy Willis</h4>
             
-            <h4 class="date">2017-10-06</h4>
+            <h4 class="date">2017-10-07</h4>
           </div>
 
     
@@ -91,7 +88,7 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">frequencytablelist &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="kw">apply</span>(toy_otu_table, <span class="dv">2</span>, table), as.data.frame)
 frequencytablelist &lt;-<span class="st"> </span><span class="kw">lapply</span>(frequencytablelist, function(x) x[x[,<span class="dv">1</span>]!=<span class="dv">0</span>,])
 
-ob_results &lt;-<span class="st"> </span><span class="kw">lapply</span>(frequencytablelist[<span class="dv">1</span>:<span class="dv">15</span>], objective_bayes_negbin, <span class="dt">answers =</span> T, <span class="dt">plot=</span>F, <span class="dt">print =</span> F)
+ob_results &lt;-<span class="st"> </span><span class="kw">lapply</span>(frequencytablelist[<span class="dv">1</span>:<span class="dv">15</span>], objective_bayes_negbin, <span class="dt">answers =</span> T, <span class="dt">plot=</span>F, <span class="dt">output =</span> F)
 
 lower &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">lapply</span>(ob_results, function(x) x$results[<span class="st">"LCI.C"</span>, ]))
 upper &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">lapply</span>(ob_results, function(x) x$results[<span class="st">"UCI.C"</span>, ]))
@@ -112,22 +109,22 @@ bloom &lt;-<span class="st"> </span>bloom1 ==<span class="st"> "yes"</span></cod
 <pre><code>## Loading required package: ggplot2</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot_data_frame &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">"index"</span> =<span class="st"> </span><span class="dv">1</span>:<span class="dv">15</span>, lower, upper, means, standard_deviations, <span class="st">"bloom"</span>=bloom[<span class="dv">1</span>:<span class="dv">15</span>])
 plot_data_frame</code></pre></div>
-<pre><code>##                index lower   upper    means standard_deviations bloom
-## Sample1.LCI.C      1   278 429.000 324.9136           39.546435 FALSE
-## Sample2.LCI.C      2   304 604.000 386.8768           81.253145 FALSE
-## Sample3.LCI.C      3   222 371.000 263.4010           38.916926 FALSE
-## Sample4.LCI.C      4   244 759.000 366.9546          131.323861 FALSE
-## Sample5.LCI.C      5   349 425.000 378.9054           20.920889 FALSE
-## Sample6.LCI.C      6   363 431.000 383.2918           16.337773 FALSE
-## Sample7.LCI.C      7   362 401.000 377.4980           10.022439  TRUE
-## Sample8.LCI.C      8   399 435.000 412.2302            9.189216  TRUE
-## Sample9.LCI.C      9   347 401.000 367.2042           14.156150 FALSE
-## Sample10.LCI.C    10   324 431.025 361.8276           27.057071 FALSE
-## Sample11.LCI.C    11   313 473.000 365.4380           41.188370 FALSE
-## Sample12.LCI.C    12   370 462.000 402.6466           23.582361 FALSE
-## Sample13.LCI.C    13   386 436.000 403.7104           13.442778 FALSE
-## Sample14.LCI.C    14   374 413.000 389.2864            9.776620  TRUE
-## Sample15.LCI.C    15   252 344.000 284.8956           23.744723  TRUE</code></pre>
+<pre><code>##                index   lower   upper    means standard_deviations bloom
+## Sample1.LCI.C      1 278.000 376.000 312.8772            25.39440 FALSE
+## Sample2.LCI.C      2 305.000 542.000 377.3862            61.74823 FALSE
+## Sample3.LCI.C      3 222.000 334.000 262.2756            30.55358 FALSE
+## Sample4.LCI.C      4 239.000 437.025 316.9486            51.88784 FALSE
+## Sample5.LCI.C      5 349.000 477.000 381.8502            31.07145 FALSE
+## Sample6.LCI.C      6 363.000 419.000 384.3468            15.01168 FALSE
+## Sample7.LCI.C      7 364.000 413.000 379.9194            13.46135  TRUE
+## Sample8.LCI.C      8 399.000 430.025 409.7236             8.17037  TRUE
+## Sample9.LCI.C      9 349.000 405.000 370.9854            14.67092 FALSE
+## Sample10.LCI.C    10 324.975 453.000 367.8584            34.02216 FALSE
+## Sample11.LCI.C    11 318.000 462.000 373.2620            38.71734 FALSE
+## Sample12.LCI.C    12 373.000 518.000 409.0450            36.09541 FALSE
+## Sample13.LCI.C    13 385.000 435.000 402.9446            13.13679 FALSE
+## Sample14.LCI.C    14 376.000 415.000 390.4416            10.09739  TRUE
+## Sample15.LCI.C    15 251.000 389.000 287.9288            32.98527  TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(plot_data_frame, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> index, <span class="dt">y =</span> means, <span class="dt">col =</span> bloom)) +
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_segment">geom_segment</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> index, <span class="dt">xend =</span> index, <span class="dt">y =</span> lower, <span class="dt">yend =</span> upper, <span class="dt">col =</span> bloom), <span class="dt">lwd =</span> <span class="fl">1.25</span>) +
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> index, <span class="dt">y =</span> means)) +<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Samples"</span>) +<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Richness estimates (Objective Bayes)"</span>)</code></pre></div>

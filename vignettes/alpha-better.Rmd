@@ -9,28 +9,33 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
   
-** Introduction to `breakaway` **
+## Introduction to estimating alpha diversity
  
 It is most often the case that only a small fraction of the entire microbial population of interest is sampled in microbiome studies. While scientists are typically interested in the entire microbial population, they only have some small sample which which represents it. Unfortunately it is typical to not adjust for the inexhaustive experiment, and to analyse only the sequences that were observed without any adjustment for missing data. This practice is no more pronounced than in the setting of alpha diversity.
 
-Alpha diversity is special because common alpha diversity estimates are highly dependent on sample size. For example, increasing the number of sequences (library size) generally increases the diversity. This is paradoxical, because true diversity of the ecosystem exists regardless of the experiment, and sampled ecosystems. The mission of `breakaway` is to provide the statistical tools to adjust for inexhaustive sampling in microbiome experiments.
+Alpha diversity is special because common alpha diversity estimates (such as plug-in and rarefied estimates) are highly dependent on sample size. For example, increasing the number of sequences (library size) generally increases the diversity. This is paradoxical, because true diversity of the ecosystem exists regardless of the experiment, and sampled ecosystems. The mission of `breakaway` is to provide the statistical tools to adjust for inexhaustive sampling in microbiome experiments.
 
 This tutorial covers using `breakaway` to estimate the Shannon index when sequencing or sampling was inexhaustive and taxa may be missing. 
 
-** Standard errors on Shannon index estimates **
+## Standard errors on Shannon index estimates 
 
-TODO: Finish this!
+Load `breakaway` and have a look at one of the in-built datasets.
 
 ```{r}
 library(breakaway)
 head(apples)
 ```
 
+Estimate the Shannon index of the population that the `apples` sample was drawn from!
 ```{r}
 shannon_better(apples)
 ```
 
-* Standard errors on Shannon index estimates *
+Cool! What about when we have a full dataset? How should this be plotted?
+
+```{r}
+#apply(toy_otu_table, 2, shannon_better)
+```
 
 TODO: Finish this!
 

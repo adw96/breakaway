@@ -4,7 +4,8 @@
 \alias{breakaway_nof1}
 \title{species richness estimation without singletons}
 \usage{
-breakaway_nof1(my_data, output = TRUE, plot = TRUE, answers = FALSE, force = FALSE)
+breakaway_nof1(my_data, output = TRUE, plot = TRUE, answers = FALSE,
+  force = FALSE)
 }
 \arguments{
 \item{my_data}{The sample frequency count table for the population of
