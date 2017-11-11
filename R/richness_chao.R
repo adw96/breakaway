@@ -56,57 +56,57 @@
 #' 
 #' 
 #' @export chao_bunge
-chao_bunge <- function(data, cutoff=10, output=TRUE, answers=FALSE) {
+chao_bunge <- function(my_data, cutoff=10, output=TRUE, answers=FALSE) {
   
-  if( !(is.matrix(data) || is.data.frame(data))) {
-    filename <- data
-    ext <- substr(filename, nchar(filename)-2, nchar(filename))
-    if (ext == "csv") {
-      data <- read.table(file=filename, header=0,sep=",")
-      if( data[1,1] !=1) data <- read.table(filename, header=1,sep=",")
-    } else if (ext == "txt") {
-      data <- read.table(file=filename, header=0)
-    } else cat("Please input your data as a txt or csv file,
-               or as an R dataframe or matrix.")
-  }
+  my_data <- check_format(my_data)
+  input_data <- my_data
+  cc <- input_data[,2]
   
-  if ( is.factor(data[,1]) ) {
-    fs <- as.numeric(as.character(data[,1]))
-    data <- cbind(fs,data[,2])
-    data <- data[data[,1]!=0,]
-  }
-  
-  index  <- 1:max(data[,1])
+  index  <- 1:max(my_data[,1])
   frequency_index <- rep(0, length(index))
-  frequency_index[data[,1]] <- data[,2]
+  frequency_index[my_data[,1]] <- my_data[,2]
   f1  <- frequency_index[1]
   n <- sum(frequency_index)
   
-  d_a <- sum(data[data[,1]>cutoff,2])
+  my_data <- my_data[ my_data[,1] <= cutoff, ]
+  cutoff <- max(my_data[,1])
+  
+  d_a <- sum(input_data[input_data[,1] > cutoff, 2])
   k <- 2:cutoff
   m <- 1:cutoff
   numerator <- frequency_index[k]
   denominator <- 1 - f1*sum(m^ 2*frequency_index[m])/(sum(m*frequency_index[m]))^ 2 # 
   diversity  <- d_a + sum(numerator /denominator)
-  f0 <- diversity - sum(frequency_index)
   
-  ## standard error is to be made available in version 3.1; please contact the author with requests
-  fs <- data[m,2]
-  n_tau <- sum(data[m,1]*data[m,2])
-  s_tau <- sum(data[m, 2])
-  H <- sum(m^2*data[m,2])
-  derivatives <- n_tau*(n_tau^3 + f1*n_tau*m^2*s_tau - n_tau*f1*H - f1^2*n_tau*m^2 - 2*f1*H*m*s_tau + 2*f1^2*H*m)/(n_tau^2 - f1*H)^2
-  derivatives[1] <- n_tau*(s_tau - f1)*(f1*n_tau - 2*f1*H + n_tau*H)/(n_tau^2 - f1*H)^2
-  covariance <- diag(rep(0, cutoff))
-  for(i in 1:(cutoff-1)) {
-    covariance[i, (i+1):cutoff] <- -fs[i]*fs[(i+1):cutoff]/diversity
+  f0 <- diversity - cc
+  
+  if (diversity >= 0) {
+    fs <- my_data[m, 2]
+    n_tau <- sum(my_data[m,1]*my_data[m,2])
+    s_tau <- sum(my_data[m, 2])
+    H <- sum(m^2*my_data[m,2])
+    derivatives <- n_tau*(n_tau^3 + f1*n_tau*m^2*s_tau - n_tau*f1*H - f1^2*n_tau*m^2 - 2*f1*H*m*s_tau + 2*f1^2*H*m)/(n_tau^2 - f1*H)^2
+    derivatives[1] <- n_tau*(s_tau - f1)*(f1*n_tau - 2*f1*H + n_tau*H)/(n_tau^2 - f1*H)^2
+    covariance <- diag(rep(0, cutoff))
+    for(i in 1:(cutoff-1)) {
+      covariance[i, (i+1):cutoff] <- -fs[i]*fs[(i+1):cutoff]/diversity
+    }
+    covariance <- t(covariance) +  covariance
+    diag(covariance) <- fs*(1-fs/diversity)
+    
+    
+    diversity_se <- sqrt(derivatives %*% covariance %*% derivatives)
+    
+  } else {
+    wlrm <- wlrm_untransformed(input_data, print = F, answers = T)
+    if (is.null(wlrm$est)) {
+      wlrm <- wlrm_transformed(input_data, print = F, answers = T)
+    } 
+    diversity <- wlrm$est
+    diversity_se  <- wlrm$seest
+    f0  <- diversity - sum(frequency_index)
   }
-  covariance <- t(covariance) +  covariance
-  diag(covariance) <- fs*(1-fs/diversity)
-  
-  
-  diversity_se <- sqrt(derivatives %*% covariance %*% derivatives)
-  
+
   if(output) {
     cat("################## Chao-Bunge ##################\n")
     cat("\tThe estimate of total diversity is", round(diversity),

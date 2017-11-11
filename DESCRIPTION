@@ -20,6 +20,11 @@ Imports: MASS,
     graphics
 Suggests: knitr,
     rmarkdown,
-    testthat
+    testthat,
+    phyloseq,
+    reshape2,
+    ggplot2,
+    plyr
 VignetteBuilder: knitr
 URL: https://adw96.github.io/breakaway/
+

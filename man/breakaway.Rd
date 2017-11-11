@@ -4,8 +4,7 @@
 \alias{breakaway}
 \title{Species richness estimation with breakaway}
 \usage{
-breakaway(my_data, output = TRUE, plot = FALSE, answers = FALSE, force = FALSE, 
-    useAll = FALSE)
+breakaway(my_data, output = TRUE, plot = FALSE, answers = FALSE)
 }
 \arguments{
 \item{my_data}{The sample frequency count table for the population of
@@ -27,18 +26,6 @@ returned.}
 
 \item{answers}{Logical: whether the function should return an argument. If
 \samp{FALSE}, output should be set to \samp{TRUE}.}
-
-\item{force}{Logical: force \samp{breakaway} to run in the presence of
-frequency count concatenation, i.e. combining all species observed 27 or 28
-or 29 or more into frequency count 27. \samp{force=TRUE} will force
-\samp{breakaway} to fit models in the presence of this. This will generally
-result in the model being misspecified, and \samp{breakaway}'s diversity
-estimates cannot be considered reliable in this case. The option
-\samp{force} issue does not address censoring or small data on the rare end
-of the frequency count tables, i.e. insufficiently many contiguous
-frequencies.}
-
-\item{useAll}{Forces all data to be used. Otherwise breakaway determines the optimal cutoff.}
 }
 \value{
 \item{code}{ A category representing algorithm behaviour.

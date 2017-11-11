@@ -4,7 +4,7 @@
 \alias{simpson_better}
 \title{An estimate of the Simpson index}
 \usage{
-simpson_better(input)
+simpson_better(input, ccc = NA, ccc_se = NA, quantile = 0.95)
 }
 \arguments{
 \item{input}{A frequency count table or vector of abundances.}

@@ -52,8 +52,7 @@ head(colnames(otu_data) == rownames(meta_data))
 We're now going to "collapse" the otu_data's columns (samples) into frequency tables. Frequency tables...
 
 ```{r}
-frequencytablelist <- lapply(apply(otu_data,2,table),as.data.frame)
-frequencytablelist <- lapply(frequencytablelist,function(x) x[x[,1]!=0,])
+frequencytablelist <- build_frequency_count_tables(otu_data)
 head(frequencytablelist[[63]])
 ```
 
@@ -78,6 +77,7 @@ breakaway(frequencytablelist[[60]])
 
 breakaway can defer to the WLRM for several reasons. Perhaps there are too many singletons. Perhaps there isn't a long enough tail. Perhaps there is false diversity. In this case, there was probably not enough data. Let's see if this failure was sensitive to the singleton count by running
 breakaway_nof1. This requires no singleton count (implicit is that the singleton count was erroneous) and predicts it from the other frequencies.
+
 ```{r}
 breakaway_nof1(frequencytablelist[[60]][-1,])
 ```
@@ -144,14 +144,14 @@ risks in randomly observing really low Shannon diversity estimates. This is an i
 
 BTW, you can use the above to look sample size variability as well. If you have very different numbers of reads across samples, this can introduce additional variability. Let's look at the distribution of reads in the current dataset.
 ```{r}
-ns <- unlist(lapply(frequencytablelist, function(x) sum(x[,2])))
+ns <- unlist(lapply(frequencytablelist, function(x) sum(x[,2] * x[,1])))
 hist(ns)
 ```
 
 Well, but a lot of variability! Lets account for it in looking at our distribution of Shannon diversity estimates
 ```{r}
 set.seed(8)
-hist(replicate(500, resample_estimate(otu_data[,1], shannon, my_sample_size = ns)))
+hist(replicate(100, resample_estimate(otu_data[,1], shannon, my_sample_size = ns)))
 ```
 
 That's a lot more variability than we saw originally!

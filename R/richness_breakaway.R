@@ -21,16 +21,6 @@
 #' @param plot Logical: whether the data and model fit should be plotted.
 #' @param answers Logical: whether the function should return an argument. If
 #' \samp{FALSE}, output should be set to \samp{TRUE}.
-#' @param force Logical: force \samp{breakaway} to run in the presence of
-#' frequency count concatenation, i.e. combining all species observed 27 or 28
-#' or 29 or more into frequency count 27. \samp{force=TRUE} will force
-#' \samp{breakaway} to fit models in the presence of this. This will generally
-#' result in the model being misspecified, and \samp{breakaway}'s diversity
-#' estimates cannot be considered reliable in this case. The option
-#' \samp{force} issue does not address censoring or small data on the rare end
-#' of the frequency count tables, i.e. insufficiently many contiguous
-#' frequencies.
-#' @param useAll Forces all data to be used. Otherwise breakaway determines the optimal cutoff.
 #' @return \item{code}{ A category representing algorithm behaviour.
 #' \samp{code=1} indicates no nonlinear models converged and the transformed
 #' WLRM diversity estimate of Rocchetti et. al. (2011) is returned.
@@ -115,114 +105,59 @@
 #' 
 #' 
 #' @export breakaway
-breakaway <- function(my_data, output=TRUE, plot=FALSE, answers=FALSE, force=FALSE, useAll=FALSE) {
+breakaway <- function(my_data, output=TRUE, plot=FALSE, answers=FALSE) {
   
-  ## read in data
-  if( !(is.matrix(my_data) || is.data.frame(my_data))) {
-    filename <- my_data
-    ext <- substr(filename, nchar(filename)-2, nchar(filename))
-    if (ext == "csv") {
-      my_data <- read.table(file=filename, header=0,sep=",")
-      if( my_data[1,1] !=1) my_data <- read.table(filename, header=1,sep=",")
-    } else if (ext == "txt") {
-      my_data <- read.table(file=filename, header=0)
-    } else stop("Please input your data as a txt or csv file,
-               or as an R dataframe or matrix.")
-  }
-  
-  ## if tables() is used to create the frequency tables, the frequency index column is usually a factor, so fix this here
-  if ( is.factor(my_data[,1]) ) {
-    fs <- as.numeric(as.character(my_data[,1]))
-    my_data <- cbind(fs,my_data[,2])
-    my_data <- my_data[my_data[,1]!=0,]
-  }
-  
-  if(length(my_data) <= 1) {
-    stop("Input data is of length 1 or 0. Huh?")
-  }
+  orig_my_data <- check_format(my_data)
   
   if (my_data[1,1]!=1 || my_data[1,2]==0) {
     stop("You don't have an observed singleton count.\n breakaway isn't built for that data structure.\n")
   } 
   
-  my_data <- my_data[!(my_data[,2]==0 | is.na(my_data[,2])),]
-  orig_my_data <- my_data
   n <- sum(orig_my_data[,2])
   f1 <- my_data[1,2]
   
-  if (useAll) {
-    warning("The useAll option is in beta! Use at your own risk.\nPlease report any issues via github or to Amy directly.")
-    ## Use all contiguous frequencies. Default is to cut off at the first break in frequencies.
-    
-    frequency_vector <- my_data[ , 1]
-    frequency_counts <- my_data[ , 2]
-    
-    frequency_ratios <- frequency_counts[-1] / frequency_counts[-length(frequency_counts)]
-    frequency_vector_differences <- frequency_vector[-1] - frequency_vector[-length(frequency_vector)]
-    
-    xs <- frequency_vector[frequency_vector_differences == 1]
-    xs <- xs[-length(xs)] # need to take off the last 1 because we lose 1 with ratios
-    xbar <- mean(xs)
-    
-    y <- frequency_ratios[frequency_vector_differences == 1]
-    ys <- (xs+1)*y
-    
-    lhs <- list("x"=xs-xbar,"y"=y)
-    cutoff <- length(y)
-  } else {
-    ## breakaway's default is to cut off at the first break in frequencies
-    
-    ## Horrible way to do this. What was 22 y.o. Amy thinking?!
-    ## finds the break in contiguity
-    cutoff <- ifelse(is.na(which(my_data[-1,1]-my_data[-length(my_data[,1]),1]>1)[1]),length(my_data[,1]),which(my_data[-1,1]-my_data[-length(my_data[,1]),1]>1)[1])
-    
-    my_data <- my_data[1:cutoff,]
-    ys <- (my_data[1:(cutoff-1),1]+1)*my_data[2:cutoff,2]/my_data[1:(cutoff-1),2]
-    xs <- 1:(cutoff-1)
-    xbar <- mean(xs)
-    lhs <- list("x"=xs-xbar,"y"=my_data[2:cutoff,2]/my_data[1:(cutoff-1),2])
-  }
+  ## breakaway's default is to cut off at the first break in frequencies
+  
+  ## Horrible way to do this. What was 22 y.o. Amy thinking?!
+  ## finds the break in contiguity
+  cutoff <- ifelse(is.na(which(my_data[-1,1]-my_data[-length(my_data[,1]),1]>1)[1]),length(my_data[,1]),which(my_data[-1,1]-my_data[-length(my_data[,1]),1]>1)[1])
+  
+  my_data <- my_data[1:cutoff,]
+  ys <- (my_data[1:(cutoff-1),1]+1)*my_data[2:cutoff,2]/my_data[1:(cutoff-1),2]
+  xs <- 1:(cutoff-1)
+  xbar <- mean(xs)
+  lhs <- list("x"=xs-xbar,"y"=my_data[2:cutoff,2]/my_data[1:(cutoff-1),2])
+  
   
   if (cutoff < 6) { ## check for unusual data structures
-    warning("You don't have enough contiguous frequencies.\n
-            breakaway needs at least 6!\n
-            Using Chao-Bunge instead.\n")
+    message("You don't have enough contiguous frequencies
+            to use breakaway. Using Chao-Bunge instead...\n")
     
-    result <- chao_bunge(data, answers = T, output = F)
+    result_temporary <- chao_bunge(my_data, answers = TRUE, output = FALSE)
+    
     if(output) {
       cat("################## breakaway ##################\n")
-      cat("\tThe best estimate of total diversity is", round(result$est),
-          "\n \t with std error",round(result$seest),"\n")
+      cat("\tThe best estimate of total diversity is", round(result_temporary$est),
+          "\n \t with std error",round(result_temporary$seest),"\n")
       cat("\tThe model employed was Chao-Bunge (Negative binomial) \n")
     }
-
+    
     if(answers) {
-      result$name <- "Chao-Bunge"
-      result$est <- result$est
-      result$seest <- result$seest
-      d <- exp(1.96*sqrt(log(1+result$seest^2/f0)))
-      result$ci <- c(n+f0/d,n+f0*d)
-      return(result)
+      return(result_temporary)
     }
-
-  } 
-  
-  if ( !force && ( (my_data[cutoff,2]/my_data[cutoff-1,2])>10 )) {
-    stop("\tIt looks like you've concatenated some of your data! Please truncate and try again.\n")
-  } 
-  
-  weights_inv <- 1/xs
-  run <- minibreak(lhs,xs,ys,my_data,weights_inv)
-  result <- list()
-  choice <- list()
-  
-  ### If no models converged, use the WLRM
-  if (sum(as.numeric(run$useful[,5]))==0) {
-    choice$outcome <- 0
-  
-    if (useAll) {
-      stop("No models converged. Your dataset may be too small for breakaway's model set, or too irregular.")
-    } else {
+    
+  } else {
+    
+    
+    weights_inv <- 1/xs
+    run <- minibreak(lhs,xs,ys,my_data,weights_inv)
+    result <- list()
+    choice <- list()
+    
+    ### If no models converged, use the WLRM
+    if (sum(as.numeric(run$useful[,5]))==0) {
+      choice$outcome <- 0
+      
       if(output) cat("No breakaway models converged.")
       weights_trans <- (1/my_data[-1,2]+1/my_data[-cutoff,2])^-1
       lm1 <- lm(log(ys)~xs,weights=weights_trans)
@@ -250,127 +185,146 @@ breakaway <- function(my_data, output=TRUE, plot=FALSE, answers=FALSE, force=FAL
       }
       
       result$code <- 1
-    }
-    
-  } else { 
-    ## Otherwise, YAY! Something worked for 1/x weighting
-    choice$outcome <- 1
-    choice$model <- rownames(run$useful)[min(which(run$useful[,5]==1))] #pick smallest
-    choice$full <-  run[[noquote(choice$model)]]
-    
-    oldest <- run$useful[run$useful[,5]==1,1][[1]]
-    est <- 0
-    its <- 0
-    while ( choice$outcome & abs(oldest-est)>1 & its < 30) {
-      oldest <- est
-      C <- round(n+oldest,0)
-      unscaledprobs <- c(1,cumprod(fitted(choice$full)))
-      p <- unscaledprobs/sum(unscaledprobs)
-      as <- p[-1]^2/p[-cutoff]^3 * (1-exp(-C*p[-cutoff]))^3/(1-exp(-C*p[-1]))^2 * (1-C*p[-cutoff]/(exp(C*p[-cutoff])-1))
-      bs <- p[-1]/p[-cutoff]^2 * (1-exp(-C*p[-cutoff]))^2/(1-exp(-C*p[-1])) * (1-C*p[-1]/(exp(C*p[-1])-1))
-      ratiovars <- (as + bs)/C
       
-      if(its==0) {
-        weights1 <- 1/ratiovars
-      }
       
-      run <- try ( minibreak(lhs,xs,ys,my_data,1/ratiovars), silent = 1)
+    } else { 
+      ## Otherwise, YAY! Something worked for 1/x weighting
+      choice$outcome <- 1
+      choice$model <- rownames(run$useful)[min(which(run$useful[,5]==1))] #pick smallest
+      choice$full <-  run[[noquote(choice$model)]]
       
-      if ( class(run) == "try-error") {
-        ratiovars <- (p[-1]^2/p[-cutoff]^3 + p[-1]/p[-cutoff]^2)/C
+      oldest <- run$useful[run$useful[,5]==1,1][[1]]
+      est <- 0
+      its <- 0
+      while ( choice$outcome & abs(oldest-est)>1 & its < 30) {
+        oldest <- est
+        C <- round(n+oldest,0)
+        unscaledprobs <- c(1,cumprod(fitted(choice$full)))
+        p <- unscaledprobs/sum(unscaledprobs)
+        as <- p[-1]^2/p[-cutoff]^3 * (1-exp(-C*p[-cutoff]))^3/(1-exp(-C*p[-1]))^2 * (1-C*p[-cutoff]/(exp(C*p[-cutoff])-1))
+        bs <- p[-1]/p[-cutoff]^2 * (1-exp(-C*p[-cutoff]))^2/(1-exp(-C*p[-1])) * (1-C*p[-1]/(exp(C*p[-1])-1))
+        ratiovars <- (as + bs)/C
+        
+        if(its==0) {
+          weights1 <- 1/ratiovars
+        }
+        
         run <- try ( minibreak(lhs,xs,ys,my_data,1/ratiovars), silent = 1)
+        
         if ( class(run) == "try-error") {
-          if(output) {print("Numerical errors result in non-convergence") }
+          ratiovars <- (p[-1]^2/p[-cutoff]^3 + p[-1]/p[-cutoff]^2)/C
+          run <- try ( minibreak(lhs,xs,ys,my_data,1/ratiovars), silent = 1)
+          if ( class(run) == "try-error") {
+            if(output) {print("Numerical errors result in non-convergence") }
+          }
+        }
+        
+        choice <- list()
+        if ( class(run)=="try-error" ) {
+          choice$outcome <- 0
+        } else if (sum(as.numeric(run$useful[,5]))==0) {
+          choice$outcome <- 0
+        } else {
+          choice$outcome <- 1
+          choice$model <- rownames(run$useful)[min(which(run$useful[,5]==1))]
+          choice$full <-  run[[noquote(choice$model)]]
+          
+          est <- run$useful[run$useful[,5]==1,1][[1]]
+          its <- its + 1
+          result$code <- 2
         }
       }
-      
-      choice <- list()
-      if ( class(run)=="try-error" ) {
-        choice$outcome <- 0
-      } else if (sum(as.numeric(run$useful[,5]))==0) {
-        choice$outcome <- 0
-      } else {
+      if( !choice$outcome) {
+        if(output) cat("We used 1/x weighting. \n")
+        run <- minibreak(lhs,xs,ys,my_data,weights_inv)
         choice$outcome <- 1
         choice$model <- rownames(run$useful)[min(which(run$useful[,5]==1))]
         choice$full <-  run[[noquote(choice$model)]]
+        result$code <- 3
+      }
+      
+      if(choice$model=="model_1_0") {
+        b0_hat <- coef(choice$full)[1]
+        b0_var <- vcov(choice$full)[1,1]
+      } else {
+        effective_coef <- c(coef(choice$full),rep(0,9-length(coef(choice$full))))
+        b <- effective_coef[1]-effective_coef[2]*xbar+effective_coef[4]*xbar^2-effective_coef[6]*xbar^3+effective_coef[8]*xbar^4
+        a <- 1-effective_coef[3]*xbar+effective_coef[5]*xbar^2-effective_coef[7]*xbar^3+effective_coef[9]*xbar^4
         
-        est <- run$useful[run$useful[,5]==1,1][[1]]
-        its <- its + 1
-        result$code <- 2
+        nabla <- c(1/a, -xbar/a, b*xbar/a^2, xbar^2/a, -b*xbar^2/a^2, -xbar^3/a,b*xbar^3/a^2, xbar^4/a, -b*xbar^4/a^2)
+        nabla <- nabla[1:length(coef(choice$full))]
+        
+        b0_hat <- b/a
+        b0_var <- t(nabla)%*%vcov(choice$full)%*%nabla
+      }
+      
+      f0 <- run$useful[rownames(run$useful)==choice$model,1][[1]]
+      f0_var <- f1*b0_hat^-2*(1-f1/n+f1*b0_hat^-2*b0_var) #1st order d.m.
+      
+      diversity <- f0 + n
+      diversity_se <- sqrt(n*f0/diversity + f0_var)
+      
+      if (choice$model == "model_1_0") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*x)/(1+x)"
+      if (choice$model == "model_1_1") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar))/(1+alpha1*(x-xbar))"
+      if (choice$model == "model_2_1") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar)+beta2*(x-xbar)^2)/(1+alpha1*(x-xbar))"
+      if (choice$model == "model_2_2") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar)+beta2*(x-xbar)^2)/(1+alpha1*(x-xbar)+alpha2)"
+      if (choice$model == "model_3_2") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar)+beta2*(x-xbar)^2+beta3*(x-xbar)^3)/(1+alpha1*(x-xbar)+alpha2*(x-xbar)^2)"
+      if (choice$model == "model_3_3") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar)+beta2*(x-xbar)^2+beta3*(x-xbar)^3)/(1+alpha1*(x-xbar)+alpha2*(x-xbar)^2+alpha3*(x-xbar)^3)"
+      if (choice$model == "model_4_3") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar)+beta2*(x-xbar)^2+beta3*(x-xbar)^3+beta4*(x-xbar)^4)/(1+alpha1*(x-xbar)+alpha2*(x-xbar)^2+alpha3*(x-xbar)^3)"
+      if (choice$model == "model_4_4") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar)+beta2*(x-xbar)^2+beta3*(x-xbar)^3+beta4*(x-xbar)^4)/(1+alpha1*(x-xbar)+alpha2*(x-xbar)^2+alpha3*(x-xbar)^3+alpha4*(x-xbar)^4)"
+      
+      parameter_table <-  coef(summary(choice$full))[,1:2]
+      colnames(parameter_table) <- c("Coef estimates","Coef std errors")
+      
+      if(output) {
+        cat("################## breakaway ##################\n")
+        cat("\tThe best estimate of total diversity is", round(diversity),
+            "\n \t with std error",round(diversity_se),"\n")
+        cat("\tThe model employed was", choice$model,"\n")
+        cat("\tThe function selected was\n\t ", the_function,"\n")
+        print(parameter_table)
+        cat("xbar\t\t\t",xbar)
+      }
+      
+      if(plot)  {
+        yhats <- fitted(choice$full)
+        par(new=FALSE)
+        plot(xs,lhs$y,xlim=c(0,max(xs)+1),ylim=c(min(lhs$y,yhats),max(lhs$y)*1.05),
+             ylab="f(x+1)/f(x)",xlab="x",main="Plot of ratios and fitted values under model");
+        points(xs,yhats,pch=18)
+        points(0,b0_hat,col="red",pch=18)
+        legend(0,max(lhs$y),c("Fitted values", "Prediction"),pch=c(18,18),col=c("black", "red"),cex=0.8,bty = "n")
+      }
+      
+      if(answers) {
+        result$name <- choice$model
+        result$para <- parameter_table
+        result$est <- diversity
+        result$seest <- as.vector(diversity_se)
+        result$full <- choice$full
+        d <- exp(1.96*sqrt(log(1+result$seest^2/f0)))
+        result$ci <- c(n+f0/d,n+f0*d)
+        return(result)
       }
     }
-    if( !choice$outcome) {
-      if(output) cat("We used 1/x weighting. \n")
-      run <- minibreak(lhs,xs,ys,my_data,weights_inv)
-      choice$outcome <- 1
-      choice$model <- rownames(run$useful)[min(which(run$useful[,5]==1))]
-      choice$full <-  run[[noquote(choice$model)]]
-      result$code <- 3
-    }
-    
-    if(choice$model=="model_1_0") {
-      b0_hat <- coef(choice$full)[1]
-      b0_var <- vcov(choice$full)[1,1]
-    } else {
-      effective_coef <- c(coef(choice$full),rep(0,9-length(coef(choice$full))))
-      b <- effective_coef[1]-effective_coef[2]*xbar+effective_coef[4]*xbar^2-effective_coef[6]*xbar^3+effective_coef[8]*xbar^4
-      a <- 1-effective_coef[3]*xbar+effective_coef[5]*xbar^2-effective_coef[7]*xbar^3+effective_coef[9]*xbar^4
-      
-      nabla <- c(1/a, -xbar/a, b*xbar/a^2, xbar^2/a, -b*xbar^2/a^2, -xbar^3/a,b*xbar^3/a^2, xbar^4/a, -b*xbar^4/a^2)
-      nabla <- nabla[1:length(coef(choice$full))]
-      
-      b0_hat <- b/a
-      b0_var <- t(nabla)%*%vcov(choice$full)%*%nabla
-    }
-    
-    f0 <- run$useful[rownames(run$useful)==choice$model,1][[1]]
-    f0_var <- f1*b0_hat^-2*(1-f1/n+f1*b0_hat^-2*b0_var) #1st order d.m.
-    
-    diversity <- f0 + n
-    diversity_se <- sqrt(n*f0/diversity + f0_var)
-    
-    if (choice$model == "model_1_0") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*x)/(1+x)"
-    if (choice$model == "model_1_1") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar))/(1+alpha1*(x-xbar))"
-    if (choice$model == "model_2_1") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar)+beta2*(x-xbar)^2)/(1+alpha1*(x-xbar))"
-    if (choice$model == "model_2_2") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar)+beta2*(x-xbar)^2)/(1+alpha1*(x-xbar)+alpha2)"
-    if (choice$model == "model_3_2") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar)+beta2*(x-xbar)^2+beta3*(x-xbar)^3)/(1+alpha1*(x-xbar)+alpha2*(x-xbar)^2)"
-    if (choice$model == "model_3_3") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar)+beta2*(x-xbar)^2+beta3*(x-xbar)^3)/(1+alpha1*(x-xbar)+alpha2*(x-xbar)^2+alpha3*(x-xbar)^3)"
-    if (choice$model == "model_4_3") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar)+beta2*(x-xbar)^2+beta3*(x-xbar)^3+beta4*(x-xbar)^4)/(1+alpha1*(x-xbar)+alpha2*(x-xbar)^2+alpha3*(x-xbar)^3)"
-    if (choice$model == "model_4_4") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar)+beta2*(x-xbar)^2+beta3*(x-xbar)^3+beta4*(x-xbar)^4)/(1+alpha1*(x-xbar)+alpha2*(x-xbar)^2+alpha3*(x-xbar)^3+alpha4*(x-xbar)^4)"
-    
-    parameter_table <-  coef(summary(choice$full))[,1:2]
-    colnames(parameter_table) <- c("Coef estimates","Coef std errors")
-    
-    if(output) {
-      cat("################## breakaway ##################\n")
-      cat("\tThe best estimate of total diversity is", round(diversity),
-          "\n \t with std error",round(diversity_se),"\n")
-      cat("\tThe model employed was", choice$model,"\n")
-      cat("\tThe function selected was\n\t ", the_function,"\n")
-      print(parameter_table)
-      cat("xbar\t\t\t",xbar)
-    }
-    
-    if(plot)  {
-      yhats <- fitted(choice$full)
-      par(new=FALSE)
-      plot(xs,lhs$y,xlim=c(0,max(xs)+1),ylim=c(min(lhs$y,yhats),max(lhs$y)*1.05),
-           ylab="f(x+1)/f(x)",xlab="x",main="Plot of ratios and fitted values under model");
-      points(xs,yhats,pch=18)
-      points(0,b0_hat,col="red",pch=18)
-      legend(0,max(lhs$y),c("Fitted values", "Prediction"),pch=c(18,18),col=c("black", "red"),cex=0.8,bty = "n")
-    }
-    
-    if(answers) {
-      result$name <- choice$model
-      result$para <- parameter_table
-      result$est <- diversity
-      result$seest <- as.vector(diversity_se)
-      result$full <- choice$full
-      d <- exp(1.96*sqrt(log(1+result$seest^2/f0)))
-      result$ci <- c(n+f0/d,n+f0*d)
-      return(result)
-    }
+  }
+}
+
+#' @export richness_clean
+richness_clean <- function(count_table, FUN = breakaway) {
+  richness_output <- try(FUN(count_table, answers = T, output = F, plot = F))
+  if (class(richness_output) != "try-error") {
+    data.frame("index" = "Richness", 
+               "estimate" = richness_output$est, 
+               "standard_error" = richness_output$seest, 
+               "lower" = richness_output$ci[1], 
+               "upper" = richness_output$ci[2])
+  } else {
+    data.frame("index" = "Richness", 
+               "estimate" = NA, 
+               "standard_error" = NA, 
+               "lower" = sum(count_table[,2]), 
+               "upper" = Inf)
   }
 }
 
@@ -656,244 +610,228 @@ residse <- function(model) {
 #' @export breakaway_nof1
 breakaway_nof1 <- function(my_data, output=TRUE, plot=TRUE, answers=FALSE, force=FALSE) {
   
-  if( !(is.matrix(my_data) || is.data.frame(my_data))) {
-    filename <- my_data
-    ext <- substr(filename, nchar(filename)-2, nchar(filename))
-    if (ext == "csv") {
-      my_data <- read.table(file=filename, header=0,sep=",")
-      if( my_data[1,1] !=1) my_data <- read.table(filename, header=1,sep=",")
-    } else if (ext == "txt") {
-      my_data <- read.table(file=filename, header=0)
-    } else cat("Please input your data as a txt or csv file,
-               or as an R dataframe or matrix.")
-  }
-  if ( is.factor(my_data[,1]) ) {
-    fs <- as.numeric(as.character(my_data[,1]))
-    my_data <- cbind(fs,my_data[,2])
-    my_data <- my_data[my_data[,1]!=0,]
-  }
+  my_data <- check_format(my_data)
   
-  if(length(my_data)>1) {
-    if (my_data[1,1]!=2 || my_data[1,2]==0) {
-      if(output) cat("breakaway_nof1 is for when you have no singleton count.\nYou need a leading doubleton count!\n")
+  
+  if (my_data[1,1]!=2 || my_data[1,2]==0) {
+    if(output) cat("breakaway_nof1 is for when you have no singleton count.\nYou need a leading doubleton count!\n")
+  } else {
+    my_data <- my_data[!(my_data[,2]==0 | is.na(my_data[,2])),]
+    orig_my_data <- my_data
+    n <- sum(orig_my_data[,2])
+    f2 <- my_data[1,2]
+    
+    cutoff <- ifelse(is.na(which(my_data[-1,1]-my_data[-length(my_data[,1]),1]>1)[1]),length(my_data[,1]),which(my_data[-1,1]-my_data[-length(my_data[,1]),1]>1)[1])
+    my_data <- my_data[1:cutoff,]
+    ys <- (my_data[1:(cutoff-1),1]+1)*my_data[2:cutoff,2]/my_data[1:(cutoff-1),2]
+    xs <- 2:cutoff
+    xbar <- mean(c(1,xs))
+    lhs <- list("x"=xs-xbar,"y"=my_data[2:cutoff,2]/my_data[1:(cutoff-1),2])
+    
+    if ( cutoff < 5) { ### check for unusual data structures
+      if(output) cat("You don't have enough contiguous frequencies.\n breakaway needs at least 6!\n")
+    } else if ((force==FALSE) && ( (my_data[cutoff,2]/my_data[cutoff-1,2])>10 )) {
+      cat("\tIt looks like you've concatenated some of your my_data!\n Please truncate and try again.\n")
     } else {
-      my_data <- my_data[!(my_data[,2]==0 | is.na(my_data[,2])),]
-      orig_my_data <- my_data
-      n <- sum(orig_my_data[,2])
-      f2 <- my_data[1,2]
+      weights_inv <- 1/xs
+      run <- minibreak_nof1(lhs,xs,ys,my_data,weights_inv)
+      result <- list()
+      choice <- list()
       
-      cutoff <- ifelse(is.na(which(my_data[-1,1]-my_data[-length(my_data[,1]),1]>1)[1]),length(my_data[,1]),which(my_data[-1,1]-my_data[-length(my_data[,1]),1]>1)[1])
-      my_data <- my_data[1:cutoff,]
-      ys <- (my_data[1:(cutoff-1),1]+1)*my_data[2:cutoff,2]/my_data[1:(cutoff-1),2]
-      xs <- 2:cutoff
-      xbar <- mean(c(1,xs))
-      lhs <- list("x"=xs-xbar,"y"=my_data[2:cutoff,2]/my_data[1:(cutoff-1),2])
-      
-      if ( cutoff < 5) { ### check for unusual data structures
-        if(output) cat("You don't have enough contiguous frequencies.\n breakaway needs at least 6!\n")
-      } else if ((force==FALSE) && ( (my_data[cutoff,2]/my_data[cutoff-1,2])>10 )) {
-        cat("\tIt looks like you've concatenated some of your my_data!\n Please truncate and try again.\n")
-      } else {
-        weights_inv <- 1/xs
-        run <- minibreak_nof1(lhs,xs,ys,my_data,weights_inv)
-        result <- list()
-        choice <- list()
+      if (sum(as.numeric(run$useful[,5]))==0) {
+        choice$outcome <- 0
+        if(output) cat("No breakaway models converged.")
+        weights_trans <- (1/my_data[-1,2]+1/my_data[-cutoff,2])^-1
+        lm1 <- lm(log(ys)~xs,weights=weights_trans)
+        b0_hat <- summary(lm1)$coef[1,1]
+        b0_se <- summary(lm1)$coef[1,2]
+        b1_hat <- summary(lm1)$coef[2,1]
+        b1_se <- summary(lm1)$coef[2,2]
         
-        if (sum(as.numeric(run$useful[,5]))==0) {
-          choice$outcome <- 0
-          if(output) cat("No breakaway models converged.")
-          weights_trans <- (1/my_data[-1,2]+1/my_data[-cutoff,2])^-1
-          lm1 <- lm(log(ys)~xs,weights=weights_trans)
-          b0_hat <- summary(lm1)$coef[1,1]
-          b0_se <- summary(lm1)$coef[1,2]
-          b1_hat <- summary(lm1)$coef[2,1]
-          b1_se <- summary(lm1)$coef[2,2]
+        f1_pred <- 2*f2*exp(-(b0_hat+b1_hat))
+        f0_pred <- f1_pred*exp(-b0_hat)
+        diversity <- f0_pred + f1_pred + n
+        
+        covmatrix <- matrix(c(f2*(1-f2/n),rep(0,8)),nrow=3)
+        covmatrix[2:3,2:3] <- vcov(lm1)
+        
+        derivs <- c(exp(-(b0_hat+b1_hat))*(1+exp(-b1_hat)),
+                    f2*exp(-b1_hat)*(1+exp(-b1_hat))*exp(-b0_hat),
+                    f2*exp(-b0_hat)*(-exp(-b1_hat)-2*exp(-b1_hat)))
+        
+        f0plusf1_var <- 4*t(derivs)%*%covmatrix%*%(derivs)
+        
+        diversity_se <- sqrt(f0plusf1_var+n*(f0_pred+f1_pred)/(n+f0_pred+f1_pred))
+        
+        if(output) {
+          cat("################## breakaway ##################\n")
+          cat("\tThe best estimate of total diversity is", round(diversity),
+              "\n \t with std error",round(diversity_se),"\n")
+          cat("\tThe model employed was the WLRM\n")
+        }
+        if(answers) {
+          result$name <- "WLRM"
+          result$para <- summary(lm1)$coef[,1:2]
+          result$est <- diversity
+          result$seest <- as.vector(diversity_se)
+          result$full <- lm1
+          d <- exp(1.96*sqrt(log(1+result$seest^2/f0_pred)))
+          result$ci <- c(n+f0_pred/d,n+f0_pred*d)
+          return(result)
+        }
+        
+        result$code <- 1
+      } else { # something worked for 1/x weighting
+        choice$outcome <- 1
+        choice$model <- rownames(run$useful)[min(which(run$useful[,5]==1))] #pick smallest
+        choice$full <-  run[[noquote(choice$model)]]
+        
+        
+        oldest <- run$useful[run$useful[,5]==1,1][[1]]
+        est <- 0
+        its <- 0
+        while ( choice$outcome & abs(oldest-est)>1 & its < 30) {
+          oldest <- est
+          C <- round(n+oldest,0)
+          unscaledprobs <- c(1,cumprod(fitted(choice$full)))
+          p <- unscaledprobs/sum(unscaledprobs)
+          as <- p[-1]^2/p[-cutoff]^3 * (1-exp(-C*p[-cutoff]))^3/(1-exp(-C*p[-1]))^2 * (1-C*p[-cutoff]/(exp(C*p[-cutoff])-1))
+          bs <- p[-1]/p[-cutoff]^2 * (1-exp(-C*p[-cutoff]))^2/(1-exp(-C*p[-1])) * (1-C*p[-1]/(exp(C*p[-1])-1))
+          ratiovars <- (as + bs)/C
           
-          f1_pred <- 2*f2*exp(-(b0_hat+b1_hat))
-          f0_pred <- f1_pred*exp(-b0_hat)
-          diversity <- f0_pred + f1_pred + n
-          
-          covmatrix <- matrix(c(f2*(1-f2/n),rep(0,8)),nrow=3)
-          covmatrix[2:3,2:3] <- vcov(lm1)
-          
-          derivs <- c(exp(-(b0_hat+b1_hat))*(1+exp(-b1_hat)),
-                      f2*exp(-b1_hat)*(1+exp(-b1_hat))*exp(-b0_hat),
-                      f2*exp(-b0_hat)*(-exp(-b1_hat)-2*exp(-b1_hat)))
-          
-          f0plusf1_var <- 4*t(derivs)%*%covmatrix%*%(derivs)
-          
-          diversity_se <- sqrt(f0plusf1_var+n*(f0_pred+f1_pred)/(n+f0_pred+f1_pred))
-          
-          if(output) {
-            cat("################## breakaway ##################\n")
-            cat("\tThe best estimate of total diversity is", round(diversity),
-                "\n \t with std error",round(diversity_se),"\n")
-            cat("\tThe model employed was the WLRM\n")
+          if(its==0) {
+            weights1 <- 1/ratiovars
           }
-          if(answers) {
-            result$name <- "WLRM"
-            result$para <- summary(lm1)$coef[,1:2]
-            result$est <- diversity
-            result$seest <- as.vector(diversity_se)
-            result$full <- lm1
-            d <- exp(1.96*sqrt(log(1+result$seest^2/f0_pred)))
-            result$ci <- c(n+f0_pred/d,n+f0_pred*d)
-            return(result)
-          }
           
-          result$code <- 1
-        } else { # something worked for 1/x weighting
-          choice$outcome <- 1
-          choice$model <- rownames(run$useful)[min(which(run$useful[,5]==1))] #pick smallest
-          choice$full <-  run[[noquote(choice$model)]]
+          run <- try ( minibreak_nof1(lhs,xs,ys,my_data,1/ratiovars), silent = 1)
           
-          
-          oldest <- run$useful[run$useful[,5]==1,1][[1]]
-          est <- 0
-          its <- 0
-          while ( choice$outcome & abs(oldest-est)>1 & its < 30) {
-            oldest <- est
-            C <- round(n+oldest,0)
-            unscaledprobs <- c(1,cumprod(fitted(choice$full)))
-            p <- unscaledprobs/sum(unscaledprobs)
-            as <- p[-1]^2/p[-cutoff]^3 * (1-exp(-C*p[-cutoff]))^3/(1-exp(-C*p[-1]))^2 * (1-C*p[-cutoff]/(exp(C*p[-cutoff])-1))
-            bs <- p[-1]/p[-cutoff]^2 * (1-exp(-C*p[-cutoff]))^2/(1-exp(-C*p[-1])) * (1-C*p[-1]/(exp(C*p[-1])-1))
-            ratiovars <- (as + bs)/C
-            
-            if(its==0) {
-              weights1 <- 1/ratiovars
-            }
-            
+          if ( class(run) == "try-error") {
+            ratiovars <- (p[-1]^2/p[-cutoff]^3 + p[-1]/p[-cutoff]^2)/C
             run <- try ( minibreak_nof1(lhs,xs,ys,my_data,1/ratiovars), silent = 1)
-            
             if ( class(run) == "try-error") {
-              ratiovars <- (p[-1]^2/p[-cutoff]^3 + p[-1]/p[-cutoff]^2)/C
-              run <- try ( minibreak_nof1(lhs,xs,ys,my_data,1/ratiovars), silent = 1)
-              if ( class(run) == "try-error") {
-                if(output) {print("Numerical errors result in non-convergence") }
-              }
-            }
-            
-            choice <- list()
-            if ( class(run)=="try-error" ) {
-              choice$outcome <- 0
-            } else if (sum(as.numeric(run$useful[,5]))==0) {
-              choice$outcome <- 0
-            } else {
-              choice$outcome <- 1
-              choice$model <- rownames(run$useful)[min(which(run$useful[,5]==1))]
-              choice$full <-  run[[noquote(choice$model)]]
-              
-              est <- run$useful[run$useful[,5]==1,1][[1]]
-              its <- its + 1
-              result$code <- 2
+              if(output) {print("Numerical errors result in non-convergence") }
             }
           }
-          if( !choice$outcome) {
-            if(output) cat("Iterative reweighting didn't produce any outcomes after the first iteration, so we use 1/x\n")
-            run <- minibreak_nof1(lhs,xs,ys,my_data,weights_inv)
+          
+          choice <- list()
+          if ( class(run)=="try-error" ) {
+            choice$outcome <- 0
+          } else if (sum(as.numeric(run$useful[,5]))==0) {
+            choice$outcome <- 0
+          } else {
             choice$outcome <- 1
             choice$model <- rownames(run$useful)[min(which(run$useful[,5]==1))]
             choice$full <-  run[[noquote(choice$model)]]
-            result$code <- 3
-          }
-          
-          effective_coef <- c(coef(choice$full),rep(0,9-length(coef(choice$full))))
-          if (choice$model=="model_1_0") {
-            effective_coef[3] <- 1
-          }
-          
-          b <- effective_coef[1]-effective_coef[2]*xbar+effective_coef[4]*xbar^2-effective_coef[6]*xbar^3+effective_coef[8]*xbar^4
-          a <- 1-effective_coef[3]*xbar+effective_coef[5]*xbar^2-effective_coef[7]*xbar^3+effective_coef[9]*xbar^4
-          nabla_b <- c(1/a, -xbar/a, b*xbar/a^2, xbar^2/a, -b*xbar^2/a^2, -xbar^3/a, b*xbar^3/a^2, xbar^4/a, -b*xbar^4/a^2)
-          nabla_b <- nabla_b[1: length(coef(choice$full))]
-          
-          b1 <- effective_coef[1]+effective_coef[2]*(1-xbar)+effective_coef[4]*(1-xbar)^2+effective_coef[6]*(1-xbar)^3+effective_coef[8]*(1-xbar)^4
-          a1 <- 1+effective_coef[3]*(1-xbar)+effective_coef[5]*(1-xbar)^2+effective_coef[7]*(1-xbar)^3+effective_coef[9]*(1-xbar)^4
-          nabla_c <- c(1/a1, (1-xbar)/a1, -b1*(1-xbar)/a1^2, (1-xbar)^2/a1, -b1*(1-xbar)^2/a1^2, (1-xbar)^3/a1,-b1*(1-xbar)^3/a1^2,(1-xbar)^4/a1,-b1*(1-xbar)^4/a1^2)
-          nabla_c <- nabla_c[1: length(coef(choice$full))]
-          
-          b0_hat <- b/a
-          c0_hat <- b1/a1
-          
-          if (choice$model=="model_1_0") {
-            nabla_b <- c(nabla_b,0)
-            new_cov_b <- matrix(0,nrow=3,ncol=3)
-            new_cov_b[1:2,1:2] <- vcov(choice$full)
-            b0_var <- t(nabla_b)%*%new_cov_b%*%nabla_b
             
-            nabla_c <- c(nabla_c,0)
-            new_cov_c <- matrix(0,nrow=3,ncol=3)
-            new_cov_c[1:2,1:2] <- vcov(choice$full)
-            c0_var <- t(nabla_c)%*%new_cov_c%*%nabla_c
-          } else {
-            b0_var <- t(nabla_b)%*%vcov(choice$full)%*%nabla_b
-            c0_var <- t(nabla_c)%*%vcov(choice$full)%*%nabla_c
+            est <- run$useful[run$useful[,5]==1,1][[1]]
+            its <- its + 1
+            result$code <- 2
           }
+        }
+        if( !choice$outcome) {
+          if(output) cat("Iterative reweighting didn't produce any outcomes after the first iteration, so we use 1/x\n")
+          run <- minibreak_nof1(lhs,xs,ys,my_data,weights_inv)
+          choice$outcome <- 1
+          choice$model <- rownames(run$useful)[min(which(run$useful[,5]==1))]
+          choice$full <-  run[[noquote(choice$model)]]
+          result$code <- 3
+        }
+        
+        effective_coef <- c(coef(choice$full),rep(0,9-length(coef(choice$full))))
+        if (choice$model=="model_1_0") {
+          effective_coef[3] <- 1
+        }
+        
+        b <- effective_coef[1]-effective_coef[2]*xbar+effective_coef[4]*xbar^2-effective_coef[6]*xbar^3+effective_coef[8]*xbar^4
+        a <- 1-effective_coef[3]*xbar+effective_coef[5]*xbar^2-effective_coef[7]*xbar^3+effective_coef[9]*xbar^4
+        nabla_b <- c(1/a, -xbar/a, b*xbar/a^2, xbar^2/a, -b*xbar^2/a^2, -xbar^3/a, b*xbar^3/a^2, xbar^4/a, -b*xbar^4/a^2)
+        nabla_b <- nabla_b[1: length(coef(choice$full))]
+        
+        b1 <- effective_coef[1]+effective_coef[2]*(1-xbar)+effective_coef[4]*(1-xbar)^2+effective_coef[6]*(1-xbar)^3+effective_coef[8]*(1-xbar)^4
+        a1 <- 1+effective_coef[3]*(1-xbar)+effective_coef[5]*(1-xbar)^2+effective_coef[7]*(1-xbar)^3+effective_coef[9]*(1-xbar)^4
+        nabla_c <- c(1/a1, (1-xbar)/a1, -b1*(1-xbar)/a1^2, (1-xbar)^2/a1, -b1*(1-xbar)^2/a1^2, (1-xbar)^3/a1,-b1*(1-xbar)^3/a1^2,(1-xbar)^4/a1,-b1*(1-xbar)^4/a1^2)
+        nabla_c <- nabla_c[1: length(coef(choice$full))]
+        
+        b0_hat <- b/a
+        c0_hat <- b1/a1
+        
+        if (choice$model=="model_1_0") {
+          nabla_b <- c(nabla_b,0)
+          new_cov_b <- matrix(0,nrow=3,ncol=3)
+          new_cov_b[1:2,1:2] <- vcov(choice$full)
+          b0_var <- t(nabla_b)%*%new_cov_b%*%nabla_b
           
-          f1_pred <- f2/c0_hat
-          f0_pred <- f1_pred/b0_hat
-          diversity <- f0_pred + f1_pred + n
-          
-          covmatrix <- diag(c(f2*(1-f2/diversity),b0_var,c0_var))
-          if (choice$model == "model_1_0") {
-            cov_b0_c0 <- 0.5*sum(vcov(choice$full)[,1])
-            covmatrix[2,3] <- cov_b0_c0
-            covmatrix[3,2] <- cov_b0_c0
-          } else {
-            covmatrix[2,3] <- b0_var/a1
-            covmatrix[3,2] <- b0_var/a1
-          }
-          derivs <- matrix(c(b0_hat^-1*c0_hat^-1,
-                             -f2*b0_hat^-2*c0_hat^-1,
-                             -f2*b0_hat^-1*c0_hat^-2,c0_hat^-1,0,-f2*b0_hat^-2),byrow=TRUE,ncol=3,nrow=2)
-          f0plusf1_var <- derivs%*%covmatrix%*%t(derivs)
-          
-          var_est <- sum(f0plusf1_var) + n*(f0_pred+f1_pred)/diversity - 2*f0_pred*n/diversity - 2*f1_pred*n/diversity
-          diversity_se <- ifelse(var_est<0, 0, sqrt(var_est)) ## Piece 6
-          
-          if (choice$model == "model_1_0") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*x)/(1+x)"
-          if (choice$model == "model_1_1") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar))/(1+alpha1*(x-xbar))"
-          if (choice$model == "model_2_1") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar)+beta2*(x-xbar)^2)/(1+alpha1*(x-xbar))"
-          if (choice$model == "model_2_2") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar)+beta2*(x-xbar)^2)/(1+alpha1*(x-xbar)+alpha2)"
-          if (choice$model == "model_3_2") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar)+beta2*(x-xbar)^2+beta3*(x-xbar)^3)/(1+alpha1*(x-xbar)+alpha2*(x-xbar)^2)"
-          if (choice$model == "model_3_3") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar)+beta2*(x-xbar)^2+beta3*(x-xbar)^3)/(1+alpha1*(x-xbar)+alpha2*(x-xbar)^2+alpha3*(x-xbar)^3)"
-          if (choice$model == "model_4_3") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar)+beta2*(x-xbar)^2+beta3*(x-xbar)^3+beta4*(x-xbar)^4)/(1+alpha1*(x-xbar)+alpha2*(x-xbar)^2+alpha3*(x-xbar)^3)"
-          if (choice$model == "model_4_4") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar)+beta2*(x-xbar)^2+beta3*(x-xbar)^3+beta4*(x-xbar)^4)/(1+alpha1*(x-xbar)+alpha2*(x-xbar)^2+alpha3*(x-xbar)^3+alpha4*(x-xbar)^4)"
-          
-          parameter_table <-  coef(summary(choice$full))[,1:2]
-          colnames(parameter_table) <- c("Coef estimates","Coef std errors")
-          
-          if(output) {
-            cat("################## breakaway ##################\n")
-            cat("\tThe best estimate of total diversity is", round(diversity),
-                "\n \t with std error",round(diversity_se),"\n")
-            cat("\tThe model employed was", choice$model,"\n")
-            cat("\tThe function selected was\n\t ", the_function,"\n")
-            print(parameter_table)
-            cat("xbar\t\t\t",xbar)
-          }
-          
-          if(plot)  {
-            yhats <- fitted(choice$full)
-            par(new=FALSE)
-            plot(xs,lhs$y,xlim=c(0,max(xs)+1),ylim=c(min(lhs$y,yhats),max(lhs$y)*1.05),
-                 ylab="f(x+1)/f(x)",xlab="x",main="Plot of ratios and fitted values under model");
-            points(xs,yhats,pch=18)
-            points(c(0,1),c(b0_hat,c0_hat),col="red",pch=18)
-            legend(0,max(lhs$y),c("Fitted values", "Prediction"),pch=c(18,18),col=c("black", "red"),cex=0.8,bty = "n")
-          }
-          
-          if(answers) {
-            result$name <- choice$model
-            result$para <- parameter_table
-            result$est <- diversity
-            result$seest <- as.vector(diversity_se)
-            result$full <- choice$full
-            d <- exp(1.96*sqrt(log(1+result$seest^2/f0_pred)))
-            result$ci <- c(n+f0_pred/d,n+f0_pred*d)
-            return(result)
-          }
+          nabla_c <- c(nabla_c,0)
+          new_cov_c <- matrix(0,nrow=3,ncol=3)
+          new_cov_c[1:2,1:2] <- vcov(choice$full)
+          c0_var <- t(nabla_c)%*%new_cov_c%*%nabla_c
+        } else {
+          b0_var <- t(nabla_b)%*%vcov(choice$full)%*%nabla_b
+          c0_var <- t(nabla_c)%*%vcov(choice$full)%*%nabla_c
+        }
+        
+        f1_pred <- f2/c0_hat
+        f0_pred <- f1_pred/b0_hat
+        diversity <- f0_pred + f1_pred + n
+        
+        covmatrix <- diag(c(f2*(1-f2/diversity),b0_var,c0_var))
+        if (choice$model == "model_1_0") {
+          cov_b0_c0 <- 0.5*sum(vcov(choice$full)[,1])
+          covmatrix[2,3] <- cov_b0_c0
+          covmatrix[3,2] <- cov_b0_c0
+        } else {
+          covmatrix[2,3] <- b0_var/a1
+          covmatrix[3,2] <- b0_var/a1
+        }
+        derivs <- matrix(c(b0_hat^-1*c0_hat^-1,
+                           -f2*b0_hat^-2*c0_hat^-1,
+                           -f2*b0_hat^-1*c0_hat^-2,c0_hat^-1,0,-f2*b0_hat^-2),byrow=TRUE,ncol=3,nrow=2)
+        f0plusf1_var <- derivs%*%covmatrix%*%t(derivs)
+        
+        var_est <- sum(f0plusf1_var) + n*(f0_pred+f1_pred)/diversity - 2*f0_pred*n/diversity - 2*f1_pred*n/diversity
+        diversity_se <- ifelse(var_est<0, 0, sqrt(var_est)) ## Piece 6
+        
+        if (choice$model == "model_1_0") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*x)/(1+x)"
+        if (choice$model == "model_1_1") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar))/(1+alpha1*(x-xbar))"
+        if (choice$model == "model_2_1") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar)+beta2*(x-xbar)^2)/(1+alpha1*(x-xbar))"
+        if (choice$model == "model_2_2") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar)+beta2*(x-xbar)^2)/(1+alpha1*(x-xbar)+alpha2)"
+        if (choice$model == "model_3_2") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar)+beta2*(x-xbar)^2+beta3*(x-xbar)^3)/(1+alpha1*(x-xbar)+alpha2*(x-xbar)^2)"
+        if (choice$model == "model_3_3") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar)+beta2*(x-xbar)^2+beta3*(x-xbar)^3)/(1+alpha1*(x-xbar)+alpha2*(x-xbar)^2+alpha3*(x-xbar)^3)"
+        if (choice$model == "model_4_3") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar)+beta2*(x-xbar)^2+beta3*(x-xbar)^3+beta4*(x-xbar)^4)/(1+alpha1*(x-xbar)+alpha2*(x-xbar)^2+alpha3*(x-xbar)^3)"
+        if (choice$model == "model_4_4") the_function <- "f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar)+beta2*(x-xbar)^2+beta3*(x-xbar)^3+beta4*(x-xbar)^4)/(1+alpha1*(x-xbar)+alpha2*(x-xbar)^2+alpha3*(x-xbar)^3+alpha4*(x-xbar)^4)"
+        
+        parameter_table <-  coef(summary(choice$full))[,1:2]
+        colnames(parameter_table) <- c("Coef estimates","Coef std errors")
+        
+        if(output) {
+          cat("################## breakaway ##################\n")
+          cat("\tThe best estimate of total diversity is", round(diversity),
+              "\n \t with std error",round(diversity_se),"\n")
+          cat("\tThe model employed was", choice$model,"\n")
+          cat("\tThe function selected was\n\t ", the_function,"\n")
+          print(parameter_table)
+          cat("xbar\t\t\t",xbar)
+        }
+        
+        if(plot)  {
+          yhats <- fitted(choice$full)
+          par(new=FALSE)
+          plot(xs,lhs$y,xlim=c(0,max(xs)+1),ylim=c(min(lhs$y,yhats),max(lhs$y)*1.05),
+               ylab="f(x+1)/f(x)",xlab="x",main="Plot of ratios and fitted values under model");
+          points(xs,yhats,pch=18)
+          points(c(0,1),c(b0_hat,c0_hat),col="red",pch=18)
+          legend(0,max(lhs$y),c("Fitted values", "Prediction"),pch=c(18,18),col=c("black", "red"),cex=0.8,bty = "n")
+        }
+        
+        if(answers) {
+          result$name <- choice$model
+          result$para <- parameter_table
+          result$est <- diversity
+          result$seest <- as.vector(diversity_se)
+          result$full <- choice$full
+          d <- exp(1.96*sqrt(log(1+result$seest^2/f0_pred)))
+          result$ci <- c(n+f0_pred/d,n+f0_pred*d)
+          return(result)
         }
       }
     }

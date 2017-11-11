@@ -50,11 +50,10 @@ hill_better <-  function(input, q = 0, ccc = NA, ccc_se = NA, quantile = 0.95) {
                    q, proportions = observed_proportions, Dest = estimates, 
                    c = cc)
   }
-  warning("Confidence intervals and standard errors are approximate!")           
-  
   
   data.frame("index"  = q, "estimate" = estimates, "standard_error" = ses, 
-             "lower" = estimates-qnorm(1-(1-quantile)/2)*ses, "upper" = estimates+qnorm(1-(1-quantile)/2)*ses)
+             "lower" = max(0, estimates-qnorm(1-(1-quantile)/2)*ses), 
+             "upper" = estimates+qnorm(1-(1-quantile)/2)*ses)
 }
 
 
@@ -109,6 +108,11 @@ hill_se <- function(Cest, Cse, q, proportions, Dest, c) {
 #' @export shannon_better
 shannon_better <- function(input, ccc = NA, ccc_se = NA, quantile = 0.95) {
   
+  if (length(dim(input)) != 2) {
+    stop("Incorrent format: I need a frequency count table")
+  } 
+  input <- check_format(input)
+  
   type <- frequency_count_or_proportion_or_column(input)
   proportions <- to_proportions(input, type)
   
@@ -121,8 +125,8 @@ shannon_better <- function(input, ccc = NA, ccc_se = NA, quantile = 0.95) {
   }
   
   cc <- sum(input[,2])
-  unobs <- ccc-cc
-  
+  unobs <- round(ccc-cc)
+
   unobserved_proportions <- rep(1/ccc, unobs)
   observed_proportions <- cc/ccc * proportions
   amended_proportions <- c(unobserved_proportions, observed_proportions)
@@ -130,10 +134,11 @@ shannon_better <- function(input, ccc = NA, ccc_se = NA, quantile = 0.95) {
   estimates <- shannon(amended_proportions)
   ses <- sqrt(sum((1 + log(amended_proportions))^2 * amended_proportions * (1-amended_proportions)/nn) )
   
-  warning("Confidence intervals and standard errors are approximate!\n")           
-  
-  data.frame("index"  = "shannon", "estimate" = estimates, "standard_error" = ses, 
-             "lower" = estimates-qnorm(1-(1-quantile)/2)*ses, "upper" = estimates+qnorm(1-(1-quantile)/2)*ses)
+  data.frame("index"  = "shannon", 
+             "estimate" = estimates, 
+             "standard_error" = ses, 
+             "lower" = max(0, estimates-qnorm(1-(1-quantile)/2)*ses), 
+             "upper" = estimates+qnorm(1-(1-quantile)/2)*ses)
   
 }
 
@@ -206,8 +211,40 @@ inverse_simpson_better <- function(input) {
 #' 
 #' @param input A frequency count table or vector of abundances.
 #' @return An estimate, standard error, and confidence set of the index.
-simpson_better <- function(input) {
-  stop("You need to email Amy telling her that you want this implemented!")
+#' @export
+simpson_better <- function(input, ccc = NA, ccc_se = NA, quantile = 0.95) {
+  
+  if (length(dim(input)) != 2) {
+    stop("Incorrent format: I need a frequency count table")
+  } 
+  input <- check_format(input)
+  
+  type <- frequency_count_or_proportion_or_column(input)
+  proportions <- to_proportions(input, type)
+  
+  nn <- sum(input[, 1]*input[, 2])
+  
+  if ((is.na(ccc) | is.null(ccc))) {
+    baway <- breakaway(input,  output = F, answers = T, plot = F)
+    ccc <- round(baway$est)
+    ccc_se <- round(baway$seest)
+  }
+  
+  cc <- sum(input[,2])
+  unobs <- round(ccc-cc)
+  
+  unobserved_proportions <- rep(1/ccc, unobs)
+  observed_proportions <- cc/ccc * proportions
+  amended_proportions <- c(unobserved_proportions, observed_proportions)
+  
+  estimates <- simpson(amended_proportions)
+  ses <- sqrt(sum((1 + log(amended_proportions))^2 * amended_proportions * (1-amended_proportions)/nn) )
+  
+  data.frame("index"  = "shannon", 
+             "estimate" = estimates, 
+             "standard_error" = ses, 
+             "lower" = max(0, estimates-qnorm(1-(1-quantile)/2)*ses), 
+             "upper" = estimates+qnorm(1-(1-quantile)/2)*ses)
 }
 
 
