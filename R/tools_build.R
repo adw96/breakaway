@@ -69,7 +69,7 @@ build_frequency_count_tables <- function(otu_table) {
 #' 
 #' @export make_frequency_count_table
 make_frequency_count_table <- function(labels) {
-  x <- as.data.frame(table(table(labels)))
+  x <- as.data.frame(table(labels[labels != 0]))
   x[, 1] <- as.numeric(as.character(x[, 1]))
   x[, 2] <- as.numeric(as.character(x[, 2]))
   x
