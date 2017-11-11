@@ -329,3 +329,48 @@ estimate_alpha_better <- function(physeq, split=TRUE, measures=NULL, estimators 
   out <- as.data.frame(out)
   return(out)
 }
+
+#' @export test_alpha
+test_alpha <- function(physeq, x, measure = "richness") {
+  estimate_df <- estimate_alpha_better(ASV_physeq, measures = measure)
+  
+  measures_ind <- grep("[A-Za-z].*estimate", colnames(estimate_df))
+  colnames(estimate_df)[measures_ind] <- unlist(strsplit(colnames(estimate_df)[measures_ind], split = ".estimate"))
+  measures <- colnames(estimate_df)[measures_ind]
+  
+  ses <- colnames(estimate_df)[grep("[A-Za-z].*standard_error", colnames(estimate_df))]
+  
+  # Make the plotting data.frame.
+  # This coerces to data.frame, required for reliable output from reshape2::melt()
+  if( !is.null(sample_data(physeq, errorIfNULL=FALSE)) ){
+    # Include the sample data, if it is there.
+    DF <- data.frame(estimate_df, sample_data(physeq))
+  } else {
+    stop("No sample data in your phyloseq object!")
+  }
+  if( !"samples" %in% colnames(DF) ){
+    # If there is no "samples" variable in DF, add it
+    DF$samples <- sample_names(physeq)
+  }
+  
+  # melt to display different alpha-measures separately
+  mdf <- reshape2::melt(DF, measure.vars=measures)
+  
+  ## Merge s.e. into one "se" column
+  # Define conversion vector, `selabs`
+  selabs <- ses
+  names(selabs) <- strsplit(ses, split = ".standard_error")
+  
+  # use selabs conversion vector to process `mdf`
+  mdf$wse <- sapply(as.character(mdf$variable), function(i, selabs){selabs[i]}, selabs)
+  for( i in 1:nrow(mdf) ){
+    if( !is.na(mdf[i, "wse"]) ){
+      mdf[i, "se"] <- mdf[i, (mdf[i, "wse"])]
+    }
+  }
+  
+  X <- model.matrix(lm(value ~ mdf[[x]], data = mdf))
+  colnames(X) <- c("Intercept", levels(mdf[[x]])[-1])
+  betta(mdf$value, mdf$se, X)$table
+  
+}
