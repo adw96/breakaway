@@ -7,23 +7,7 @@ objective_bayes_negbin <- function(data, output=TRUE, plot=TRUE, answers=FALSE,
                                    Metropolis.start.T1=-0.8, Metropolis.stdev.T1=0.05,
                                    Metropolis.start.T2=0.8, Metropolis.stdev.T2=0.05, bars=3) {
   
-  
-  if( !(is.matrix(data) || is.data.frame(data))) {
-    filename <- data
-    ext <- substr(filename, nchar(filename)-2, nchar(filename))
-    if (ext == "csv") {
-      data <- read.table(file=filename, header=0,sep=",")
-      if( data[1,1] !=1) data <- read.table(filename, header=1,sep=",")
-    } else if (ext == "txt") {
-      data <- read.table(file=filename, header=0)
-    } else cat("Please input your data as a txt or csv file,
-               or as an R dataframe or matrix.")
-  }
-  if ( is.factor(data[,1]) ) {
-    fs <- as.numeric(as.character(data[,1]))
-    data <- cbind(fs,data[,2])
-    data <- data[data[,1]!=0,]
-  }
+  data <- check_format(data)
   
   fullfreqdata  <- data
   # calculate NP estimate of n0
@@ -256,22 +240,7 @@ objective_bayes_poisson <- function(data, output=TRUE, plot=TRUE, answers=FALSE,
                                     tau=10, burn.in=100, iterations=2500, Metropolis.stdev.N=75,
                                     Metropolis.start.lambda=1, Metropolis.stdev.lambda=0.3, bars=3) {
   
-  if( !(is.matrix(data) || is.data.frame(data))) {
-    filename <- data
-    ext <- substr(filename, nchar(filename)-2, nchar(filename))
-    if (ext == "csv") {
-      data <- read.table(file=filename, header=0,sep=",")
-      if( data[1,1] !=1) data <- read.table(filename, header=1,sep=",")
-    } else if (ext == "txt") {
-      data <- read.table(file=filename, header=0)
-    } else cat("Please input your data as a txt or csv file,
-               or as an R dataframe or matrix.")
-  }
-  if ( is.factor(data[,1]) ) {
-    fs <- as.numeric(as.character(data[,1]))
-    data <- cbind(fs,data[,2])
-    data <- data[data[,1]!=0,]
-  }
+  data <- check_format(data)
   
   fullfreqdata  <- data
   # calculate NP estimate of n0
@@ -476,22 +445,7 @@ objective_bayes_mixedgeo <- function(data, output=TRUE, plot=TRUE, answers=FALSE
                                      Metropolis.start.T1=1, Metropolis.stdev.T1=2,
                                      Metropolis.start.T2=3, Metropolis.stdev.T2=2, bars=3) {
   
-  if( !(is.matrix(data) || is.data.frame(data))) {
-    filename <- data
-    ext <- substr(filename, nchar(filename)-2, nchar(filename))
-    if (ext == "csv") {
-      data <- read.table(file=filename, header=0,sep=",")
-      if( data[1,1] !=1) data <- read.table(filename, header=1,sep=",")
-    } else if (ext == "txt") {
-      data <- read.table(file=filename, header=0)
-    } else cat("Please input your data as a txt or csv file,
-               or as an R dataframe or matrix.")
-  }
-  if ( is.factor(data[,1]) ) {
-    fs <- as.numeric(as.character(data[,1]))
-    data <- cbind(fs,data[,2])
-    data <- data[data[,1]!=0,]
-  }
+  data <- check_format(data)
   
   fullfreqdata  <- data
   # calculate NP estimate of n0
@@ -730,22 +684,7 @@ objective_bayes_geometric <- function(data, output=TRUE, plot=TRUE, answers=FALS
                                       tau=10, burn.in=100, iterations=2500, Metropolis.stdev.N=75,
                                       Metropolis.start.theta=1, Metropolis.stdev.theta=0.3) {
   
-  if( !(is.matrix(data) || is.data.frame(data))) {
-    filename <- data
-    ext <- substr(filename, nchar(filename)-2, nchar(filename))
-    if (ext == "csv") {
-      data <- read.table(file=filename, header=0,sep=",")
-      if( data[1,1] !=1) data <- read.table(filename, header=1,sep=",")
-    } else if (ext == "txt") {
-      data <- read.table(file=filename, header=0)
-    } else cat("Please input your data as a txt or csv file,
-               or as an R dataframe or matrix.")
-  }
-  if ( is.factor(data[,1]) ) {
-    fs <- as.numeric(as.character(data[,1]))
-    data <- cbind(fs,data[,2])
-    data <- data[data[,1]!=0,]
-  }
+  data <- check_format(data)
   
   fullfreqdata  <- data
   # calculate NP estimate of n0
