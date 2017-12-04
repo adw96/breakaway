@@ -105,8 +105,11 @@
 #' 
 #' 
 #' @export breakaway
-breakaway <- function(my_data, output=TRUE, plot=FALSE, answers=FALSE) {
+breakaway <- function(my_data, output=TRUE, plot=FALSE, answers=FALSE, print = NULL) {
   
+  if (!is.null(print)) {
+    warning("Argument 'print' deprecated")
+  }
   orig_my_data <- check_format(my_data)
   
   if (my_data[1,1]!=1 || my_data[1,2]==0) {
