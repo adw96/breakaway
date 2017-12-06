@@ -60,7 +60,7 @@ chao_bunge <- function(my_data, cutoff=10, output=TRUE, answers=FALSE) {
   
   my_data <- check_format(my_data)
   input_data <- my_data
-  cc <- input_data[,2]
+  cc <- sum(input_data[,2])
   
   index  <- 1:max(my_data[,1])
   frequency_index <- rep(0, length(index))
@@ -68,6 +68,10 @@ chao_bunge <- function(my_data, cutoff=10, output=TRUE, answers=FALSE) {
   f1  <- frequency_index[1]
   n <- sum(frequency_index)
   
+  if (max(my_data[, 1]) > cutoff) {
+    warning("cutoff exceeds minimum frequency count index; setting to maximum")
+    cutoff <- max(my_data[, 1])
+  }
   my_data <- my_data[ my_data[,1] <= cutoff, ]
   cutoff <- max(my_data[,1])
   
@@ -75,7 +79,7 @@ chao_bunge <- function(my_data, cutoff=10, output=TRUE, answers=FALSE) {
   k <- 2:cutoff
   m <- 1:cutoff
   numerator <- frequency_index[k]
-  denominator <- 1 - f1*sum(m^ 2*frequency_index[m])/(sum(m*frequency_index[m]))^ 2 # 
+  denominator <- 1 - f1*sum(m^ 2*frequency_index[m])/(sum(m*frequency_index[m]))^2 # 
   diversity  <- d_a + sum(numerator /denominator)
   
   f0 <- diversity - cc
