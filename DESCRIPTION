@@ -17,11 +17,11 @@ Depends:
 Imports: MASS,
     stats,
     utils,
+    phyloseq,
     graphics
 Suggests: knitr,
     rmarkdown,
     testthat,
-    phyloseq,
     reshape2,
     ggplot2,
     plyr
