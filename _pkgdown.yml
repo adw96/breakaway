@@ -1,0 +1,9 @@
+url: http://adw96.github.io/breakaway
+
+template:
+  params:
+    bootswatch: united
+
+
+navbar:
+  type: default
