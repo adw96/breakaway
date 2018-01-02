@@ -145,8 +145,7 @@ objective_bayes_negbin <- function(data, output=TRUE, plot=TRUE, answers=FALSE,
   p.D<-mean.D-D.mean
   
   ## 4) Deviance information criterion
-  DIC<-2*mean.D-D.mean
-  
+  DIC<-2*p.D+D.mean
   
   
   ### Step 5: fitted values based on medians of the marginal posteriors
@@ -238,22 +237,24 @@ objective_bayes_negbin <- function(data, output=TRUE, plot=TRUE, answers=FALSE,
 #' @export
 objective_bayes_poisson <- function(data, output=TRUE, plot=TRUE, answers=FALSE, 
                                     tau=10, burn.in=100, iterations=2500, Metropolis.stdev.N=75,
-                                    Metropolis.start.lambda=1, Metropolis.stdev.lambda=0.3, bars=3) {
+                                    Metropolis.start.lambda=1, Metropolis.stdev.lambda=0.3, bars=5) {
   
   data <- check_format(data)
-  
   fullfreqdata  <- data
-  # calculate NP estimate of n0
+  
+  # calculate summary statistics on full data
   w<-sum(fullfreqdata[,2])
   n<-sum(fullfreqdata[,1]*fullfreqdata[,2])
-  NP.est.n0<-w/(1-fullfreqdata[1,2]/n)-w
-  
-  # subset data below tau
+
+  # subset data up to tau
   freqdata<-fullfreqdata[1:tau,]
   
-  # calculate summary statistics
+  # calculate summary statistics on data up to tau
   w.tau<-sum(freqdata[,2])
   n.tau<-sum(freqdata[,1]*freqdata[,2])
+  # calculate NP estimate of n0
+  NP.est.n0<-w.tau/(1-freqdata[1,2]/n.tau)-w.tau
+  
   
   ### Step 3: calculate posterior
   
@@ -271,6 +272,9 @@ objective_bayes_poisson <- function(data, output=TRUE, plot=TRUE, answers=FALSE,
   
   for (i in 2:iterations){
     
+    # print every 100th iteration number
+    if (i %in% seq(0,iterations-burn.in,by=500)) {print(paste("starting iteration ",i," of ",iterations,sep=""))}
+    
     ## sample from p(lambda|x,C)
     
     # propose value for lambda
@@ -283,8 +287,7 @@ objective_bayes_poisson <- function(data, output=TRUE, plot=TRUE, answers=FALSE,
     r1<-exp(logr1)
     
     # accept or reject propsed value
-    if (runif(1)<min(r1,1)) {L[i]<-L.new ; a1<-a1+1}
-    else L[i]<-L[i-1]
+    if (runif(1)<min(r1,1)) {L[i]<-L.new ; a1<-a1+1} else {L[i]<-L[i-1]}
     
     ## sample from p(C|lambda,x)
     
@@ -312,8 +315,7 @@ objective_bayes_poisson <- function(data, output=TRUE, plot=TRUE, answers=FALSE,
     r2<-exp(logr2)
     
     # accept or reject propsed value
-    if (runif(1)<min(r2,1)) {N[i]<-N.new ; a2<-a2+1}
-    else N[i]<-N[i-1]
+    if (runif(1)<min(r2,1)) {N[i]<-N.new ; a2<-a2+1} else {N[i]<-N[i-1]}
     
     ## calculate deviance from current sample
     
@@ -325,7 +327,7 @@ objective_bayes_poisson <- function(data, output=TRUE, plot=TRUE, answers=FALSE,
     N2.curr<-sum(N3.curr)
     
     # calculate deviance
-    D.post[i]<-(-2)*(N2.curr-sum(log(factorial(freqdata[,2])))-L[i]*(N[i])-sum(freqdata[,2]*log(factorial(freqdata[,1])))+n.tau*log(L[i]))
+    D.post[i]<-(-2)*(N2.curr-sum(lfactorial(freqdata[,2]))-L[i]*(N[i])-sum(freqdata[,2]*log(factorial(freqdata[,1])))+n.tau*log(L[i]))
     
   }
   
@@ -340,7 +342,7 @@ objective_bayes_poisson <- function(data, output=TRUE, plot=TRUE, answers=FALSE,
   N3.mean[1:w.tau]<-log(mean.N-0:(w.tau-1))
   N2.mean<-sum(N3.mean)
   
-  loglik.post.mean<-N2.mean-sum(log(factorial(freqdata[,2])))-mean.L*mean.N+n.tau*log(mean.L)-sum(freqdata[,2]*log(factorial(freqdata[,1])))
+  loglik.post.mean<-N2.mean-sum(lfactorial(freqdata[,2]))-mean.L*mean.N+n.tau*log(mean.L)-sum(freqdata[,2]*lfactorial(freqdata[,1]))
   D.mean<-(-2)*loglik.post.mean
   
   ## 2) posterior mean and median deviances
@@ -352,7 +354,7 @@ objective_bayes_poisson <- function(data, output=TRUE, plot=TRUE, answers=FALSE,
   p.D<-mean.D-D.mean
   
   ## 4) Deviance information criterion
-  DIC<-2*mean.D-D.mean
+  DIC<-2*p.D+D.mean
   
   ### Step 5: fitted values based on medians of the marginal posteriors
   median.L<-quantile(L[(burn.in+1):iterations],probs=.5,names=F)
@@ -362,8 +364,15 @@ objective_bayes_poisson <- function(data, output=TRUE, plot=TRUE, answers=FALSE,
   fits[1:tau]<-(median.N)*dpois(1:tau,median.L)
   fitted.values<-data.frame(cbind(j=seq(1,tau),fits,count=freqdata[,2]))
   
-  ### Step 6: results
-  hist.points<-hist(N[(burn.in+1):iterations]+w-w.tau,breaks=seq(w,max(N)+w-w.tau+1)-0.5, plot = plot)
+  ### Step 6: estimate thinning to reduce correlated posterior samples 
+  lags<-acf(N[(burn.in+1):iterations],type="correlation",main="Autocorr plot",ylab="ACF",xlab="Lag", plot=F)
+  lag.thin<-suppressWarnings(min(which(lags$acf<0.1)))
+  if (lag.thin==Inf) {lag.thin<-paste(">",length(lags$lag),sep="")
+    } 
+  
+
+  ### Step 7: results
+  hist.points<-hist(N[(burn.in+1):iterations]+w-w.tau,breaks=seq(w,max(N)+w-w.tau+1)-0.5, plot = FALSE)
   
   results<-data.frame(w=w,
                       n=n,
@@ -371,10 +380,11 @@ objective_bayes_poisson <- function(data, output=TRUE, plot=TRUE, answers=FALSE,
                       tau=tau,
                       w.tau=w.tau,
                       n.tau=n.tau,
-                      iterations=iterations,
+                      iterations=iterations-burn.in,
                       burn.in=burn.in,
                       acceptance.rate.lambda=a1/iterations,
                       acceptance.rate.N=a2/iterations,
+                      lag=lag.thin,
                       mode.C=hist.points$mids[which.max(hist.points$density)],
                       mean.C=mean(N[(burn.in+1):iterations])+w-w.tau,
                       median.C=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.5,names=F),
@@ -386,51 +396,34 @@ objective_bayes_poisson <- function(data, output=TRUE, plot=TRUE, answers=FALSE,
                       DIC)
   
   final_results <- list()
-  final_results$est <- results$median.C
-  final_results$mean <- results$mean.C
-  final_results$semeanest <- sd(N[(burn.in+1):iterations])+w-w.tau
-  final_results$ci <- c("lower"=results$LCI.C, "upper"=results$UCI.C)
+  final_results$meanest <- results$mean.C
+  final_results$semeanest <- sd(N[(burn.in+1):iterations]+w-w.tau)
+  final_results$medianest <- results$median.C
+  final_results$medianci <- c("lower 95%"=results$LCI.C, "upper 95%"=results$UCI.C)
   final_results$dic  <- DIC
   final_results$fits <- fitted.values
-  final_results$diagnostics<-c("acceptance rate N"=results$acceptance.rate.N,"acceptance rate lambda"=results$acceptance.rate.lambda)
+  final_results$diagnostics<-c("acceptance rate N"=results$acceptance.rate.N,
+                               "acceptance rate lambda"=results$acceptance.rate.lambda,
+                               "lag"=results$lag)
   
   if (output) {
     # output results and fitted values
     print(final_results)
   }
   
-  if (plot != FALSE) {
-    # prepare trace plot for C
+  if (plot) {
+
+    par(mfrow=c(1,2))
     
-    # first thin values of C if there are more than 10,000 iterations
-    # must be a divisor of (iterations-burn.in)
-    iterations.trace<-min(10000,iterations-burn.in)
-    N.thin<-rep(0,iterations.trace)
-    N.thin[1:iterations.trace]<-N[1:iterations.trace*((iterations-burn.in)/iterations.trace)]
-    
-    if (plot == "all") {
-      plot.new()
-      mat <- matrix(c(1,2,3,3), 2, byrow=T)
-      layout(mat, c(1,1), c(1,1))
-      
-      # make trace plot
-      plot(1:iterations.trace,N.thin,type="l",xlab="Iteration Number",ylab="Total Number of Species", main="Trace plot")
-      
-      # autocorrelation plot for C
-      acf(N[(burn.in+1):iterations],type="correlation",main="Autocorr plot",ylab="ACF",xlab="Lag")
-      
-    } else {
-      par(mfrow=c(2,1))
-      # make trace plot
-      plot(1:iterations.trace,N.thin,type="l",xlab="Iteration Number",ylab="Total Number of Species", main="Trace plot")
-    }
-    # # a histogram with # bars for each discrete value
+    ## posterior histogram with # bars for each discrete value
     hist(N[(burn.in+1):iterations]+w-w.tau,
-         breaks=seq(w,max(N[(burn.in+1):iterations])+w-w.tau+1,
+         breaks=seq(min(N[(burn.in+1):iterations]+w-w.tau),max(N[(burn.in+1):iterations]+w-w.tau+1),
                     length=(max(N[(burn.in+1):iterations])-w.tau+1)/bars+1)-0.5,
          main="Posterior distribution",xlab="Total Number of Species",
-         col='purple',freq=F,ylab="Density",
-         xlim=c(w,quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.975,names=F)))
+         col='purple',freq=F,ylab="Density")
+    
+    # make trace plot 
+    plot(1:iterations,N,type="l",xlab="Iteration Number",ylab="Total Number of Species", main="Trace plot")
   }
   
   if (answers) {
@@ -592,7 +585,7 @@ objective_bayes_mixedgeo <- function(data, output=TRUE, plot=TRUE, answers=FALSE
   p.D<-mean.D-D.mean
   
   ## 4) Deviance information criterion
-  DIC<-2*mean.D-D.mean
+  DIC<-2*p.D+D.mean
   
   
   
@@ -803,7 +796,7 @@ objective_bayes_geometric <- function(data, output=TRUE, plot=TRUE, answers=FALS
   p.D<-mean.D-D.mean
   
   ## 4) Deviance information criterion
-  DIC<-2*mean.D-D.mean
+  DIC<-2*p.D+D.mean
   
   ### Step 5: fitted values based on medians of the marginal posteriors
   median.R<-quantile(R[(burn.in+1):iterations],probs=.5,names=F)
