@@ -194,11 +194,11 @@ objective_bayes_negbin <- function(data, output=TRUE, plot=TRUE, answers=FALSE,
                       DIC
   )
   
-  final_results <- list()
-  final_results$meanest <- results$mean.N
+  final_results <- list()  
+  final_results$est <- results$median.N
+  final_results$ci <- c("lower 95%"=results$LCI.N, "upper 95%"=results$UCI.N)
+  final_results$mean <- results$mean.N
   final_results$semeanest <- results$stddev.N
-  final_results$medianest <- results$median.N
-  final_results$medianci <- c("lower 95%"=results$LCI.N, "upper 95%"=results$UCI.N)
   final_results$dic  <- DIC
   final_results$fits <- fitted.values
   final_results$diagnostics<-c("acceptance rate N"=results$acceptance.rate.N,
@@ -397,10 +397,10 @@ objective_bayes_poisson <- function(data, output=TRUE, plot=TRUE, answers=FALSE,
                       DIC)
   
   final_results <- list()
-  final_results$meanest <- results$mean.N
+  final_results$est <- results$median.N
+  final_results$ci <- c("lower 95%"=results$LCI.N, "upper 95%"=results$UCI.N)
+  final_results$mean <- results$mean.N
   final_results$semeanest <- results$stddev.N
-  final_results$medianest <- results$median.N
-  final_results$medianci <- c("lower 95%"=results$LCI.N, "upper 95%"=results$UCI.N)
   final_results$dic  <- DIC
   final_results$fits <- fitted.values
   final_results$diagnostics<-c("acceptance rate N"=results$acceptance.rate.N,
@@ -439,19 +439,20 @@ objective_bayes_mixedgeo <- function(data, output=TRUE, plot=TRUE, answers=FALSE
                                      Metropolis.start.T2=3, Metropolis.stdev.T2=2, bars=3) {
   
   data <- check_format(data)
-  
   fullfreqdata  <- data
-  # calculate NP estimate of n0
+  
+  # calculate summary statistics on full data
   w<-sum(fullfreqdata[,2])
   n<-sum(fullfreqdata[,1]*fullfreqdata[,2])
-  NP.est.n0<-w/(1-fullfreqdata[1,2]/n)-w
-  
-  # subset data below tau
+
+  # subset data up to tau
   freqdata<-fullfreqdata[1:tau,]
   
-  # calculate summary statistics
+  # calculate summary statistics on data up to tau
   w.tau<-sum(freqdata[,2])
   n.tau<-sum(freqdata[,1]*freqdata[,2])
+  # calculate NP estimate of n0
+  NP.est.n0<-w.tau/(1-freqdata[1,2]/n.tau)-w.tau
   
   
   ### Step 3: calculate posterior
@@ -475,6 +476,9 @@ objective_bayes_mixedgeo <- function(data, output=TRUE, plot=TRUE, answers=FALSE
   D.post<-rep(0,iterations)
   
   for (i in 2:iterations){
+    
+    # print every 500th iteration number
+    if (i %in% seq(0,iterations-burn.in,by=500)) {print(paste("starting iteration ",i," of ",iterations,sep=""))}
     
     ## sample from p(Z|A,T1,T2,X,N)
     
@@ -541,8 +545,7 @@ objective_bayes_mixedgeo <- function(data, output=TRUE, plot=TRUE, answers=FALSE
     r1<-exp(logr1)
     
     ## accept or reject the proposed value
-    if (runif(1)<min(r1,1)) {N[i]<-N.new ; a1<-a1+1}
-    else N[i]<-N[i-1]
+    if (runif(1)<min(r1,1)) {N[i]<-N.new ; a1<-a1+1} else {N[i]<-N[i-1]}
     
     ## calculate deviance from current sample
     
@@ -554,7 +557,7 @@ objective_bayes_mixedgeo <- function(data, output=TRUE, plot=TRUE, answers=FALSE
     N2.curr<-sum(N3.curr)
     
     # calculate deviance
-    D.post[i]<-(-2)*(N2.curr+(N[i]-w.tau)*log(A[i]*(1/(1+T1[i]))+(1-A[i])*(1/(1+T2[i])))+sum(freqdata[,2]*log(A[i]*(1/(1+T1[i]))*(T1[i]/(1+T1[i]))^freqdata[,1]+(1-A[i])*(1/(1+T2[i]))*(T2[i]/(1+T2[i]))^freqdata[,1]))-sum(log(factorial(freqdata[,2]))))
+    D.post[i]<-(-2)*(N2.curr+(N[i]-w.tau)*log(A[i]*(1/(1+T1[i]))+(1-A[i])*(1/(1+T2[i])))+sum(freqdata[,2]*log(A[i]*(1/(1+T1[i]))*(T1[i]/(1+T1[i]))^freqdata[,1]+(1-A[i])*(1/(1+T2[i]))*(T2[i]/(1+T2[i]))^freqdata[,1]))-sum(lfactorial(freqdata[,2])))
     
   }
   
@@ -575,7 +578,8 @@ objective_bayes_mixedgeo <- function(data, output=TRUE, plot=TRUE, answers=FALSE
   }
   N2.mean<-sum(N3.mean)
   
-  D.mean<-(-2)*(N2.curr+(mean.N-w.tau)*log(mean.A*(1/(1+mean.T1))+(1-mean.A)*(1/(1+mean.T2)))+sum(freqdata[,2]*log(mean.A*(1/(1+mean.T1))*(mean.T1/(1+mean.T1))^freqdata[,1]+(1-mean.A)*(1/(1+mean.T2))*(mean.T2/(1+mean.T2))^freqdata[,1]))-sum(log(factorial(freqdata[,2]))))
+  loglik.post.mean<-N2.curr+(mean.N-w.tau)*log(mean.A*(1/(1+mean.T1))+(1-mean.A)*(1/(1+mean.T2)))+sum(freqdata[,2]*log(mean.A*(1/(1+mean.T1))*(mean.T1/(1+mean.T1))^freqdata[,1]+(1-mean.A)*(1/(1+mean.T2))*(mean.T2/(1+mean.T2))^freqdata[,1]))-sum(lfactorial(freqdata[,2]))
+  D.mean<-(-2)*loglik.post.mean
   
   ## 2) posterior mean and median deviances
   mean.D<-mean(D.post[(burn.in+1):iterations])
@@ -586,7 +590,6 @@ objective_bayes_mixedgeo <- function(data, output=TRUE, plot=TRUE, answers=FALSE
   
   ## 4) Deviance information criterion
   DIC<-2*p.D+D.mean
-  
   
   
   ### Step 5: fitted values based on medians of the marginal posteriors
@@ -601,33 +604,48 @@ objective_bayes_mixedgeo <- function(data, output=TRUE, plot=TRUE, answers=FALSE
   }
   fitted.values<-data.frame(cbind(j=seq(1,tau),fits,count=freqdata[,2]))
   
-  ### Step 6: results
-  hist.points<-hist(N[(burn.in+1):iterations]+w-w.tau,breaks=seq(w,max(N)+w-w.tau+1)-0.5, plot = plot)
+  
+  ### Step 6: estimate thinning to reduce correlated posterior samples 
+  lags<-acf(N[(burn.in+1):iterations],type="correlation",main="Autocorr plot",ylab="ACF",xlab="Lag", plot=F)
+  lag.thin<-suppressWarnings(min(which(lags$acf<0.1)))
+  if (lag.thin==Inf) {lag.thin<-paste(">",length(lags$lag),sep="")
+  } 
+  
+  ### Step 7: results
+  hist.points<-hist(N[(burn.in+1):iterations]+w-w.tau,breaks=seq(w,max(N)+w-w.tau+1)-0.5, plot = FALSE)
   
   results<-data.frame(w=w,
                       n=n,
-                      NP.est.C=NP.est.n0+w,
+                      NP.est.N=NP.est.n0+w,
                       tau=tau,
                       w.tau=w.tau,
                       n.tau=n.tau,
-                      iterations=iterations,
+                      iterations=iterations-burn.in,
                       burn.in=burn.in,
                       acceptance.rate.T1T2=1,
-                      acceptance.rate.C=a1/iterations,
-                      mode.C=hist.points$mids[which.max(hist.points$density)],
-                      mean.C=mean(N[(burn.in+1):iterations])+w-w.tau,
-                      median.C=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.5,names=F),
-                      LCI.C=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.025,names=F),
-                      UCI.C=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.975,names=F),
-                      stddev.C=sqrt(var((N[(burn.in+1):iterations]+w-w.tau))),
+                      acceptance.rate.N=a1/iterations,
+                      lag=lag.thin,
+                      mode.N=hist.points$mids[which.max(hist.points$density)],
+                      mean.N=mean(N[(burn.in+1):iterations])+w-w.tau,
+                      median.N=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.5,names=F),
+                      LCI.N=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.025,names=F),
+                      UCI.N=quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.975,names=F),
+                      stddev.N=sd((N[(burn.in+1):iterations]+w-w.tau)),
                       mean.D=mean.D,
                       median.D=median.D,
                       DIC
   )
   
   final_results <- list()
-  final_results$results <- t(results)
+  final_results$est <- results$median.N
+  final_results$ci <- c("lower 95%"=results$LCI.N, "upper 95%"=results$UCI.N)
+  final_results$mean <- results$mean.N
+  final_results$semeanest <- results$stddev.N
+  final_results$dic  <- DIC
   final_results$fits <- fitted.values
+  final_results$diagnostics<-c("acceptance rate N"=results$acceptance.rate.N,
+                               "acceptance rate T1T2"=results$acceptance.rate.T1T2,
+                               "lag"=results$lag)
   
   if (output) {
     # output results and fitted values
@@ -635,35 +653,17 @@ objective_bayes_mixedgeo <- function(data, output=TRUE, plot=TRUE, answers=FALSE
   }
   
   if (plot) {
-    par(mfrow=c(2,2))
     
-    # trace plot for C
-    # first thin values of C if there are more than 10,000 iterations
-    # must be a divisor of (iterations-burn.in)
-    iterations.trace<-min(10000,iterations-burn.in)
-    N.thin<-rep(0,iterations.trace)
-    for (k in 1:iterations.trace){
-      N.thin[k]<-N[k*((iterations-burn.in)/iterations.trace)]
-    }
+    par(mfrow=c(1,2))
     
-    # make trace plot
-    plot(1:iterations.trace,N.thin,xlab="Iteration Number",ylab="Total Number of Species", main="Trace plot")
-    
-    # autocorrelation plot for C
-    acf(N[(burn.in+1):iterations],type="correlation",main="Autocorr plot",ylab="ACF",xlab="Lag")
-    
-    # histogram of C with a bar for each discrete value
+    ## posterior histogram
     hist(N[(burn.in+1):iterations]+w-w.tau,
-         breaks=seq(w,max(N[(burn.in+1):iterations])+w-w.tau+1)-0.5,
          main="Posterior distribution",xlab="Total Number of Species",
          col='purple',freq=F,ylab="Density")
     
-    # a histogram with # bars for each discrete value
-    hist(N[(burn.in+1):iterations]+w-w.tau,
-         breaks=seq(w,max(N[(burn.in+1):iterations])+w-w.tau+1,
-                    length=(max(N[(burn.in+1):iterations])-w.tau+1)/bars+1)-0.5,
-         main="Posterior distribution",xlab="Total Number of Species",col='purple',
-         freq=F,ylab="Density",xlim=c(w,quantile(N[(burn.in+1):iterations]+w-w.tau,probs=.975,names=F)))
+    # make trace plot 
+    plot((burn.in+1):iterations,N[(burn.in+1):iterations]+w-w.tau,type="l",xlab="Iteration Number",ylab="Total Number of Species", main="Trace plot")
+    
   }
   
   if (answers) {
