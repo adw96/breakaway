@@ -235,6 +235,12 @@ betta_points <- function(y, se, x=1:length(y), ylimu=NA, myy=NA, mymain=NA, myco
 
 
 
+
+
+
+
+
+
 #' modelling total diversity with random effects
 #' 
 #' This function extends betta() to permit random effects modelling.

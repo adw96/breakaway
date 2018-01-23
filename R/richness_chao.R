@@ -110,7 +110,7 @@ chao_bunge <- function(my_data, cutoff=10, output=TRUE, answers=FALSE) {
     diversity_se  <- wlrm$seest
     f0  <- diversity - sum(frequency_index)
   }
-
+  
   if(output) {
     cat("################## Chao-Bunge ##################\n")
     cat("\tThe estimate of total diversity is", round(diversity),
@@ -233,7 +233,7 @@ chao_bunge <- function(my_data, cutoff=10, output=TRUE, answers=FALSE) {
 #' 
 #' @export chao1
 chao1 <- function(data, output=TRUE, answers=FALSE) {
-
+  
   if( !(is.matrix(data) || is.data.frame(data))) {
     filename <- data
     ext <- substr(filename, nchar(filename)-2, nchar(filename))
@@ -245,25 +245,25 @@ chao1 <- function(data, output=TRUE, answers=FALSE) {
     } else cat("Please input your data as a txt or csv file,
                or as an R dataframe or matrix.")
   }
-
+  
   if ( is.factor(data[,1]) ) {
     fs <- as.numeric(as.character(data[,1]))
     data <- cbind(fs,data[,2])
     data <- data[data[,1]!=0,]
   }
-
+  
   index  <- 1:max(data[,1])
   frequency_index <- rep(0, length(index))
   frequency_index[data[,1]] <- data[,2]
   f1  <- frequency_index[1]
   f2 <- frequency_index[2]
   n <- sum(frequency_index)
-
+  
   f0 <- f1^2/(2*f2)
   diversity <- n + f0
-
+  
   diversity_se <- sqrt(f2*(0.5*(f1/f2)^2 + (f1/f2)^3 + 0.25*(f1/f2)^4))
-
+  
   if(output) {
     cat("################## Chao1 ##################\n")
     cat("\tThe estimate of total diversity is", round(diversity),
@@ -407,6 +407,8 @@ chao1_bc <- function(data, output=TRUE, answers=FALSE) {
     data <- data[data[,1]!=0,]
   }
   
+  
+  
   index  <- 1:max(data[,1])
   frequency_index <- rep(0, length(index))
   frequency_index[data[,1]] <- data[,2]
@@ -433,4 +435,81 @@ chao1_bc <- function(data, output=TRUE, answers=FALSE) {
     result$ci <- c(n+f0/d,n+f0*d)
     return(result)
   }
+}
+
+#' @export chao_shen
+chao_shen  <- function(my_data) {
+  
+  cleaned_data <- check_format(my_data)
+  
+  if (cleaned_data[1,1]!=1 || cleaned_data[1,2]==0) {
+    stop("You don't have an observed singleton count.\n Chao-Shen isn't built for that data structure.\n")
+  } 
+
+  estimate <- chao_shen_estimate(cleaned_data)  
+  cc <- sum(cleaned_data[, 2])
+  
+  j_max <- length(cleaned_data[, 2])  
+  
+  derivative <- vector("numeric", j_max)
+  for (i in 1:j_max) {
+    perturbed_table <- cleaned_data
+    perturbed_table[i, 2] <- perturbed_table[i, 2] + 1
+    upper <- chao_shen_estimate(perturbed_table)
+    perturbed_table[i, 2] <- perturbed_table[i, 2] - 2
+    lower <- chao_shen_estimate(perturbed_table)
+    derivative[i] <- (upper - lower)/2
+  }
+  
+  variance_estimate <- t(derivative) %*% multinomial_covariance(cleaned_data, cc/estimate) %*% derivative
+
+  list("est" = estimate, 
+       "se" = c(ifelse(variance_estimate < 0, 0, sqrt(variance_estimate))))
+}
+
+chao_shen_estimate <- function(cleaned_data) {
+  n <- sum(cleaned_data[, 2] * cleaned_data[, 1])
+  f1 <- cleaned_data[1,2]
+  
+  p_hat <- to_proportions(cleaned_data, type="frequency count")
+  chat <- 1 - f1/n
+  p_tilde <- chat * p_hat
+  
+  -sum(p_tilde * log(p_tilde) / (1 - (1 - p_tilde)^n))
+  
+}
+
+multinomial_covariance <- function(my_data, chat) {
+  frequencies <- my_data[, 2]
+  j_max <- length(frequencies)  
+  
+  # divide diagonal by 2 so that when we make it symmetric we don't double count
+  estimated_covariance <- diag(frequencies*(1 - frequencies / chat) / 2) 
+  
+  for (i in 1:(j_max-1)) {
+    estimated_covariance[i, (i + 1):j_max] <- -frequencies[i]*frequencies[(i + 1):j_max]/chat
+  }
+  
+  estimated_covariance + t(estimated_covariance)
+
+}
+
+
+
+#' @export good_turing
+good_turing  <- function(my_data) {
+  
+  cleaned_data <- check_format(my_data)
+  
+  if (cleaned_data[1,1]!=1 || cleaned_data[1,2]==0) {
+    stop("You don't have an observed singleton count.\n Chao-Shen isn't built for that data structure.\n")
+  } 
+  
+  cc <- sum(cleaned_data[, 2])
+  n <- sum(cleaned_data[, 2] * cleaned_data[, 1])
+  f1 <- cleaned_data[1,2]
+  
+  chat <- cc / (1 - f1/n)
+  list("est" = chat, 
+       "se" = NA)
 }

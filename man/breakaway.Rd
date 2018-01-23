@@ -4,7 +4,8 @@
 \alias{breakaway}
 \title{Species richness estimation with breakaway}
 \usage{
-breakaway(my_data, output = TRUE, plot = FALSE, answers = FALSE)
+breakaway(my_data, output = TRUE, plot = FALSE, answers = FALSE,
+  print = NULL)
 }
 \arguments{
 \item{my_data}{The sample frequency count table for the population of
