@@ -68,7 +68,7 @@ chao_bunge <- function(my_data, cutoff=10, output=TRUE, answers=FALSE) {
   f1  <- frequency_index[1]
   n <- sum(frequency_index)
   
-  if (max(my_data[, 1]) > cutoff) {
+  if (min(my_data[, 1]) > cutoff) {
     warning("cutoff exceeds minimum frequency count index; setting to maximum")
     cutoff <- max(my_data[, 1])
   }
@@ -85,20 +85,23 @@ chao_bunge <- function(my_data, cutoff=10, output=TRUE, answers=FALSE) {
   f0 <- diversity - cc
   
   if (diversity >= 0) {
-    fs <- my_data[m, 2]
-    n_tau <- sum(my_data[m,1]*my_data[m,2])
-    s_tau <- sum(my_data[m, 2])
-    H <- sum(m^2*my_data[m,2])
-    derivatives <- n_tau*(n_tau^3 + f1*n_tau*m^2*s_tau - n_tau*f1*H - f1^2*n_tau*m^2 - 2*f1*H*m*s_tau + 2*f1^2*H*m)/(n_tau^2 - f1*H)^2
-    derivatives[1] <- n_tau*(s_tau - f1)*(f1*n_tau - 2*f1*H + n_tau*H)/(n_tau^2 - f1*H)^2
+    fs_up_to_cut_off <- frequency_index[m]
+    n_tau <- sum(m * fs_up_to_cut_off)
+    s_tau <- sum(fs_up_to_cut_off)
+    H <- sum(m^2 * fs_up_to_cut_off)
+    derivatives <- n_tau * (n_tau^3 + f1 * n_tau * m^2 * 
+                              s_tau - n_tau * f1 * H - f1^2 * n_tau * m^2 - 2 * 
+                              f1 * H * m * s_tau + 2 * f1^2 * H * m)/(n_tau^2 - 
+                                                                        f1 * H)^2
+    derivatives[1] <- n_tau * (s_tau - f1) * (f1 * n_tau - 
+                                                2 * f1 * H + n_tau * H)/(n_tau^2 - f1 * H)^2
     covariance <- diag(rep(0, cutoff))
-    for(i in 1:(cutoff-1)) {
-      covariance[i, (i+1):cutoff] <- -fs[i]*fs[(i+1):cutoff]/diversity
+    for (i in 1:(cutoff - 1)) {
+      covariance[i, (i + 1):cutoff] <- -fs_up_to_cut_off[i] * fs_up_to_cut_off[(i + 
+                                                                                  1):cutoff]/diversity
     }
-    covariance <- t(covariance) +  covariance
-    diag(covariance) <- fs*(1-fs/diversity)
-    
-    
+    covariance <- t(covariance) + covariance
+    diag(covariance) <- fs_up_to_cut_off * (1 - fs_up_to_cut_off/diversity)
     diversity_se <- sqrt(derivatives %*% covariance %*% derivatives)
     
   } else {
@@ -443,9 +446,9 @@ chao_shen  <- function(my_data) {
   cleaned_data <- check_format(my_data)
   
   if (cleaned_data[1,1]!=1 || cleaned_data[1,2]==0) {
-    stop("You don't have an observed singleton count.\n Chao-Shen isn't built for that data structure.\n")
+    warning("You don't have an observed singleton count.\n Chao-Shen isn't built for that data structure.\n")
   } 
-
+  
   estimate <- chao_shen_estimate(cleaned_data)  
   cc <- sum(cleaned_data[, 2])
   
@@ -462,14 +465,14 @@ chao_shen  <- function(my_data) {
   }
   
   variance_estimate <- t(derivative) %*% multinomial_covariance(cleaned_data, cc/estimate) %*% derivative
-
+  
   list("est" = estimate, 
        "se" = c(ifelse(variance_estimate < 0, 0, sqrt(variance_estimate))))
 }
 
 chao_shen_estimate <- function(cleaned_data) {
   n <- sum(cleaned_data[, 2] * cleaned_data[, 1])
-  f1 <- cleaned_data[1,2]
+  f1 <- ifelse(cleaned_data[1,1] == 1, cleaned_data[1,2], 0)
   
   p_hat <- to_proportions(cleaned_data, type="frequency count")
   chat <- 1 - f1/n
@@ -491,7 +494,7 @@ multinomial_covariance <- function(my_data, chat) {
   }
   
   estimated_covariance + t(estimated_covariance)
-
+  
 }
 
 
@@ -502,12 +505,12 @@ good_turing  <- function(my_data) {
   cleaned_data <- check_format(my_data)
   
   if (cleaned_data[1,1]!=1 || cleaned_data[1,2]==0) {
-    stop("You don't have an observed singleton count.\n Chao-Shen isn't built for that data structure.\n")
+    warning("You don't have an observed singleton count.\n Chao-Shen isn't built for that data structure.\n")
   } 
   
   cc <- sum(cleaned_data[, 2])
   n <- sum(cleaned_data[, 2] * cleaned_data[, 1])
-  f1 <- cleaned_data[1,2]
+  f1 <- ifelse(cleaned_data[1,1] == 1, cleaned_data[1,2], 0)
   
   chat <- cc / (1 - f1/n)
   list("est" = chat, 
