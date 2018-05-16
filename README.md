@@ -1,5 +1,10 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+<img src="man/figures/logo.png" align="right" />
+================================================
+
+[![Travis-CI Build Status](https://travis-ci.org/adw96/breakaway.svg?branch=master)](https://travis-ci.org/adw96/breakaway) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/adw96/breakaway?branch=master&svg=true)](https://ci.appveyor.com/project/adw96/breakaway) [![Coverage status](https://codecov.io/gh/adw96/breakaway/branch/master/graph/badge.svg)](https://codecov.io/github/adw96/breakaway?branch=master) [![CRAN version](http://www.r-pkg.org/badges/version/breakaway)](https://cran.r-project.org/package=breakaway)
+
 breakaway
 =========
 

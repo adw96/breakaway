@@ -1,10 +1,15 @@
-urls:
-  reference: http://adw96.github.io/breakaway/reference
-  article: http://adw96.github.io/breakaway/articles
+pandoc: 1.17.2
+pkgdown: 1.0.0.9000
+pkgdown_sha: 5eeb2aab0b68924bcde72ded0f7326070eaa0fa0
 articles:
   alpha-better: alpha-better.html
   betta-figure: betta-figure.html
   breakaway: breakaway.html
+  extended-tutorial: extended-tutorial.html
+  phyloseq: phyloseq.html
   resample-estimates: resample-estimates.html
   sample-size-calculations: sample-size-calculations.html
+urls:
+  reference: http://adw96.github.io/breakaway/reference
+  article: http://adw96.github.io/breakaway/articles
 

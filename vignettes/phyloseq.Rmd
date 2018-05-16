@@ -1,0 +1,21 @@
+---
+title: "breakaway + phyloseq"
+author: "Amy Willis"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{getting-started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r}
+### Run the first two lines at home! ####
+# install.packages("devtools")
+# devtools::install_github("adw96/breakaway")
+library(breakaway)
+library(phyloseq)
+data(GlobalPatterns)
+
+plot_alpha(GlobalPatterns)
+```

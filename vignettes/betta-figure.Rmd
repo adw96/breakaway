@@ -22,18 +22,19 @@ library(breakaway)
 frequencytablelist <- lapply(apply(toy_otu_table, 2, table), as.data.frame)
 frequencytablelist <- lapply(frequencytablelist, function(x) x[x[,1]!=0,])
 
-ob_results <- lapply(frequencytablelist[1:15], objective_bayes_negbin, answers = T, plot=F, output = F)
+ob_results <- lapply(frequencytablelist[c(6:9)], objective_bayes_negbin, answers = T, plot=F, output = F)
 
-lower <- unlist(lapply(ob_results, function(x) x$results["LCI.C", ]))
-upper <- unlist(lapply(ob_results, function(x) x$results["UCI.C", ]))
-means <- unlist(lapply(ob_results, function(x) x$results["mean.C", ]))
-standard_deviations <- unlist(lapply(ob_results, function(x) x$results["stddev.C", ]))
+lower <- unlist(lapply(ob_results, function(x) x[["ci"]][2]))
+upper <- unlist(lapply(ob_results, function(x) x[["ci"]][1]))
+means <- unlist(lapply(ob_results, function(x) x[["est"]]))
+means
+standard_deviations <- unlist(lapply(ob_results, function(x) x[["semeanest"]]))
 
 ## Find how many otus are in the cyanobacteria genus
 cyano_nodes <- apply(toy_otu_table[grepl("Cyano", toy_taxonomy), ], 2, function(x) sum(x>0))
 cyano_nodes <- cyano_nodes
 
-bloom1 <- toy_metadata[, "bloom2"]
+bloom1 <- toy_metadata[, "bloom2"][6:9]
 bloom <- bloom1 == "yes"
 ```
 
@@ -46,8 +47,8 @@ betta_pic(means, standard_deviations, mypch = ifelse(bloom, 16, 1))
 The following is a nice option if you would like to use ggplot. 
 
 ```{r, fig.show='hold'}
-require(ggplot2)
-plot_data_frame <- data.frame("index" = 1:15, lower, upper, means, standard_deviations, "bloom"=bloom[1:15])
+library(ggplot2)
+plot_data_frame <- data.frame("index" = 1:4, lower, upper, means, standard_deviations, "bloom"=bloom)
 plot_data_frame
 
 ggplot(plot_data_frame, aes(x = index, y = means, col = bloom)) +

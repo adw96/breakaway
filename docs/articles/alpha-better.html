@@ -8,14 +8,18 @@
 <title>alpha diversity, properly • breakaway</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/united/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><meta property="og:title" content="alpha diversity, properly">
+<meta property="og:description" content="">
+<meta property="og:image" content="http://adw96.github.io/breakaway/logo.png">
+<meta name="twitter:card" content="summary">
+<!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 <body>
-    <div class="container template-vignette">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -24,18 +28,22 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">breakaway</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">breakaway</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.3</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="../articles/breakaway.html">Get Started</a>
+  <a href="../articles/breakaway.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -52,6 +60,12 @@
     </li>
     <li>
       <a href="../articles/betta-figure.html">Comparing samples visually with betta</a>
+    </li>
+    <li>
+      <a href="../articles/extended-tutorial.html">Getting into the weeds</a>
+    </li>
+    <li>
+      <a href="../articles/phyloseq.html">breakaway + phyloseq</a>
     </li>
     <li>
       <a href="../articles/resample-estimates.html">Variance of alpha diversity estimates</a>
@@ -72,28 +86,31 @@
 
       
       </header><div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>alpha diversity, properly</h1>
                         <h4 class="author">Amy Willis</h4>
             
-            <h4 class="date">2017-10-07</h4>
-          </div>
+            <h4 class="date">2018-05-16</h4>
+      
+      
+      <div class="hidden name"><code>alpha-better.Rmd</code></div>
+
+    </div>
 
     
     
-<div class="contents">
 <div id="introduction-to-estimating-alpha-diversity" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction-to-estimating-alpha-diversity" class="anchor"></a>Introduction to estimating alpha diversity</h2>
 <p>It is most often the case that only a small fraction of the entire microbial population of interest is sampled in microbiome studies. While scientists are typically interested in the entire microbial population, they only have some small sample which which represents it. Unfortunately it is typical to not adjust for the inexhaustive experiment, and to analyse only the sequences that were observed without any adjustment for missing data. This practice is no more pronounced than in the setting of alpha diversity.</p>
-<p>Alpha diversity is special because common alpha diversity estimates are highly dependent on sample size. For example, increasing the number of sequences (library size) generally increases the diversity. This is paradoxical, because true diversity of the ecosystem exists regardless of the experiment, and sampled ecosystems. The mission of <code>breakaway</code> is to provide the statistical tools to adjust for inexhaustive sampling in microbiome experiments.</p>
+<p>Alpha diversity is special because common alpha diversity estimates (such as plug-in and rarefied estimates) are highly dependent on sample size. For example, increasing the number of sequences (library size) generally increases the diversity. This is paradoxical, because true diversity of the ecosystem exists regardless of the experiment, and sampled ecosystems. The mission of <code>breakaway</code> is to provide the statistical tools to adjust for inexhaustive sampling in microbiome experiments.</p>
 <p>This tutorial covers using <code>breakaway</code> to estimate the Shannon index when sequencing or sampling was inexhaustive and taxa may be missing.</p>
 </div>
 <div id="standard-errors-on-shannon-index-estimates" class="section level2">
 <h2 class="hasAnchor">
 <a href="#standard-errors-on-shannon-index-estimates" class="anchor"></a>Standard errors on Shannon index estimates</h2>
-<p>TODO: Finish this!</p>
+<p>Load <code>breakaway</code> and have a look at one of the in-built datasets.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(breakaway)
 <span class="kw">head</span>(apples)</code></pre></div>
 <pre><code>##   index frequency
@@ -103,301 +120,241 @@
 ## 4     4        59
 ## 5     5        42
 ## 6     6        51</code></pre>
+<p>Estimate the Shannon index of the population that the <code>apples</code> sample was drawn from!</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/shannon_better.html">shannon_better</a></span>(apples)</code></pre></div>
-<pre><code>## Warning in shannon_better(apples): Confidence intervals and standard errors are approximate!</code></pre>
 <pre><code>##     index estimate standard_error   lower    upper
 ## 1 shannon 6.551956     0.05263679 6.44879 6.655122</code></pre>
+<p>Cool! What about when we have a full dataset? How should this be plotted?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#apply(toy_otu_table, 2, shannon_better)</span></code></pre></div>
 <p>TODO: Finish this!</p>
-<p>Let’s start by writing some functions to invent fake communities. This is so we can validate the idea on fake data.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(breakaway)
-<span class="kw">library</span>(ggplot2)
-<span class="kw">library</span>(gridExtra)
-<span class="kw">library</span>(dplyr)</code></pre></div>
-<pre><code>## Warning: Installed Rcpp (0.12.13) different from Rcpp used to build dplyr (0.12.11).
-## Please reinstall dplyr to avoid random crashes or undefined behavior.</code></pre>
-<pre><code>## 
-## Attaching package: 'dplyr'</code></pre>
-<pre><code>## The following object is masked from 'package:gridExtra':
-## 
-##     combine</code></pre>
-<pre><code>## The following objects are masked from 'package:stats':
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(magrittr)
-<span class="kw">library</span>(grid)
-<span class="kw">library</span>(lattice)
-
-
-<span class="co"># create a total community</span>
-make_community2 &lt;-<span class="st"> </span>function(CC, <span class="dt">alpha_parameter =</span> <span class="dv">1</span>, <span class="dt">beta_parameter =</span> <span class="dv">2</span>) {
-  relative_proportions &lt;-<span class="st"> </span><span class="kw">rbeta</span>(CC, alpha_parameter, beta_parameter) <span class="co"># this is just a good way to get relative abundances</span>
-  raw_abundances &lt;-<span class="st"> </span>relative_proportions/<span class="kw">sum</span>(relative_proportions)
-  output &lt;-<span class="st"> </span><span class="kw">list</span>()
-  output$proportions &lt;-<span class="st"> </span>raw_abundances
-  output
-}
-
-<span class="co"># let's simulate some rarefaction curves</span>
-subsample_community &lt;-<span class="st"> </span>function(population, n) {
-  output &lt;-<span class="st"> </span><span class="kw">list</span>()
-  who &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/sample.html">sample</a></span>(population$names, n, <span class="dt">replace =</span> F)
-  community &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">as.matrix</span>(<span class="kw">table</span>(who)))
-  abundances &lt;-<span class="st"> </span>community/<span class="kw">sum</span>(community)
-  output$names &lt;-<span class="st"> </span>who
-  output$proportions &lt;-<span class="st"> </span>abundances
-  output
-}
-
-draw_rarefaction &lt;-<span class="st"> </span>function(population, <span class="dt">pts =</span> <span class="ot">NA</span>, <span class="dt">replicates =</span> <span class="dv">5</span>, <span class="dt">ecosystem =</span> <span class="ot">NA</span>) {
-  rarefaction_table &lt;-<span class="st"> </span><span class="kw">data.frame</span>()
-  if (<span class="kw">all</span>(<span class="kw">is.na</span>(pts))) pts &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">round</span>(<span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">5</span>, <span class="dt">to =</span> <span class="kw">length</span>(population$names)/<span class="dv">100</span>, <span class="dt">length =</span> <span class="dv">100</span>)),
-                                <span class="kw">round</span>(<span class="kw">seq</span>(<span class="dt">from =</span> <span class="kw">length</span>(population$names)/<span class="dv">100</span>, <span class="dt">to =</span> <span class="kw">length</span>(population$names)/<span class="dv">10</span>, <span class="dt">length =</span> <span class="dv">100</span>)),
-                                <span class="kw">round</span>(<span class="kw">seq</span>(<span class="dt">from =</span> <span class="kw">length</span>(population$names)/<span class="dv">10</span>, <span class="dt">to =</span> <span class="kw">length</span>(population$names)/<span class="dv">4</span>, <span class="dt">length =</span> <span class="dv">100</span>)),
-                                <span class="kw">round</span>(<span class="kw">seq</span>(<span class="dt">from =</span> <span class="kw">length</span>(population$names)/<span class="dv">4</span>, <span class="dt">to =</span> <span class="kw">length</span>(population$names), <span class="dt">length =</span> <span class="dv">10</span>)))
-  who &lt;-<span class="st"> </span><span class="kw">replicate</span>(replicates, <span class="kw"><a href="http://dplyr.tidyverse.org/reference/sample.html">sample</a></span>(population$names, <span class="kw">length</span>(population$names), <span class="dt">replace =</span> F))
-  for (i in pts) {
-    subsample_diversity &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NA</span>, replicates)
-    subsample_shannon &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NA</span>, replicates)
-    for (j in <span class="dv">1</span>:replicates) {  
-      subsample &lt;-<span class="st"> </span>who[<span class="dv">1</span>:i, j]
-      subsample_diversity[j] &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">unique</span>(subsample))
-      community &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">as.matrix</span>(<span class="kw">table</span>(subsample)))
-      proportions &lt;-<span class="st"> </span>community/<span class="kw">sum</span>(community)
-      subsample_shannon[j] &lt;-<span class="st"> </span>breakaway::<span class="kw"><a href="../reference/shannon.html">shannon</a></span>(proportions)
-    }
-    rarefaction_table %&lt;&gt;%<span class="st"> </span><span class="kw">rbind</span>(<span class="kw">data.frame</span>(<span class="st">"reads"</span> =<span class="st"> </span>i, 
-                                            <span class="st">"richness"</span> =<span class="st"> </span><span class="kw">min</span>(subsample_diversity), <span class="st">"richness_max"</span> =<span class="st"> </span><span class="kw">max</span>(subsample_diversity), 
-                                            <span class="st">"shannon"</span> =<span class="st"> </span><span class="kw">min</span>(subsample_shannon), <span class="st">"shannon_max"</span> =<span class="st"> </span><span class="kw">max</span>(subsample_shannon), 
-                                            <span class="st">"ecosystem"</span> =<span class="st"> </span>ecosystem, <span class="st">"type"</span> =<span class="st"> "rcurve"</span>))
-  }
-  rarefaction_table
-}
-
-get_point &lt;-<span class="st"> </span>function(ecosystem, read, label) {
-  read &lt;-<span class="st"> </span><span class="kw">round</span>(read)
-  my_population &lt;-<span class="st"> </span><span class="kw">get</span>(<span class="kw">paste</span>(<span class="st">"population"</span>, ecosystem, <span class="dt">sep=</span><span class="st">""</span>))
-  ecosystem_name &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">"ecosystem"</span>, ecosystem, <span class="dt">sep=</span><span class="st">""</span>)
-  subsample &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/sample.html">sample</a></span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">1</span>:<span class="kw">length</span>(my_population$proportions)), <span class="dt">size =</span> read, <span class="dt">prob =</span> my_population$proportions, <span class="dt">replace =</span> T)
-  
-  point &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">"reads"</span> =<span class="st"> </span>read, 
-                      <span class="st">"richness"</span> =<span class="st"> </span><span class="kw">length</span>(<span class="kw">unique</span>(subsample)), <span class="st">"richness_max"</span> =<span class="st"> </span><span class="ot">NA</span>,
-                      <span class="st">"shannon"</span> =<span class="st"> </span>breakaway::<span class="kw"><a href="../reference/shannon.html">shannon</a></span>(<span class="kw">c</span>(<span class="kw">as.matrix</span>(<span class="kw">table</span>(subsample)))/<span class="kw">sum</span>(<span class="kw">c</span>(<span class="kw">as.matrix</span>(<span class="kw">table</span>(subsample))))), 
-                      <span class="st">"shannon_max"</span> =<span class="st"> </span><span class="ot">NA</span>, 
-                      <span class="st">"ecosystem"</span> =<span class="st"> </span>ecosystem_name, <span class="st">"type"</span> =<span class="st"> "observation"</span>)
-  subsample1 &lt;-<span class="st"> </span><span class="kw">list</span>()
-  subsample1$names &lt;-<span class="st"> </span>subsample
-  subsample1$proportions &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">as.matrix</span>(<span class="kw">table</span>(subsample)))/<span class="kw">sum</span>(<span class="kw">c</span>(<span class="kw">as.matrix</span>(<span class="kw">table</span>(subsample))))
-  rarefied_sample &lt;-<span class="st"> </span><span class="kw">draw_rarefaction</span>(subsample1, <span class="dt">replicates =</span> <span class="dv">1</span>, <span class="dt">pts =</span> <span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">1</span>, <span class="dt">to =</span> read, <span class="dt">length =</span> <span class="dv">100</span>), 
-                                      <span class="dt">ecosystem =</span> ecosystem_name)
-  rarefied_sample$type &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">"rarefied_sample"</span>, label, <span class="dt">sep=</span><span class="st">""</span>)
-  
-  richness_estimate &lt;-<span class="st"> </span>subsample %&gt;%<span class="st"> </span>make_frequency_count_table %&gt;%<span class="st"> </span><span class="kw"><a href="../reference/breakaway.html">breakaway</a></span>( <span class="dt">output =</span> F, <span class="dt">answers =</span> T, <span class="dt">plot =</span> F) %$%<span class="st"> </span>ci 
-  
-  shannon_estimate &lt;-<span class="st"> </span>subsample %&gt;%<span class="st"> </span>make_frequency_count_table  %&gt;%<span class="st"> </span>shannon_better
-  
-  estimate &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">"reads"</span> =<span class="st"> </span>read, 
-                         <span class="st">"richness"</span> =<span class="st"> </span>richness_estimate[<span class="dv">1</span>], <span class="st">"richness_max"</span> =<span class="st"> </span>richness_estimate[<span class="dv">2</span>],
-                         <span class="st">"shannon"</span> =<span class="st"> </span>shannon_estimate[<span class="dv">1</span>,<span class="dv">4</span>], <span class="st">"shannon_max"</span> =<span class="st"> </span>shannon_estimate[<span class="dv">1</span>,<span class="dv">5</span>],
-                         <span class="st">"ecosystem"</span> =<span class="st"> </span>ecosystem_name, <span class="st">"type"</span> =<span class="st"> </span><span class="kw">paste</span>(<span class="st">"estimate"</span>, label, <span class="dt">sep=</span><span class="st">""</span>))
-  
-  <span class="kw">rbind</span>(point, rarefied_sample, estimate)
-}
-get_truth &lt;-<span class="st"> </span>function(ecosystem_number) {
-  ecosystem &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">"population"</span>, ecosystem_number, <span class="dt">sep =</span> <span class="st">""</span>)
-  population &lt;-<span class="st"> </span><span class="kw">get</span>(ecosystem)
-  <span class="kw">data.frame</span>(<span class="st">"reads"</span> =<span class="st"> </span><span class="dv">0</span>, <span class="st">"richness"</span> =<span class="st"> </span><span class="kw">length</span>(population$proportions), <span class="st">"richness_max"</span> =<span class="st"> </span><span class="ot">NA</span>,
-             <span class="st">"shannon"</span> =<span class="st"> </span>breakaway::<span class="kw"><a href="../reference/shannon.html">shannon</a></span>(population$proportions), <span class="st">"shannon_max"</span> =<span class="st"> </span><span class="ot">NA</span>, 
-             <span class="st">"ecosystem"</span> =<span class="st">  </span><span class="kw">paste</span>(<span class="st">"ecosystem"</span>, ecosystem_number, <span class="dt">sep =</span> <span class="st">""</span>), <span class="st">"type"</span> =<span class="st"> "truth"</span>)
-}</code></pre></div>
-<p>Now let’s actually create some communities, and draw some pretend samples from them.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">170918</span>)
-
-Ca =<span class="st"> </span><span class="dv">6000</span>
-Cb =<span class="st"> </span><span class="dv">5000</span>
-aa =<span class="st"> </span><span class="fl">0.5</span>
-ab =<span class="st"> </span>aa
-ba =<span class="st"> </span><span class="dv">3</span>
-bb =<span class="st"> </span><span class="dv">1</span>
-
-<span class="co"># rarefaction curves</span>
-population1 &lt;-<span class="st"> </span><span class="kw">make_community2</span>(Ca, <span class="dt">alpha_parameter =</span> aa, <span class="dt">beta_parameter =</span> ab)
-population2 &lt;-<span class="st"> </span><span class="kw">make_community2</span>(Cb, <span class="dt">alpha_parameter =</span> ba, <span class="dt">beta_parameter =</span> bb)
-
-<span class="co"># observations and truth</span>
-truth &lt;-<span class="st"> </span><span class="kw">rbind</span>(<span class="kw">get_truth</span>(<span class="dv">1</span>), <span class="kw">get_truth</span>(<span class="dv">2</span>))
-
-observations &lt;-<span class="st"> </span><span class="kw">rbind</span>(<span class="kw">get_point</span>(<span class="dv">2</span>, <span class="dv">25000</span>, <span class="dv">1</span>), 
-                      <span class="kw">get_point</span>(<span class="dv">2</span>, <span class="dv">12000</span>, <span class="dv">2</span>),
-                      <span class="kw">get_point</span>(<span class="dv">2</span>, <span class="dv">8000</span>, <span class="dv">3</span>), 
-                      <span class="kw">get_point</span>(<span class="dv">2</span>, <span class="dv">7000</span>, <span class="dv">4</span>),
-                      <span class="kw">get_point</span>(<span class="dv">2</span>, <span class="dv">16000</span>, <span class="dv">5</span>),
-                      <span class="kw">get_point</span>(<span class="dv">1</span>, <span class="dv">8000</span>, <span class="dv">1</span>),
-                      <span class="kw">get_point</span>(<span class="dv">1</span>, <span class="dv">14000</span>, <span class="dv">2</span>),
-                      <span class="kw">get_point</span>(<span class="dv">1</span>, <span class="dv">5000</span>, <span class="dv">3</span>),
-                      <span class="kw">get_point</span>(<span class="dv">1</span>, <span class="dv">7500</span>, <span class="dv">4</span>),
-                      <span class="kw">get_point</span>(<span class="dv">1</span>, <span class="dv">4500</span>, <span class="dv">5</span>),
-                      <span class="kw">get_point</span>(<span class="dv">1</span>, <span class="dv">3000</span>, <span class="dv">6</span>))</code></pre></div>
-<pre><code>## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
-
-## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
-
-## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
-
-## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
-
-## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
-
-## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
-
-## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
-
-## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
-
-## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
-
-## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!
-
-## Warning in shannon_better(.): Confidence intervals and standard errors are approximate!</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rarefaction_level &lt;-<span class="st"> </span>observations %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(type ==<span class="st"> "observation"</span>) %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(reads) %&gt;%<span class="st"> </span>min
-
-rarefaction_table &lt;-<span class="st"> </span><span class="kw">rbind</span>(observations, truth)
-rarefaction_table %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(ecosystem) %&gt;%<span class="st"> </span>unlist %&gt;%<span class="st"> </span><span class="kw">substring</span>(<span class="dv">10</span>, <span class="dv">11</span>) %&gt;%<span class="st"> </span>as.numeric -&gt;<span class="st"> </span>rarefaction_table$ecosystem_number
-
-
-plot_base &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(<span class="dt">data =</span> rarefaction_table, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">col =</span> ecosystem)) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_bw</a></span>() 
-
-plot_5_a &lt;-<span class="st"> </span>plot_base +<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">labs</a></span>(<span class="dt">x=</span><span class="st">"No. reads"</span>, <span class="dt">y=</span><span class="st">"Taxonomic richness"</span>,<span class="dt">col =</span> <span class="st">""</span>) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_cartesian">coord_cartesian</a></span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">26000</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">7000</span>)) +<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>(<span class="dt">data =</span> rarefaction_table %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(type ==<span class="st"> "observation"</span>), 
-             <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x=</span>reads, <span class="dt">y=</span>richness, <span class="dt">col =</span> ecosystem))+
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position =</span> <span class="kw">c</span>(<span class="fl">0.7</span>, <span class="fl">0.25</span>), <span class="dt">legend.text=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/element">element_text</a></span>(<span class="dt">size=</span><span class="dv">7</span>))  +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_color_discrete</a></span>(<span class="dt">name=</span><span class="st">""</span>,
-                       <span class="dt">breaks=</span><span class="kw">c</span>(<span class="st">"ecosystem1"</span>, <span class="st">"ecosystem2"</span>), 
-                       <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">"Environment A"</span>, <span class="st">"Environment B"</span>)) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/guides">guides</a></span>(<span class="dt">fill=</span><span class="ot">FALSE</span>)
-plot_5_b &lt;-<span class="st"> </span>plot_base +<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">labs</a></span>(<span class="dt">x=</span><span class="st">"No. reads"</span>, <span class="dt">y=</span><span class="st">"Shannon diversity"</span>,<span class="dt">col =</span> <span class="st">""</span>) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_cartesian">coord_cartesian</a></span>(<span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">26000</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">7</span>, <span class="dv">9</span>)) +<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>(<span class="dt">data =</span> rarefaction_table %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(type ==<span class="st"> "observation"</span>), 
-             <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x=</span>reads, <span class="dt">y=</span>shannon, <span class="dt">col =</span> ecosystem))+
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position =</span> <span class="kw">c</span>(<span class="fl">0.7</span>, <span class="fl">0.3</span>), <span class="dt">legend.text=</span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/element">element_text</a></span>(<span class="dt">size=</span><span class="dv">7</span>))  +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_hue">scale_color_discrete</a></span>(<span class="dt">name=</span><span class="st">""</span>,
-                       <span class="dt">breaks=</span><span class="kw">c</span>(<span class="st">"ecosystem1"</span>, <span class="st">"ecosystem2"</span>), 
-                       <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">"Environment A"</span>, <span class="st">"Environment B"</span>)) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/guides">guides</a></span>(<span class="dt">fill=</span><span class="ot">FALSE</span>)
-
-plot_6_a &lt;-<span class="st"> </span>plot_5_a +<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_ribbon">geom_ribbon</a></span>(<span class="dt">data =</span> rarefaction_table %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(type ==<span class="st"> "rcurve"</span>),
-              <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x=</span>reads, <span class="dt">ymin=</span>richness, <span class="dt">ymax=</span>richness_max, <span class="dt">col =</span> ecosystem, <span class="dt">fill =</span> ecosystem), <span class="dt">alpha =</span> <span class="dv">0</span>, <span class="dt">linetype =</span> <span class="dv">0</span>) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>(<span class="dt">data =</span> rarefaction_table %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(type ==<span class="st"> "observation"</span>),
-           <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x=</span>reads, <span class="dt">y=</span>richness, <span class="dt">col =</span> ecosystem))+
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>(<span class="dt">data =</span> rarefaction_table %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(type ==<span class="st"> "rarefied_sample1"</span>),
-            <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x=</span>reads, <span class="dt">y=</span>richness, <span class="dt">col =</span> ecosystem)) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"Rarefaction curve"</span>) +<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>(<span class="dt">data =</span> rarefaction_table %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(type ==<span class="st"> "rarefied_sample2"</span>),
-            <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x=</span>reads, <span class="dt">y=</span>richness, <span class="dt">col =</span> ecosystem)) 
-  
-plot_6_d &lt;-<span class="st"> </span>plot_5_b +<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_ribbon">geom_ribbon</a></span>(<span class="dt">data =</span> rarefaction_table %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(type ==<span class="st"> "rcurve"</span>),
-              <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x=</span>reads, <span class="dt">ymin=</span>shannon, <span class="dt">ymax=</span>shannon_max, <span class="dt">col =</span> ecosystem, <span class="dt">fill =</span> ecosystem), <span class="dt">alpha =</span> <span class="dv">0</span>, <span class="dt">linetype =</span> <span class="dv">0</span>) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>(<span class="dt">data =</span> rarefaction_table %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(type ==<span class="st"> "observation"</span>),
-             <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x=</span>reads, <span class="dt">y=</span>shannon, <span class="dt">col =</span> ecosystem))+
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>(<span class="dt">data =</span> rarefaction_table %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(type ==<span class="st"> "rarefied_sample1"</span>),
-            <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x=</span>reads, <span class="dt">y=</span>shannon, <span class="dt">col =</span> ecosystem)) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>(<span class="dt">data =</span> rarefaction_table %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(type ==<span class="st"> "rarefied_sample2"</span>),
-            <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x=</span>reads, <span class="dt">y=</span>shannon, <span class="dt">col =</span> ecosystem)) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"Rarefaction curve"</span>)
-
-
-plot_7a_left &lt;-<span class="st"> </span>plot_6_a +<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_abline">geom_hline</a></span>(<span class="dt">data =</span> rarefaction_table %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(type ==<span class="st"> "truth"</span>), 
-             <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">yintercept=</span>richness, <span class="dt">col =</span> ecosystem), <span class="dt">lty =</span> <span class="dv">2</span>) 
-
-plot_7b_left &lt;-<span class="st"> </span>plot_6_d +<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_abline">geom_hline</a></span>(<span class="dt">data =</span> rarefaction_table %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(type ==<span class="st"> "truth"</span>), 
-             <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">yintercept=</span>shannon, <span class="dt">col =</span> ecosystem), <span class="dt">lty =</span> <span class="dv">2</span>) 
-
-plot_7_a &lt;-<span class="st"> </span>plot_base +<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_x_continuous</a></span>(<span class="dt">name=</span><span class="st">"Environment"</span>, <span class="dt">breaks=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>), <span class="dt">limits =</span> <span class="kw">c</span>(<span class="fl">0.5</span>, <span class="fl">2.5</span>)) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>(<span class="dt">data =</span> rarefaction_table %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(type ==<span class="st"> "observation"</span>), 
-             <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x=</span>ecosystem_number +<span class="st"> </span><span class="kw">c</span>(<span class="kw">seq</span>(-<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="dt">length.out =</span> <span class="dv">6</span>), 
-                                        <span class="kw">seq</span>(-<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="dt">length.out =</span> <span class="dv">5</span>)), <span class="dt">y=</span>richness, <span class="dt">col =</span> ecosystem), <span class="dt">alpha =</span> <span class="fl">0.1</span>) +<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_linerange">geom_linerange</a></span>(<span class="dt">data =</span> rarefaction_table %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw">substr</span>(type, <span class="dv">1</span>, <span class="dv">8</span>) ==<span class="st"> "estimate"</span>), 
-                 <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> ecosystem_number +<span class="st"> </span><span class="kw">c</span>(<span class="kw">seq</span>(-<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="dt">length.out =</span> <span class="dv">6</span>), 
-                                              <span class="kw">seq</span>(-<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="dt">length.out =</span> <span class="dv">5</span>)), <span class="dt">ymin=</span>richness, <span class="dt">ymax =</span> richness_max), <span class="dt">lty =</span> <span class="dv">1</span>) +<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_abline">geom_hline</a></span>(<span class="dt">data =</span> rarefaction_table %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(type ==<span class="st"> "truth"</span>), 
-             <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">yintercept=</span>richness, <span class="dt">col =</span> ecosystem), <span class="dt">lty =</span> <span class="dv">2</span>) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">labs</a></span>(<span class="dt">y=</span><span class="st">"Taxonomic richness"</span>,<span class="dt">col =</span> <span class="st">""</span>) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position=</span><span class="st">"none"</span>) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"Estimated true richness with error"</span>) +<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_cartesian">coord_cartesian</a></span>(<span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">7000</span>))
-
-plot_7_b &lt;-<span class="st"> </span>plot_base +<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_x_continuous</a></span>(<span class="dt">name=</span><span class="st">"Environment"</span>, <span class="dt">breaks=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>), <span class="dt">limits =</span> <span class="kw">c</span>(<span class="fl">0.5</span>, <span class="fl">2.5</span>)) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>(<span class="dt">data =</span> rarefaction_table %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(type ==<span class="st"> "observation"</span>), 
-             <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x=</span>ecosystem_number +<span class="st"> </span><span class="kw">c</span>(<span class="kw">seq</span>(-<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="dt">length.out =</span> <span class="dv">6</span>), 
-                                        <span class="kw">seq</span>(-<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="dt">length.out =</span> <span class="dv">5</span>)), <span class="dt">y=</span>shannon, <span class="dt">col =</span> ecosystem), <span class="dt">alpha =</span> <span class="fl">0.1</span>) +<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_linerange">geom_linerange</a></span>(<span class="dt">data =</span> rarefaction_table %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw">substr</span>(type, <span class="dv">1</span>, <span class="dv">8</span>) ==<span class="st"> "estimate"</span>), 
-                 <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> ecosystem_number +<span class="st"> </span><span class="kw">c</span>(<span class="kw">seq</span>(-<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="dt">length.out =</span> <span class="dv">6</span>), 
-                                              <span class="kw">seq</span>(-<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="dt">length.out =</span> <span class="dv">5</span>)), <span class="dt">ymin=</span>shannon, <span class="dt">ymax =</span> shannon_max), <span class="dt">lty =</span> <span class="dv">1</span>) +<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_abline">geom_hline</a></span>(<span class="dt">data =</span> rarefaction_table %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(type ==<span class="st"> "truth"</span>), 
-             <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">yintercept=</span>shannon, <span class="dt">col =</span> ecosystem), <span class="dt">lty =</span> <span class="dv">2</span>) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">labs</a></span>(<span class="dt">y=</span><span class="st">"Shannon index"</span>,<span class="dt">col =</span> <span class="st">""</span>) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position=</span><span class="st">"none"</span>) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"Estimated true Shannon with error"</span>) +<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_cartesian">coord_cartesian</a></span>(<span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">7</span>, <span class="dv">9</span>))
-
-plot_14_a &lt;-<span class="st"> </span>plot_base +<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_x_continuous</a></span>(<span class="dt">name=</span><span class="st">"Environment"</span>, <span class="dt">breaks=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>), <span class="dt">limits =</span> <span class="kw">c</span>(<span class="fl">0.5</span>, <span class="fl">2.5</span>)) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_linerange">geom_linerange</a></span>(<span class="dt">data =</span> rarefaction_table %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw">substr</span>(type, <span class="dv">1</span>, <span class="dv">8</span>) ==<span class="st"> "estimate"</span>), 
-                 <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> ecosystem_number +<span class="st"> </span><span class="kw">c</span>(<span class="kw">seq</span>(-<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="dt">length.out =</span> <span class="dv">6</span>), 
-                                              <span class="kw">seq</span>(-<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="dt">length.out =</span> <span class="dv">5</span>)), <span class="dt">ymin=</span>richness, <span class="dt">ymax =</span> richness_max), <span class="dt">lty =</span> <span class="dv">1</span>) +<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">labs</a></span>(<span class="dt">y=</span><span class="st">"Taxonomic richness"</span>,<span class="dt">col =</span> <span class="st">""</span>) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position=</span><span class="st">"none"</span>) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"Estimated true richness with error"</span>) +<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_cartesian">coord_cartesian</a></span>(<span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">7000</span>))
-
-plot_14_b &lt;-<span class="st"> </span>plot_base +<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_x_continuous</a></span>(<span class="dt">name=</span><span class="st">"Environment"</span>, <span class="dt">breaks=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>), <span class="dt">limits =</span> <span class="kw">c</span>(<span class="fl">0.5</span>, <span class="fl">2.5</span>)) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_linerange">geom_linerange</a></span>(<span class="dt">data =</span> rarefaction_table %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw">substr</span>(type, <span class="dv">1</span>, <span class="dv">8</span>) ==<span class="st"> "estimate"</span>), 
-                 <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> ecosystem_number +<span class="st"> </span><span class="kw">c</span>(<span class="kw">seq</span>(-<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="dt">length.out =</span> <span class="dv">6</span>), 
-                                              <span class="kw">seq</span>(-<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="dt">length.out =</span> <span class="dv">5</span>)), <span class="dt">ymin=</span>shannon, <span class="dt">ymax =</span> shannon_max), <span class="dt">lty =</span> <span class="dv">1</span>) +<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">labs</a></span>(<span class="dt">y=</span><span class="st">"Shannon index"</span>,<span class="dt">col =</span> <span class="st">""</span>) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position=</span><span class="st">"none"</span>) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"Estimated true Shannon with error"</span>) +<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_cartesian">coord_cartesian</a></span>(<span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">7</span>, <span class="dv">9</span>))
-
-plot_6_b &lt;-<span class="st"> </span>plot_base +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">labs</a></span>(<span class="dt">y=</span><span class="st">"Taxonomic richness"</span>,<span class="dt">col =</span> <span class="st">""</span>) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_cartesian">coord_cartesian</a></span>(<span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">7000</span>)) +<span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>(<span class="dt">data =</span> rarefaction_table %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(type ==<span class="st"> "observation"</span>), 
-             <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x=</span>ecosystem_number+<span class="st"> </span><span class="kw">c</span>(<span class="kw">seq</span>(-<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="dt">length.out =</span> <span class="dv">6</span>), 
-                                       <span class="kw">seq</span>(-<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="dt">length.out =</span> <span class="dv">5</span>)), <span class="dt">y=</span>richness, <span class="dt">col =</span> ecosystem)) +<span class="st"> </span>
-<span class="st">  </span><span class="co"># geom_hline(data = rarefaction_table %&gt;% filter(type == "truth"), </span>
-<span class="st">  </span><span class="co">#            aes(yintercept=richness, col = ecosystem), lty = 2) +</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"Raw richness"</span>) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_x_continuous</a></span>(<span class="dt">name=</span><span class="st">"Environment"</span>, <span class="dt">breaks=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>), <span class="dt">limits =</span> <span class="kw">c</span>(<span class="fl">0.5</span>, <span class="fl">2.5</span>)) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position=</span><span class="st">"none"</span>) 
-
-plot_6_e &lt;-<span class="st"> </span>plot_base +<span class="st">  </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">labs</a></span>(<span class="dt">y=</span><span class="st">"Shannon diversity"</span>,<span class="dt">col =</span> <span class="st">""</span>) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_x_continuous</a></span>(<span class="dt">name=</span><span class="st">"Environment"</span>, <span class="dt">breaks=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>), <span class="dt">limits =</span> <span class="kw">c</span>(<span class="fl">0.5</span>, <span class="fl">2.5</span>)) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>(<span class="dt">data =</span> rarefaction_table %&gt;%<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(type ==<span class="st"> "observation"</span>), 
-             <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x=</span>ecosystem_number+<span class="st"> </span><span class="kw">c</span>(<span class="kw">seq</span>(-<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="dt">length.out =</span> <span class="dv">6</span>), 
-                                       <span class="kw">seq</span>(-<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="dt">length.out =</span> <span class="dv">5</span>)), <span class="dt">y=</span>shannon, <span class="dt">col =</span> ecosystem)) +<span class="st"> </span>
-<span class="st">  </span><span class="co"># geom_hline(data = rarefaction_table %&gt;% filter(type == "truth"), </span>
-<span class="st">  </span><span class="co">#            aes(yintercept=shannon, col = ecosystem), lty = 2) +</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(<span class="dt">legend.position=</span><span class="st">"none"</span>) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"Raw Shannon index"</span>) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/coord_cartesian">coord_cartesian</a></span>(<span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">7</span>, <span class="dv">9</span>)) 
-
-<span class="kw"><a href="http://www.rdocumentation.org/packages/gridExtra/topics/arrangeGrob">grid.arrange</a></span>(<span class="dt">grobs =</span> <span class="kw">list</span>(plot_6_b, plot_6_e, plot_14_a, plot_14_b), 
-             <span class="dt">layout_matrix =</span>  <span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), <span class="dt">nrow =</span> <span class="dv">2</span>))</code></pre></div>
-<p><img src="alpha-better_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
-</div>
+<!-- Let's start by writing some functions to invent fake communities. This is so we can validate the idea on fake data. -->
+<!-- ```{r} -->
+<!-- library(breakaway) -->
+<!-- library(ggplot2) -->
+<!-- library(gridExtra) -->
+<!-- library(dplyr) -->
+<!-- library(magrittr) -->
+<!-- library(grid) -->
+<!-- library(lattice) -->
+<!-- # create a total community -->
+<!-- make_community2 <- function(CC, alpha_parameter = 1, beta_parameter = 2) { -->
+<!--   relative_proportions <- rbeta(CC, alpha_parameter, beta_parameter) # this is just a good way to get relative abundances -->
+<!--   raw_abundances <- relative_proportions/sum(relative_proportions) -->
+<!--   output <- list() -->
+<!--   output$proportions <- raw_abundances -->
+<!--   output -->
+<!-- } -->
+<!-- # let's simulate some rarefaction curves -->
+<!-- subsample_community <- function(population, n) { -->
+<!--   output <- list() -->
+<!--   who <- sample(population$names, n, replace = F) -->
+<!--   community <- c(as.matrix(table(who))) -->
+<!--   abundances <- community/sum(community) -->
+<!--   output$names <- who -->
+<!--   output$proportions <- abundances -->
+<!--   output -->
+<!-- } -->
+<!-- draw_rarefaction <- function(population, pts = NA, replicates = 5, ecosystem = NA) { -->
+<!--   rarefaction_table <- data.frame() -->
+<!--   if (all(is.na(pts))) pts <- c(round(seq(from = 5, to = length(population$names)/100, length = 100)), -->
+<!--                                 round(seq(from = length(population$names)/100, to = length(population$names)/10, length = 100)), -->
+<!--                                 round(seq(from = length(population$names)/10, to = length(population$names)/4, length = 100)), -->
+<!--                                 round(seq(from = length(population$names)/4, to = length(population$names), length = 10))) -->
+<!--   who <- replicate(replicates, sample(population$names, length(population$names), replace = F)) -->
+<!--   for (i in pts) { -->
+<!--     subsample_diversity <- rep(NA, replicates) -->
+<!--     subsample_shannon <- rep(NA, replicates) -->
+<!--     for (j in 1:replicates) {   -->
+<!--       subsample <- who[1:i, j] -->
+<!--       subsample_diversity[j] <- length(unique(subsample)) -->
+<!--       community <- c(as.matrix(table(subsample))) -->
+<!--       proportions <- community/sum(community) -->
+<!--       subsample_shannon[j] <- breakaway::shannon(proportions) -->
+<!--     } -->
+<!--     rarefaction_table %<>% rbind(data.frame("reads" = i,  -->
+<!--                                             "richness" = min(subsample_diversity), "richness_max" = max(subsample_diversity),  -->
+<!--                                             "shannon" = min(subsample_shannon), "shannon_max" = max(subsample_shannon),  -->
+<!--                                             "ecosystem" = ecosystem, "type" = "rcurve")) -->
+<!--   } -->
+<!--   rarefaction_table -->
+<!-- } -->
+<!-- get_point <- function(ecosystem, read, label) { -->
+<!--   read <- round(read) -->
+<!--   my_population <- get(paste("population", ecosystem, sep="")) -->
+<!--   ecosystem_name <- paste("ecosystem", ecosystem, sep="") -->
+<!--   subsample <- sample(x = c(1:length(my_population$proportions)), size = read, prob = my_population$proportions, replace = T) -->
+<!--   point <- data.frame("reads" = read,  -->
+<!--                       "richness" = length(unique(subsample)), "richness_max" = NA, -->
+<!--                       "shannon" = breakaway::shannon(c(as.matrix(table(subsample)))/sum(c(as.matrix(table(subsample))))),  -->
+<!--                       "shannon_max" = NA,  -->
+<!--                       "ecosystem" = ecosystem_name, "type" = "observation") -->
+<!--   subsample1 <- list() -->
+<!--   subsample1$names <- subsample -->
+<!--   subsample1$proportions <- c(as.matrix(table(subsample)))/sum(c(as.matrix(table(subsample)))) -->
+<!--   rarefied_sample <- draw_rarefaction(subsample1, replicates = 1, pts = seq(from = 1, to = read, length = 100),  -->
+<!--                                       ecosystem = ecosystem_name) -->
+<!--   rarefied_sample$type <- paste("rarefied_sample", label, sep="") -->
+<!--   richness_estimate <- subsample %>% make_frequency_count_table %>% breakaway( output = F, answers = T, plot = F) %$% ci  -->
+<!--   shannon_estimate <- subsample %>% make_frequency_count_table  %>% shannon_better -->
+<!--   estimate <- data.frame("reads" = read,  -->
+<!--                          "richness" = richness_estimate[1], "richness_max" = richness_estimate[2], -->
+<!--                          "shannon" = shannon_estimate[1,4], "shannon_max" = shannon_estimate[1,5], -->
+<!--                          "ecosystem" = ecosystem_name, "type" = paste("estimate", label, sep="")) -->
+<!--   rbind(point, rarefied_sample, estimate) -->
+<!-- } -->
+<!-- get_truth <- function(ecosystem_number) { -->
+<!--   ecosystem <- paste("population", ecosystem_number, sep = "") -->
+<!--   population <- get(ecosystem) -->
+<!--   data.frame("reads" = 0, "richness" = length(population$proportions), "richness_max" = NA, -->
+<!--              "shannon" = breakaway::shannon(population$proportions), "shannon_max" = NA,  -->
+<!--              "ecosystem" =  paste("ecosystem", ecosystem_number, sep = ""), "type" = "truth") -->
+<!-- } -->
+<!-- ``` -->
+<!-- Now let's actually create some communities, and draw some pretend samples from them. -->
+<!-- ```{r} -->
+<!-- set.seed(170918) -->
+<!-- Ca = 6000 -->
+<!-- Cb = 5000 -->
+<!-- aa = 0.5 -->
+<!-- ab = aa -->
+<!-- ba = 3 -->
+<!-- bb = 1 -->
+<!-- # rarefaction curves -->
+<!-- population1 <- make_community2(Ca, alpha_parameter = aa, beta_parameter = ab) -->
+<!-- population2 <- make_community2(Cb, alpha_parameter = ba, beta_parameter = bb) -->
+<!-- # observations and truth -->
+<!-- truth <- rbind(get_truth(1), get_truth(2)) -->
+<!-- observations <- rbind(get_point(2, 25000, 1),  -->
+<!--                       get_point(2, 12000, 2), -->
+<!--                       get_point(2, 8000, 3),  -->
+<!--                       get_point(2, 7000, 4), -->
+<!--                       get_point(2, 16000, 5), -->
+<!--                       get_point(1, 8000, 1), -->
+<!--                       get_point(1, 14000, 2), -->
+<!--                       get_point(1, 5000, 3), -->
+<!--                       get_point(1, 7500, 4), -->
+<!--                       get_point(1, 4500, 5), -->
+<!--                       get_point(1, 3000, 6)) -->
+<!-- rarefaction_level <- observations %>% filter(type == "observation") %>% select(reads) %>% min -->
+<!-- rarefaction_table <- rbind(observations, truth) -->
+<!-- rarefaction_table %>% select(ecosystem) %>% unlist %>% substring(10, 11) %>% as.numeric -> rarefaction_table$ecosystem_number -->
+<!-- plot_base <- ggplot(data = rarefaction_table, aes(col = ecosystem)) + -->
+<!--   theme_bw()  -->
+<!-- plot_5_a <- plot_base +  -->
+<!--   labs(x="No. reads", y="Taxonomic richness",col = "") + -->
+<!--   coord_cartesian(xlim = c(0, 26000), ylim=c(0, 7000)) +  -->
+<!--   geom_point(data = rarefaction_table %>% filter(type == "observation"),  -->
+<!--              aes(x=reads, y=richness, col = ecosystem))+ -->
+<!--   theme(legend.position = c(0.7, 0.25), legend.text=element_text(size=7))  + -->
+<!--   scale_color_discrete(name="", -->
+<!--                        breaks=c("ecosystem1", "ecosystem2"),  -->
+<!--                        labels=c("Environment A", "Environment B")) + -->
+<!--   guides(fill=FALSE) -->
+<!-- plot_5_b <- plot_base +  -->
+<!--   labs(x="No. reads", y="Shannon diversity",col = "") + -->
+<!--   coord_cartesian(xlim=c(0, 26000), ylim=c(7, 9)) +  -->
+<!--   geom_point(data = rarefaction_table %>% filter(type == "observation"),  -->
+<!--              aes(x=reads, y=shannon, col = ecosystem))+ -->
+<!--   theme(legend.position = c(0.7, 0.3), legend.text=element_text(size=7))  + -->
+<!--   scale_color_discrete(name="", -->
+<!--                        breaks=c("ecosystem1", "ecosystem2"),  -->
+<!--                        labels=c("Environment A", "Environment B")) + -->
+<!--   guides(fill=FALSE) -->
+<!-- plot_6_a <- plot_5_a +  -->
+<!--   geom_ribbon(data = rarefaction_table %>% filter(type == "rcurve"), -->
+<!--               aes(x=reads, ymin=richness, ymax=richness_max, col = ecosystem, fill = ecosystem), alpha = 0, linetype = 0) + -->
+<!--   geom_point(data = rarefaction_table %>% filter(type == "observation"), -->
+<!--            aes(x=reads, y=richness, col = ecosystem))+ -->
+<!--   geom_line(data = rarefaction_table %>% filter(type == "rarefied_sample1"), -->
+<!--             aes(x=reads, y=richness, col = ecosystem)) + -->
+<!--   ggtitle("Rarefaction curve") +  -->
+<!--   geom_line(data = rarefaction_table %>% filter(type == "rarefied_sample2"), -->
+<!--             aes(x=reads, y=richness, col = ecosystem))  -->
+<!-- plot_6_d <- plot_5_b +  -->
+<!--   geom_ribbon(data = rarefaction_table %>% filter(type == "rcurve"), -->
+<!--               aes(x=reads, ymin=shannon, ymax=shannon_max, col = ecosystem, fill = ecosystem), alpha = 0, linetype = 0) + -->
+<!--   geom_point(data = rarefaction_table %>% filter(type == "observation"), -->
+<!--              aes(x=reads, y=shannon, col = ecosystem))+ -->
+<!--   geom_line(data = rarefaction_table %>% filter(type == "rarefied_sample1"), -->
+<!--             aes(x=reads, y=shannon, col = ecosystem)) + -->
+<!--   geom_line(data = rarefaction_table %>% filter(type == "rarefied_sample2"), -->
+<!--             aes(x=reads, y=shannon, col = ecosystem)) + -->
+<!--   ggtitle("Rarefaction curve") -->
+<!-- plot_7a_left <- plot_6_a + geom_hline(data = rarefaction_table %>% filter(type == "truth"),  -->
+<!--              aes(yintercept=richness, col = ecosystem), lty = 2)  -->
+<!-- plot_7b_left <- plot_6_d + geom_hline(data = rarefaction_table %>% filter(type == "truth"),  -->
+<!--              aes(yintercept=shannon, col = ecosystem), lty = 2)  -->
+<!-- plot_7_a <- plot_base +  -->
+<!--   scale_x_continuous(name="Environment", breaks=c(1,2), labels=c("A", "B"), limits = c(0.5, 2.5)) + -->
+<!--   geom_point(data = rarefaction_table %>% filter(type == "observation"),  -->
+<!--              aes(x=ecosystem_number + c(seq(-0.1, 0.1, length.out = 6),  -->
+<!--                                         seq(-0.1, 0.1, length.out = 5)), y=richness, col = ecosystem), alpha = 0.1) +  -->
+<!--   geom_linerange(data = rarefaction_table %>% filter(substr(type, 1, 8) == "estimate"),  -->
+<!--                  aes(x = ecosystem_number + c(seq(-0.1, 0.1, length.out = 6),  -->
+<!--                                               seq(-0.1, 0.1, length.out = 5)), ymin=richness, ymax = richness_max), lty = 1) +  -->
+<!--   geom_hline(data = rarefaction_table %>% filter(type == "truth"),  -->
+<!--              aes(yintercept=richness, col = ecosystem), lty = 2) + -->
+<!--   labs(y="Taxonomic richness",col = "") + -->
+<!--   theme(legend.position="none") + -->
+<!--   ggtitle("Estimated true richness with error") +  -->
+<!--   coord_cartesian(ylim=c(0, 7000)) -->
+<!-- plot_7_b <- plot_base +  -->
+<!--   scale_x_continuous(name="Environment", breaks=c(1,2), labels=c("A", "B"), limits = c(0.5, 2.5)) + -->
+<!--   geom_point(data = rarefaction_table %>% filter(type == "observation"),  -->
+<!--              aes(x=ecosystem_number + c(seq(-0.1, 0.1, length.out = 6),  -->
+<!--                                         seq(-0.1, 0.1, length.out = 5)), y=shannon, col = ecosystem), alpha = 0.1) +  -->
+<!--   geom_linerange(data = rarefaction_table %>% filter(substr(type, 1, 8) == "estimate"),  -->
+<!--                  aes(x = ecosystem_number + c(seq(-0.1, 0.1, length.out = 6),  -->
+<!--                                               seq(-0.1, 0.1, length.out = 5)), ymin=shannon, ymax = shannon_max), lty = 1) +  -->
+<!--   geom_hline(data = rarefaction_table %>% filter(type == "truth"),  -->
+<!--              aes(yintercept=shannon, col = ecosystem), lty = 2) + -->
+<!--   labs(y="Shannon index",col = "") + -->
+<!--   theme(legend.position="none") + -->
+<!--   ggtitle("Estimated true Shannon with error") +  -->
+<!--   coord_cartesian(ylim=c(7, 9)) -->
+<!-- plot_14_a <- plot_base +  -->
+<!--   scale_x_continuous(name="Environment", breaks=c(1,2), labels=c("A", "B"), limits = c(0.5, 2.5)) + -->
+<!--   geom_linerange(data = rarefaction_table %>% filter(substr(type, 1, 8) == "estimate"),  -->
+<!--                  aes(x = ecosystem_number + c(seq(-0.1, 0.1, length.out = 6),  -->
+<!--                                               seq(-0.1, 0.1, length.out = 5)), ymin=richness, ymax = richness_max), lty = 1) +  -->
+<!--   labs(y="Taxonomic richness",col = "") + -->
+<!--   theme(legend.position="none") + -->
+<!--   ggtitle("Estimated true richness with error") +  -->
+<!--   coord_cartesian(ylim=c(0, 7000)) -->
+<!-- plot_14_b <- plot_base +  -->
+<!--   scale_x_continuous(name="Environment", breaks=c(1,2), labels=c("A", "B"), limits = c(0.5, 2.5)) + -->
+<!--   geom_linerange(data = rarefaction_table %>% filter(substr(type, 1, 8) == "estimate"),  -->
+<!--                  aes(x = ecosystem_number + c(seq(-0.1, 0.1, length.out = 6),  -->
+<!--                                               seq(-0.1, 0.1, length.out = 5)), ymin=shannon, ymax = shannon_max), lty = 1) +  -->
+<!--   labs(y="Shannon index",col = "") + -->
+<!--   theme(legend.position="none") + -->
+<!--   ggtitle("Estimated true Shannon with error") +  -->
+<!--   coord_cartesian(ylim=c(7, 9)) -->
+<!-- plot_6_b <- plot_base + -->
+<!--   labs(y="Taxonomic richness",col = "") + -->
+<!--   coord_cartesian(ylim=c(0, 7000)) +  -->
+<!--   geom_point(data = rarefaction_table %>% filter(type == "observation"),  -->
+<!--              aes(x=ecosystem_number+ c(seq(-0.1, 0.1, length.out = 6),  -->
+<!--                                        seq(-0.1, 0.1, length.out = 5)), y=richness, col = ecosystem)) +  -->
+<!--   # geom_hline(data = rarefaction_table %>% filter(type == "truth"),  -->
+<!--   #            aes(yintercept=richness, col = ecosystem), lty = 2) + -->
+<!--   ggtitle("Raw richness") + -->
+<!--   scale_x_continuous(name="Environment", breaks=c(1,2), labels=c("A", "B"), limits = c(0.5, 2.5)) + -->
+<!--   theme(legend.position="none")  -->
+<!-- plot_6_e <- plot_base +   -->
+<!--   labs(y="Shannon diversity",col = "") + -->
+<!--   scale_x_continuous(name="Environment", breaks=c(1,2), labels=c("A", "B"), limits = c(0.5, 2.5)) + -->
+<!--   geom_point(data = rarefaction_table %>% filter(type == "observation"),  -->
+<!--              aes(x=ecosystem_number+ c(seq(-0.1, 0.1, length.out = 6),  -->
+<!--                                        seq(-0.1, 0.1, length.out = 5)), y=shannon, col = ecosystem)) +  -->
+<!--   # geom_hline(data = rarefaction_table %>% filter(type == "truth"),  -->
+<!--   #            aes(yintercept=shannon, col = ecosystem), lty = 2) + -->
+<!--   theme(legend.position="none") + -->
+<!--   ggtitle("Raw Shannon index") + -->
+<!--   coord_cartesian(ylim=c(7, 9))  -->
+<!-- grid.arrange(grobs = list(plot_6_b, plot_6_e, plot_14_a, plot_14_b),  -->
+<!--              layout_matrix =  matrix(c(1, 2, 3, 4), nrow = 2)) -->
+<!-- ``` -->
 </div>
   </div>
 
@@ -420,11 +377,13 @@ plot_6_e &lt;-<span class="st"> </span>plot_base +<span class="st">  </span>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
 </div>
+
+  
 
   </body>
 </html>

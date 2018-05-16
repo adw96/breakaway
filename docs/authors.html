@@ -18,13 +18,22 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="pkgdown.css" rel="stylesheet">
 <script src="jquery.sticky-kit.min.js"></script>
 <script src="pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Authors" />
+
+<meta property="og:image" content="http://adw96.github.io/breakaway/logo.png" />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,18 +56,22 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">breakaway</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="index.html">breakaway</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.3</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="/index.html">
+  <a href="index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="articles/breakaway.html">Get Started</a>
+  <a href="articles/breakaway.html">Get started</a>
 </li>
 <li>
   <a href="reference/index.html">Reference</a>
@@ -77,6 +90,12 @@
       <a href="articles/betta-figure.html">Comparing samples visually with betta</a>
     </li>
     <li>
+      <a href="articles/extended-tutorial.html">Getting into the weeds</a>
+    </li>
+    <li>
+      <a href="articles/phyloseq.html">breakaway + phyloseq</a>
+    </li>
+    <li>
       <a href="articles/resample-estimates.html">Variance of alpha diversity estimates</a>
     </li>
     <li>
@@ -89,6 +108,7 @@
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -96,23 +116,23 @@
       
       </header>
 
-      <div class="row">
-  <div class="contents col-md-12">
+<div class="row">
+  <div class="contents col-md-9">
     <div class="page-header">
       <h1>Authors</h1>
     </div>
 
     <ul class="list-unstyled">
       <li>
-        <p><strong>Amy Willis</strong>. Author, maintainer.
+        <p><strong>Amy Willis</strong>. Author, maintainer. 
         </p>
       </li>
       <li>
-        <p><strong>Kathryn Barger</strong>. Author.
+        <p><strong>Kathryn Barger</strong>. Author. 
         </p>
       </li>
       <li>
-        <p><strong>John Bunge</strong>. Author.
+        <p><strong>John Bunge</strong>. Author. 
         </p>
       </li>
     </ul>
@@ -128,11 +148,14 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

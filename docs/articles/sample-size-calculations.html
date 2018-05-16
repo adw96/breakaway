@@ -8,14 +8,18 @@
 <title>Sample size calculations for alpha diversity • breakaway</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/united/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><meta property="og:title" content="Sample size calculations for alpha diversity">
+<meta property="og:description" content="">
+<meta property="og:image" content="http://adw96.github.io/breakaway/logo.png">
+<meta name="twitter:card" content="summary">
+<!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 <body>
-    <div class="container template-vignette">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -24,18 +28,22 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">breakaway</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">breakaway</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.3</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="../articles/breakaway.html">Get Started</a>
+  <a href="../articles/breakaway.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -52,6 +60,12 @@
     </li>
     <li>
       <a href="../articles/betta-figure.html">Comparing samples visually with betta</a>
+    </li>
+    <li>
+      <a href="../articles/extended-tutorial.html">Getting into the weeds</a>
+    </li>
+    <li>
+      <a href="../articles/phyloseq.html">breakaway + phyloseq</a>
     </li>
     <li>
       <a href="../articles/resample-estimates.html">Variance of alpha diversity estimates</a>
@@ -72,17 +86,20 @@
 
       
       </header><div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Sample size calculations for alpha diversity</h1>
                         <h4 class="author">Amy Willis</h4>
             
-            <h4 class="date">2017-10-07</h4>
-          </div>
+            <h4 class="date">2018-05-16</h4>
+      
+      
+      <div class="hidden name"><code>sample-size-calculations.Rmd</code></div>
+
+    </div>
 
     
     
-<div class="contents">
 <p>This is a really quick introduction to using the sample size calculation tools provided in <code>breakaway</code>. It assumes reasonable familiarity with both <code>R</code> and <code>breakaway</code>.</p>
 <div id="loading-the-package-and-your-data" class="section level2">
 <h2 class="hasAnchor">
@@ -108,12 +125,12 @@ bloom &lt;-<span class="st"> </span>bloom1 ==<span class="st"> "yes"</span></cod
 <p>Let’s start by drawing a picture. Could a difference even be possible?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dv">1</span>:<span class="kw">length</span>(bloom), <span class="kw">c</span>(cyano_nodes[bloom], cyano_nodes[!bloom]), 
      <span class="dt">pch=</span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">16</span>, <span class="kw">sum</span>(bloom)), <span class="kw">rep</span>(<span class="dv">1</span>, <span class="kw">sum</span>(!bloom)))) ## Hmmm ambiguous</code></pre></div>
-<p><img src="sample-size-calculations_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
+<p><img src="sample-size-calculations_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <p>Fascinating! We observe much more low richnesses for non-bloom samples, but it’s really quite ambiguous.</p>
 <p>An important consideration is that our samples are not exhaustive: each of these cyanobacteria richness values are estimated and not, in fact, correct. There almost certainly were more phyla present than we observed. Estimating the total phyla richness is a great problem for <code>breakaway</code>. Actually, it’s probably better for CatchAll, because there’s not that much richness (only around 20 phyla per sample). Let’s come back to estimating the total phyla richness another time and focus instead on finding the required sample size to detect a difference when there is noise.</p>
 <p>I’m going to make a big leap now and pretend that I know that the standard deviation in the bloom richnesses is 2, and the standard deviation in non-bloom richnesses is 5. How would the above picture change? Sounds like a good problem for <code>betta_pic</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/betta_pic.html">betta_pic</a></span>(<span class="kw">c</span>(cyano_nodes[bloom], cyano_nodes[!bloom]), <span class="dt">se =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">2</span>, <span class="kw">sum</span>(bloom)), <span class="kw">rep</span>(<span class="dv">5</span>, <span class="kw">sum</span>(!bloom))), <span class="dt">mypch =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">16</span>, <span class="kw">sum</span>(bloom)), <span class="kw">rep</span>(<span class="dv">1</span>, <span class="kw">sum</span>(!bloom))))</code></pre></div>
-<p><img src="sample-size-calculations_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
+<p><img src="sample-size-calculations_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <p>Ooooo, difficult! With this picture suggest a difference? Maybe. We definitely need more samples. I wonder how many? (That’s the point of this tutorial, FYI)</p>
 <p>Why would the standard deviation change the necessary sample size? Let’s suppose that both groups have the same standard error. How do the differences between the groups change?</p>
 <pre><code>##       Estimates Standard Errors p-values
@@ -137,34 +154,33 @@ bloom &lt;-<span class="st"> </span>bloom1 ==<span class="st"> "yes"</span></cod
 <p>For no good reason, suppose I want to test at the 5% level. <code>alpha = 0.05</code>.</p>
 <p>Power of 80%? Why not?! <code>prop = 0.8</code> TODO: Amy to rename this to <code>power</code></p>
 <p>I’ve got time to go make myself a coffee, and I care a lot about precision, so I will set <code>samples = 500</code>. Only have time for a sneeze? Set <code>samples = 100</code>. Big boozy lunch? <code>samples = 2000</code>. Scales linearly. It’s pretty fast! (No thanks to me…)</p>
-<pre><code>## Power at a sample size of 5: 26.4%
-## Power at a sample size of 6: 31.2%
-## Power at a sample size of 7: 32.8%
-## Power at a sample size of 8: 39.6%
-## Power at a sample size of 9: 43.8%
-## Power at a sample size of 10: 49.2%
+<pre><code>## Power at a sample size of 5: 27.4%
+## Power at a sample size of 6: 32%
+## Power at a sample size of 7: 35.8%
+## Power at a sample size of 8: 38.2%
+## Power at a sample size of 9: 40.2%
+## Power at a sample size of 10: 44.2%
 ## Power at a sample size of 11: 46.8%
-## Power at a sample size of 12: 54.8%
-## Power at a sample size of 13: 48.6%
-## Power at a sample size of 14: 58.4%
-## Power at a sample size of 15: 57%
-## Power at a sample size of 16: 59.8%
-## Power at a sample size of 17: 58.4%
-## Power at a sample size of 18: 63%
-## Power at a sample size of 19: 63.2%
-## Power at a sample size of 20: 65.8%
-## Power at a sample size of 21: 66.6%
-## Power at a sample size of 22: 69.4%
-## Power at a sample size of 23: 76%
-## Power at a sample size of 24: 74.4%
-## Power at a sample size of 25: 73%
-## Power at a sample size of 26: 75.4%
-## Power at a sample size of 27: 78.8%
-## Power at a sample size of 28: 79.4%
-## Power at a sample size of 29: 79.8%
-## Power at a sample size of 30: 80.2%
-## Sample size needed:  30 
-## Note: This is number of subjects *per group* i.e. 30 from the control group and 30 from the test group. It should be considered a lower bound at best! Please consult Amy with any questions.</code></pre>
+## Power at a sample size of 12: 52.2%
+## Power at a sample size of 13: 55%
+## Power at a sample size of 14: 55.8%
+## Power at a sample size of 15: 58.8%
+## Power at a sample size of 16: 57.2%
+## Power at a sample size of 17: 58.8%
+## Power at a sample size of 18: 65.4%
+## Power at a sample size of 19: 67.8%
+## Power at a sample size of 20: 61.4%
+## Power at a sample size of 21: 64.2%
+## Power at a sample size of 22: 69.8%
+## Power at a sample size of 23: 71.8%
+## Power at a sample size of 24: 76.2%
+## Power at a sample size of 25: 75.2%
+## Power at a sample size of 26: 74.4%
+## Power at a sample size of 27: 77.2%
+## Power at a sample size of 28: 76.4%
+## Power at a sample size of 29: 80.6%
+## Sample size needed:  29 
+## Note: This is number of subjects *per group* i.e. 29 from the control group and 29 from the test group. It should be considered a lower bound at best! Please consult Amy with any questions.</code></pre>
 <p>Wooohooo! 30 bloom and 30 non-bloom samples are needed. <em>As an estimate!</em></p>
 </div>
 <div id="coming-soon" class="section level2">
@@ -181,7 +197,6 @@ bloom &lt;-<span class="st"> </span>bloom1 ==<span class="st"> "yes"</span></cod
 <h2 class="hasAnchor">
 <a href="#more-complex-experimental-designs" class="anchor"></a>More complex experimental designs…</h2>
 <p>Oooooo I love this question! Feel free to modify the code to match your experiment design. If you don’t know how to do this or think that your design is broadly relevant, send me an email and I will implement it. (Free of charge!)</p>
-</div>
 </div>
   </div>
 
@@ -206,11 +221,13 @@ bloom &lt;-<span class="st"> </span>bloom1 ==<span class="st"> "yes"</span></cod
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
 </div>
+
+  
 
   </body>
 </html>

@@ -1,9 +1,9 @@
 Package: breakaway
 Title: Species Richness Estimation and Modeling
 Version: 4.3
-Date: 2017-10-04
+Date: 2018-05-15
 Authors@R: as.person(c(
-    "Amy Willis <adwillis@uw.edu> [aut, cre]", 
+    "Amy Willis <adwillis@uw.edu> [aut, cre]",
     "Kathryn Barger [aut]",
     "John Bunge [aut]"
   ))
@@ -18,13 +18,14 @@ Imports: MASS,
     stats,
     utils,
     phyloseq,
-    graphics
+    graphics,
+    magrittr,
+    ggplot2,
+    mvtnorm,
+    reshape2
 Suggests: knitr,
     rmarkdown,
     testthat,
-    reshape2,
-    ggplot2,
     plyr
 VignetteBuilder: knitr
 URL: https://adw96.github.io/breakaway/
-

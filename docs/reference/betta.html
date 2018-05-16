@@ -18,13 +18,27 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Modelling total diversity with betta — betta" />
+
+<meta property="og:description" content="This function tests for heterogeneity of total diversity (observed plus
+unobserved) across multiple sites. It can account or test for fixed effects
+that may explain diversity. It returns the significance of the covariates in
+explaining diversity and a hypothesis test for heterogeneity." />
+
+<meta property="og:image" content="http://adw96.github.io/breakaway/logo.png" />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,18 +61,22 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">breakaway</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">breakaway</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.3</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="../articles/breakaway.html">Get Started</a>
+  <a href="../articles/breakaway.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -77,6 +95,12 @@
       <a href="../articles/betta-figure.html">Comparing samples visually with betta</a>
     </li>
     <li>
+      <a href="../articles/extended-tutorial.html">Getting into the weeds</a>
+    </li>
+    <li>
+      <a href="../articles/phyloseq.html">breakaway + phyloseq</a>
+    </li>
+    <li>
       <a href="../articles/resample-estimates.html">Variance of alpha diversity estimates</a>
     </li>
     <li>
@@ -89,6 +113,7 @@
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -96,22 +121,26 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Modelling total diversity with betta</h1>
+    
+    <div class="hidden name"><code>betta.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This function tests for heterogeneity of total diversity (observed plus
 unobserved) across multiple sites. It can account or test for fixed effects
 that may explain diversity. It returns the significance of the covariates in
 explaining diversity and a hypothesis test for heterogeneity.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>betta</span>(<span class='no'>chats</span>, <span class='no'>ses</span>, <span class='kw'>X</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -183,8 +212,8 @@ changes in biodiversity. <em>arXiv preprint.</em></p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='breakaway.html'>breakaway</a></code>; <code><a href='breakaway_nof1.html'>breakaway_nof1</a></code>;
-<code><a href='betta_pic.html'>betta_pic</a></code>; <code><a href='apples.html'>apples</a></code></p>
+    <div class='dont-index'><p><code><a href='breakaway.html'>breakaway</a></code>; <code><a href='breakaway_nof1.html'>breakaway_nof1</a></code>;
+<code><a href='betta_pic.html'>betta_pic</a></code>; <code><a href='apples.html'>apples</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -211,29 +240,26 @@ changes in biodiversity. <em>arXiv preprint.</em></p>
 
 <span class='fu'>betta</span>(<span class='fu'>c</span>(<span class='fl'>2000</span>, <span class='fl'>3000</span>, <span class='fl'>4000</span>, <span class='fl'>3000</span>), <span class='fu'>c</span>(<span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>150</span>, <span class='fl'>180</span>), <span class='fu'>cbind</span>(<span class='fl'>1</span>, <span class='fu'>c</span>(<span class='fl'>100</span>, <span class='fl'>150</span>, <span class='fl'>100</span>,
     <span class='fl'>50</span>)))</div><div class='output co'>#&gt; $table
-#&gt;      Estimates Standard Errors p-values
-#&gt; [1,]      3000      416.145604        0
-#&gt; [2,]         0        3.931271        1
+#&gt;         Estimates Standard Errors p-values
+#&gt; [1,] 2.995149e+03      416.145952        0
+#&gt; [2,] 1.730997e-03        3.931275        1
 #&gt; 
 #&gt; $cov
-#&gt;           [,1]        [,2]
-#&gt; [1,] 1575147.0 -14038.3992
-#&gt; [2,]  -14038.4    140.5712
+#&gt;            [,1]        [,2]
+#&gt; [1,] 1575149.61 -14038.4223
+#&gt; [2,]  -14038.42    140.5715
 #&gt; 
 #&gt; $ssq_u
-#&gt; [1] 666666.7
+#&gt; [1] 666667.8
 #&gt; 
 #&gt; $homogeneity
-#&gt; [1] 144.4444   0.0000
+#&gt; [1] 143.9291   0.0000
 #&gt; 
 #&gt; $global
-#&gt; [1] 5.196990e+01 5.635492e-13
+#&gt; [1] 5.180787e+01 6.120660e-13
 #&gt; 
 #&gt; $blups
-#&gt; [1] 2014.778 3000.000 3967.352 3000.000
-#&gt; 
-#&gt; $blupses
-#&gt; [1]  99.44868 198.55147 148.15536 178.94475
+#&gt; [1] 2014.709 2999.740 3967.199 2999.779
 #&gt; </div><div class='input'>
 <span class='co'>## handles missing data</span>
 <span class='fu'>betta</span>(<span class='fu'>c</span>(<span class='fl'>2000</span>, <span class='fl'>3000</span>, <span class='fl'>4000</span>, <span class='fl'>3000</span>), <span class='fu'>c</span>(<span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>150</span>, <span class='fl'>NA</span>))</div><div class='output co'>#&gt; $table
@@ -255,35 +281,29 @@ changes in biodiversity. <em>arXiv preprint.</em></p>
 #&gt; 
 #&gt; $blups
 #&gt; [1] 2009.901 3000.000 3977.995       NA
-#&gt; 
-#&gt; $blupses
-#&gt; [1]  99.67172 197.39929 148.89651        NA
 #&gt; </div><div class='input'>
 <span class='co'>## A test for heterogeneity of apples diversity estimates vs butterfly estimates</span>
 <span class='fu'>betta</span>(<span class='fu'>c</span>(<span class='fl'>1552</span>, <span class='fl'>1500</span>, <span class='fl'>884</span>), <span class='fu'>c</span>(<span class='fl'>305</span>, <span class='fl'>675</span>, <span class='fl'>205</span>), <span class='fu'>cbind</span>(<span class='fl'>1</span>, <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1</span>)))</div><div class='output co'>#&gt; $table
 #&gt;      Estimates Standard Errors p-values
-#&gt; [1,]  1256.295        391.9755    0.001
-#&gt; [2,]     0.000        599.7284    1.000
+#&gt; [1,]      1526        294.0600     0.00
+#&gt; [2,]      -642        424.3689     0.13
 #&gt; 
 #&gt; $cov
 #&gt;           [,1]      [,2]
-#&gt; [1,]  268224.3 -268224.3
-#&gt; [2,] -268224.3  627898.5
+#&gt; [1,]  166341.7 -166341.7
+#&gt; [2,] -166341.7  346430.7
 #&gt; 
 #&gt; $ssq_u
-#&gt; [1] 317649.2
+#&gt; [1] 138064
 #&gt; 
 #&gt; $homogeneity
-#&gt; [1] 4.3684535 0.0366102
+#&gt; [1] 0.008750509 0.925471271
 #&gt; 
 #&gt; $global
-#&gt; [1] 10.272244904  0.001350464
+#&gt; [1] 1.833863e+01 1.849194e-05
 #&gt; 
 #&gt; $blups
-#&gt; [1] 1485.0176 1356.4053  927.4997
-#&gt; 
-#&gt; $blupses
-#&gt; [1] 292.7727 529.4190 205.0000
+#&gt; [1] 1541.534 1519.954  884.000
 #&gt; </div><div class='input'>
 
 
@@ -337,11 +357,14 @@ Amy Willis
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

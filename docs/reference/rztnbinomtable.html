@@ -19,13 +19,26 @@ tables. — rztnbinomtable • breakaway</title>
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="beta version: Zero-truncated negative binomially distributed frequency count
+tables. — rztnbinomtable" />
+
+<meta property="og:description" content="Simulate a frequency count table based on a negative binomial model.
+Zero-truncated, obviously." />
+
+<meta property="og:image" content="http://adw96.github.io/breakaway/logo.png" />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -48,18 +61,22 @@ tables. — rztnbinomtable • breakaway</title>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">breakaway</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">breakaway</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.3</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="../articles/breakaway.html">Get Started</a>
+  <a href="../articles/breakaway.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -78,6 +95,12 @@ tables. — rztnbinomtable • breakaway</title>
       <a href="../articles/betta-figure.html">Comparing samples visually with betta</a>
     </li>
     <li>
+      <a href="../articles/extended-tutorial.html">Getting into the weeds</a>
+    </li>
+    <li>
+      <a href="../articles/phyloseq.html">breakaway + phyloseq</a>
+    </li>
+    <li>
       <a href="../articles/resample-estimates.html">Variance of alpha diversity estimates</a>
     </li>
     <li>
@@ -90,6 +113,7 @@ tables. — rztnbinomtable • breakaway</title>
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -97,21 +121,25 @@ tables. — rztnbinomtable • breakaway</title>
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>beta version: Zero-truncated negative binomially distributed frequency count
 tables.</h1>
+    
+    <div class="hidden name"><code>rztnbinomtable.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Simulate a frequency count table based on a negative binomial model.
 Zero-truncated, obviously.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>rztnbinomtable</span>(<span class='no'>C</span>, <span class='no'>size</span>, <span class='no'>probability</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -150,11 +178,14 @@ Amy Willis
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

@@ -8,14 +8,18 @@
 <title>Comparing samples visually with betta • breakaway</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/united/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><meta property="og:title" content="Comparing samples visually with betta">
+<meta property="og:description" content="">
+<meta property="og:image" content="http://adw96.github.io/breakaway/logo.png">
+<meta name="twitter:card" content="summary">
+<!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 <body>
-    <div class="container template-vignette">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -24,18 +28,22 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">breakaway</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">breakaway</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.3</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="../articles/breakaway.html">Get Started</a>
+  <a href="../articles/breakaway.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -52,6 +60,12 @@
     </li>
     <li>
       <a href="../articles/betta-figure.html">Comparing samples visually with betta</a>
+    </li>
+    <li>
+      <a href="../articles/extended-tutorial.html">Getting into the weeds</a>
+    </li>
+    <li>
+      <a href="../articles/phyloseq.html">breakaway + phyloseq</a>
     </li>
     <li>
       <a href="../articles/resample-estimates.html">Variance of alpha diversity estimates</a>
@@ -72,64 +86,96 @@
 
       
       </header><div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Comparing samples visually with betta</h1>
                         <h4 class="author">Amy Willis</h4>
             
-            <h4 class="date">2017-10-07</h4>
-          </div>
+            <h4 class="date">2018-05-16</h4>
+      
+      
+      <div class="hidden name"><code>betta-figure.Rmd</code></div>
+
+    </div>
 
     
     
-<div class="contents">
 <p><code>betta</code> is useful for formally testing differences between communities with respect to their alpha diversity. However, before ever doing any inferential test, it’s best to try to visualise the difference that you are looking for. Here is a example to show you how to do that using <code>betta_pic</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(breakaway)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">frequencytablelist &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="kw">apply</span>(toy_otu_table, <span class="dv">2</span>, table), as.data.frame)
 frequencytablelist &lt;-<span class="st"> </span><span class="kw">lapply</span>(frequencytablelist, function(x) x[x[,<span class="dv">1</span>]!=<span class="dv">0</span>,])
 
-ob_results &lt;-<span class="st"> </span><span class="kw">lapply</span>(frequencytablelist[<span class="dv">1</span>:<span class="dv">15</span>], objective_bayes_negbin, <span class="dt">answers =</span> T, <span class="dt">plot=</span>F, <span class="dt">output =</span> F)
-
-lower &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">lapply</span>(ob_results, function(x) x$results[<span class="st">"LCI.C"</span>, ]))
-upper &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">lapply</span>(ob_results, function(x) x$results[<span class="st">"UCI.C"</span>, ]))
-means &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">lapply</span>(ob_results, function(x) x$results[<span class="st">"mean.C"</span>, ]))
-standard_deviations &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">lapply</span>(ob_results, function(x) x$results[<span class="st">"stddev.C"</span>, ]))
+ob_results &lt;-<span class="st"> </span><span class="kw">lapply</span>(frequencytablelist[<span class="kw">c</span>(<span class="dv">6</span>:<span class="dv">9</span>)], objective_bayes_negbin, <span class="dt">answers =</span> T, <span class="dt">plot=</span>F, <span class="dt">output =</span> F)</code></pre></div>
+<pre><code>## [1] "starting iteration 500 of 6000"
+## [1] "starting iteration 1000 of 6000"
+## [1] "starting iteration 1500 of 6000"
+## [1] "starting iteration 2000 of 6000"
+## [1] "starting iteration 2500 of 6000"
+## [1] "starting iteration 3000 of 6000"
+## [1] "starting iteration 3500 of 6000"
+## [1] "starting iteration 4000 of 6000"
+## [1] "starting iteration 4500 of 6000"
+## [1] "starting iteration 5000 of 6000"
+## [1] "starting iteration 500 of 6000"
+## [1] "starting iteration 1000 of 6000"
+## [1] "starting iteration 1500 of 6000"
+## [1] "starting iteration 2000 of 6000"
+## [1] "starting iteration 2500 of 6000"
+## [1] "starting iteration 3000 of 6000"
+## [1] "starting iteration 3500 of 6000"
+## [1] "starting iteration 4000 of 6000"
+## [1] "starting iteration 4500 of 6000"
+## [1] "starting iteration 5000 of 6000"
+## [1] "starting iteration 500 of 6000"
+## [1] "starting iteration 1000 of 6000"
+## [1] "starting iteration 1500 of 6000"
+## [1] "starting iteration 2000 of 6000"
+## [1] "starting iteration 2500 of 6000"
+## [1] "starting iteration 3000 of 6000"
+## [1] "starting iteration 3500 of 6000"
+## [1] "starting iteration 4000 of 6000"
+## [1] "starting iteration 4500 of 6000"
+## [1] "starting iteration 5000 of 6000"
+## [1] "starting iteration 500 of 6000"
+## [1] "starting iteration 1000 of 6000"
+## [1] "starting iteration 1500 of 6000"
+## [1] "starting iteration 2000 of 6000"
+## [1] "starting iteration 2500 of 6000"
+## [1] "starting iteration 3000 of 6000"
+## [1] "starting iteration 3500 of 6000"
+## [1] "starting iteration 4000 of 6000"
+## [1] "starting iteration 4500 of 6000"
+## [1] "starting iteration 5000 of 6000"</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lower &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">lapply</span>(ob_results, function(x) x[[<span class="st">"ci"</span>]][<span class="dv">2</span>]))
+upper &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">lapply</span>(ob_results, function(x) x[[<span class="st">"ci"</span>]][<span class="dv">1</span>]))
+means &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">lapply</span>(ob_results, function(x) x[[<span class="st">"est"</span>]]))
+means</code></pre></div>
+<pre><code>## Sample6 Sample7 Sample8 Sample9 
+##     380     376     408     366</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">standard_deviations &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">lapply</span>(ob_results, function(x) x[[<span class="st">"semeanest"</span>]]))
 
 ## Find how many otus are in the cyanobacteria genus
 cyano_nodes &lt;-<span class="st"> </span><span class="kw">apply</span>(toy_otu_table[<span class="kw">grepl</span>(<span class="st">"Cyano"</span>, toy_taxonomy), ], <span class="dv">2</span>, function(x) <span class="kw">sum</span>(x&gt;<span class="dv">0</span>))
 cyano_nodes &lt;-<span class="st"> </span>cyano_nodes
 
-bloom1 &lt;-<span class="st"> </span>toy_metadata[, <span class="st">"bloom2"</span>]
+bloom1 &lt;-<span class="st"> </span>toy_metadata[, <span class="st">"bloom2"</span>][<span class="dv">6</span>:<span class="dv">9</span>]
 bloom &lt;-<span class="st"> </span>bloom1 ==<span class="st"> "yes"</span></code></pre></div>
 <p>The following is the default option for plotting. It shows the mean estimates with lines up to +/-2 standard deviations. In this way, it is a visual mimic of the procedure that underpins <code>betta</code>. Feel free to pull apart the source code to optimise it for your purposes. It uses base graphics.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/betta_pic.html">betta_pic</a></span>(means, standard_deviations, <span class="dt">mypch =</span> <span class="kw">ifelse</span>(bloom, <span class="dv">16</span>, <span class="dv">1</span>))</code></pre></div>
-<p><img src="betta-figure_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
+<p><img src="betta-figure_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 <p>The following is a nice option if you would like to use ggplot.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(ggplot2)</code></pre></div>
-<pre><code>## Loading required package: ggplot2</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot_data_frame &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">"index"</span> =<span class="st"> </span><span class="dv">1</span>:<span class="dv">15</span>, lower, upper, means, standard_deviations, <span class="st">"bloom"</span>=bloom[<span class="dv">1</span>:<span class="dv">15</span>])
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+plot_data_frame &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">"index"</span> =<span class="st"> </span><span class="dv">1</span>:<span class="dv">4</span>, lower, upper, means, standard_deviations, <span class="st">"bloom"</span>=bloom)
 plot_data_frame</code></pre></div>
-<pre><code>##                index   lower   upper    means standard_deviations bloom
-## Sample1.LCI.C      1 278.000 376.000 312.8772            25.39440 FALSE
-## Sample2.LCI.C      2 305.000 542.000 377.3862            61.74823 FALSE
-## Sample3.LCI.C      3 222.000 334.000 262.2756            30.55358 FALSE
-## Sample4.LCI.C      4 239.000 437.025 316.9486            51.88784 FALSE
-## Sample5.LCI.C      5 349.000 477.000 381.8502            31.07145 FALSE
-## Sample6.LCI.C      6 363.000 419.000 384.3468            15.01168 FALSE
-## Sample7.LCI.C      7 364.000 413.000 379.9194            13.46135  TRUE
-## Sample8.LCI.C      8 399.000 430.025 409.7236             8.17037  TRUE
-## Sample9.LCI.C      9 349.000 405.000 370.9854            14.67092 FALSE
-## Sample10.LCI.C    10 324.975 453.000 367.8584            34.02216 FALSE
-## Sample11.LCI.C    11 318.000 462.000 373.2620            38.71734 FALSE
-## Sample12.LCI.C    12 373.000 518.000 409.0450            36.09541 FALSE
-## Sample13.LCI.C    13 385.000 435.000 402.9446            13.13679 FALSE
-## Sample14.LCI.C    14 376.000 415.000 390.4416            10.09739  TRUE
-## Sample15.LCI.C    15 251.000 389.000 287.9288            32.98527  TRUE</code></pre>
+<pre><code>##                   index   lower upper means standard_deviations bloom
+## Sample6.upper 95%     1 411.025   363   380            12.88913 FALSE
+## Sample7.upper 95%     2 420.000   363   376            14.46645  TRUE
+## Sample8.upper 95%     3 425.000   398   408             7.13514  TRUE
+## Sample9.upper 95%     4 403.000   347   366            14.97494 FALSE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(plot_data_frame, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> index, <span class="dt">y =</span> means, <span class="dt">col =</span> bloom)) +
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_segment">geom_segment</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> index, <span class="dt">xend =</span> index, <span class="dt">y =</span> lower, <span class="dt">yend =</span> upper, <span class="dt">col =</span> bloom), <span class="dt">lwd =</span> <span class="fl">1.25</span>) +
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> index, <span class="dt">y =</span> means)) +<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">xlab</a></span>(<span class="st">"Samples"</span>) +<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ylab</a></span>(<span class="st">"Richness estimates (Objective Bayes)"</span>)</code></pre></div>
-<p><img src="betta-figure_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
-</div>
+<p><img src="betta-figure_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -143,11 +189,13 @@ plot_data_frame</code></pre></div>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
 </div>
+
+  
 
   </body>
 </html>

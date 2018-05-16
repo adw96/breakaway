@@ -8,14 +8,18 @@
 <title>Getting started with breakaway • breakaway</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/united/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><meta property="og:title" content="Getting started with breakaway">
+<meta property="og:description" content="">
+<meta property="og:image" content="http://adw96.github.io/breakaway/logo.png">
+<meta name="twitter:card" content="summary">
+<!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 <body>
-    <div class="container template-vignette">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -24,18 +28,22 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">breakaway</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">breakaway</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.3</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="../articles/breakaway.html">Get Started</a>
+  <a href="../articles/breakaway.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -52,6 +60,12 @@
     </li>
     <li>
       <a href="../articles/betta-figure.html">Comparing samples visually with betta</a>
+    </li>
+    <li>
+      <a href="../articles/extended-tutorial.html">Getting into the weeds</a>
+    </li>
+    <li>
+      <a href="../articles/phyloseq.html">breakaway + phyloseq</a>
     </li>
     <li>
       <a href="../articles/resample-estimates.html">Variance of alpha diversity estimates</a>
@@ -72,17 +86,20 @@
 
       
       </header><div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Getting started with breakaway</h1>
                         <h4 class="author">Amy Willis</h4>
             
-            <h4 class="date">2017-10-07</h4>
-          </div>
+            <h4 class="date">2018-05-16</h4>
+      
+      
+      <div class="hidden name"><code>breakaway.Rmd</code></div>
+
+    </div>
 
     
     
-<div class="contents">
 <p><code>breakaway</code> is a package for species richness estimation and modelling. As the package has grown and users have requested more functionality, it contains some basic generalisations of the statistical philosophy that underpins <code>breakaway</code> to the general alpha diversity case. Because of the flexibility of the modelling strategies, most users of breakaway are microbial ecologists with very large OTU tables, however, nothing should exclude a macroecologist from using the same tools. If you have a macroecology dataset and want to use this package, I would love to hear from you so please feel free to contact me (email or via Github’s Issues/Projects infrastructure).</p>
 <div id="vignette-info" class="section level2">
 <h2 class="hasAnchor">
@@ -128,16 +145,15 @@ meta_data &lt;-<span class="st"> </span>toy_metadata
 <h2 class="hasAnchor">
 <a href="#creating-frequency-tables" class="anchor"></a>Creating frequency tables</h2>
 <p>We’re now going to “collapse” the otu_data’s columns (samples) into frequency tables. Frequency tables…</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">frequencytablelist &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="kw">apply</span>(otu_data,<span class="dv">2</span>,table),as.data.frame)
-frequencytablelist &lt;-<span class="st"> </span><span class="kw">lapply</span>(frequencytablelist,function(x) x[x[,<span class="dv">1</span>]!=<span class="dv">0</span>,])
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">frequencytablelist &lt;-<span class="st"> </span><span class="kw"><a href="../reference/build_frequency_count_tables.html">build_frequency_count_tables</a></span>(otu_data)
 <span class="kw">head</span>(frequencytablelist[[<span class="dv">63</span>]])</code></pre></div>
-<pre><code>##   Var1 Freq
-## 2    1   35
-## 3    2   22
-## 4    3   15
-## 5    4   17
-## 6    5   11
-## 7    6   10</code></pre>
+<pre><code>##      Index Frequency
+## [1,]     1        35
+## [2,]     2        22
+## [3,]     3        15
+## [4,]     4        17
+## [5,]     5        11
+## [6,]     6        10</code></pre>
 <p>Interpretation: In this sample, there were 57 different species observed only once (singletons), 25 different species observed only twice, …, 1 species observed 171 times.</p>
 </div>
 <div id="estimating-species-richness" class="section level2">
@@ -152,9 +168,9 @@ frequencytablelist &lt;-<span class="st"> </span><span class="kw">lapply</span>(
 ##  The function selected was
 ##    f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar))/(1+alpha1*(x-xbar)) 
 ##        Coef estimates Coef std errors
-## beta0      1.00985054      0.17827684
-## beta1      0.10949383      0.06709395
-## alpha1     0.08960881      0.09572568
+## beta0      1.00985062      0.17827686
+## beta1      0.10949387      0.06709399
+## alpha1     0.08960885      0.09572573
 ## xbar          8.5</code></pre>
 <p>You should get some output to screen, including your estimate &amp; s.e., and a plot of the fits to the ratios. Note that it is not a fit to the frequencies, it is a fit to the ratios of frequencies. You would never need to include this type of plot in one of your papers. It is solely for you to check for model misspecification. What’s model misspecification? If the black diamonds don’t remotely follow the pattern of the white circles, that’s model misspecification.</p>
 <p>Sometimes, breakaway’s usual procedure doesn’t work, that is, it gives a negative estimate, which is of course silly. In that case, breakaway returns a different model’s result. It’s called the WLRM. There isn’t a picture. Here is an example of a case where breakaway returns the WLRM.</p>
@@ -198,11 +214,7 @@ frequencytablelist &lt;-<span class="st"> </span><span class="kw">lapply</span>(
 <p>The above discussion focused exclusively on richness. Let’s look at the variability of evenness estimates</p>
 <p>Let’s calculate the plug in estimate of Shannon diversity</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/shannon.html">shannon</a></span>(frequencytablelist[[<span class="dv">1</span>]])</code></pre></div>
-<pre><code>## Warning in Ops.factor(input[, 2], input[, 1]): '*' not meaningful for
-## factors</code></pre>
-<pre><code>## Warning in Ops.factor(input[, 1], total_reads): '/' not meaningful for
-## factors</code></pre>
-<pre><code>## [1] NA</code></pre>
+<pre><code>## [1] 4.220773</code></pre>
 <p>4.95, huh? Let’s look at how variable it is</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">2</span>) <span class="co"># the following functions are random, so let's set the seed (allows reproducibility)</span>
 <span class="kw"><a href="../reference/resample_estimate.html">resample_estimate</a></span>(otu_data[,<span class="dv">1</span>], shannon)</code></pre></div>
@@ -214,20 +226,20 @@ frequencytablelist &lt;-<span class="st"> </span><span class="kw">lapply</span>(
 <p>Hmmm, doesn’t look too variable! Let’s look at a lot of them</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))
 <span class="kw">hist</span>(<span class="kw">replicate</span>(<span class="dv">200</span>, <span class="kw"><a href="../reference/resample_estimate.html">resample_estimate</a></span>(otu_data[,<span class="dv">1</span>], shannon)))</code></pre></div>
-<p><img src="breakaway_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
+<p><img src="breakaway_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 <p>(replicate says: “do this 200 times”) Yikes, that’s some negative skew! That suggests that we have risks in randomly observing really low Shannon diversity estimates. This is an important thing to keep in mind when analysing data. eg. Did we just have bad luck with the sample from the patient taking the drug? Or is the drug causing the effect?</p>
 <p>BTW, you can use the above to look sample size variability as well. If you have very different numbers of reads across samples, this can introduce additional variability. Let’s look at the distribution of reads in the current dataset.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ns &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">lapply</span>(frequencytablelist, function(x) <span class="kw">sum</span>(x[,<span class="dv">2</span>])))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ns &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">lapply</span>(frequencytablelist, function(x) <span class="kw">sum</span>(x[,<span class="dv">2</span>] *<span class="st"> </span>x[,<span class="dv">1</span>])))
 <span class="kw">hist</span>(ns)</code></pre></div>
-<p><img src="breakaway_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
+<p><img src="breakaway_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 <p>Well, but a lot of variability! Lets account for it in looking at our distribution of Shannon diversity estimates</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">8</span>)
-<span class="kw">hist</span>(<span class="kw">replicate</span>(<span class="dv">500</span>, <span class="kw"><a href="../reference/resample_estimate.html">resample_estimate</a></span>(otu_data[,<span class="dv">1</span>], shannon, <span class="dt">my_sample_size =</span> ns)))</code></pre></div>
-<p><img src="breakaway_files/figure-html/unnamed-chunk-12-1.png" width="672"></p>
+<span class="kw">hist</span>(<span class="kw">replicate</span>(<span class="dv">100</span>, <span class="kw"><a href="../reference/resample_estimate.html">resample_estimate</a></span>(otu_data[,<span class="dv">1</span>], shannon, <span class="dt">my_sample_size =</span> ns)))</code></pre></div>
+<p><img src="breakaway_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
 <p>That’s a lot more variability than we saw originally!</p>
 <p>Going forward with your analyses, don’t forget to account for variability in your estimates. Bootstrap standard errors are better than nothing!</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(<span class="kw">replicate</span>(<span class="dv">500</span>, <span class="kw"><a href="../reference/resample_estimate.html">resample_estimate</a></span>(otu_data[,<span class="dv">1</span>], shannon, <span class="dt">my_sample_size =</span> ns)))</code></pre></div>
-<pre><code>## [1] 0.1147657</code></pre>
+<pre><code>## [1] 0.0593876</code></pre>
 </div>
 <div id="modelling-alpha-diversity" class="section level2">
 <h2 class="hasAnchor">
@@ -251,13 +263,13 @@ for (i in <span class="dv">1</span>:<span class="kw">dim</span>(otu_data)[<span 
 <p>Here gives us our estimates and standard errors so we can have a look estimates_shannon[,1:2] We can even (normal-ish) plot intervals. The x-axis is just against the enumeration of the lakes. It is not meaningful.</p>
 <p>The following plotting command may be different to ones you have seen before. It’s a really quick way of visualizing the error in your samples and quickly spotting outliers. NOTE: Outliers have SMALL LINES, which means high precision, and are generally far away from points near them.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/betta_pic.html">betta_pic</a></span>(estimates_shannon[,<span class="dv">1</span>], estimates_shannon[,<span class="dv">2</span>])</code></pre></div>
-<p><img src="breakaway_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
+<p><img src="breakaway_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
 <p>No obvious outliers here.</p>
 <p>Lets look at the effect of summer samples</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">col_by_seasons &lt;-<span class="st"> </span><span class="kw">ifelse</span>(meta_data$Period==<span class="st">"Autum"</span>,<span class="st">"black"</span>,<span class="kw">ifelse</span>(meta_data$Period==<span class="st">"Spring"</span>,<span class="st">"pink"</span>,<span class="st">"red"</span>))
 <span class="kw"><a href="../reference/betta_pic.html">betta_pic</a></span>(estimates_shannon[,<span class="dv">1</span>], estimates_shannon[,<span class="dv">2</span>], <span class="dt">mycol =</span> col_by_seasons)
 <span class="kw">legend</span>(<span class="st">"bottom"</span>,<span class="kw">c</span>(<span class="st">"Spring"</span>,<span class="st">"Summer"</span>,<span class="st">"Autumn"</span>),<span class="dt">col=</span><span class="kw">c</span>(<span class="st">"pink"</span>,<span class="st">"red"</span>,<span class="st">"black"</span>),<span class="dt">cex=</span><span class="fl">0.8</span>,<span class="dt">lwd=</span><span class="dv">3</span>,<span class="dt">box.col=</span>F)</code></pre></div>
-<p><img src="breakaway_files/figure-html/unnamed-chunk-16-1.png" width="672"></p>
+<p><img src="breakaway_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
 <p>Don’t forget that because we are plotting diversity <em>estimates</em>, we need to plot <em>lines</em> (i.e. confidence intervals) not points (point estimates). That’s very important.</p>
 <p>We’re now going to create our “design” matrix, a.k.a. “X matrix.” To do this we’re going to cheat a little. We’re going to use an existing R method, lm, to save us the hassle. We are going to investigate the effect of temperature and site</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">covar_matrix &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(<span class="kw">lm</span>(<span class="kw">rnorm</span>(<span class="kw">dim</span>(meta_data)[<span class="dv">1</span>])~(meta_data$Site)*(meta_data$Period)))
@@ -306,21 +318,21 @@ for (i in <span class="dv">1</span>:<span class="kw">dim</span>(otu_data)[<span 
 <p>Let’s go ahead and try to fit our model and take a look at the results</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">results &lt;-<span class="st"> </span><span class="kw"><a href="../reference/betta.html">betta</a></span>(estimates_shannon[,<span class="dv">1</span>],estimates_shannon[,<span class="dv">2</span>],covar_matrix)
 results$table</code></pre></div>
-<pre><code>##              Estimates Standard Errors p-values
-## Int          3.6762282      0.03173672    0.000
-## SiteP        0.0703456      0.04539051    0.121
-## Spring       0.2799471      0.07531902    0.000
-## Summer       0.0000000      0.04006777    1.000
-## SitePSpring -0.1624206      0.11361872    0.153
-## SitePSummer  0.0000000      0.05733874    1.000</code></pre>
+<pre><code>##               Estimates Standard Errors p-values
+## Int          3.99245500      0.03492370    0.000
+## SiteP        0.22218862      0.04993229    0.000
+## Spring       0.24398633      0.08338609    0.003
+## Summer      -0.01670901      0.04404835    0.704
+## SitePSpring -0.32318785      0.12575223    0.010
+## SitePSummer -0.17801169      0.06298614    0.005</code></pre>
 <p>Interpretation is idential to regression.</p>
 <p>Here are some things to quickly note: Firstly, significance of Spring means that the average Shannon diversity of the Spring samples is significantly higher than non-Spring AT SITE L. It’s more by 0.40 on average.</p>
 <p>The non-signif of the SiteP variables means there is no significant difference between Sites P and L, in both summer and not… AFTER ACCOUNTING FOR ESTIMATION ERROR!</p>
 <p>Notice that a regression on the Shannon estimates notes more evidence against the “site has no effect” null:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">lm</span>(estimates_shannon[,<span class="dv">1</span>] ~<span class="st"> </span>meta_data$Site*(meta_data$Period==<span class="st">"Summ"</span>)))$coef[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">4</span>)]</code></pre></div>
 <pre><code>##                         Estimate      Pr(&gt;|t|)
-## (Intercept)           3.73180582 1.416502e-122
-## meta_data$SitePelagic 0.03763412  5.525585e-01</code></pre>
+## (Intercept)           4.03193015 4.436049e-121
+## meta_data$SitePelagic 0.05154171  4.628903e-01</code></pre>
 <p>Not such a big deal in this case, but may be with more, marginal results/more variables.</p>
 <p>You should always use betta() when modelling and doing inference on functions of your OTU table!</p>
 <p>sigsq_u (in full results output) being significant means there is still <em>heterogeneity</em> in the lakes. “Not all lakes have the same Shannon diversity even after accounting for season &amp; site.” (microscale heterogeneity, pH, chemical factors, depth…?)</p>
@@ -336,13 +348,12 @@ results$table</code></pre></div>
 <p>To estimate the bootstrap mean and standard error of the simpson index, we do the following</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">simpson_resamples &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">100</span>, <span class="kw"><a href="../reference/resample_estimate.html">resample_estimate</a></span>(otu_data[,<span class="dv">1</span>], simpson))
 <span class="kw">hist</span>(simpson_resamples)</code></pre></div>
-<p><img src="breakaway_files/figure-html/unnamed-chunk-22-1.png" width="672"></p>
+<p><img src="breakaway_files/figure-html/unnamed-chunk-22-1.png" width="700"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(simpson_resamples)</code></pre></div>
-<pre><code>## [1] 0.02495933</code></pre>
+<pre><code>## [1] 0.02451132</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(simpson_resamples)</code></pre></div>
-<pre><code>## [1] 0.002419121</code></pre>
+<pre><code>## [1] 0.0003917674</code></pre>
 <p>This is just for the first column. You would do this for every sample (in a loop), then use these as inputs to betta.</p>
-</div>
 </div>
   </div>
 
@@ -370,11 +381,13 @@ results$table</code></pre></div>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
 </div>
+
+  
 
   </body>
 </html>
