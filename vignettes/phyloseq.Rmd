@@ -2,11 +2,11 @@
 title: "breakaway + phyloseq"
 author: "Amy Willis"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: pdf_document
 vignette: >
-  %\VignetteIndexEntry{getting-started}
+  %\VignetteIndexEntry{phyloseq integration}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  %\VignetteEncoding[utf8]{inputenc}
 ---
 
 ```{r}

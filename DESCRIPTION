@@ -22,10 +22,11 @@ Imports: MASS,
     magrittr,
     ggplot2,
     mvtnorm,
-    reshape2
+    reshape2,
+    R.rsp,
+    testthat
 Suggests: knitr,
     rmarkdown,
-    testthat,
     plyr
 VignetteBuilder: knitr
 URL: https://adw96.github.io/breakaway/

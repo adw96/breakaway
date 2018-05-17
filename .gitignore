@@ -4,6 +4,7 @@
 hadleystutorial.R
 breakaway.Rproj
 .RData
+.Ruserdata
 data/.Rapp.history
 make-data-files.R
 playing/
