@@ -60,8 +60,9 @@ to_proportions <- function(input, type) {
 #' dealing with a microbial sample, use \code{\link{shannon_better}} instead.
 #' @export shannon
 shannon <- function(input) {
-  
+  if(any(is.na(input))) stop("Input contains missing values")
   type <- frequency_count_or_proportion_or_column(input)
+  
   proportions <- to_proportions(input, type)
   
   -sum(proportions*log(proportions))
