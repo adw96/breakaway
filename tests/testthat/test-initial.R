@@ -31,3 +31,8 @@ test_that("alpha diversity for the inbuilt datasets", {
                 "a Shannon diversity standard error is negative!")
   }
 })
+
+test_that("shannon isn't crazy", {
+  expect_that(abs(shannon(c(0.2, 0.8)) - shannon(c(0.02, 0.08))) < 1e-8, is_true(),
+                "a Shannon diversity estimate is negative!")
+})

@@ -27,6 +27,8 @@ to_proportions <- function(input, type) {
     relative_abundance <- input[, 1] / total_reads
     rep(relative_abundance, input[, 2])
   } else if (type == "proportion") {
+    if (sum(input) != 1) warning("Proportions that don't sum to one; renormalising...")
+    input <- input/sum(input)
     input[input>0]
   } else if (type == "column") {
     input <- input/sum(input)
@@ -65,7 +67,7 @@ shannon <- function(input) {
   
   proportions <- to_proportions(input, type)
   
-  -sum(proportions*log(proportions))
+  -sum(proportions*log(proportions, base=exp(1)))
 }
 
 
