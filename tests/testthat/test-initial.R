@@ -14,6 +14,7 @@ test_that("alpha diversity for the inbuilt datasets", {
   datasets <- list(apples, hawaii)
   datasets <- append(datasets, tables)
   for (i in 1:length(datasets)) {
+    print(i)
     dataset <- datasets[[i]]
     breakaway_dataset <- breakaway(dataset, output = F, answers = T, plot = F)
     lower_bound <- sum(dataset[,2])

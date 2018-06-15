@@ -52,7 +52,9 @@ hist(shannon_estimates)
 # To investigate the effect of sample size on the resample estimate of the Shannon index,
 # re-sample over multiple sample sizes; in this case, the number of reads
 ns <- apply(toy_otu_table, 2, sum)
-shannon_estimates <- replicate(200, resample_estimate(toy_otu_table[,1], shannon, my_sample_size = ns))
+shannon_estimates <- replicate(200, resample_estimate(toy_otu_table[,1], 
+shannon, 
+my_sample_size = ns))
 
 hist(shannon_estimates)
 sd(shannon_estimates) # a not too terrible estimate of the standard error in estimating Shannon

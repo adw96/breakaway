@@ -24,6 +24,7 @@
 #' @references Willis, A., Bunge, J., and Whitman, T. (2015). Inference for
 #' changes in biodiversity. arXiv preprint.
 #' @keywords diversity
+#' @importFrom graphics axis hist legend lines par plot points
 #' @examples
 #' 
 #' 
@@ -117,5 +118,3 @@ hill_pic <- function(input, res = 20, method = "resample") {
   lines(xx, upper, lty = 2)
   points(xx, raw, pch = 16, col = "red")
 }
-
-

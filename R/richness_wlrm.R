@@ -207,13 +207,14 @@ wlrm_transformed <- function(data, print=TRUE, plot=FALSE, answers=FALSE, cutoff
 #' estimation based upon ratios of recapture probabilities. \emph{Annals of
 #' Applied Statistics}, \bold{5}.
 #' @keywords diversity models
+#' @importFrom graphics legend points
+#' @importFrom utils head read.table
+#' 
+#' 
+#' 
+#' 
+#' 
 #' @examples
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
 #' 
 #' 
 #' 

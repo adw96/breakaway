@@ -16,7 +16,7 @@
 #' columns give the parameter estimates, standard errors, and p-values,
 #' respectively. This model is only as effective as your diversity estimation
 #' procedure; for this reason please confirm that your estimates are
-#' appropriate and that your model is not misspecified. \samp{betta_pic} may be
+#' appropriate and that your model is not misspecified. betta_pic may be
 #' useful for this purpose.  } \item{cov}{ Estimated covariance matrix of the
 #' parameter estimates.  } \item{ssq_u}{ The estimate of the heterogeneity
 #' variance.  } \item{homogeneity}{ The test statistic and p-value for the test
@@ -48,7 +48,7 @@
 #' a way that accounts for its estimated nature.
 #' @author Amy Willis
 #' @seealso \code{\link{breakaway}}; \code{\link{breakaway_nof1}};
-#' \code{\link{betta_pic}}; \code{\link{apples}}
+#' \code{\link{apples}}
 #' @references Willis, A., Bunge, J., and Whitman, T. (2015). Inference for
 #' changes in biodiversity. \emph{arXiv preprint.}
 #' 
@@ -257,7 +257,7 @@ betta_points <- function(y, se, x=1:length(y), ylimu=NA, myy=NA, mymain=NA, myco
 #' columns give the parameter estimates, standard errors, and p-values,
 #' respectively. This model is only as effective as your diversity estimation
 #' procedure; for this reason please confirm that your estimates are
-#' appropriate and that your model is not misspecified. \samp{betta_pic} may be
+#' appropriate and that your model is not misspecified. betta_pic may be
 #' useful for this purpose.  } \item{cov}{ Estimated covariance matrix of the
 #' parameter estimates.  } \item{ssq_u}{ The estimate of the heterogeneity
 #' variance.  } \item{ssq_g}{ Estimates of within-group variance. The estimate
@@ -269,7 +269,7 @@ betta_points <- function(y, se, x=1:length(y), ylimu=NA, myy=NA, mymain=NA, myco
 #' variability for the random effects case are unavailable at this time; please
 #' contact the maintainer if needed.  }
 #' @author Amy Willis
-#' @seealso \code{\link{betta}}; \code{\link{betta_pic}}
+#' @seealso \code{\link{betta}}; 
 #' @references Willis, A., Bunge, J., and Whitman, T. (2015). Inference for
 #' changes in biodiversity. \emph{arXiv preprint.}
 #' @keywords diversity

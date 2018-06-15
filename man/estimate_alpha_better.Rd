@@ -4,8 +4,7 @@
 \alias{estimate_alpha_better}
 \title{Estimate alpha diversity}
 \usage{
-estimate_alpha_better(physeq, split = TRUE, measures = NULL,
-  estimators = NULL)
+estimate_alpha_better(physeq, estimators)
 }
 \arguments{
 \item{physeq}{(Required). \code{\link{phyloseq-class}}, or alternatively, 
