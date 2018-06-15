@@ -27,6 +27,8 @@ returned.}
 
 \item{answers}{Logical: whether the function should return an argument. If
 \samp{FALSE}, output should be set to \samp{TRUE}.}
+
+\item{print}{Print the output?}
 }
 \value{
 \item{code}{ A category representing algorithm behaviour.

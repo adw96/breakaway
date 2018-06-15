@@ -332,7 +332,7 @@ estimate_alpha_better <- function(physeq, split=TRUE, measures=NULL, estimators 
 
 #' @export test_alpha
 test_alpha <- function(physeq, x, measure = "richness") {
-  estimate_df <- estimate_alpha_better(ASV_physeq, measures = measure)
+  estimate_df <- estimate_alpha_better(physeq, measures = measure)
   
   measures_ind <- grep("[A-Za-z].*estimate", colnames(estimate_df))
   colnames(estimate_df)[measures_ind] <- unlist(strsplit(colnames(estimate_df)[measures_ind], split = ".estimate"))

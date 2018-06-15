@@ -21,6 +21,7 @@
 #' @param plot Logical: whether the data and model fit should be plotted.
 #' @param answers Logical: whether the function should return an argument. If
 #' \samp{FALSE}, output should be set to \samp{TRUE}.
+#' @param print Print the output?
 #' @return \item{code}{ A category representing algorithm behaviour.
 #' \samp{code=1} indicates no nonlinear models converged and the transformed
 #' WLRM diversity estimate of Rocchetti et. al. (2011) is returned.

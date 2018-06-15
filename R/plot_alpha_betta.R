@@ -1,5 +1,6 @@
 #' @export
-plot_alpha_better <- function(physeq, estimators, x="samples", color=NULL, shape=NULL, title=NULL,
+plot_alpha_better <- function(physeq, estimators, x="samples", 
+                              color=NULL, shape=NULL, title=NULL,
                               scales="free_y", nrow=1, sortby=NULL) {
   
   # estimate alpha
@@ -72,9 +73,9 @@ plot_alpha_better <- function(physeq, estimators, x="samples", color=NULL, shape
     if(!all(sortby %in% levels(mdf$variable))){
       warning("`sortby` argument not among `estimators`. Ignored.")
     }
-    if(!is.discrete(mdf[, x])){
-      warning("`sortby` argument provided, but `x` not a discrete variable. `sortby` is ignored.")
-    }
+    # if(!is.discrete(mdf[, x])){
+    #   warning("`sortby` argument provided, but `x` not a discrete variable. `sortby` is ignored.")
+    # }
     if(all(sortby %in% levels(mdf$variable)) & is.discrete(mdf[, x])){
       # Replace x-factor with same factor that has levels re-ordered according to `sortby`
       wh.sortby = which(mdf$variable %in% sortby)
@@ -107,6 +108,22 @@ plot_alpha_better <- function(physeq, estimators, x="samples", color=NULL, shape
   
 }
 
+format_breakaway <- function(counts) {
+  frequency_table <- build_frequency_count_tables(counts)
+  baway <- try(breakaway(frequency_table))
+  if (class(baway) != "try-error") {
+    c("estimate" = baway$est, 
+      "stderror" = baway$seest, 
+      "lcb" = baway$ci[1], 
+      "ucb" = baway$ci[2])
+  } else {
+    c("estimate" = NA,
+      "stderror" = NA, 
+      "lcb" = sum(frequency_table[,2]), 
+      "ucb" = Inf)
+  }
+}
+
 #' @export
 estimate_alpha_better <- function(physeq, estimators) {
   
@@ -125,21 +142,7 @@ estimate_alpha_better <- function(physeq, estimators) {
   # Initialize to NULL
   outlist = vector("list")
   if( "breakaway" %in% estimators ){
-    format_breakaway <- function(counts) {
-      frequency_table <- make_frequency_count_tables(counts)
-      baway <- try(breakaway(frequency_table))
-      if (class(baway) != "try-error") {
-        c("estimate" = y$est, 
-          "stderror" = y$seest, 
-          "lcb" = y$ci[1], 
-          "ucb" = y$ci[2])
-      } else {
-        c("estimate" = NA,
-          "stderror" = NA, 
-          "lcb" = sum(frequency_table[,2]), 
-          "ucb" = Inf)
-      }
-    }
+    
     baway_matrix <- apply(OTU, 1, format_breakaway)
     
     outlist <- c(outlist, list(breakaway = baway_matrix))
@@ -156,9 +159,9 @@ estimate_alpha_better <- function(physeq, estimators) {
   
   
   out = do.call("cbind", outlist)
-  # Rename columns per renamevec
-  namechange = intersect(colnames(out), names(renamevec))
-  colnames(out)[colnames(out) %in% namechange] <- renamevec[namechange]
+  # # Rename columns per renamevec
+  # namechange = intersect(colnames(out), names(renamevec))
+  # colnames(out)[colnames(out) %in% namechange] <- renamevec[namechange]
   # Final prune to just those columns related to "estimators". Use grep.
   colkeep = sapply(paste0("(se\\.){0,}", estimators), grep, colnames(out), ignore.case=TRUE)
   out = out[, sort(unique(unlist(colkeep))), drop=FALSE]

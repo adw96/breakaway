@@ -2,19 +2,34 @@
 % Please edit documentation in R/alpha-class.R
 \name{alpha}
 \alias{alpha}
-\title{Build alpha-class objects from their components.}
+\title{alpha}
 \usage{
-alpha(...)
+alpha(estimate = 1000, error = 100)
 }
 \arguments{
-\item{...}{One or more components}
+\item{estimate}{the estimate}
+
+\item{error}{the error}
+
+\item{interval}{an interval estimate}
+
+\item{type}{TODO}
+
+\item{model}{TODO}
+
+\item{warnings}{TODO}
+
+\item{frequentist}{frequentist or Bayesian}
+
+\item{parametric}{TODO}
+
+\item{other}{TODO}
+
+\item{estimate}{the estimate}
 }
 \value{
 An object of class alpha.
 }
 \description{
-\code{alpha()} is a constructor method
-}
-\seealso{
-\code{\link{breakaway}}
+Build alpha-class objects from their components. \code{alpha()} is a constructor method
 }

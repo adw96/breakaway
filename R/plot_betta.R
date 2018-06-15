@@ -89,7 +89,7 @@ betta_pic <- function(y, se, x=1:length(y), ylimu=NA, myy=NA, mymain=NA, mycol=r
 hill_pic <- function(input, res = 20, method = "resample") {
   
   xx <- seq(from = 0, to = 4, length.out = res)
-  my_results <- alpha_better(input = input, xx)
+  my_results <- hill_better(input = input, xx)
   raw <- hill(input = input, q = xx)
   ests <- my_results$Estimate
   
@@ -104,7 +104,7 @@ hill_pic <- function(input, res = 20, method = "resample") {
                     subsample_otu(input), 
                     simplify = "list")
     y2 <- apply(y1, 2, function(x) data.frame("Index"=as.numeric(as.character(unlist(x[1]))), "Freq"=as.numeric(as.character(unlist(x[2])))))
-    y3 <- lapply(y2, alpha_better, q = xx)
+    y3 <- lapply(y2, hill_better, q = xx)
     y4 <- lapply(y3, function(x) x[,2])
     y5 <- do.call(rbind, y4)
     ests <- apply(y5, 2, function(x) quantile(x, 0.5))

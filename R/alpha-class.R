@@ -1,15 +1,22 @@
-################################################################################
-#' Build alpha-class objects from their components.
+#' alpha
+#' 
+#' Build alpha-class objects from their components. \code{alpha()} is a constructor method
 #'
-#' \code{alpha()} is a constructor method
+#' @usage alpha(estimate = 1000, error = 100)
 #'
-#' @usage alpha(...)
-#'
-#' @param ... One or more components
+#' @param estimate the estimate
+#' @param error the error
+#' @param interval an interval estimate
+#' @param estimate the estimate
+#' @param type TODO
+#' @param model  TODO
+#' @param warnings  TODO
+#' @param frequentist frequentist or Bayesian
+#' @param parametric TODO
+#' @param other  TODO
 #'
 #' @return An object of class alpha. 
 #'
-#' @seealso \code{\link{breakaway}}
 alpha <- function(estimate = NULL,
                   error = NULL,
                   interval = NULL,
