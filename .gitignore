@@ -8,6 +8,7 @@ breakaway.Rproj
 data/.Rapp.history
 make-data-files.R
 playing/
+stashed/*
 
 # R files #
 ###########

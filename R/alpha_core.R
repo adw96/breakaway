@@ -19,6 +19,7 @@ frequency_count_or_proportion_or_column <- function(input) {
   }
 }
 
+#' TODO write as generic method
 #' @export
 to_proportions <- function(input, type) {
   
