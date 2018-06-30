@@ -7,13 +7,11 @@
 convert(input_data)
 }
 \arguments{
-\item{Supported}{types include filenames, data frames, matrices, vectors...}
+\item{input_data}{Supported types include filenames, data frames, matrices, vectors...}
 }
 \value{
-Frequency count able 
-
-Inputs slated for development include phyloseq and otu_table
+Frequency count able
 }
 \description{
-convert between different inputs for alpha-diversity estimates
+Inputs slated for development include phyloseq and otu_table
 }

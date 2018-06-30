@@ -6,6 +6,9 @@
 \usage{
 check_format(output_data)
 }
+\arguments{
+\item{output_data}{A matrix to test}
+}
 \value{
 A checked frequency count table
 }

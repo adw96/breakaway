@@ -4,11 +4,11 @@
 #' mistakenly referred to as an index.
 #' 
 #' 
-#' @param input_data The sample frequency count table for the population of interest.
-#' See dataset apples for sample formatting.
-#' @param output Logical: whether the results should be printed to screen.
-#' @param answers Should the answers be returned as a list?
-#' @return The results of the estimator, including standard error.
+#' @param input_data An input type that can be processed by \code{convert()}
+#' @param output Deprecated; only for backwards compatibility
+#' @param answers Deprecated; only for backwards compatibility
+#'
+#' @return An object of class \code{alpha_estimate}
 #' @note The authors of this package strongly discourage the use of this
 #' estimator.  It is only valid when you wish to assume that every taxa has
 #' equal probability of being observed. You don't really think that's possible,
@@ -21,10 +21,11 @@
 #' 
 #' 
 #' @export chao1
-chao1 <- function(input_data, output=TRUE, answers=FALSE) {
+chao1 <- function(input_data, output=NULL, answers=NULL) {
   
   my_data <- convert(input_data)
   
+  # TODO: this is a stupid way of doing it, find a better one 
   index  <- 1:max(my_data[,1])
   frequency_index <- rep(0, length(index))
   frequency_index[my_data[,1]] <- my_data[,2]
@@ -37,20 +38,35 @@ chao1 <- function(input_data, output=TRUE, answers=FALSE) {
   
   diversity_se <- sqrt(f2*(0.5*(f1/f2)^2 + (f1/f2)^3 + 0.25*(f1/f2)^4))
   
-  if(output) {
-    cat("################## Chao1 ##################\n")
-    cat("\tThe estimate of total diversity is", round(diversity),
-        "\n \t with std error",round(diversity_se),"\n")
-    cat("You know that this estimate is only valid if all taxa are equally abundant, right?\n")
-  }
-  if(answers) {
-    result <- list()
-    result$name <- "Chao1"
-    result$est <- diversity
-    result$seest <- diversity_se
-    d <- exp(1.96*sqrt(log(1+result$seest^2/f0)))
-    result$ci <- c(n+f0/d,n+f0*d)
-    return(result)
-  }
+  d <- exp(1.96*sqrt(log(1 + diversity_se^2 / f0)))
+  
+  ## construct diversity_estimate
+  alpha_estimate(estimate = diversity,
+                 error = diversity_se,
+                 estimand = "richness",
+                 name = "Chao1",
+                 interval = c(n + f0/d, n + f0*d),
+                 type = "parametric",
+                 model = "Poisson (homogeneous)",
+                 frequentist = TRUE,
+                 parametric = TRUE,
+                 reasonable = FALSE,
+                 interval_type = "Approximate: log-normal")
+  
+  # if(output) {
+  #   cat("################## Chao1 ##################\n")
+  #   cat("\tThe estimate of total diversity is", round(diversity),
+  #       "\n \t with std error",round(diversity_se),"\n")
+  #   cat("You know that this estimate is only valid if all taxa are equally abundant, right?\n")
+  # }
+  # if(answers) {
+  #   result <- list()
+  #   result$name <- "Chao1"
+  #   result$est <- diversity
+  #   result$seest <- diversity_se
+  #   
+  #   result$ci <- c(n+f0/d,n+f0*d)
+  #   return(result)
+  # }
 }
 

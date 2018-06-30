@@ -4,15 +4,15 @@
 \alias{chao1}
 \title{Chao1 species richness estimator}
 \usage{
-chao1(input_data, output = TRUE, answers = FALSE)
+chao1(input_data, output = NULL, answers = NULL)
 }
 \arguments{
 \item{input_data}{The sample frequency count table for the population of interest.
 See dataset apples for sample formatting.}
 
-\item{output}{Logical: whether the results should be printed to screen.}
+\item{output}{Deprecated; only for backwards compatibility}
 
-\item{answers}{Should the answers be returned as a list?}
+\item{answers}{Deprecated; only for backwards compatibility}
 }
 \value{
 The results of the estimator, including standard error.

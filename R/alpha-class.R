@@ -1,46 +1,83 @@
-#' alpha
+#' alpha_estimate
 #' 
-#' Build alpha-class objects from their components. \code{alpha()} is a constructor method
+#' Build objects of class alpha_estimate from their components. \code{alpha_estimate()} is a constructor method
 #'
-#' @usage alpha(estimate = 1000, error = 100)
+#' @param estimate The estimate
+#' @param error The standard error in the estimate
+#' @param estimand What is the estimate trying to estimate? (richness, Shannon...)
+#' @param name The name of the method
+#' @param interval An interval estimate
+#' @param interval_type Type of interval estimate
+#' @param type ????
+#' @param model  What model is fit
+#' @param warnings  Any warnings?
+#' @param frequentist Logical. Frequentist or Bayesian?
+#' @param parametric Logical. Parametric or not?
+#' @param plot A ggplot associated with the estimate
+#' @param reasonable Is the estimate likely to be reasonable?
+#' @param other Any other relevant objects
+#' @param ... Any other objects
 #'
-#' @param estimate the estimate
-#' @param error the error
-#' @param interval an interval estimate
-#' @param estimate the estimate
-#' @param type TODO
-#' @param model  TODO
-#' @param warnings  TODO
-#' @param frequentist frequentist or Bayesian
-#' @param parametric TODO
-#' @param other  TODO
+#' @return An object of class alpha_estimate 
 #'
-#' @return An object of class alpha. 
-#'
-alpha <- function(estimate = NULL,
-                  error = NULL,
-                  interval = NULL,
-                  type = NULL,
-                  model = NULL,
-                  warnings = NULL,
-                  frequentist = NULL, # frequentist or Bayesian
-                  parametric = NULL,
-                  other = NULL
-                  ){
+#' @export
+alpha_estimate <- function(estimate = NULL,
+                           error = NULL,
+                           estimand = NULL,
+                           name = NULL,
+                           interval = NULL,
+                           interval_type = NULL,
+                           type = NULL,
+                           model = NULL,
+                           warnings = NULL,
+                           frequentist = NULL, 
+                           parametric = NULL,
+                           plot = NULL,
+                           reasonable = NULL,
+                           other = NULL,
+                           ...) {
   
-  alpha_object <- list()
-  alpha_object@estimate <- estimate
-  alpha_object@error <- error
+  # deprecated: est, seest, ci
+  
+  alpha_object <- list(estimate = estimate,
+                       error = error,
+                       estimand = estimand,
+                       name = name,
+                       interval = interval,
+                       interval_type = interval_type,
+                       type = type,
+                       model = model,
+                       warnings = warnings,
+                       frequentist = frequentist, 
+                       parametric = parametric,
+                       plot = plot,
+                       reasonable = reasonable,
+                       other = other,
+                       ...)
   
   
-  class(alpha_object) <- append("alpha", class(alpha_object))
+  class(alpha_object) <- append("alpha_estimate", class(alpha_object))
   
   return(alpha_object)
 }
 
-print.alpha <- function(my_alpha) {
-  alpha.df <- data.frame("estimate" = my_alpha$estimate, "error" = my_alpha$estimate)
-  print(alpha.df)
+#' @export
+print.alpha_estimate <- function(x, ...) {
+  
+  cat(paste("Estimate of ", x$estimand,
+            " from method ", x$name, ":\n", sep=""))
+  cat(paste("  Estimate is ", round(x$estimate, ifelse(x$estimand == "richness", 0, 2)), 
+            " with standard error ", round(x$error, 2), "\n", sep=""))
+  cat(paste("  Confidence interval: (", 
+            round(x$interval[1], ifelse(x$estimand == "richness", 0, 2)), ", ", 
+            round(x$interval[2], ifelse(x$estimand == "richness", 0, 2)), ")\n", sep=""))
+  
+}
+
+
+#' @export
+plot.alpha_estimate <- function(x, ...) {
+  x$plot
 }
 
 
