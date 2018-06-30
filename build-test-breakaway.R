@@ -31,7 +31,7 @@ document(directory)
 roxygenise(directory)
 build(directory, vignettes=F)
 library(breakaway)
-g <- chao1(apples)
+g <- chao1_bc(apples)
 names(g)
 g
 test(directory)

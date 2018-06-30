@@ -9,10 +9,6 @@ test_that("datasets load", {
   
   expect_equal(dim(toy_otu_table)[2], 143) # 143 samples
   
-  ## TODO
-  expect_true(toy_otu_table %>% class %in% c("phyloseq", "otu_table"))
-  
-  
 })
 
 
@@ -69,13 +65,6 @@ test_that("richness for the inbuilt datasets", {
   }
 })
 
-test_that("known problems", {
-  
-  data("toy_otu_table")
-  fc <- make_frequency_count_table(toy_otu_table[,126])
-  expect_true(fc$seest >= 0, 
-              info = paste("wlrm_untransformed std error is negative for dataset", dataset_names[i]))
-  
 
-})
+
 

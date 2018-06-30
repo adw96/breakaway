@@ -17,17 +17,16 @@ test_that("Initial conversions work", {
 datasets_to_test <- list(apples,
                          hawaii)
 
-richness_estimates <- list(chao1)
+richness_estimates <- list(chao1,
                            # breakaway,
                            # chao_bunge,
-                           # chao1_bc,
                            # wlrm_transformed,
-                           # wlrm_untransformed)
-# objective_bayes_negbin(apples, iterations=100, burn.in=50),
-# objective_bayes_poisson(apples, iterations=100, burn.in=50))
-# 
-# 
-test_that("Richness estimates accept frequency count tables", {
+                           # wlrm_untransformed,
+                           # objective_bayes_negbin(apples, iterations=100, burn.in=50),
+                           # objective_bayes_poisson(apples, iterations=100, burn.in=50))
+                           chao1_bc)
+
+test_that("Richness estimates output the correct type", {
   
   ### apply all functions in richness_estimates to all datasets in datasets_to_test
   
@@ -38,6 +37,21 @@ test_that("Richness estimates accept frequency count tables", {
   }
   
 })
+
+
+# 
+# 
+# test_that("Richness estimates accept frequency count tables", {
+#   
+#   ### apply all functions in richness_estimates to all datasets in datasets_to_test
+#   
+#   for (dataset in datasets_to_test) {
+#     for (richness_estimate in richness_estimates) {
+#       expect_is(richness_estimate(dataset), "alpha_estimate")
+#     }
+#   }
+#   
+# })
 # 
 # test_that("Richness estimates accept count vectors", {
 #   

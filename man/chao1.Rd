@@ -7,15 +7,14 @@
 chao1(input_data, output = NULL, answers = NULL)
 }
 \arguments{
-\item{input_data}{The sample frequency count table for the population of interest.
-See dataset apples for sample formatting.}
+\item{input_data}{An input type that can be processed by \code{convert()}}
 
 \item{output}{Deprecated; only for backwards compatibility}
 
 \item{answers}{Deprecated; only for backwards compatibility}
 }
 \value{
-The results of the estimator, including standard error.
+An object of class \code{alpha_estimate}
 }
 \description{
 This function implements the Chao1 richness estimate, which is often

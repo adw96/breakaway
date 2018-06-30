@@ -3,86 +3,31 @@
 #' This function implements the bias-corrected Chao1 richness estimate.
 #' 
 #' 
-#' @param data The sample frequency count table for the population of interest.
-#' See dataset apples for sample formatting.
-#' @param output Logical: whether the results should be printed to screen.
-#' @param answers Should the answers be returned as a list?
-#' @return The results of the estimator, including standard error.
+#' @param input_data An input type that can be processed by \code{convert()}
+#' @param output Deprecated; only for backwards compatibility
+#' @param answers Deprecated; only for backwards compatibility
+#'
+#' @return An object of class \code{alpha_estimate}
 #' @note The authors of this package strongly discourage the use of this
-#' estimator. It is underpinned by totally implausible assumptions that are not
-#' made by other richness estimators.  Bias correcting Chao1 is the least of
-#' your problems.
+#' estimator.  It is only valid when you wish to assume that every taxa has
+#' equal probability of being observed. You don't really think that's possible,
+#' do you?
 #' @author Amy Willis
 #' @examples
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
 #' 
 #' 
 #' chao1_bc(apples)
 #' 
 #' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
 #' @export chao1_bc
-chao1_bc <- function(data, output=TRUE, answers=FALSE) {
+chao1_bc <- function(input_data, output=NULL, answers=NULL) {
   
-  if( !(is.matrix(data) || is.data.frame(data))) {
-    filename <- data
-    ext <- substr(filename, nchar(filename)-2, nchar(filename))
-    if (ext == "csv") {
-      data <- read.table(file=filename, header=0,sep=",")
-      if( data[1,1] !=1) data <- read.table(filename, header=1,sep=",")
-    } else if (ext == "txt") {
-      data <- read.table(file=filename, header=0)
-    } else cat("Please input your data as a txt or csv file,
-               or as an R dataframe or matrix.")
-  }
+  my_data <- convert(input_data)
   
-  if ( is.factor(data[,1]) ) {
-    fs <- as.numeric(as.character(data[,1]))
-    data <- cbind(fs,data[,2])
-    data <- data[data[,1]!=0,]
-  }
-  
-  
-  
-  index  <- 1:max(data[,1])
+  # TODO: this is a stupid way of doing it, find a better one 
+  index  <- 1:max(my_data[,1])
   frequency_index <- rep(0, length(index))
-  frequency_index[data[,1]] <- data[,2]
+  frequency_index[my_data[,1]] <- my_data[,2]
   f1  <- frequency_index[1]
   f2 <- frequency_index[2]
   n <- sum(frequency_index)
@@ -92,18 +37,34 @@ chao1_bc <- function(data, output=TRUE, answers=FALSE) {
   
   diversity_se <- sqrt(f1*(f1-1)/(2*(f2+1)) + f1*(2*f1-1)^2/(4*(f2+1)^2) + f1^2*f2*(f1-1)^2/(4*(f2+1)^4))
   
-  if(output) {
-    cat("################## Bias-corrected Chao1 ##################\n")
-    cat("\tThe estimate of total diversity is", round(diversity),
-        "\n \t with std error",round(diversity_se),"\n")
-  }
-  if(answers) {
-    result <- list()
-    result$name <- "Chao1_bc"
-    result$est <- diversity
-    result$seest <- diversity_se
-    d <- exp(1.96*sqrt(log(1+result$seest^2/f0)))
-    result$ci <- c(n+f0/d,n+f0*d)
-    return(result)
-  }
+  # TODO: write a function to do this
+  d <- exp(1.96*sqrt(log(1 + diversity_se^2 / f0)))
+  
+  ## construct diversity_estimate
+  alpha_estimate(estimate = diversity,
+                 error = diversity_se,
+                 estimand = "richness",
+                 name = "chao1_bc",
+                 interval = c(n + f0/d, n + f0*d),
+                 type = "parametric",
+                 model = "Poisson (homogeneous)",
+                 frequentist = TRUE,
+                 parametric = TRUE,
+                 reasonable = FALSE,
+                 interval_type = "Approximate: log-normal")
+  
+  # if(output) {
+  #   cat("################## Bias-corrected Chao1 ##################\n")
+  #   cat("\tThe estimate of total diversity is", round(diversity),
+  #       "\n \t with std error",round(diversity_se),"\n")
+  # }
+  # if(answers) {
+  #   result <- list()
+  #   result$name <- "Chao1_bc"
+  #   result$est <- diversity
+  #   result$seest <- diversity_se
+  #   d <- exp(1.96*sqrt(log(1+result$seest^2/f0)))
+  #   result$ci <- c(n+f0/d,n+f0*d)
+  #   return(result)
+  # }
 }

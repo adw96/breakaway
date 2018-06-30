@@ -4,70 +4,31 @@
 \alias{chao1_bc}
 \title{Bias-corrected Chao1 species richness estimator}
 \usage{
-chao1_bc(data, output = TRUE, answers = FALSE)
+chao1_bc(input_data, output = NULL, answers = NULL)
 }
 \arguments{
-\item{data}{The sample frequency count table for the population of interest.
-See dataset apples for sample formatting.}
+\item{input_data}{An input type that can be processed by \code{convert()}}
 
-\item{output}{Logical: whether the results should be printed to screen.}
+\item{output}{Deprecated; only for backwards compatibility}
 
-\item{answers}{Should the answers be returned as a list?}
+\item{answers}{Deprecated; only for backwards compatibility}
 }
 \value{
-The results of the estimator, including standard error.
+An object of class \code{alpha_estimate}
 }
 \description{
 This function implements the bias-corrected Chao1 richness estimate.
 }
 \note{
 The authors of this package strongly discourage the use of this
-estimator. It is underpinned by totally implausible assumptions that are not
-made by other richness estimators.  Bias correcting Chao1 is the least of
-your problems.
+estimator.  It is only valid when you wish to assume that every taxa has
+equal probability of being observed. You don't really think that's possible,
+do you?
 }
 \examples{
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 chao1_bc(apples)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
