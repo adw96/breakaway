@@ -22,45 +22,6 @@ build_frequency_count_tables <- function(otu_table) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #' Draw frequency count subtables from an OTU table
 #' 
 #' Draw frequency count subtables from an OTU table
@@ -96,28 +57,3 @@ proportions_instead <- function(otu_table) {
   }
 }
 
-check_format <- function(my_data) {
-  
-  ## read in data
-  if( !(is.matrix(my_data) || is.data.frame(my_data))) {
-    print(head(my_data))
-    stop(paste("Input data of class ", class(my_data), ". ",
-               "Please input your data as a data frame or matrix.", sep = ""))
-  }
-  
-  if(length(my_data) <= 1) {
-    stop("Input data is of length 1 or 0. Huh?")
-  }
-  
-
-  
-  ## if tables() is used to create the frequency tables, the frequency index column is usually a factor, so fix this here
-  if ( is.factor(my_data[,1]) ) {
-    fs <- as.numeric(as.character(my_data[,1]))
-    my_data <- cbind(fs,my_data[,2])
-    my_data <- my_data[my_data[,1]!=0,]
-  }
-  
-  my_data[!(my_data[,2]==0 | is.na(my_data[,2])),]
-  
-}
