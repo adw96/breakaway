@@ -12,6 +12,9 @@ test_that("Initial conversions work", {
   expect_error(convert(toy_metadata))
   expect_error(convert(toy_taxonomy))
   
+  
+  expect_error(convert(cbind(c(1:5,7,6), 20:14)))
+  
 })
 
 datasets_to_test <- list(apples,
@@ -20,8 +23,8 @@ datasets_to_test <- list(apples,
 richness_estimates <- list(chao1,
                            # breakaway,
                            # chao_bunge,
-                           # wlrm_transformed,
-                           # wlrm_untransformed,
+                           wlrm_transformed,
+                           wlrm_untransformed,
                            # objective_bayes_negbin(apples, iterations=100, burn.in=50),
                            # objective_bayes_poisson(apples, iterations=100, burn.in=50))
                            chao1_bc)

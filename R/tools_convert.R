@@ -93,5 +93,9 @@ check_format <- function(output_data) {
   
   colnames(output_data) <- c("index", "frequency")
   
+  if (!all(sort(output_data[, 1]) == output_data[, 1])) {
+    stop("frequency counts not in order in `convert`")
+  }
+  
   output_data
 }

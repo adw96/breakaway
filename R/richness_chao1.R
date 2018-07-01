@@ -52,7 +52,9 @@ chao1 <- function(input_data, output=NULL, answers=NULL) {
                  frequentist = TRUE,
                  parametric = TRUE,
                  reasonable = FALSE,
-                 interval_type = "Approximate: log-normal")
+                 interval_type = "Approximate: log-normal",
+                 est = diversity,
+                 seest = diversity_se)
   
   # if(output) {
   #   cat("################## Chao1 ##################\n")

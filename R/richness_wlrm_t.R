@@ -21,6 +21,9 @@
 #' estimation based upon ratios of recapture probabilities. \emph{Annals of
 #' Applied Statistics}, \bold{5}.
 #' @keywords diversity models
+#' 
+#' @import ggplot2 
+#' 
 #' @examples
 #' 
 #' wlrm_transformed(apples)
@@ -40,13 +43,15 @@ wlrm_transformed <- function(input_data,
     diversity_se <- NA
     my_warning <- "no singletons"
   } else {
-    my_data <- my_data[!(my_data[,2]==0 | is.na(my_data[,2])),]
+    
     n <- sum(my_data[,2])
+    # TODO fix 
     f1 <- my_data[1,2]
     
     if (is.na(cutoff)) {
       cutoff <- ifelse(is.na(which(my_data[-1,1]-my_data[-length(my_data[,1]),1]>1)[1]),length(my_data[,1]),which(my_data[-1,1]-my_data[-length(my_data[,1]),1]>1)[1])
     }
+
     my_data <- my_data[1:cutoff,]
     ys <- (my_data[1:(cutoff-1),1]+1)*my_data[2:cutoff,2]/my_data[1:(cutoff-1),2]
     xs <- 1:(cutoff-1)
@@ -65,7 +70,7 @@ wlrm_transformed <- function(input_data,
     diversity_se <- sqrt(f0_se^2 + n*f0/(n + f0))
     d <- exp(1.96 * sqrt(log(1 + diversity_se^2 / f0)))
     
-    my_warning = NULL
+    my_warning <- NULL
     
     # result <- list()
     # result$name <- "tWLRM"
@@ -110,5 +115,7 @@ wlrm_transformed <- function(input_data,
                  warnings = my_warning,
                  other = list(para = summary(lm1)$coef[,1:2],
                               full = lm1,
-                              cutoff = cutoff))
+                              cutoff = cutoff),
+                 est = diversity,
+                 seest = diversity_se)
 }

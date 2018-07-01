@@ -35,10 +35,10 @@ document(directory)
 roxygenise(directory)
 build(directory, vignettes=F)
 library(breakaway)
-g <- wlrm_transformed(apples)
-g$plot
-names(g)
-g
+# g <- wlrm_untransformed(apples)
+# g$plot
+# names(g)
+# g
 test(directory)
 
 #############################################

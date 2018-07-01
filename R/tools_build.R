@@ -45,6 +45,9 @@ convert_freq_indices <- function(frequency_table) {
   checked_frequency_table
 }
 
+#' OTU table to relative abundances
+#' 
+#' @param otu_table An OTU table
 #' @export
 proportions_instead <- function(otu_table) {
   if (!(is.null(dim(otu_table)) | is.vector(otu_table))) {

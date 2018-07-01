@@ -51,20 +51,8 @@ chao1_bc <- function(input_data, output=NULL, answers=NULL) {
                  frequentist = TRUE,
                  parametric = TRUE,
                  reasonable = FALSE,
-                 interval_type = "Approximate: log-normal")
+                 interval_type = "Approximate: log-normal",
+                 est = diversity,
+                 seest = diversity_se)
   
-  # if(output) {
-  #   cat("################## Bias-corrected Chao1 ##################\n")
-  #   cat("\tThe estimate of total diversity is", round(diversity),
-  #       "\n \t with std error",round(diversity_se),"\n")
-  # }
-  # if(answers) {
-  #   result <- list()
-  #   result$name <- "Chao1_bc"
-  #   result$est <- diversity
-  #   result$seest <- diversity_se
-  #   d <- exp(1.96*sqrt(log(1+result$seest^2/f0)))
-  #   result$ci <- c(n+f0/d,n+f0*d)
-  #   return(result)
-  # }
 }
