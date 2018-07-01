@@ -2,31 +2,24 @@
 % Please edit documentation in R/richness_wlrm_t.R
 \name{wlrm_transformed}
 \alias{wlrm_transformed}
-\title{function for species richness estimation}
+\title{The transformed weighted linear regression estimator for species richness estimation}
 \usage{
-wlrm_transformed(data, print = TRUE, plot = FALSE, answers = FALSE,
-  cutoff = NA)
+wlrm_transformed(input_data, cutoff = NA, print = NULL, plot = NULL,
+  answers = NULL)
 }
 \arguments{
-\item{data}{The sample frequency count table for the population of interest.
-See \samp{breakaway} for details.}
+\item{input_data}{An input type that can be processed by \code{convert()}}
 
-\item{print}{Logical: whether the results should be printed to screen.}
+\item{cutoff}{Maximum frequency count to use}
 
-\item{plot}{Logical: whether the data and model fit should be plotted.}
+\item{print}{Deprecated; only for backwards compatibility}
 
-\item{answers}{Logical: whether the function should return an argument.}
+\item{plot}{Deprecated; only for backwards compatibility}
 
-\item{cutoff}{The maximum frequency count to use for prediction. Defaults to
-maximal.}
+\item{answers}{Deprecated; only for backwards compatibility}
 }
 \value{
-\item{name}{ The ``name'' of the model.  } \item{para}{ Estimated
-model parameters and standard errors.  } \item{est}{ The estimate of total
-(observed plus unobserved) diversity.  } \item{seest}{ The standard error in
-the diversity estimate.  } \item{full}{ The chosen linear model for
-frequency ratios.  } \item{ci}{ An asymmetric 95\% confidence interval for
-diversity.  }
+An object of class \code{alpha_estimate}
 }
 \description{
 This function implements the transformed version of the species richness
@@ -39,48 +32,8 @@ artificially low standard errors. Extreme caution is advised.
 }
 \examples{
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 wlrm_transformed(apples)
 wlrm_transformed(apples, plot = FALSE, print = FALSE, answers = TRUE)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
 \references{

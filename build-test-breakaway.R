@@ -1,15 +1,19 @@
 # testing and compiling breakaway
-directory <- "/Users/adwillis/software/breakaway"
-setwd(directory)
+# directory <- "/Users/adwillis/software/breakaway"
+# setwd(directory)
 library(devtools)
 library(roxygen2)
-library(testthat)
 library(knitr)
 library(rstudioapi)
 library(Rd2roxygen)
-devtools::install_github("hadley/pkgdown")
-devtools::install_github("r-lib/testthat")
+install_github("r-lib/fs")
+library(fs)
+devtools::install_github("r-lib/pkgdown")
 library(pkgdown)
+devtools::install_github("r-lib/testthat")
+library(testthat)
+devtools::install_github("HenrikBengtsson/R.rsp")
+library(R.rsp)
 
 # check function can build
 check() # builds namespace
@@ -31,7 +35,8 @@ document(directory)
 roxygenise(directory)
 build(directory, vignettes=F)
 library(breakaway)
-g <- chao1_bc(apples)
+g <- wlrm_transformed(apples)
+g$plot
 names(g)
 g
 test(directory)

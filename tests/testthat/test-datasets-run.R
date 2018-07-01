@@ -46,7 +46,7 @@ test_that("richness for the inbuilt datasets", {
     expect_true(cb_dataset$est >= lower_bound, 
                 info = paste("chao_bunge estimate is negative for dataset", dataset_names[i]))
     
-    expect_true(wlrmt_dataset$seest >= 0, 
+    expect_true(wlrmt_dataset$error >= 0, 
                 info = paste("wlrm_transformed std error is negative for dataset", dataset_names[i]))
     
     expect_true(wlrmut_dataset$seest >= 0, 
