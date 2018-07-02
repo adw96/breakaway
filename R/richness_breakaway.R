@@ -50,6 +50,7 @@
 #' dataset may contain these errors, and recommend the use of
 #' \code{\link{breakaway_nof1}} as an exploratory tool in this case.
 #' @author Amy Willis
+#' @import magrittr
 #' @seealso \code{\link{breakaway_nof1}}; \code{\link{apples}}
 #' @references Willis, A. and Bunge, J. (2015). Estimating diversity via
 #' frequency ratios. \emph{Biometrics}, \bold{71}(4), 1042--1049.

@@ -26,7 +26,7 @@ convert <- function(input_data) {
       
       output_data <- read.table(file=filename, header=0, sep=",")
       # TODO figure out if there is a header
-
+      
     } else {
       
       stop("Input is a string, but not a valid file path.")
@@ -43,7 +43,7 @@ convert <- function(input_data) {
     
     output_data <- input_data
     
-  } else if (class(input_data) == "numeric") {
+  } else if (class(input_data) %in% c("numeric", "integer")) {
     
     # must be vector of counts
     if (isTRUE(all.equal(sum(input_data), 1))) {
@@ -54,7 +54,8 @@ convert <- function(input_data) {
       stop("input_data is a vector but not a vector of integers")
     }
     
-    output_data <- as.data.frame(table(input_data))
+    input_data_remove_zeros <- input_data[input_data != 0]
+    output_data <- as.data.frame(table(input_data_remove_zeros))
     
   } else {
     
@@ -67,6 +68,7 @@ convert <- function(input_data) {
   
 }
 
+
 #' Run some basic checks on a possible frequency count table
 #' 
 #' @param output_data A matrix to test
@@ -74,22 +76,25 @@ convert <- function(input_data) {
 #' @return A checked frequency count table
 check_format <- function(output_data) {
   
-  if (length(output_data) <= 1) {
-    stop("Input data to `check_format` is of length 1 or 0.")
-  }
+  if (length(output_data) <= 1) stop("Input data to `check_format` is of length 1 or 0.")
   
-  if (is.factor(output_data[, 1]) ) {
-    
-    ## if table is used to create the frequency tables, the frequency index column is usually a factor, so fix this here
-    
-    fs <- as.numeric(as.character(output_data[, 1]))
-    output_data <- cbind(fs, output_data[, 2])
-    output_data <- output_data[output_data[, 1] != 0, ]
-    
+  if(!(class(output_data) %in% c("matrix", "data.frame"))) stop("Input should be a matrix or a data frame")
+  
+  if(length(dim(output_data)) != 2) stop("Input should have 2 columns")
+  
+  if(any(output_data[,2] %% 1 != 0)) stop("Second input column not integer-valued; should be counts")
+  
+  if(!all(rank(output_data[,1]) == 1:length(output_data[,1]))) warning("Frequency count format, right?")
+  
+  
+  ## if table is used to create the frequency tables, the frequency index column is usually a factor, so fix this here
+  if (output_data[,1] %>% class == "factor") {
+    output_data[,1] %<>% as.character %>% as.integer
   }
   
   # remove rows with zero
   output_data <- output_data[output_data[, 2] != 0, ]
+  output_data %<>% data.frame
   
   colnames(output_data) <- c("index", "frequency")
   

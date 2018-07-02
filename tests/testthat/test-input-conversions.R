@@ -13,7 +13,7 @@ test_that("Initial conversions work", {
   expect_error(convert(toy_taxonomy))
   
   
-  expect_error(convert(cbind(c(1:5,7,6), 20:14)))
+  expect_error(suppressWarnings({convert(cbind(c(1:5,7,6), 20:14))}))
   
 })
 

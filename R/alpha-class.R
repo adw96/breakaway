@@ -67,14 +67,23 @@ alpha_estimate <- function(estimate = NULL,
 #' @export
 print.alpha_estimate <- function(x, ...) {
   
-  cat(paste("Estimate of ", x$estimand,
-            " from method ", x$name, ":\n", sep=""))
-  cat(paste("  Estimate is ", round(x$estimate, ifelse(x$estimand == "richness", 0, 2)), 
-            " with standard error ", round(x$error, 2), "\n", sep=""))
-  cat(paste("  Confidence interval: (", 
-            round(x$interval[1], ifelse(x$estimand == "richness", 0, 2)), ", ", 
-            round(x$interval[2], ifelse(x$estimand == "richness", 0, 2)), ")\n", sep=""))
-  
+  if (is.null(x$estimand)) {
+    cat("Attempt to print estimate with unknown estimand")
+  } else if (is.null(x$name)) {
+    cat("Attempt to print estimate with unknown name")
+  } else if (is.null(x$estimate)) {
+    cat("Attempt to print estimate with unknown estimate")
+  } else {
+    cat(paste("Estimate of ", x$estimand,
+              " from method ", x$name, ":\n", sep=""))
+    cat(paste("  Estimate is ", round(x$estimate, ifelse(x$estimand == "richness", 0, 2)), 
+              " with standard error ", round(x$error, 2), "\n", sep=""))
+    if (!is.null(x$interval)) {
+      cat(paste("  Confidence interval: (", 
+                round(x$interval[1], ifelse(x$estimand == "richness", 0, 2)), ", ", 
+                round(x$interval[2], ifelse(x$estimand == "richness", 0, 2)), ")\n", sep=""))
+    }
+  }
 }
 
 
