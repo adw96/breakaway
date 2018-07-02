@@ -51,8 +51,6 @@ chao1_bc <- function(input_data, output=NULL, answers=NULL) {
                  frequentist = TRUE,
                  parametric = TRUE,
                  reasonable = FALSE,
-                 interval_type = "Approximate: log-normal",
-                 est = diversity,
-                 seest = diversity_se)
+                 interval_type = "Approximate: log-normal")
   
 }

@@ -4,59 +4,23 @@
 #' in Chao & Bunge (2002).
 #' 
 #' 
-#' @param data The sample frequency count table for the population of interest.
-#' See dataset apples for sample formatting.
+#' @param input_data An input type that can be processed by \code{convert()}
 #' @param cutoff The maximum frequency to use in fitting.
-#' @param output Logical: whether the results should be printed to screen.
-#' @param answers Should the answers be returned as a list?
-#' @return The results of the estimator, including standard error.
+#' @param output Deprecated; only for backwards compatibility
+#' @param answers Deprecated; only for backwards compatibility
+#' @return An object of class \code{alpha_estimate}
+#' 
 #' @author Amy Willis
 #' @examples
 #' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
 #' chao_bunge(apples)
 #' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
 #' @export chao_bunge
-chao_bunge <- function(my_data, cutoff=10, output=TRUE, answers=FALSE) {
+chao_bunge <- function(input_data, 
+                       cutoff=10, 
+                       output=NULL, answers=NULL) {
+  
+  my_data <- convert(input_data)
   
   my_data <- check_format(my_data)
   input_data <- my_data
@@ -102,30 +66,43 @@ chao_bunge <- function(my_data, cutoff=10, output=TRUE, answers=FALSE) {
     }
     covariance <- t(covariance) + covariance
     diag(covariance) <- fs_up_to_cut_off * (1 - fs_up_to_cut_off/diversity)
-    diversity_se <- sqrt(derivatives %*% covariance %*% derivatives)
+    diversity_se <- c(sqrt(derivatives %*% covariance %*% derivatives))
     
   } else {
-    wlrm <- wlrm_untransformed(input_data, print = F, answers = T)
-    if (is.null(wlrm$est)) {
-      wlrm <- wlrm_transformed(input_data, print = F, answers = T)
-    } 
-    diversity <- wlrm$est
-    diversity_se  <- wlrm$seest
-    f0  <- diversity - sum(frequency_index)
+    # wlrm <- wlrm_untransformed(input_data, print = F, answers = T)
+    # if (is.null(wlrm$est)) {
+    #   wlrm <- wlrm_transformed(input_data, print = F, answers = T)
+    # } 
+    diversity <- NA
+    diversity_se  <- NA
+    f0  <- NA
   }
   
-  if(output) {
-    cat("################## Chao-Bunge ##################\n")
-    cat("\tThe estimate of total diversity is", round(diversity),
-        "\n \t with std error",round(diversity_se),"\n")
-  }
-  if(answers) {
-    result <- list()
-    result$name <- "Chao-Bunge"
-    result$est <- diversity
-    result$seest <- as.vector(diversity_se)
-    d <- exp(1.96*sqrt(log(1+result$seest^2/f0)))
-    result$ci <- c(n+f0/d,n+f0*d)
-    return(result)
-  }
+  # if(output) {
+  #   cat("################## Chao-Bunge ##################\n")
+  #   cat("\tThe estimate of total diversity is", round(diversity),
+  #       "\n \t with std error",round(diversity_se),"\n")
+  # }
+  # if(answers) {
+  #   result <- list()
+  #   result$name <- "Chao-Bunge"
+  #   result$est <- diversity
+  #   result$seest <- as.vector(diversity_se)
+  d <- exp(1.96*sqrt(log(1+diversity_se^2/f0)))
+  #   result$ci <- c(n+f0/d,n+f0*d)
+  #   return(result)
+  # }
+  
+  alpha_estimate(estimate = diversity,
+                 error = diversity_se,
+                 estimand = "richness",
+                 name = "Chao-Bunge",
+                 interval = c(n + f0/d, n + f0*d),
+                 type = "parametric",
+                 model = "Negative Binomial",
+                 frequentist = TRUE,
+                 parametric = TRUE,
+                 reasonable = TRUE,
+                 interval_type = "Approximate: log-normal")
+  
 }

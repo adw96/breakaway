@@ -146,7 +146,5 @@ wlrm_untransformed  <- function(input_data,
                  warnings = my_warning,
                  other = list(para = summary(lm2)$coef[,1:2],
                               full = lm2,
-                              cutoff = cutoff),
-                 est = diversity,
-                 seest = diversity_se)
+                              cutoff = cutoff))
 }

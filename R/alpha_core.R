@@ -19,7 +19,13 @@ frequency_count_or_proportion_or_column <- function(input) {
   }
 }
 
+#' convert to proportions
+#' 
 #' TODO write as generic method
+#' 
+#' @param input the input data
+#' @param type What time
+#' 
 #' @export
 to_proportions <- function(input, type) {
   

@@ -2,9 +2,14 @@
 % Please edit documentation in R/alpha_core.R
 \name{to_proportions}
 \alias{to_proportions}
-\title{TODO write as generic method}
+\title{convert to proportions}
 \usage{
 to_proportions(input, type)
+}
+\arguments{
+\item{input}{the input data}
+
+\item{type}{What time}
 }
 \description{
 TODO write as generic method

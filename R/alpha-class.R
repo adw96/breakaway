@@ -53,6 +53,9 @@ alpha_estimate <- function(estimate = NULL,
                        plot = plot,
                        reasonable = reasonable,
                        other = other,
+                       est = estimate,
+                       seest = error,
+                       ci = interval,
                        ...)
   
   

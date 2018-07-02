@@ -97,7 +97,8 @@ plot_alpha <- function(physeq, x = "samples", color = NULL, shape = NULL,
                        upper_limits = NULL) { 
   
   # Calculate the relevant alpha-diversity measures
-  estimate_df <- estimate_alpha_better(physeq, split = TRUE, measures = measures, estimators = estimators)
+  # estimate_df <- estimate_alpha_better(physeq, split = TRUE, measures = measures, estimators = estimators)
+  estimate_df <- phyloseq::estimate_richness(physeq, split = TRUE, measures = measures, estimators = estimators)
   
   
   # Measures may have been renamed in `estimate_df`. Replace it w with the name from estimate_df

@@ -4,20 +4,19 @@
 \alias{chao_bunge}
 \title{Chao-Bunge species richness estimator}
 \usage{
-chao_bunge(my_data, cutoff = 10, output = TRUE, answers = FALSE)
+chao_bunge(input_data, cutoff = 10, output = NULL, answers = NULL)
 }
 \arguments{
+\item{input_data}{An input type that can be processed by \code{convert()}}
+
 \item{cutoff}{The maximum frequency to use in fitting.}
 
-\item{output}{Logical: whether the results should be printed to screen.}
+\item{output}{Deprecated; only for backwards compatibility}
 
-\item{answers}{Should the answers be returned as a list?}
-
-\item{data}{The sample frequency count table for the population of interest.
-See dataset apples for sample formatting.}
+\item{answers}{Deprecated; only for backwards compatibility}
 }
 \value{
-The results of the estimator, including standard error.
+An object of class \code{alpha_estimate}
 }
 \description{
 This function implements the species richness estimation procedure outlined
@@ -25,47 +24,7 @@ in Chao & Bunge (2002).
 }
 \examples{
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 chao_bunge(apples)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
 \author{
