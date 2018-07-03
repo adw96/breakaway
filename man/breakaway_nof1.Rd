@@ -4,11 +4,11 @@
 \alias{breakaway_nof1}
 \title{species richness estimation without singletons}
 \usage{
-breakaway_nof1(my_data, output = TRUE, plot = TRUE, answers = FALSE,
+breakaway_nof1(input_data, output = TRUE, plot = TRUE, answers = FALSE,
   force = FALSE)
 }
 \arguments{
-\item{my_data}{The sample frequency count table for the population of
+\item{input_data}{The sample frequency count table for the population of
 interest. The first row must correspond to the doubletons. Acceptable
 formats include a matrix, data frame, or file path (csv or txt). The
 standard frequency count table format is used: two columns, the first of

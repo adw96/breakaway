@@ -20,9 +20,10 @@ chao_bunge <- function(input_data,
                        cutoff=10, 
                        output=NULL, answers=NULL) {
   
+  my_warnings <- NULL
+  
   my_data <- convert(input_data)
   
-  my_data <- check_format(my_data)
   input_data <- my_data
   cc <- sum(input_data[,2])
   
@@ -33,7 +34,7 @@ chao_bunge <- function(input_data,
   n <- sum(frequency_index)
   
   if (min(my_data[, 1]) > cutoff) {
-    warning("cutoff exceeds minimum frequency count index; setting to maximum")
+    my_warnings <- c(my_warnings, "cutoff exceeds minimum frequency count index")
     cutoff <- max(my_data[, 1])
   }
   my_data <- my_data[ my_data[,1] <= cutoff, ]
@@ -76,6 +77,9 @@ chao_bunge <- function(input_data,
     diversity <- NA
     diversity_se  <- NA
     f0  <- NA
+    
+    my_warnings <- c(my_warnings, "negative richness estimate")
+    
   }
   
   # if(output) {
@@ -98,11 +102,13 @@ chao_bunge <- function(input_data,
                  estimand = "richness",
                  name = "Chao-Bunge",
                  interval = c(n + f0/d, n + f0*d),
-                 type = "parametric",
+                 type = "???",
                  model = "Negative Binomial",
                  frequentist = TRUE,
                  parametric = TRUE,
                  reasonable = TRUE,
-                 interval_type = "Approximate: log-normal")
+                 interval_type = "Approximate: log-normal", 
+                 warnings = my_warnings,
+                 other = list(cutoff = cutoff))
   
 }

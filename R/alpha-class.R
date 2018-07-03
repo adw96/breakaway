@@ -8,7 +8,7 @@
 #' @param name The name of the method
 #' @param interval An interval estimate
 #' @param interval_type Type of interval estimate
-#' @param type ????
+#' @param type TODO(Amy): Deprecate?
 #' @param model  What model is fit
 #' @param warnings  Any warnings?
 #' @param frequentist Logical. Frequentist or Bayesian?
@@ -38,6 +38,12 @@ alpha_estimate <- function(estimate = NULL,
                            ...) {
   
   # deprecated: est, seest, ci
+  
+  # if (is.null(ci) & !is.null(error)) {
+  # # TODO need f0
+  #   d <- exp(1.96*sqrt(log(1 + error^2 / f0)))
+  #   
+  # }
   
   alpha_object <- list(estimate = estimate,
                        error = error,
@@ -82,6 +88,9 @@ print.alpha_estimate <- function(x, ...) {
       cat(paste("  Confidence interval: (", 
                 round(x$interval[1], ifelse(x$estimand == "richness", 0, 2)), ", ", 
                 round(x$interval[2], ifelse(x$estimand == "richness", 0, 2)), ")\n", sep=""))
+    }
+    if (!is.null(x$other$cutoff)) {
+      cat(paste("  Cutoff: ", x$other$cutoff)) 
     }
   }
 }

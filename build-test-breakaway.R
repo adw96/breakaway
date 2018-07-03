@@ -1,5 +1,6 @@
 # testing and compiling breakaway
 # directory <- "/Users/adwillis/software/breakaway"
+# directory <- "/Users/adw96/Documents/software/breakaway"
 # setwd(directory)
 library(devtools)
 library(roxygen2)
@@ -35,9 +36,17 @@ document(directory)
 roxygenise(directory)
 build(directory, vignettes=F)
 library(breakaway)
+breakaway(toy_otu_table$Sample106)$plot
+breakaway(apples)$plot
 test(directory)
-
 check() # builds namespace
+
+breakaway(toy_otu_table$Sample31)
+breakaway(toy_otu_table$Sample4)
+breakaway(toy_otu_table$Sample28)
+chao_bunge(toy_otu_table$Sample31)
+
+test_
 
 #############################################
 

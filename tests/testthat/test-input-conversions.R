@@ -21,12 +21,12 @@ datasets_to_test <- list(apples,
                          hawaii)
 
 richness_estimates <- list(chao1,
-                           # breakaway,
-                           # chao_bunge,
+                           breakaway,
+                           chao_bunge,
                            wlrm_transformed,
                            wlrm_untransformed,
                            # objective_bayes_negbin(apples, iterations=100, burn.in=50),
-                           # objective_bayes_poisson(apples, iterations=100, burn.in=50))
+                           # objective_bayes_poisson(apples, iterations=100, burn.in=50),
                            chao1_bc)
 
 test_that("Richness estimates output the correct type", {

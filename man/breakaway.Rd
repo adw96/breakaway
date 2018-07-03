@@ -4,34 +4,22 @@
 \alias{breakaway}
 \title{Species richness estimation with breakaway}
 \usage{
-breakaway(my_data, output = TRUE, plot = FALSE, answers = FALSE,
+breakaway(input_data, output = NULL, plot = NULL, answers = NULL,
   print = NULL)
 }
 \arguments{
-\item{my_data}{The sample frequency count table for the population of
-interest. The first row must correspond to the singletons. Acceptable
-formats include a matrix, data frame, or file path (csv or txt). The
-standard frequency count table format is used: two columns, the first of
-which contains the frequency of interest (eg. 1 for singletons, species
-observed once, 2 for doubletons, species observed twice, etc.) and the
-second of which contains the number of species observed this many times.
-Frequencies (first column) should be ordered least to greatest. At least 6
-contiguous frequencies are necessary. Do not concatenate large frequencies.
-See dataset apples for sample formatting.}
+\item{input_data}{An input type that can be processed by \code{convert()}}
 
-\item{output}{Logical: whether the results should be printed to screen. If
-\samp{FALSE}, answers should be set to \samp{TRUE} so that results will be
-returned.}
+\item{output}{Deprecated; only for backwards compatibility}
 
-\item{plot}{Logical: whether the data and model fit should be plotted.}
+\item{plot}{Deprecated; only for backwards compatibility}
 
-\item{answers}{Logical: whether the function should return an argument. If
-\samp{FALSE}, output should be set to \samp{TRUE}.}
+\item{answers}{Deprecated; only for backwards compatibility}
 
-\item{print}{Print the output?}
+\item{print}{Deprecated; only for backwards compatibility}
 }
 \value{
-\item{code}{ A category representing algorithm behaviour.
+An object of class \code{alpha_estimate} \item{code}{ A category representing algorithm behaviour.
 \samp{code=1} indicates no nonlinear models converged and the transformed
 WLRM diversity estimate of Rocchetti et. al. (2011) is returned.
 \samp{code=2} indicates that the iteratively reweighted model converged and
@@ -68,50 +56,8 @@ dataset may contain these errors, and recommend the use of
 }
 \examples{
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 breakaway(apples)
 breakaway(apples, plot = FALSE, output = FALSE, answers = TRUE)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
 \references{

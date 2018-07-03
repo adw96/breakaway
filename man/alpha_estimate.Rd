@@ -22,7 +22,7 @@ alpha_estimate(estimate = NULL, error = NULL, estimand = NULL,
 
 \item{interval_type}{Type of interval estimate}
 
-\item{type}{????}
+\item{type}{TODO(Amy): Deprecate?}
 
 \item{model}{What model is fit}
 
