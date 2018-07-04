@@ -36,7 +36,12 @@ document(directory)
 roxygenise(directory)
 build(directory, vignettes=F)
 library(breakaway)
-breakaway(toy_otu_table$Sample106)$plot
+breakaway(apples)
+breakaway_nof1(apples[-1,]) %>% names
+breakaway_nof1(hawaii[-1,])$estimate
+breakaway_nof1(hawaii[-1,])$plot
+breakaway_nof1(apples[-1,])$plot
+
 breakaway(apples)$plot
 test(directory)
 check() # builds namespace
@@ -45,8 +50,8 @@ breakaway(toy_otu_table$Sample31)
 breakaway(toy_otu_table$Sample4)
 breakaway(toy_otu_table$Sample28)
 chao_bunge(toy_otu_table$Sample31)
+breakaway(apples)
 
-test_
 
 #############################################
 

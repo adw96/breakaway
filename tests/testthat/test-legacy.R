@@ -25,11 +25,10 @@ test_that("Updated S3 outputs consistent", {
   expect_equal(chao_bc$estimate, 1238.912, tolerance = 1e-3)
   expect_equal(chao_bc$error, 37.69171, tolerance = 1e-3)
   
-  ### Old format
-  expect_equal(ba$est, 1552.416, tolerance = 1e-1)
-  expect_equal(ba$seest, 304.7071, tolerance = 1e-1)
+  expect_equal(ba$estimate, 1552.416, tolerance = 1e-1)
+  expect_equal(ba$error, 304.7071, tolerance = 1e-1)
   
-  expect_equal(ba_nof1$est %>% unname, 1500.401, tolerance = 1e-1)
-  expect_equal(ba_nof1$seest, 1341.351, tolerance = 1e-1)
+  expect_equal(ba_nof1$estimate, 1500.401, tolerance = 1e-1)
+  expect_equal(ba_nof1$error, 1341.351, tolerance = 1e-1)
   
 })
