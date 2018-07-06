@@ -95,6 +95,17 @@ print.alpha_estimate <- function(x, ...) {
   }
 }
 
+#' @export
+summary.alpha_estimate <- function(x, ...) {
+  # output just like a list
+  
+  # don't plot
+  y <- x
+  class(y) <- setdiff(class(y), "alpha_estimate")
+  y$plot <- NULL
+  print(y)
+}
+
 
 #' @export
 plot.alpha_estimate <- function(x, ...) {

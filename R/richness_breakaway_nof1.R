@@ -365,8 +365,7 @@ breakaway_nof1 <- function(input_data,
                                                            code = 1,
                                                            the_function = the_function,
                                                            name = choice$model),
-                                              full = choice$full,
-                                              ci = c(n + f0_pred/d, n + f0_pred*d))
+                                              full = choice$full)
         
         
       }

@@ -2,6 +2,7 @@
 
 S3method(plot,alpha_estimate)
 S3method(print,alpha_estimate)
+S3method(summary,alpha_estimate)
 export(alpha_estimate)
 export(betta)
 export(betta_pic)

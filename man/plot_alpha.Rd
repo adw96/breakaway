@@ -8,14 +8,14 @@ plot_alpha(physeq, x = "samples", color = NULL, shape = NULL, nrow = 1,
   measures = NULL, estimators = NULL, upper_limits = NULL)
 }
 \arguments{
-\item{physeq}{(Required). \code{\link{phyloseq-class}}, or alternatively, 
+\item{physeq}{(Required). \code{\link{phyloseq-class}}, or alternatively,
 an \code{\link{otu_table-class}}. The data about which you want to estimate.}
 
 \item{x}{(Optional). A variable to map to the horizontal axis. The vertical
  axis will be mapped to the alpha diversity index/estimate
  and have units of total taxa, and/or index value (dimensionless).
  This parameter (\code{x}) can be either a character string indicating a
- variable in \code{sample_data} 
+ variable in \code{sample_data}
  (among the set returned by \code{sample_variables(physeq)} );
  or a custom supplied vector with length equal to the number of samples
  in the dataset (nsamples(physeq)).
@@ -23,10 +23,10 @@ an \code{\link{otu_table-class}}. The data about which you want to estimate.}
  The default value is \code{"samples"}, which will map each sample's name
  to a separate horizontal position in the plot.}
 
-\item{color}{(Optional). Default \code{NULL}. 
+\item{color}{(Optional). Default \code{NULL}.
 The sample variable to map to different colors.
-Like \code{x}, this can be a single character string of the variable name in 
-\code{sample_data} 
+Like \code{x}, this can be a single character string of the variable name in
+\code{sample_data}
 (among the set returned by \code{sample_variables(physeq)} );
 or a custom supplied vector with length equal to the number of samples
 in the dataset (nsamples(physeq)).
@@ -36,9 +36,9 @@ but it can be modified afterward with an additional layer using
 
 \item{shape}{(Optional). Default \code{NULL}. The sample variable to map
 to different shapes. Like \code{x} and \code{color},
-this can be a single character string 
-of the variable name in 
-\code{sample_data} 
+this can be a single character string
+of the variable name in
+\code{sample_data}
 (among the set returned by \code{sample_variables(physeq)} );
 or a custom supplied vector with length equal to the number of samples
 in the dataset (nsamples(physeq)).
@@ -48,9 +48,9 @@ but it can be modified afterward with an additional layer using
 
 \item{nrow}{(Optional). Default is \code{1},
 meaning that all plot panels will be placed in a single row,
-side-by-side. 
+side-by-side.
 This argument is passed to \code{\link[ggplot2]{facet_wrap}}.
-If \code{NULL}, the number of rows and columns will be 
+If \code{NULL}, the number of rows and columns will be
 chosen automatically (wrapped) based on the number of panels
 and the size of the graphics device.}
 

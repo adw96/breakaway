@@ -14,15 +14,15 @@ test_that("toy_otu_table inherits from phyloseq", {
   
 })
 
-test_that("wlrm_untransformed is occasionally NULL", {
+test_that("breakaway runs on phyloseq objects and matrices", {
   
-  dataset <- make_frequency_count_table(toy_otu_table[, 126])
-  wlrmut_dataset <- wlrm_untransformed(fc, answers = T, print=F)
-  expect_false(wlrmut_dataset, is.null)
-  
-  dataset <- make_frequency_count_table(toy_otu_table[, 31])
-  wlrmut_dataset <- wlrm_untransformed(fc, answers = T, print=F)
-  expect_false(wlrmut_dataset, is.null)
+  expect_is(breakaway(toy_otu_table), "alpha_estimate")
   
   
+})
+
+test_that("crazy estimates give warnings", {
+  
+  expect_warning((GlobalPatterns %>% otu_table)[,1] %>% c %>% breakaway)
+
 })

@@ -1,5 +1,5 @@
 # testing and compiling breakaway
-# directory <- "/Users/adwillis/software/breakaway"
+directory <- "/Users/adwillis/software/breakaway"
 # directory <- "/Users/adw96/Documents/software/breakaway"
 # setwd(directory)
 library(devtools)
@@ -23,10 +23,20 @@ rmarkdown::render("README.Rmd")
 roxygenise(directory)
 document(directory)
 # build(directory)
-build(directory, vignettes=F)
+# build(directory, vignettes=F)
 build(directory, vignettes=T)
 library(breakaway)
 test(directory)
+
+data("GlobalPatterns")
+breakaway(GlobalPatterns)
+
+(GlobalPatterns %>% 
+  otu_table)[,1] %>% c %>% breakaway -> x
+x
+x$reasonable
+x$other
+x$plot + ylim(0,5)
 
 ?build_vignettes
 

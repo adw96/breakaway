@@ -310,8 +310,7 @@ breakaway <- function(input_data,
                                                            code = 1,
                                                            the_function = the_function,
                                                            name = choice$model),
-                                              full = choice$full,
-                                              ci = c(n + f0/d, n + f0*d))
+                                              full = choice$full)
         
         
       }

@@ -8,12 +8,12 @@ estimate_alpha_better(physeq, split = TRUE, measures = NULL,
   estimators = NULL)
 }
 \arguments{
-\item{physeq}{(Required). \code{\link{phyloseq-class}}, or alternatively, 
+\item{physeq}{(Required). \code{\link{phyloseq-class}}, or alternatively,
 an \code{\link{otu_table-class}}. The data about which you want to estimate
 the richness.}
 
 \item{split}{(Optional). Logical. Should a separate set of richness estimates
-be performed for each sample? Or alternatively, pool all samples and 
+be performed for each sample? Or alternatively, pool all samples and
 estimate richness of the entire set.}
 
 \item{measures}{(Optional). Default is \code{NULL}, meaning that
@@ -27,10 +27,10 @@ Values must be among those supported:
 A \code{data.frame} of the richness estimates, and their standard error.
 }
 \description{
-Estimates a number of standard alpha diversity in a statistically rigourous way, 
+Estimates a number of standard alpha diversity in a statistically rigourous way,
 and returns the results as a \code{data.frame}.
 Strictly speaking, this function is not only estimating richness,
-despite its name. 
+despite its name.
 It can operate on the cumulative population of all
 samples in the dataset, or by repeating the richness estimates for each
 sample individually.
@@ -41,7 +41,7 @@ later on if needed, just not before using this function.
 }
 \seealso{
 Check out the custom plotting function, \code{\link{plot_richness}},
- for easily showing the results of different estimates, 
+ for easily showing the results of different estimates,
  with method-specific error-bars.
  Also check out the internal functions borrowed from the \code{vegan} package:
 }
