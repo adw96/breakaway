@@ -25,7 +25,9 @@ Imports: MASS,
     reshape2,
     R.rsp,
     testthat
-Suggests: knitr,
+Suggests: covr,
+    DT,
+    knitr,
     rmarkdown,
     plyr
 VignetteBuilder: knitr
