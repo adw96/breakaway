@@ -1,6 +1,7 @@
 # testing and compiling breakaway
-directory <- "/Users/adwillis/software/breakaway"
+# directory <- "/Users/adwillis/software/breakaway"
 # directory <- "/Users/adw96/Documents/software/breakaway"
+directory <- "/Users/amy/Documents/software/breakaway"
 # setwd(directory)
 library(devtools)
 library(roxygen2)
@@ -8,12 +9,12 @@ library(knitr)
 library(rstudioapi)
 library(Rd2roxygen)
 # install_github("r-lib/fs")
-library(fs)
 # devtools::install_github("r-lib/pkgdown")
-library(pkgdown)
 # devtools::install_github("r-lib/testthat")
-library(testthat)
 # devtools::install_github("HenrikBengtsson/R.rsp")
+library(fs)
+library(pkgdown)
+library(testthat)
 library(R.rsp)
 
 # check function can build
@@ -23,8 +24,8 @@ rmarkdown::render("README.Rmd")
 roxygenise(directory)
 document(directory)
 # build(directory)
-# build(directory, vignettes=F)
-build(directory, vignettes=T)
+build(directory, vignettes=F)
+# build(directory, vignettes=T)
 library(breakaway)
 test(directory)
 

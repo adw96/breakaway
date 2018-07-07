@@ -40,30 +40,3 @@ test_that("Richness estimates output the correct type", {
   }
   
 })
-
-
-# 
-# 
-# test_that("Richness estimates accept frequency count tables", {
-#   
-#   ### apply all functions in richness_estimates to all datasets in datasets_to_test
-#   
-#   for (dataset in datasets_to_test) {
-#     for (richness_estimate in richness_estimates) {
-#       expect_is(richness_estimate(dataset), "alpha_estimate")
-#     }
-#   }
-#   
-# })
-# 
-# test_that("Richness estimates accept count vectors", {
-#   
-#   # convert all datasets to count vectors and test
-#   
-#   for (dataset in datasets_to_test) {
-#     count_vector_to_test <- to_count_vector(dataset)
-#     for (richness_estimate in richness_estimates) {
-#       expect_is(richness_estimate(count_vector_to_test), "diversity_estimate")
-#     }
-#   }
-# })

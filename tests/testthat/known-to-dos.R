@@ -20,9 +20,3 @@ test_that("breakaway runs on phyloseq objects and matrices", {
   
   
 })
-
-test_that("crazy estimates give warnings", {
-  
-  expect_warning((GlobalPatterns %>% otu_table)[,1] %>% c %>% breakaway)
-
-})

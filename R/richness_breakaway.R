@@ -105,24 +105,7 @@ breakaway <- function(input_data,
                                             reasonable = FALSE,
                                             warnings = "insufficient contiguous frequencies")
       
-      # message("You don't have enough contiguous frequencies
-      #         to use breakaway. Using Chao-Bunge instead...\n")
-      # 
-      # result_temporary <- chao_bunge(my_data, answers = TRUE, output = FALSE)
-      # 
-      # if(output) {
-      #   cat("################## breakaway ##################\n")
-      #   cat("\tThe best estimate of total diversity is", round(result_temporary$est),
-      #       "\n \t with std error",round(result_temporary$seest),"\n")
-      #   cat("\tThe model employed was Chao-Bunge (Negative binomial) \n")
-      # }
-      # 
-      # if(answers) {
-      #   return(result_temporary)
-      # }
-      
     } else {
-      
       
       weights_inv <- 1/xs
       run <- minibreak_all(lhs, xs, ys, my_data, weights_inv, withf1 = TRUE)
@@ -153,7 +136,8 @@ breakaway <- function(input_data,
         oldest <- run$useful[run$useful[,5]==1,1][[1]]
         est <- 0
         its <- 0
-        while ( choice$outcome & abs(oldest-est)>1 & its < 30) {
+        while ( choice$outcome & abs(oldest-est) > 1 & its < 30) {
+          
           oldest <- est
           C <- round(n+oldest,0)
           unscaledprobs <- c(1,cumprod(fitted(choice$full)))
@@ -162,9 +146,9 @@ breakaway <- function(input_data,
           bs <- p[-1]/p[-cutoff]^2 * (1-exp(-C*p[-cutoff]))^2/(1-exp(-C*p[-1])) * (1-C*p[-1]/(exp(C*p[-1])-1))
           ratiovars <- (as + bs)/C
           
-          if(its==0) {
-            weights1 <- 1/ratiovars
-          }
+          # if(its==0) {
+          #   weights1 <- 1/ratiovars
+          # }
           
           run <- try ( minibreak_all(lhs,xs,ys,my_data,1/ratiovars, withf1 = TRUE), silent = 1)
           
@@ -185,12 +169,14 @@ breakaway <- function(input_data,
                                                     other = list(outcome = 0,
                                                                  code = 1))
               
-              # if(output) {print("Numerical errors result in non-convergence") }
             }
           }
           
           choice <- list()
-          if ( class(run) == "try-error" | sum(as.numeric(run$useful[,5]))==0) {
+          if ( class(run) == "try-error" | 
+               sum(as.numeric(run$useful[,5]))==0 | 
+               any(is.infinite(ratiovars)) |
+               ratiovars[1] > 1e20) {
             choice$outcome <- 0
           } else {
             choice$outcome <- 1
@@ -202,7 +188,7 @@ breakaway <- function(input_data,
             result$code <- 2
           }
         }
-        if( !choice$outcome) {
+        if (!choice$outcome) {
           # if(output) cat("We used 1/x weighting. \n")
           run <- minibreak_all(lhs,xs,ys,my_data,weights_inv, withf1 = TRUE)
           choice$outcome <- 1
@@ -246,26 +232,7 @@ breakaway <- function(input_data,
         
         d <- exp(1.96*sqrt(log(1+diversity_se^2/f0)))
         
-        
-        # if(output) {
-        #   cat("################## breakaway ##################\n")
-        #   cat("\tThe best estimate of total diversity is", round(diversity),
-        #       "\n \t with std error",round(diversity_se),"\n")
-        #   cat("\tThe model employed was", choice$model,"\n")
-        #   cat("\tThe function selected was\n\t ", the_function,"\n")
-        #   print(parameter_table)
-        #   cat("xbar\t\t\t",xbar)
-        # }
-        
-        # # if(plot)  {
         yhats <- fitted(choice$full)
-        # par(new=FALSE)
-        # plot(xs,lhs$y,xlim=c(0,max(xs)+1),ylim=c(min(lhs$y,yhats),max(lhs$y)*1.05),
-        #      ylab="f(x+1)/f(x)",xlab="x",main="Plot of ratios and fitted values under model");
-        # points(xs,yhats,pch=18)
-        # points(0,b0_hat,col="red",pch=18)
-        # legend(0,max(lhs$y),c("Fitted values", "Prediction"),pch=c(18,18),col=c("black", "red"),cex=0.8,bty = "n")
-        # # }
         
         plot_data <- rbind(data.frame("x" = xs, "y" = lhs$y, 
                                       "type" = "Observed"),
@@ -379,7 +346,7 @@ minibreak_all <- function(lhs, xs, ys, input_data, myweights, withf1 = NULL) {
   
   all_ests <- list()
   
-  model_1_0 <-  lm(ys~xs,weights=myweights)
+  model_1_0 <-  lm(ys~xs, weights=myweights)
   start_1_0 <- list(beta0 = model_1_0$coef[1], beta1 = model_1_0$coef[2])
   
   lhs2 <- lhs; lhs2$x <- xs # otherwise singularity

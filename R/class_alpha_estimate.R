@@ -96,11 +96,11 @@ print.alpha_estimate <- function(x, ...) {
 }
 
 #' @export
-summary.alpha_estimate <- function(x, ...) {
+summary.alpha_estimate <- function(object, ...) {
   # output just like a list
   
   # don't plot
-  y <- x
+  y <- object
   class(y) <- setdiff(class(y), "alpha_estimate")
   y$plot <- NULL
   print(y)
