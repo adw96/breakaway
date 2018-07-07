@@ -66,7 +66,7 @@ to_proportions <- function(input, type) {
 #' proportions.
 #' @return The Shannon index of the population given by input.
 #' @note This function is intended for population-level data. If you are
-#' dealing with a microbial sample, use \code{\link{shannon_better}} instead.
+#' dealing with a microbial sample, use DivNet instead.
 #' @export shannon
 shannon <- function(input) {
   if(any(is.na(input))) stop("Input contains missing values")
@@ -132,7 +132,7 @@ shannon <- function(input) {
 #' @param q The Hill number of interest. q = 0 corresponds to species richness, q = 2 corresponds to inverse Simpson, etc.
 #' @return The Hill number of the population given by input.
 #' @note This function is intended for population-level data. If you are
-#' dealing with a microbial sample, use \code{\link{hill_better}} instead.
+#' dealing with a microbial sample, use DivNet instead.
 #' @export hill
 hill <- function(input, q) {
   
@@ -202,7 +202,7 @@ hill <- function(input, q) {
 #' proportions.
 #' @return The inverse-Simpson index of the population given by input.
 #' @note This function is intended for population-level data. If you are
-#' dealing with a microbial sample, use \code{\link{inverse_simpson_better}} instead.
+#' dealing with a microbial sample, use DivNet instead.
 #' @export inverse_simpson
 inverse_simpson <- function(input) {
   hill(input, 2)
@@ -261,7 +261,7 @@ inverse_simpson <- function(input) {
 #' proportions.
 #' @return The Simpson index of the population given by input.
 #' @note This function is intended for population-level data. If you are
-#' dealing with a microbial sample, use \code{\link{simpson_better}} instead.
+#' dealing with a microbial sample, use DivNet instead.
 #' @export simpson
 simpson <- function(input) {
   1/hill(input, 2)
@@ -319,7 +319,7 @@ simpson <- function(input) {
 #' proportions.
 #' @return The Gini-Simpson index of the population given by input.
 #' @note This function is intended for population-level data. If you are
-#' dealing with a microbial sample, use \code{\link{gini_better}} instead.
+#' dealing with a microbial sample, use DivNet instead.
 #' @export gini
 gini <- function(input) {
   1-simpson(input)

@@ -20,5 +20,5 @@ Plug-in Hill numbers, for population-level data.
 }
 \note{
 This function is intended for population-level data. If you are
-dealing with a microbial sample, use \code{\link{hill_better}} instead.
+dealing with a microbial sample, use DivNet instead.
 }

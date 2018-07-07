@@ -4,9 +4,9 @@
 \alias{betta_pic}
 \title{function for plotting total diversity}
 \usage{
-betta_pic(y, se, x = 1:length(y), ylimu = NA, myy = NA, mymain = NA,
-  mycol = rep("black", length(y)), labs = NA, mypch = rep(16, length(y)),
-  myxlim = c(0.8 * min(x, na.rm = T), 1.2 * max(x, na.rm = T)))
+betta_pic(y, se, x = 1:length(y), ylimu = NULL, myy = NULL,
+  mymain = NULL, mycol = NULL, labs = NULL, mypch = NULL,
+  myxlim = NULL)
 }
 \arguments{
 \item{y}{A vector of estimates of total diversity. Other parameter estimates
@@ -21,66 +21,24 @@ If no argument is given, defaults to the order.}
 
 \item{ylimu}{The upper endpoint of the y-axis.}
 
-\item{myy}{A label for the y-axis. Default is none.}
+\item{myy}{Deprecated, for backwards compatibility}
 
-\item{mymain}{A main title for the plot. Default is none.}
+\item{mymain}{Deprecated, for backwards compatibility}
 
-\item{mycol}{Colors for the plotting points. Default is black.}
+\item{mycol}{Deprecated, for backwards compatibility}
 
-\item{labs}{x-axis labels. Default is none (non x-axis plotted).}
+\item{labs}{Deprecated, for backwards compatibility}
 
-\item{mypch}{Plotting characters for the estimates. Defaults to circles.}
+\item{mypch}{Deprecated, for backwards compatibility}
 
-\item{myxlim}{A vector of x-axis limits. Default is 0 to 10\% greater than
-the maximum x value.}
+\item{myxlim}{Deprecated, for backwards compatibility}
 }
 \description{
 A simple plotting interface for comparing total diversity across samples or
 a covariate gradient.
 }
 \examples{
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 betta_pic(c(1552, 1500, 884), c(305, 675, 205), mymain = "Example title")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
 \references{

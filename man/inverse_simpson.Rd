@@ -18,5 +18,5 @@ Plug-in Inverse Simpson index, for population-level data.
 }
 \note{
 This function is intended for population-level data. If you are
-dealing with a microbial sample, use \code{\link{inverse_simpson_better}} instead.
+dealing with a microbial sample, use DivNet instead.
 }
