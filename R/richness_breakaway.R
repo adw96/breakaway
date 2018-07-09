@@ -53,10 +53,66 @@
 #' breakaway(apples)
 #' breakaway(apples, plot = FALSE, output = FALSE, answers = TRUE)
 #' 
-#' @export breakaway
+#' @export 
 breakaway <- function(input_data, 
                       output = NULL, plot = NULL, 
                       answers = NULL, print = NULL) {
+  UseMethod("breakaway", input_data)
+}
+
+#' @export
+breakaway.phyloseq <- function(input_data, 
+                               output = NULL, plot = NULL, 
+                               answers = NULL, print = NULL) {
+  
+  if (input_data %>% otu_table %>% taxa_are_rows) {
+    input_data %>% 
+      otu_table %>%
+      apply(2, breakaway) %>%
+      alpha_estimates
+  } else {
+    input_data %>% 
+      otu_table %>%
+      apply(1, breakaway) %>%
+      alpha_estimates
+  }
+}
+
+#' @export
+breakaway.matrix <- function(input_data, 
+                             output = NULL, plot = NULL, 
+                             answers = NULL, print = NULL) {
+  
+  input_data %>%
+    as.data.frame %>%
+    breakaway(output, plot, answers, print)
+  
+}
+
+#' @export
+breakaway.data.frame <- function(input_data, 
+                                 output = NULL, plot = NULL, 
+                                 answers = NULL, print = NULL) {
+  
+  ## if a frequency count matrix...
+  if (dim(input_data)[2] == 2 & 
+      all(input_data[,1] %>% sort == input_data[,1])) {
+    breakaway.default(input_data)
+  } else {
+    
+    warning("Assuming taxa are rows")
+    
+    input_data %>% 
+      apply(2, breakaway) %>%
+      alpha_estimates
+    
+  }
+}
+
+#' @export
+breakaway.default <- function(input_data, 
+                              output = NULL, plot = NULL, 
+                              answers = NULL, print = NULL) {
   
   my_data <- convert(input_data)
   
@@ -249,16 +305,6 @@ breakaway <- function(input_data,
           labs(x = "x", y = "f(x+1)/f(x)", title = "Plot of ratios and fitted values: Kemp models") +
           theme_bw()
         
-        # if(answers) {
-        #   result$name <- choice$model
-        #   result$para <- parameter_table
-        #   result$est <- diversity
-        #   result$seest <- as.vector(diversity_se)
-        #   result$full <- choice$full
-        #   result$ci <- c(n+f0/d,n+f0*d)
-        #   return(result)
-        # }
-        
         kemp_alpha_estimate <- alpha_estimate(estimate = diversity,
                                               error = diversity_se,
                                               model = "Kemp",
@@ -277,7 +323,8 @@ breakaway <- function(input_data,
                                                            code = 1,
                                                            the_function = the_function,
                                                            name = choice$model),
-                                              full = choice$full)
+                                              full = choice$full,
+                                              f0_hat = f0)
         
         
       }
@@ -287,23 +334,6 @@ breakaway <- function(input_data,
   kemp_alpha_estimate
   
 }
-
-# richness_clean <- function(count_table, FUN = breakaway) {
-#   richness_output <- try(FUN(count_table, answers = T, output = F, plot = F))
-#   if (class(richness_output) != "try-error") {
-#     data.frame("index" = "Richness",
-#                "estimate" = richness_output$est,
-#                "standard_error" = richness_output$seest,
-#                "lower" = richness_output$ci[1],
-#                "upper" = richness_output$ci[2])
-#   } else {
-#     data.frame("index" = "Richness",
-#                "estimate" = NA,
-#                "standard_error" = NA,
-#                "lower" = sum(count_table[,2]),
-#                "upper" = Inf)
-#   }
-# }
 
 rootcheck <- function(model,lhs,nof1=FALSE) {
   if(length(coef(model))==2)  {

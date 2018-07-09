@@ -42,7 +42,7 @@ objective_bayes_negbin <- function(data, output=TRUE, plot=TRUE, answers=FALSE,
   for (i in 2:iterations){
     
     # print every 500th iteration number
-    if (i %in% seq(0,iterations-burn.in,by=500)) {print(paste("starting iteration ",i," of ",iterations,sep=""))}
+    if (i %in% seq(0,iterations-burn.in,by=500)) {message(paste("starting iteration ",i," of ",iterations,sep=""))}
     
     ## sample from p(T1T2|N,x)
     
@@ -271,7 +271,7 @@ objective_bayes_poisson <- function(data, output=TRUE, plot=TRUE, answers=FALSE,
   for (i in 2:iterations){
     
     # print every 500th iteration number
-    if (i %in% seq(0,iterations-burn.in,by=500)) {print(paste("starting iteration ",i," of ",iterations,sep=""))}
+    if (i %in% seq(0,iterations-burn.in,by=500)) {message(paste("starting iteration ",i," of ",iterations,sep=""))}
     
     ## sample from p(lambda|x,C)
     
@@ -478,7 +478,7 @@ objective_bayes_mixedgeo <- function(data, output=TRUE, plot=TRUE, answers=FALSE
   for (i in 2:iterations){
     
     # print every 500th iteration number
-    if (i %in% seq(0,iterations-burn.in,by=500)) {print(paste("starting iteration ",i," of ",iterations,sep=""))}
+    if (i %in% seq(0,iterations-burn.in,by=500)) {message(paste("starting iteration ",i," of ",iterations,sep=""))}
     
     ## sample from p(Z|A,T1,T2,X,N)
     

@@ -21,9 +21,11 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -35,12 +37,13 @@ frequency count table. Unlike breakaway, it does not require
 an input for the number of species observed once, making it an excellent
 exploratory tool for microbial ecologists who believe that their sample may
 contain spurious singletons. The underlying estimation procedure is similar
-to that of breakaway and is outlined in Willis &amp; Bunge (2014).
+to that of breakaway and is outlined in Willis &amp;amp; Bunge (2014).
 The diversity estimate, standard error, estimated model coefficients and
 plot of the fitted model are returned." />
 
 <meta property="og:image" content="http://adw96.github.io/breakaway/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -67,7 +70,7 @@ plot of the fitted model are returned." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">breakaway</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.4</span>
       </span>
     </div>
 
@@ -93,16 +96,7 @@ plot of the fitted model are returned." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/alpha-better.html">alpha diversity, properly</a>
-    </li>
-    <li>
-      <a href="../articles/betta-figure.html">Comparing samples visually with betta</a>
-    </li>
-    <li>
       <a href="../articles/extended-tutorial.html">Getting into the weeds</a>
-    </li>
-    <li>
-      <a href="../articles/phyloseq.html">breakaway + phyloseq</a>
     </li>
     <li>
       <a href="../articles/resample-estimates.html">Variance of alpha diversity estimates</a>
@@ -146,55 +140,41 @@ plot of the fitted model are returned.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>breakaway_nof1</span>(<span class='no'>my_data</span>, <span class='kw'>output</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>answers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>breakaway_nof1</span>(<span class='no'>input_data</span>, <span class='kw'>output</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>answers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>print</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>force</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>my_data</th>
-      <td><p>The sample frequency count table for the population of
-interest. The first row must correspond to the doubletons. Acceptable
-formats include a matrix, data frame, or file path (csv or txt). The
-standard frequency count table format is used: two columns, the first of
-which contains the frequency of interest (eg. 1 for singletons, species
-observed once; 2 for doubletons, species observed twice, etc.) and the
-second of which contains the number of species observed this many times.
-Frequencies (first column) should be ordered least to greatest. At least 6
-contiguous frequencies are necessary. Do not concatenate large frequencies.
-See dataset <code><a href='apples.html'>apples</a></code> for sample formatting.</p></td>
+      <th>input_data</th>
+      <td><p>An input type that can be processed by <code><a href='convert.html'>convert()</a></code></p></td>
     </tr>
     <tr>
       <th>output</th>
-      <td><p>Logical: whether the results should be printed to screen. If
-<samp>FALSE</samp>, <samp>answers</samp> should be set to <samp>TRUE</samp> so that results
-will be returned.</p></td>
+      <td><p>Deprecated; only for backwards compatibility</p></td>
     </tr>
     <tr>
       <th>plot</th>
-      <td><p>Logical: whether the data and model fit should be plotted.</p></td>
+      <td><p>Deprecated; only for backwards compatibility</p></td>
     </tr>
     <tr>
       <th>answers</th>
-      <td><p>Logical: whether the function should return an argument. If
-<samp>FALSE</samp>, <samp>output</samp> should be set to <samp>TRUE</samp>.</p></td>
+      <td><p>Deprecated; only for backwards compatibility</p></td>
+    </tr>
+    <tr>
+      <th>print</th>
+      <td><p>Deprecated; only for backwards compatibility</p></td>
     </tr>
     <tr>
       <th>force</th>
-      <td><p>Logical: force the procedure to run in the presence of
-frequency count concatenation. A basic check procedure confirms that the
-user has not appeared to concatenate multiple upper frequencies.
-<samp>force=TRUE</samp> will force the procedure to fit models in the presence of
-this. <samp>breakaway_nof1</samp>'s diversity estimates cannot be considered
-reliable in this case.</p></td>
+      <td><p>Deprecated; only for backwards compatibility</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
-
+    <p>An object of class <code>alpha_estimate</code></p>
 <dt>code</dt><dd><p>A category representing algorithm behaviour.
 <samp>code=1</samp> indicates no nonlinear models converged and the transformed
 WLRM diversity estimate of Rocchetti et. al. (2011) is returned.
@@ -231,7 +211,7 @@ dataset, and have greater standard errors.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Willis, A. (2015). Species richness estimation with high
-diversity but spurious singletons. <em>Under review.</em></p>
+diversity but spurious singletons. <em>arXiv.</em></p>
 <p>Willis, A. and Bunge, J. (2015). Estimating diversity via frequency ratios.
 <em>Biometrics.</em></p>
     
@@ -242,92 +222,11 @@ diversity but spurious singletons. <em>Under review.</em></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<span class='fu'>breakaway_nof1</span>(<span class='no'>apples</span>[-<span class='fl'>1</span>, ])</div><div class='output co'>#&gt; Iterative reweighting didn't produce any outcomes after the first iteration, so we use 1/x
-#&gt; ################## breakaway ##################
-#&gt; 	The best estimate of total diversity is 1500 
-#&gt;  	 with std error 1341 
-#&gt; 	The model employed was model_1_1 
-#&gt; 	The function selected was
-#&gt; 	  f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar))/(1+alpha1*(x-xbar)) 
-#&gt;        Coef estimates Coef std errors
-#&gt; beta0      1.20078845      0.18102489
-#&gt; beta1      0.05614293      0.04800126
-#&gt; alpha1     0.02874888      0.05381204
-#&gt; xbar			 16.5</div><div class='img'><img src='breakaway_nof1-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>breakaway_nof1</span>(<span class='no'>apples</span>[-<span class='fl'>1</span>, ], <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>output</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>answers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; $code
-#&gt; [1] 3
-#&gt; 
-#&gt; $name
-#&gt; [1] "model_1_1"
-#&gt; 
-#&gt; $para
-#&gt;        Coef estimates Coef std errors
-#&gt; beta0      1.20078845      0.18102489
-#&gt; beta1      0.05614293      0.04800126
-#&gt; alpha1     0.02874888      0.05381204
-#&gt; 
-#&gt; $est
-#&gt;    beta0 
-#&gt; 1500.401 
-#&gt; 
-#&gt; $seest
-#&gt; [1] 1341.351
-#&gt; 
-#&gt; $full
-#&gt; Nonlinear regression model
-#&gt;   model: lhs$y ~ structure_1_1(x, beta0, beta1, alpha1)
-#&gt;    data: lhs
-#&gt;   beta0   beta1  alpha1 
-#&gt; 1.20079 0.05614 0.02875 
-#&gt;  weighted residual sum-of-squares: 1.274
-#&gt; 
-#&gt; Number of iterations to convergence: 25 
-#&gt; Achieved convergence tolerance: 8.431e-06
-#&gt; 
-#&gt; $ci
-#&gt;       beta0       beta0 
-#&gt;    724.8861 139032.6457 
-#&gt; </div><div class='input'>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<span class='fu'>breakaway_nof1</span>(<span class='no'>apples</span>[-<span class='fl'>1</span>, ])</div><div class='output co'>#&gt; Estimate of richness from method breakaway+nof1:
+#&gt;   Estimate is 1500 with standard error 1341.35
+#&gt;   Confidence interval: (725, 139033)</div><div class='input'><span class='fu'>breakaway_nof1</span>(<span class='no'>apples</span>[-<span class='fl'>1</span>, ], <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>output</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>answers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Estimate of richness from method breakaway+nof1:
+#&gt;   Estimate is 1500 with standard error 1341.35
+#&gt;   Confidence interval: (725, 139033)</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

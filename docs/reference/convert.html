@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Build frequency count tables from an OTU table — build_frequency_count_tables • breakaway</title>
+<title>convert between different inputs for alpha-diversity estimates — convert • breakaway</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Build frequency count tables from an OTU table — build_frequency_count_tables" />
+<meta property="og:title" content="convert between different inputs for alpha-diversity estimates — convert" />
 
-<meta property="og:description" content="Build frequency count tables from an OTU table" />
+<meta property="og:description" content="Inputs slated for development include phyloseq and otu_table" />
 
 <meta property="og:image" content="http://adw96.github.io/breakaway/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -115,32 +115,31 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Build frequency count tables from an OTU table</h1>
+    <h1>convert between different inputs for alpha-diversity estimates</h1>
     
-    <div class="hidden name"><code>build_frequency_count_tables.Rd</code></div>
+    <div class="hidden name"><code>convert.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Build frequency count tables from an OTU table</p>
+    <p>Inputs slated for development include phyloseq and otu_table</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>build_frequency_count_tables</span>(<span class='no'>otu_table</span>)</pre>
+    <pre class="usage"><span class='fu'>convert</span>(<span class='no'>input_data</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>otu_table</th>
-      <td><p>An OTU table as a data frame or a matrix. Columns are the
-samples and rows give the taxa.</p></td>
+      <th>input_data</th>
+      <td><p>Supported types include filenames, data frames, matrices, vectors...</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list of frequency count tables corresponding to the columns.</p>
+    <p>Frequency count able</p>
     
 
   </div>

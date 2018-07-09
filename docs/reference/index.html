@@ -21,9 +21,11 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -32,6 +34,7 @@
 
 <meta property="og:image" content="http://adw96.github.io/breakaway/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -58,7 +61,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">breakaway</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.4</span>
       </span>
     </div>
 
@@ -84,16 +87,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/alpha-better.html">alpha diversity, properly</a>
-    </li>
-    <li>
-      <a href="../articles/betta-figure.html">Comparing samples visually with betta</a>
-    </li>
-    <li>
       <a href="../articles/extended-tutorial.html">Getting into the weeds</a>
-    </li>
-    <li>
-      <a href="../articles/phyloseq.html">breakaway + phyloseq</a>
     </li>
     <li>
       <a href="../articles/resample-estimates.html">Variance of alpha diversity estimates</a>
@@ -140,9 +134,15 @@
       <tr>
         
         <td>
-          <p><code><a href="alpha.html">alpha()</a></code> </p>
+          <p><code><a href="alpha_estimate.html">alpha_estimate()</a></code> </p>
         </td>
-        <td><p>Build alpha-class objects from their components.</p></td>
+        <td><p>alpha_estimate</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="alpha_estimates.html">alpha_estimates()</a></code> </p>
+        </td>
+        <td><p>alpha_estimates</p></td>
       </tr><tr>
         
         <td>
@@ -206,21 +206,21 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="estimate_alpha_better.html">estimate_alpha_better()</a></code> </p>
+          <p><code><a href="check_format.html">check_format()</a></code> </p>
         </td>
-        <td><p>Estimate alpha diversity</p></td>
+        <td><p>Run some basic checks on a possible frequency count table</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="convert.html">convert()</a></code> </p>
+        </td>
+        <td><p>convert between different inputs for alpha-diversity estimates</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="gini.html">gini()</a></code> </p>
         </td>
         <td><p>Plug-in Gini-Simpson index</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="gini_better.html">gini_better()</a></code> </p>
-        </td>
-        <td><p>An estimate of the Gini-Simpson index</p></td>
       </tr><tr>
         
         <td>
@@ -236,21 +236,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="hill_better.html">hill_better()</a></code> </p>
-        </td>
-        <td><p>Hill number estimates</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="inverse_simpson.html">inverse_simpson()</a></code> </p>
         </td>
         <td><p>Plug-in Inverse Simpson index</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="inverse_simpson_better.html">inverse_simpson_better()</a></code> </p>
-        </td>
-        <td><p>An estimate of the Inverse-Simpson index</p></td>
       </tr><tr>
         
         <td>
@@ -260,9 +248,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="plot_alpha.html">plot_alpha()</a></code> </p>
+          <p><code><a href="proportions_instead.html">proportions_instead()</a></code> </p>
         </td>
-        <td><p>Plot alpha diversity with less incorrect error bars</p></td>
+        <td><p>OTU table to relative abundances</p></td>
       </tr><tr>
         
         <td>
@@ -303,27 +291,21 @@ tables.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="shannon_better.html">shannon_better()</a></code> </p>
-        </td>
-        <td><p>Shannon diversity estimates</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="simpson.html">simpson()</a></code> </p>
         </td>
         <td><p>Plug-in Simpson index</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="simpson_better.html">simpson_better()</a></code> </p>
-        </td>
-        <td><p>An estimate of the Simpson index</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="subsample_otu.html">subsample_otu()</a></code> </p>
         </td>
         <td><p>Resampling the taxa of your OTU table</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="to_proportions.html">to_proportions()</a></code> </p>
+        </td>
+        <td><p>convert to proportions</p></td>
       </tr><tr>
         
         <td>
@@ -347,13 +329,13 @@ tables.</p></td>
         <td>
           <p><code><a href="wlrm_transformed.html">wlrm_transformed()</a></code> </p>
         </td>
-        <td><p>function for species richness estimation</p></td>
+        <td><p>The transformed weighted linear regression estimator for species richness estimation</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="wlrm_untransformed.html">wlrm_untransformed()</a></code> </p>
         </td>
-        <td><p>function for species richness estimation</p></td>
+        <td><p>The untransformed weighted linear regression estimator for species richness estimation</p></td>
       </tr>
     </tbody>
     </table>

@@ -4,5 +4,7 @@
 
 library(testthat)
 library(breakaway)
+library(phyloseq)
+library(magrittr)
 
 test_check("breakaway")

@@ -44,16 +44,4 @@ betta_pic <- function(y, se,
     geom_linerange(aes(ymin = lower, ymax = upper)) +
     theme_bw()
     
-  
-  # n <- length(y)
-  # ylimu <- ifelse(is.na(ylimu), max(y+2*se, na.rm = T), ylimu)
-  # par(xpd=NA)
-  # plot(0, 0, type="n", xlim=myxlim, ylim=c(0, ylimu), xlab="", bty="n", ylab=myy, main=mymain)
-  # for (i in 1:n) {
-  #   if(!is.na(y[i]) & !is.na(x[i])) {
-  #     points(x[i], y[i], pch=mypch[i], col=mycol[i])
-  #     lines(c(x[i], x[i]), c(max(0, y[i]-1.96*se[i], na.rm = T), min(y[i]+1.96*se[i], ylimu)), col=mycol[i])
-  #   }
-  # }
-  # if(!is.na(labs)) axis(1, at=1:length(y), labels=labs, las=2, cex=0.8)
 }

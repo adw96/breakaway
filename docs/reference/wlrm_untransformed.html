@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>function for species richness estimation — wlrm_untransformed • breakaway</title>
+<title>The untransformed weighted linear regression estimator for species richness estimation — wlrm_untransformed • breakaway</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -21,20 +21,23 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
 
-<meta property="og:title" content="function for species richness estimation — wlrm_untransformed" />
+<meta property="og:title" content="The untransformed weighted linear regression estimator for species richness estimation — wlrm_untransformed" />
 
 <meta property="og:description" content="This function implements the untransformed version of the species richness
 estimation procedure outlined in Rocchetti, Bunge and Bohning (2011)." />
 
 <meta property="og:image" content="http://adw96.github.io/breakaway/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -61,7 +64,7 @@ estimation procedure outlined in Rocchetti, Bunge and Bohning (2011)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">breakaway</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.4</span>
       </span>
     </div>
 
@@ -87,16 +90,7 @@ estimation procedure outlined in Rocchetti, Bunge and Bohning (2011)." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/alpha-better.html">alpha diversity, properly</a>
-    </li>
-    <li>
-      <a href="../articles/betta-figure.html">Comparing samples visually with betta</a>
-    </li>
-    <li>
       <a href="../articles/extended-tutorial.html">Getting into the weeds</a>
-    </li>
-    <li>
-      <a href="../articles/phyloseq.html">breakaway + phyloseq</a>
     </li>
     <li>
       <a href="../articles/resample-estimates.html">Variance of alpha diversity estimates</a>
@@ -122,7 +116,7 @@ estimation procedure outlined in Rocchetti, Bunge and Bohning (2011)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>function for species richness estimation</h1>
+    <h1>The untransformed weighted linear regression estimator for species richness estimation</h1>
     
     <div class="hidden name"><code>wlrm_untransformed.Rd</code></div>
     </div>
@@ -134,47 +128,37 @@ estimation procedure outlined in Rocchetti, Bunge and Bohning (2011).</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>wlrm_untransformed</span>(<span class='no'>data</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>answers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>cutoff</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</pre>
+    <pre class="usage"><span class='fu'>wlrm_untransformed</span>(<span class='no'>input_data</span>, <span class='kw'>cutoff</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>answers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>The sample frequency count table for the population of interest.
-See <samp>breakaway</samp> for details.</p></td>
-    </tr>
-    <tr>
-      <th>print</th>
-      <td><p>Logical: whether the results should be printed to screen.</p></td>
-    </tr>
-    <tr>
-      <th>plot</th>
-      <td><p>Logical: whether the data and model fit should be plotted.</p></td>
-    </tr>
-    <tr>
-      <th>answers</th>
-      <td><p>Logical: whether the function should return an argument.</p></td>
+      <th>input_data</th>
+      <td><p>An input type that can be processed by <code><a href='convert.html'>convert()</a></code></p></td>
     </tr>
     <tr>
       <th>cutoff</th>
-      <td><p>The maximum frequency count to use for prediction. Defaults to
-maximal.</p></td>
+      <td><p>Maximum frequency count to use</p></td>
+    </tr>
+    <tr>
+      <th>print</th>
+      <td><p>Deprecated; only for backwards compatibility</p></td>
+    </tr>
+    <tr>
+      <th>plot</th>
+      <td><p>Deprecated; only for backwards compatibility</p></td>
+    </tr>
+    <tr>
+      <th>answers</th>
+      <td><p>Deprecated; only for backwards compatibility</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
-
-<dt>name</dt><dd><p>The ``name'' of the model.</p></dd> <dt>para</dt><dd><p>Estimated
-model parameters and standard errors.</p></dd> <dt>est</dt><dd><p>The estimate of total
-(observed plus unobserved) diversity.</p></dd> <dt>seest</dt><dd><p>The standard error in
-the diversity estimate.</p></dd> <dt>full</dt><dd><p>The chosen linear model for
-frequency ratios.</p></dd> <dt>ci</dt><dd><p>An asymmetric 95% confidence interval for
-diversity.</p></dd>
-
+    <p>An object of class <code>alpha_estimate</code></p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -196,49 +180,10 @@ Applied Statistics</em>, <b>5</b>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<span class='fu'>wlrm_untransformed</span>(<span class='no'>apples</span>)</div><div class='output co'>#&gt; ################## utWLRM ##################
-#&gt; 	The best estimate of total diversity is 1330 
-#&gt;  	 with std error 77 </div><div class='input'>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<span class='fu'>wlrm_untransformed</span>(<span class='no'>apples</span>)</div><div class='output co'>#&gt; Estimate of richness from method wlrm_untransformed:
+#&gt;   Estimate is 1330 with standard error 77
+#&gt;   Confidence interval: (1011, 10518)
+#&gt;   Cutoff:  33</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

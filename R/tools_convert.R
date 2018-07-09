@@ -9,15 +9,7 @@
 #' @export
 convert <- function(input_data) {
   
-  if ("phyloseq" %in% class(input_data)) {
-    
-    stop("phyloseq not yet supported as an input type to function `convert`")
-    
-  } else if ("otu_table" %in% class(input_data)) {
-    
-    stop("otu_table not yet supported as an input type to function `convert`")
-    
-  } else if (class(input_data) == "character") {
+  if (class(input_data) == "character") {
     
     filename <- input_data
     ext <- substr(filename, nchar(filename) - 2, nchar(filename))
@@ -33,14 +25,14 @@ convert <- function(input_data) {
       
     }
     
-  } else if ("data.frame" %in% class(input_data) | "matrix" %in% class(input_data)) {
-    
+  } else if ("data.frame" %in% class(input_data) | 
+             "matrix" %in% class(input_data)) {
+
     # determine if frequency count table or vector
     if (dim(input_data)[2] != 2) {
       stop("input_data is a data.frame or matrix but not a frequency count table.\n")
-    } 
-    
-    
+    }
+
     output_data <- input_data
     
   } else if (class(input_data) %in% c("numeric", "integer")) {
@@ -58,9 +50,8 @@ convert <- function(input_data) {
     output_data <- as.data.frame(table(input_data_remove_zeros))
     
   } else {
-    
-    stop("Unsupported input type to function `convert`")
-    
+    stop(paste("Unsupported input type to function `convert`.",
+               "You passed in an object of class", class(input_data)))
   }
   
   checked_output_data <- check_format(output_data)

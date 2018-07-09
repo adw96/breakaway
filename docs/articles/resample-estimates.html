@@ -8,8 +8,8 @@
 <title>Variance of alpha diversity estimates • breakaway</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/united/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><meta property="og:title" content="Variance of alpha diversity estimates">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Variance of alpha diversity estimates">
 <meta property="og:description" content="">
 <meta property="og:image" content="http://adw96.github.io/breakaway/logo.png">
 <meta name="twitter:card" content="summary">
@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">breakaway</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.4</span>
       </span>
     </div>
 
@@ -56,16 +56,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/alpha-better.html">alpha diversity, properly</a>
-    </li>
-    <li>
-      <a href="../articles/betta-figure.html">Comparing samples visually with betta</a>
-    </li>
-    <li>
       <a href="../articles/extended-tutorial.html">Getting into the weeds</a>
-    </li>
-    <li>
-      <a href="../articles/phyloseq.html">breakaway + phyloseq</a>
     </li>
     <li>
       <a href="../articles/resample-estimates.html">Variance of alpha diversity estimates</a>
@@ -91,7 +82,7 @@
       <h1>Variance of alpha diversity estimates</h1>
                         <h4 class="author">Amy Willis</h4>
             
-            <h4 class="date">2018-05-16</h4>
+            <h4 class="date">2018-07-08</h4>
       
       
       <div class="hidden name"><code>resample-estimates.Rmd</code></div>
@@ -101,48 +92,7 @@
     
     
 <p>Alpha diversity metrics, such as Shannon and Simpson indices, are unknown parameters of the microbial communities that we study. Like any other parameter of a population, they need to be estimated based on data, and the estimates should be accompanied by standard errors. Unfortunately this is not practised in the case of alpha diversity indices in microbial ecology.</p>
-<p>This tutorial will run you through some methods for estimating standard errors on alpha diversity estimates. This is an active area of research of the Statistical Diversity Lab (Amy’s research group) at UW, and so this tutorial will evolve as better models are developed.</p>
-<p>Currently alpha diversity is estimated using plug-in estimates. This involves assuming that you sampled the entire microbial community, not just a small sample of it. Plug-in estimates involve imputing the relative abundances that you observed in your sample in calculating the estimate based on these relative abundances. But how do we get a reasonable estimate of the variance in this estimate? A reasonable first pass at this is to use the independent bootstrap. This will definitely underestimate the actual variance in alpha diversity estimates, but it’s a reasonable first pass. Let’s see what it looks like:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### Run the first two lines at home! ####
-<span class="co"># install.packages("devtools")</span>
-<span class="co"># devtools::install_github("adw96/breakaway")</span>
-<span class="kw">library</span>(breakaway)
-<span class="kw">data</span>(toy_otu_table)
-<span class="kw">data</span>(toy_metadata)
-
-<span class="kw"><a href="../reference/shannon.html">shannon</a></span>(toy_otu_table[,<span class="dv">1</span>])</code></pre></div>
-<pre><code>## [1] 4.220773</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/resample_estimate.html">resample_estimate</a></span>(toy_otu_table[,<span class="dv">1</span>], shannon)</code></pre></div>
-<pre><code>## [1] 4.170993</code></pre>
-<p>The function resample_estimate takes on a column of your OTU table, bootstraps the OTUs that were observed, and calculates the plug-in estimate of the alpha diversity function on that bootstrapped sample.</p>
-<p>Great! How do we use that to get an estimate of the variance of the plug-in Shannon estimate? We do it lots of times!</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">shannon_estimates &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">200</span>, <span class="kw"><a href="../reference/resample_estimate.html">resample_estimate</a></span>(toy_otu_table[,<span class="dv">1</span>], shannon))
-<span class="kw">hist</span>(shannon_estimates)</code></pre></div>
-<p><img src="resample-estimates_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
-<p>Okay, that doesn’t look so bad. Perhaps we don’t have that much variance in estimating Shannon after all?</p>
-<p>WRONG! We have so much variance in estimating this. Plug-in estimates are very sensitive to sample size – hence why the practice of rarefying arose. A natural proposal is then to bootstrap over multiple different sample sizes. What should those multiple different sample sizes be? Let’s try the number of reads that we found across all of our samples.</p>
-<p>First calculate the number of reads that we obtained in each sample</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ns &lt;-<span class="st"> </span><span class="kw">apply</span>(toy_otu_table, <span class="dv">2</span>, sum)
-<span class="kw">hist</span>(ns)</code></pre></div>
-<p><img src="resample-estimates_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
-<p>Then let’s iterate over them in calculating our estimates.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">shannon_estimates_n &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">200</span>, <span class="kw"><a href="../reference/resample_estimate.html">resample_estimate</a></span>(toy_otu_table[,<span class="dv">1</span>], shannon, <span class="dt">my_sample_size =</span> ns))
-<span class="kw">hist</span>(shannon_estimates_n)</code></pre></div>
-<p><img src="resample-estimates_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
-<p>That’s a lot more variability than we initially saw! How about the standard deviation?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(shannon_estimates_n)</code></pre></div>
-<pre><code>## [1] 0.07808451</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(shannon_estimates)</code></pre></div>
-<pre><code>## [1] 0.06807522</code></pre>
-<p>Okay that’s not that different. But since current practices pretending that the standard deviation is zero (no error bars on alpha diversity!), it’s way better than pretending that the variance is zero.</p>
-<p>Similarly, this isn’t a great solution to constructing confidence intervals for Shannon, but it’s a start!</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">quantile</span>(shannon_estimates_n, <span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</code></pre></div>
-<pre><code>##     2.5%    97.5% 
-## 4.059053 4.228583</code></pre>
-<p>Watch this space for better ways to construct confidence intervals for alpha diversity!</p>
-<p>(Obviously this tutorial applies to any other diversity index, not just Shannon, but hopefully was helpful to make this discussion more concrete.)</p>
-<p>By the way – it’s much better, in my opinion, to use non-bootstrapped standard errors for species richness estimates. This is because there are certain regularity conditions that are necessary for the bootstrap to give reasonable estimates of variance, and these definitely don’t hold for species richness estimation.</p>
-<p>(It’s likely that they don’t hold for other alpha diversity indices either, but it’s definitely a terrible idea for richness!)</p>
+<p><code>breakaway</code> focuses on species richness estimates. The package <code>DivNet</code> is for alpha and beta diversity estimates. Please go to <code>github.com/adw96/DivNet</code> to get DivNet.</p>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

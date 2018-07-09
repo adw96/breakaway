@@ -1,12 +1,9 @@
 pandoc: 1.17.2
-pkgdown: 1.0.0.9000
-pkgdown_sha: 5eeb2aab0b68924bcde72ded0f7326070eaa0fa0
+pkgdown: 1.1.0.9000
+pkgdown_sha: 63e2ec4ed54da283d47fbe93f20bc1dd6de6fb1a
 articles:
-  alpha-better: alpha-better.html
-  betta-figure: betta-figure.html
   breakaway: breakaway.html
   extended-tutorial: extended-tutorial.html
-  phyloseq: phyloseq.html
   resample-estimates: resample-estimates.html
   sample-size-calculations: sample-size-calculations.html
 urls:

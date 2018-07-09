@@ -37,8 +37,6 @@ alpha_estimate <- function(estimate = NULL,
                            other = NULL,
                            ...) {
   
-  # deprecated: est, seest, ci
-  
   # if (is.null(ci) & !is.null(error)) {
   # # TODO need f0
   #   d <- exp(1.96*sqrt(log(1 + error^2 / f0)))
@@ -49,7 +47,7 @@ alpha_estimate <- function(estimate = NULL,
                        error = error,
                        estimand = estimand,
                        name = name,
-                       interval = interval,
+                       interval = interval, #ifelse(is.na(estimate), c(NA, NA), interval),
                        interval_type = interval_type,
                        type = type,
                        model = model,

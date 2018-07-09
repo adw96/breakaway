@@ -21,9 +21,11 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -31,11 +33,12 @@
 <meta property="og:title" content="Species richness estimation with breakaway — breakaway" />
 
 <meta property="og:description" content="This function implements the species richness estimation procedure outlined
-in Willis &amp; Bunge (2015). The diversity estimate, standard error, estimated
+in Willis &amp;amp; Bunge (2015). The diversity estimate, standard error, estimated
 model coefficients, model details and plot of the fitted model are returned." />
 
 <meta property="og:image" content="http://adw96.github.io/breakaway/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -62,7 +65,7 @@ model coefficients, model details and plot of the fitted model are returned." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">breakaway</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.4</span>
       </span>
     </div>
 
@@ -88,16 +91,7 @@ model coefficients, model details and plot of the fitted model are returned." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/alpha-better.html">alpha diversity, properly</a>
-    </li>
-    <li>
-      <a href="../articles/betta-figure.html">Comparing samples visually with betta</a>
-    </li>
-    <li>
       <a href="../articles/extended-tutorial.html">Getting into the weeds</a>
-    </li>
-    <li>
-      <a href="../articles/phyloseq.html">breakaway + phyloseq</a>
     </li>
     <li>
       <a href="../articles/resample-estimates.html">Variance of alpha diversity estimates</a>
@@ -136,46 +130,37 @@ model coefficients, model details and plot of the fitted model are returned.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>breakaway</span>(<span class='no'>my_data</span>, <span class='kw'>output</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>answers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+    <pre class="usage"><span class='fu'>breakaway</span>(<span class='no'>input_data</span>, <span class='kw'>output</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>answers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>print</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>my_data</th>
-      <td><p>The sample frequency count table for the population of
-interest. The first row must correspond to the singletons. Acceptable
-formats include a matrix, data frame, or file path (csv or txt). The
-standard frequency count table format is used: two columns, the first of
-which contains the frequency of interest (eg. 1 for singletons, species
-observed once, 2 for doubletons, species observed twice, etc.) and the
-second of which contains the number of species observed this many times.
-Frequencies (first column) should be ordered least to greatest. At least 6
-contiguous frequencies are necessary. Do not concatenate large frequencies.
-See dataset apples for sample formatting.</p></td>
+      <th>input_data</th>
+      <td><p>An input type that can be processed by <code><a href='convert.html'>convert()</a></code></p></td>
     </tr>
     <tr>
       <th>output</th>
-      <td><p>Logical: whether the results should be printed to screen. If
-<samp>FALSE</samp>, answers should be set to <samp>TRUE</samp> so that results will be
-returned.</p></td>
+      <td><p>Deprecated; only for backwards compatibility</p></td>
     </tr>
     <tr>
       <th>plot</th>
-      <td><p>Logical: whether the data and model fit should be plotted.</p></td>
+      <td><p>Deprecated; only for backwards compatibility</p></td>
     </tr>
     <tr>
       <th>answers</th>
-      <td><p>Logical: whether the function should return an argument. If
-<samp>FALSE</samp>, output should be set to <samp>TRUE</samp>.</p></td>
+      <td><p>Deprecated; only for backwards compatibility</p></td>
+    </tr>
+    <tr>
+      <th>print</th>
+      <td><p>Deprecated; only for backwards compatibility</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
-
+    <p>An object of class <code>alpha_estimate</code></p>
 <dt>code</dt><dd><p>A category representing algorithm behaviour.
 <samp>code=1</samp> indicates no nonlinear models converged and the transformed
 WLRM diversity estimate of Rocchetti et. al. (2011) is returned.
@@ -222,91 +207,11 @@ Statistics</em>, <b>5</b>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<span class='fu'>breakaway</span>(<span class='no'>apples</span>)</div><div class='output co'>#&gt; We used 1/x weighting. 
-#&gt; ################## breakaway ##################
-#&gt; 	The best estimate of total diversity is 1552 
-#&gt;  	 with std error 305 
-#&gt; 	The model employed was model_1_1 
-#&gt; 	The function selected was
-#&gt; 	  f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar))/(1+alpha1*(x-xbar)) 
-#&gt;        Coef estimates Coef std errors
-#&gt; beta0      1.20345572      0.16807523
-#&gt; beta1      0.05765149      0.02962840
-#&gt; alpha1     0.03012304      0.03782164
-#&gt; xbar			 16.5</div><div class='input'><span class='fu'>breakaway</span>(<span class='no'>apples</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>output</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>answers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; $code
-#&gt; [1] 3
-#&gt; 
-#&gt; $name
-#&gt; [1] "model_1_1"
-#&gt; 
-#&gt; $para
-#&gt;        Coef estimates Coef std errors
-#&gt; beta0      1.20345572      0.16807523
-#&gt; beta1      0.05765149      0.02962840
-#&gt; alpha1     0.03012304      0.03782164
-#&gt; 
-#&gt; $est
-#&gt; [1] 1552.416
-#&gt; 
-#&gt; $seest
-#&gt; [1] 304.7071
-#&gt; 
-#&gt; $full
-#&gt; Nonlinear regression model
-#&gt;   model: lhs$y ~ structure_1_1(x, beta0, beta1, alpha1)
-#&gt;    data: lhs
-#&gt;   beta0   beta1  alpha1 
-#&gt; 1.20346 0.05765 0.03012 
-#&gt;  weighted residual sum-of-squares: 1.274
-#&gt; 
-#&gt; Number of iterations to convergence: 8 
-#&gt; Achieved convergence tolerance: 8.599e-06
-#&gt; 
-#&gt; $ci
-#&gt; [1]  1006.52 47805.11
-#&gt; </div><div class='input'>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<span class='fu'>breakaway</span>(<span class='no'>apples</span>)</div><div class='output co'>#&gt; Estimate of richness from method breakaway:
+#&gt;   Estimate is 1552 with standard error 304.71
+#&gt;   Confidence interval: (1007, 47805)</div><div class='input'><span class='fu'>breakaway</span>(<span class='no'>apples</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>output</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>answers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Estimate of richness from method breakaway:
+#&gt;   Estimate is 1552 with standard error 304.71
+#&gt;   Confidence interval: (1007, 47805)</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

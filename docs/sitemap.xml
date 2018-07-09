@@ -4,7 +4,10 @@
     <loc>http://adw96.github.io/breakaway/index.html</loc>
   </url>
   <url>
-    <loc>http://adw96.github.io/breakaway/reference/alpha.html</loc>
+    <loc>http://adw96.github.io/breakaway/reference/alpha_estimate.html</loc>
+  </url>
+  <url>
+    <loc>http://adw96.github.io/breakaway/reference/alpha_estimates.html</loc>
   </url>
   <url>
     <loc>http://adw96.github.io/breakaway/reference/apples.html</loc>
@@ -37,13 +40,13 @@
     <loc>http://adw96.github.io/breakaway/reference/chao_bunge.html</loc>
   </url>
   <url>
-    <loc>http://adw96.github.io/breakaway/reference/estimate_alpha_better.html</loc>
+    <loc>http://adw96.github.io/breakaway/reference/check_format.html</loc>
+  </url>
+  <url>
+    <loc>http://adw96.github.io/breakaway/reference/convert.html</loc>
   </url>
   <url>
     <loc>http://adw96.github.io/breakaway/reference/gini.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/gini_better.html</loc>
   </url>
   <url>
     <loc>http://adw96.github.io/breakaway/reference/hawaii.html</loc>
@@ -52,19 +55,13 @@
     <loc>http://adw96.github.io/breakaway/reference/hill.html</loc>
   </url>
   <url>
-    <loc>http://adw96.github.io/breakaway/reference/hill_better.html</loc>
-  </url>
-  <url>
     <loc>http://adw96.github.io/breakaway/reference/inverse_simpson.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/inverse_simpson_better.html</loc>
   </url>
   <url>
     <loc>http://adw96.github.io/breakaway/reference/make_frequency_count_table.html</loc>
   </url>
   <url>
-    <loc>http://adw96.github.io/breakaway/reference/plot_alpha.html</loc>
+    <loc>http://adw96.github.io/breakaway/reference/proportions_instead.html</loc>
   </url>
   <url>
     <loc>http://adw96.github.io/breakaway/reference/resample_estimate.html</loc>
@@ -85,16 +82,13 @@
     <loc>http://adw96.github.io/breakaway/reference/shannon.html</loc>
   </url>
   <url>
-    <loc>http://adw96.github.io/breakaway/reference/shannon_better.html</loc>
-  </url>
-  <url>
     <loc>http://adw96.github.io/breakaway/reference/simpson.html</loc>
   </url>
   <url>
-    <loc>http://adw96.github.io/breakaway/reference/simpson_better.html</loc>
+    <loc>http://adw96.github.io/breakaway/reference/subsample_otu.html</loc>
   </url>
   <url>
-    <loc>http://adw96.github.io/breakaway/reference/subsample_otu.html</loc>
+    <loc>http://adw96.github.io/breakaway/reference/to_proportions.html</loc>
   </url>
   <url>
     <loc>http://adw96.github.io/breakaway/reference/toy_metadata.html</loc>
@@ -112,19 +106,10 @@
     <loc>http://adw96.github.io/breakaway/reference/wlrm_untransformed.html</loc>
   </url>
   <url>
-    <loc>http://adw96.github.io/breakaway/articles/alpha-better.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/articles/betta-figure.html</loc>
-  </url>
-  <url>
     <loc>http://adw96.github.io/breakaway/articles/breakaway.html</loc>
   </url>
   <url>
     <loc>http://adw96.github.io/breakaway/articles/extended-tutorial.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/articles/phyloseq.html</loc>
   </url>
   <url>
     <loc>http://adw96.github.io/breakaway/articles/resample-estimates.html</loc>

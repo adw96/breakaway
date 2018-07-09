@@ -21,9 +21,11 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -35,6 +37,7 @@ a covariate gradient." />
 
 <meta property="og:image" content="http://adw96.github.io/breakaway/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -61,7 +64,7 @@ a covariate gradient." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">breakaway</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.4</span>
       </span>
     </div>
 
@@ -87,16 +90,7 @@ a covariate gradient." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/alpha-better.html">alpha diversity, properly</a>
-    </li>
-    <li>
-      <a href="../articles/betta-figure.html">Comparing samples visually with betta</a>
-    </li>
-    <li>
       <a href="../articles/extended-tutorial.html">Getting into the weeds</a>
-    </li>
-    <li>
-      <a href="../articles/phyloseq.html">breakaway + phyloseq</a>
     </li>
     <li>
       <a href="../articles/resample-estimates.html">Variance of alpha diversity estimates</a>
@@ -134,9 +128,9 @@ a covariate gradient.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>betta_pic</span>(<span class='no'>y</span>, <span class='no'>se</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fu'>length</span>(<span class='no'>y</span>), <span class='kw'>ylimu</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>myy</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>mymain</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>mycol</span> <span class='kw'>=</span> <span class='fu'>rep</span>(<span class='st'>"black"</span>, <span class='fu'>length</span>(<span class='no'>y</span>)), <span class='kw'>labs</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>mypch</span> <span class='kw'>=</span> <span class='fu'>rep</span>(<span class='fl'>16</span>, <span class='fu'>length</span>(<span class='no'>y</span>)),
-  <span class='kw'>myxlim</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.8</span> * <span class='fu'>min</span>(<span class='no'>x</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='no'>T</span>), <span class='fl'>1.2</span> * <span class='fu'>max</span>(<span class='no'>x</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='no'>T</span>)))</pre>
+    <pre class="usage"><span class='fu'>betta_pic</span>(<span class='no'>y</span>, <span class='no'>se</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fu'>length</span>(<span class='no'>y</span>), <span class='kw'>ylimu</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>myy</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>mymain</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>mycol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>labs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>mypch</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>myxlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -163,28 +157,27 @@ If no argument is given, defaults to the order.</p></td>
     </tr>
     <tr>
       <th>myy</th>
-      <td><p>A label for the y-axis. Default is none.</p></td>
+      <td><p>Deprecated, for backwards compatibility</p></td>
     </tr>
     <tr>
       <th>mymain</th>
-      <td><p>A main title for the plot. Default is none.</p></td>
+      <td><p>Deprecated, for backwards compatibility</p></td>
     </tr>
     <tr>
       <th>mycol</th>
-      <td><p>Colors for the plotting points. Default is black.</p></td>
+      <td><p>Deprecated, for backwards compatibility</p></td>
     </tr>
     <tr>
       <th>labs</th>
-      <td><p>x-axis labels. Default is none (non x-axis plotted).</p></td>
+      <td><p>Deprecated, for backwards compatibility</p></td>
     </tr>
     <tr>
       <th>mypch</th>
-      <td><p>Plotting characters for the estimates. Defaults to circles.</p></td>
+      <td><p>Deprecated, for backwards compatibility</p></td>
     </tr>
     <tr>
       <th>myxlim</th>
-      <td><p>A vector of x-axis limits. Default is 0 to 10% greater than
-the maximum x value.</p></td>
+      <td><p>Deprecated, for backwards compatibility</p></td>
     </tr>
     </table>
     
@@ -199,48 +192,7 @@ changes in biodiversity. arXiv preprint.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<span class='fu'>betta_pic</span>(<span class='fu'>c</span>(<span class='fl'>1552</span>, <span class='fl'>1500</span>, <span class='fl'>884</span>), <span class='fu'>c</span>(<span class='fl'>305</span>, <span class='fl'>675</span>, <span class='fl'>205</span>), <span class='kw'>mymain</span> <span class='kw'>=</span> <span class='st'>"Example title"</span>)</div><div class='img'><img src='betta_pic-1.png' alt='' width='700' height='433' /></div><div class='input'>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <pre class="examples"><div class='input'><span class='fu'>betta_pic</span>(<span class='fu'>c</span>(<span class='fl'>1552</span>, <span class='fl'>1500</span>, <span class='fl'>884</span>), <span class='fu'>c</span>(<span class='fl'>305</span>, <span class='fl'>675</span>, <span class='fl'>205</span>), <span class='kw'>mymain</span> <span class='kw'>=</span> <span class='st'>"Example title"</span>)</div><div class='img'><img src='betta_pic-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

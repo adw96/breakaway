@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Build frequency count tables from an OTU table — build_frequency_count_tables • breakaway</title>
+<title>alpha_estimate — alpha_estimate • breakaway</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Build frequency count tables from an OTU table — build_frequency_count_tables" />
+<meta property="og:title" content="alpha_estimate — alpha_estimate" />
 
-<meta property="og:description" content="Build frequency count tables from an OTU table" />
+<meta property="og:description" content="Build objects of class alpha_estimate from their components. alpha_estimate() is a constructor method" />
 
 <meta property="og:image" content="http://adw96.github.io/breakaway/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -115,32 +115,90 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Build frequency count tables from an OTU table</h1>
+    <h1>alpha_estimate</h1>
     
-    <div class="hidden name"><code>build_frequency_count_tables.Rd</code></div>
+    <div class="hidden name"><code>alpha_estimate.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Build frequency count tables from an OTU table</p>
+    <p>Build objects of class alpha_estimate from their components. <code>alpha_estimate()</code> is a constructor method</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>build_frequency_count_tables</span>(<span class='no'>otu_table</span>)</pre>
+    <pre class="usage"><span class='fu'>alpha_estimate</span>(<span class='kw'>estimate</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>error</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>estimand</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>interval</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>interval_type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>warnings</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>frequentist</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>parametric</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>reasonable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>other</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>otu_table</th>
-      <td><p>An OTU table as a data frame or a matrix. Columns are the
-samples and rows give the taxa.</p></td>
+      <th>estimate</th>
+      <td><p>The estimate</p></td>
+    </tr>
+    <tr>
+      <th>error</th>
+      <td><p>The standard error in the estimate</p></td>
+    </tr>
+    <tr>
+      <th>estimand</th>
+      <td><p>What is the estimate trying to estimate? (richness, Shannon...)</p></td>
+    </tr>
+    <tr>
+      <th>name</th>
+      <td><p>The name of the method</p></td>
+    </tr>
+    <tr>
+      <th>interval</th>
+      <td><p>An interval estimate</p></td>
+    </tr>
+    <tr>
+      <th>interval_type</th>
+      <td><p>Type of interval estimate</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>TODO(Amy): Deprecate?</p></td>
+    </tr>
+    <tr>
+      <th>model</th>
+      <td><p>What model is fit</p></td>
+    </tr>
+    <tr>
+      <th>warnings</th>
+      <td><p>Any warnings?</p></td>
+    </tr>
+    <tr>
+      <th>frequentist</th>
+      <td><p>Logical. Frequentist or Bayesian?</p></td>
+    </tr>
+    <tr>
+      <th>parametric</th>
+      <td><p>Logical. Parametric or not?</p></td>
+    </tr>
+    <tr>
+      <th>plot</th>
+      <td><p>A ggplot associated with the estimate</p></td>
+    </tr>
+    <tr>
+      <th>reasonable</th>
+      <td><p>Is the estimate likely to be reasonable?</p></td>
+    </tr>
+    <tr>
+      <th>other</th>
+      <td><p>Any other relevant objects</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Any other objects</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list of frequency count tables corresponding to the columns.</p>
+    <p>An object of class alpha_estimate</p>
     
 
   </div>
