@@ -1,14 +1,29 @@
+#' OB negbin
+#' 
 #' @importFrom mvtnorm rmvnorm
 #' @importFrom stats acf
 #' 
 #' @export
-objective_bayes_negbin <- function(data, output=TRUE, plot=TRUE, answers=FALSE, 
-                                   tau=10, burn.in=1000, iterations=5000, Metropolis.stdev.N=100,
-                                   Metropolis.start.T1=-0.8, Metropolis.stdev.T1=0.01,
-                                   Metropolis.start.T2=0.8, Metropolis.stdev.T2=0.01, bars=5) {
+objective_bayes_negbin <- function(data, 
+                                   output=TRUE, 
+                                   plot=TRUE, 
+                                   answers=FALSE, 
+                                   tau=10, 
+                                   burn.in=1000, 
+                                   iterations=5000, 
+                                   Metropolis.stdev.N=100,
+                                   Metropolis.start.T1=-0.8, 
+                                   Metropolis.stdev.T1=0.01,
+                                   Metropolis.start.T2=0.8, 
+                                   Metropolis.stdev.T2=0.01, 
+                                   bars=5) {
   
   data <- check_format(data)
   fullfreqdata  <- data
+  
+  if (tau > max(data[,1])) {
+    tau <- max(data[,1])
+  }
   
   # calculate summary statistics on full data
   w<-sum(fullfreqdata[,2])
@@ -69,7 +84,12 @@ objective_bayes_negbin <- function(data, output=TRUE, plot=TRUE, answers=FALSE,
     r1<-exp(logr1)
     
     # accept or reject propsed value
-    if (runif(1)<min(r1,1)) {T1T2[i,]<-T1T2.new ; a1<-a1+1} else {T1T2[i,]<-T1T2[i-1,]}
+    if (runif(1) < min(r1,1)) {
+      T1T2[i,]<-T1T2.new
+      a1<-a1+1
+    } else {
+      T1T2[i,]<-T1T2[i-1,]
+    }
     
     ## sample from p(N|A,G,x)
     
@@ -238,6 +258,10 @@ objective_bayes_poisson <- function(data, output=TRUE, plot=TRUE, answers=FALSE,
   
   data <- check_format(data)
   fullfreqdata  <- data
+  
+  if (tau > max(data[,1])) {
+    tau <- max(data[,1])
+  }
   
   # calculate summary statistics on full data
   w<-sum(fullfreqdata[,2])
@@ -424,7 +448,7 @@ objective_bayes_poisson <- function(data, output=TRUE, plot=TRUE, answers=FALSE,
     # make trace plot 
     plot((burn.in+1):iterations,N[(burn.in+1):iterations]+w-w.tau,type="l",xlab="Iteration Number",ylab="Total Number of Species", main="Trace plot")
   }
-
+  
   if (answers) {
     return(final_results)
   }
@@ -441,10 +465,14 @@ objective_bayes_mixedgeo <- function(data, output=TRUE, plot=TRUE, answers=FALSE
   data <- check_format(data)
   fullfreqdata  <- data
   
+  if (tau > max(data[,1])) {
+    tau <- max(data[,1])
+  }
+  
   # calculate summary statistics on full data
   w<-sum(fullfreqdata[,2])
   n<-sum(fullfreqdata[,1]*fullfreqdata[,2])
-
+  
   # subset data up to tau
   freqdata<-fullfreqdata[1:tau,]
   
@@ -672,12 +700,34 @@ objective_bayes_mixedgeo <- function(data, output=TRUE, plot=TRUE, answers=FALSE
   
 }
 
-#' @export
-objective_bayes_geometric <- function(data, output=TRUE, plot=TRUE, answers=FALSE,
-                                      tau=10, burn.in=100, iterations=2500, Metropolis.stdev.N=75,
-                                      Metropolis.start.theta=1, Metropolis.stdev.theta=0.3) {
+#' Estimate species richness with an objective Bayes method using a geometric model
+#' 
+#' @param data TODO
+#' @param output TODO
+#' @param plot TODO
+#' @param answers TODO
+#' @param tau TODO
+#' @param burn.in TODO
+#' @param iterations TODO
+#' @param Metropolis.stdev.N TODO
+#' @param Metropolis.start.theta TODO
+#' @param Metropolis.stdev.theta TODO
+#' 
+#' @export 
+objective_bayes_geometric <- function(data, 
+                                      output=TRUE, 
+                                      plot=TRUE, answers=FALSE,
+                                      tau=10, burn.in=100, 
+                                      iterations=2500, 
+                                      Metropolis.stdev.N=75,
+                                      Metropolis.start.theta=1, 
+                                      Metropolis.stdev.theta=0.3) {
   
   data <- check_format(data)
+  
+  if (tau > max(data[,1])) {
+    tau <- max(data[,1])
+  }
   
   fullfreqdata  <- data
   # calculate NP estimate of n0
@@ -697,7 +747,7 @@ objective_bayes_geometric <- function(data, output=TRUE, plot=TRUE, answers=FALS
   ### Step 3: calculate posterior
   
   ## initialization
-  iterations<-iterations+burn.in
+  iterations <- iterations+burn.in
   N<-rep(0,iterations)
   R<-c(Metropolis.start.theta,rep(1,iterations-1))
   # to track acceptance rate of theta
@@ -713,18 +763,27 @@ objective_bayes_geometric <- function(data, output=TRUE, plot=TRUE, answers=FALS
     ## sample from p(theta|C,x)
     
     # propose value for theta
-    R.new<-abs(rnorm(1,mean=R[i-1],sd=Metropolis.stdev.theta))
+    R.new <- abs(rnorm(1, mean=R[i-1], 
+                       sd=Metropolis.stdev.theta))
+    
     
     # calculate log of acceptance ratio
-    logr1<-(-N[i-1]-n.tau-1/2)*log(1+R.new)+(n.tau-1/2)*log(R.new)-(-N[i-1]-n.tau-1/2)*log(1+R[i-1])-(n.tau-1/2)*log(R[i-1])
+    logr1 <- (-N[i-1]-n.tau-1/2) * log(1+R.new) + 
+      (n.tau-1/2)*log(R.new) - 
+      (-N[i-1]-n.tau-1/2) * log(1+R[i-1]) - 
+      (n.tau-1/2)*log(R[i-1])
+    
     
     # calculate acceptance ratio
     r1<-exp(logr1)
     
     # accept or reject propsed value
-    if (runif(1)<min(r1,1)) {R[i]<-R.new ; a1<-a1+1}
-    else R[i]<-R[i-1]
-    
+    if (runif(1)<min(r1,1)) {
+      R[i]<-R.new ; a1<-a1+1
+    }
+    else {
+      R[i]<-R[i-1]
+    }
     ## sample from p(C|theta,x)
     
     ## make sure N.new >=w.tau
@@ -754,10 +813,14 @@ objective_bayes_geometric <- function(data, output=TRUE, plot=TRUE, answers=FALS
     # calculate acceptance ratio
     r2<-exp(logr2)
     
-    # accept or reject propsed value
-    if (runif(1)<min(r2,1)) {N[i]<-N.new ; a2<-a2+1}
-    else N[i]<-N[i-1]
     
+    # accept or reject propsed value
+    if (runif(1)<min(r2,1)) {
+      N[i]<-N.new ; a2<-a2+1
+    }
+    else {
+      N[i]<-N[i-1]
+    }
     ## calculate deviance from current sample
     
     # calculate log(N[i]!/(N[i]-w.tau)!)

@@ -1,7 +1,7 @@
 # testing and compiling breakaway
 # directory <- "/Users/adwillis/software/breakaway"
-directory <- "/Users/adw96/Documents/software/breakaway"
-# directory <- "/Users/amy/Documents/software/breakaway"
+# directory <- "/Users/adw96/Documents/software/breakaway"
+directory <- "/Users/amy/Documents/software/breakaway"
 setwd(directory)
 library(devtools)
 library(roxygen2)
@@ -24,9 +24,9 @@ library(tibble)
 
 check() 
 
-
-roxygenise(directory)
-build(directory)
+document()
+roxygenise()
+build()
 library(breakaway)
 
 test(directory)
