@@ -25,3 +25,9 @@ test_that("make aggregated phyloseq object for testing", {
 test_that("breakaway on phyloseq objects runs in parallel", {
   expect_true(FALSE)
 })
+
+
+test_that("GlobalPatterns runs", {
+  expect_is(GlobalPatterns %>% breakaway,
+              "alpha_estimates")
+})

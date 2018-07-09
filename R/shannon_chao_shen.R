@@ -1,11 +1,16 @@
-
+#' The Chao-Shen estimate of Shannon diversity
+#' 
+#' 
+#' @param input_data An input type that can be processed by \code{convert()}
+#' @return An object of class \code{alpha_estimate} 
 #' @export chao_shen
-chao_shen  <- function(my_data) {
+chao_shen  <- function(input_data) {
   
-  cleaned_data <- check_format(my_data)
+  cleaned_data <- convert(input_data)
   
+  the_warning <- NULL
   if (cleaned_data[1,1]!=1 || cleaned_data[1,2]==0) {
-    warning("You don't have an observed singleton count.\n Chao-Shen isn't built for that data structure.\n")
+    the_warning <- "You don't have an observed singleton count.\n Chao-Shen isn't built for that data structure.\n"
   } 
   
   estimate <- chao_shen_estimate(cleaned_data)  
@@ -25,8 +30,14 @@ chao_shen  <- function(my_data) {
   
   variance_estimate <- t(derivative) %*% multinomial_covariance(cleaned_data, cc/estimate) %*% derivative
   
-  list("est" = estimate, 
-       "se" = c(ifelse(variance_estimate < 0, 0, sqrt(variance_estimate))))
+  alpha_estimate(estimate = estimate, 
+                 error = c(ifelse(variance_estimate < 0, 0, sqrt(variance_estimate))),
+                 estimand = "Shannon",
+                 name = "chao_shen",
+                 parametric = FALSE,
+                 frequentist = TRUE,
+                 warnings = the_warning)
+  
 }
 
 chao_shen_estimate <- function(cleaned_data) {
