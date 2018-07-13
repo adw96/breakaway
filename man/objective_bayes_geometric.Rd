@@ -10,25 +10,25 @@ objective_bayes_geometric(data, output = TRUE, plot = TRUE,
   Metropolis.stdev.theta = 0.3)
 }
 \arguments{
-\item{data}{TODO}
+\item{data}{TODO(Kathryn)(Kathryn)}
 
-\item{output}{TODO}
+\item{output}{TODO(Kathryn)(Kathryn)}
 
-\item{plot}{TODO}
+\item{plot}{TODO(Kathryn)(Kathryn)}
 
-\item{answers}{TODO}
+\item{answers}{TODO(Kathryn)(Kathryn)}
 
-\item{tau}{TODO}
+\item{tau}{TODO(Kathryn)}
 
-\item{burn.in}{TODO}
+\item{burn.in}{TODO(Kathryn)}
 
-\item{iterations}{TODO}
+\item{iterations}{TODO(Kathryn)}
 
-\item{Metropolis.stdev.N}{TODO}
+\item{Metropolis.stdev.N}{TODO(Kathryn)}
 
-\item{Metropolis.start.theta}{TODO}
+\item{Metropolis.start.theta}{TODO(Kathryn)}
 
-\item{Metropolis.stdev.theta}{TODO}
+\item{Metropolis.stdev.theta}{TODO(Kathryn)}
 }
 \description{
 Estimate species richness with an objective Bayes method using a geometric model

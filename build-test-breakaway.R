@@ -1,7 +1,7 @@
 # testing and compiling breakaway
 # directory <- "/Users/adwillis/software/breakaway"
-# directory <- "/Users/adw96/Documents/software/breakaway"
-directory <- "/Users/amy/Documents/software/breakaway"
+directory <- "/Users/adw96/Documents/software/breakaway"
+# directory <- "/Users/amy/Documents/software/breakaway"
 setwd(directory)
 library(devtools)
 library(roxygen2)
@@ -24,11 +24,12 @@ library(tibble)
 
 check() 
 
-document()
+ document()
 roxygenise()
-build()
+build(vignettes = F)
 library(breakaway)
-
+breakaway(apples) %>% plot
+breakaway_nof1(apples[-1,]) %>% plot
 test(directory)
 
 covr::package_coverage()

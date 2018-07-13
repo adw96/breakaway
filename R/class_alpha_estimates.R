@@ -96,10 +96,10 @@ plot.alpha_estimates <- function(x,
   } 
   
   
-  ggplot2::ggplot(df, aes(x = xaxis)) +
+  ggplot2::ggplot(df, aes_string(x = "xaxis")) +
     ylab("Alpha-diversity estimate") +
-    geom_point(aes(y = estimate)) +
-    geom_linerange(aes(ymin = lower, ymax = upper)) +
+    geom_point(aes_string(y = "estimate")) +
+    geom_linerange(aes_string(ymin = "lower", ymax = "upper")) +
     theme_bw() +
     xlim(0.5, length(x)+0.5)
 }

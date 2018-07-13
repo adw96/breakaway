@@ -51,7 +51,7 @@ wlrm_transformed <- function(input_data,
     if (is.na(cutoff)) {
       cutoff <- ifelse(is.na(which(my_data[-1,1]-my_data[-length(my_data[,1]),1]>1)[1]),length(my_data[,1]),which(my_data[-1,1]-my_data[-length(my_data[,1]),1]>1)[1])
     }
-
+    
     my_data <- my_data[1:cutoff,]
     ys <- (my_data[1:(cutoff-1),1]+1)*my_data[2:cutoff,2]/my_data[1:(cutoff-1),2]
     xs <- 1:(cutoff-1)
@@ -91,13 +91,14 @@ wlrm_transformed <- function(input_data,
                                   "type" = "Prediction"))
     
     my_plot <- ggplot(plot_data, 
-                      aes(x = x, 
-                          y = y,
-                          col = type, pch = type)) +
+                      aes_string(x = "x", 
+                                 y = "y",
+                                 col = "type", 
+                                 pch = "type")) +
       geom_point() +
       labs(x = "x", y = "f(x+1)/f(x)", title = "Plot of ratios and fitted values: tWLRLM") +
       theme_bw()
-
+    
   }
   
   alpha_estimate(estimate = diversity,

@@ -1,3 +1,8 @@
+#' What type of data is this?
+#' 
+#' @param input The input data
+#' 
+#' @return A string telling you what you had
 #' @export
 frequency_count_or_proportion_or_column <- function(input) {
   if (class(input) %in% c("data.frame", "matrix")) {

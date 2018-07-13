@@ -37,9 +37,13 @@
 #' count). The authors encourage judicious use of diversity estimators when the
 #' dataset may contain these errors, and recommend the use of
 #' \code{\link{breakaway_nof1}} as an exploratory tool in this case.
+#' 
 #' @author Amy Willis
+#' 
 #' @import magrittr
 #' @import ggplot2
+#' @import phyloseq
+#' 
 #' @seealso \code{\link{breakaway_nof1}}; \code{\link{apples}}
 #' @references Willis, A. and Bunge, J. (2015). Estimating diversity via
 #' frequency ratios. \emph{Biometrics}, \bold{71}(4), 1042--1049.
@@ -290,17 +294,20 @@ breakaway.default <- function(input_data,
         
         yhats <- fitted(choice$full)
         
-        plot_data <- rbind(data.frame("x" = xs, "y" = lhs$y, 
+        plot_data <- rbind(data.frame("x" = xs, 
+                                      "y" = lhs$y, 
                                       "type" = "Observed"),
-                           data.frame("x" = xs, "y" = yhats, 
+                           data.frame("x" = xs, 
+                                      "y" = yhats, 
                                       "type" = "Fitted"),
-                           data.frame("x" = 0, "y" = b0_hat, 
+                           data.frame("x" = 0, 
+                                      "y" = b0_hat, 
                                       "type" = "Prediction"))
-        
         my_plot <- ggplot(plot_data, 
-                          aes(x = x, 
-                              y = y,
-                              col = type, pch = type)) +
+                          aes_string(x = "x", 
+                                     y = "y",
+                                     col = "type", 
+                                     pch = "type")) +
           geom_point() +
           labs(x = "x", y = "f(x+1)/f(x)", title = "Plot of ratios and fitted values: Kemp models") +
           theme_bw()

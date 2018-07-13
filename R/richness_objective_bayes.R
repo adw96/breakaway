@@ -1,7 +1,22 @@
-#' OB negbin
+#' Objective Bayes species richness estimate with the Negative Binomial model
 #' 
+#' @param data TODO(Kathryn)
+#' @param output TODO(Kathryn)
+#' @param plot  TODO(Kathryn)
+#' @param answers TODO(Kathryn)
+#' @param tau TODO(Kathryn)
+#' @param burn.in TODO(Kathryn)
+#' @param iterations TODO(Kathryn)
+#' @param Metropolis.stdev.N TODO(Kathryn)
+#' @param Metropolis.start.T1 TODO(Kathryn)
+#' @param Metropolis.stdev.T1 TODO(Kathryn)
+#' @param Metropolis.start.T2 TODO(Kathryn)
+#' @param Metropolis.stdev.T2 TODO(Kathryn)
+#' @param bars TODO(Kathryn)
+#'  
 #' @importFrom mvtnorm rmvnorm
 #' @importFrom stats acf
+#' @importFrom graphics hist par plot
 #' 
 #' @export
 objective_bayes_negbin <- function(data, 
@@ -251,10 +266,33 @@ objective_bayes_negbin <- function(data,
 }
 
 
+#' Objective Bayes species richness estimate with the Poisson model
+#' 
+#' @param data TODO(Kathryn)
+#' @param output TODO(Kathryn)
+#' @param plot  TODO(Kathryn)
+#' @param answers TODO(Kathryn)
+#' @param tau TODO(Kathryn)
+#' @param burn.in TODO(Kathryn)
+#' @param iterations TODO(Kathryn)
+#' @param Metropolis.stdev.N TODO(Kathryn)
+#' @param Metropolis.start.lambda TODO(Kathryn)
+#' @param Metropolis.stdev.lambda TODO(Kathryn)
+#' @param bars TODO(Kathryn)
+#' 
+#' @importFrom graphics hist par plot
+#' 
 #' @export
-objective_bayes_poisson <- function(data, output=TRUE, plot=TRUE, answers=FALSE, 
-                                    tau=10, burn.in=100, iterations=2500, Metropolis.stdev.N=75,
-                                    Metropolis.start.lambda=1, Metropolis.stdev.lambda=0.3, bars=5) {
+objective_bayes_poisson <- function(data, 
+                                    output=TRUE, 
+                                    plot=TRUE, 
+                                    answers=FALSE, 
+                                    tau=10, burn.in=100, 
+                                    iterations=2500, 
+                                    Metropolis.stdev.N=75,
+                                    Metropolis.start.lambda=1, 
+                                    Metropolis.stdev.lambda=0.3, 
+                                    bars=5) {
   
   data <- check_format(data)
   fullfreqdata  <- data
@@ -455,7 +493,24 @@ objective_bayes_poisson <- function(data, output=TRUE, plot=TRUE, answers=FALSE,
   
 }
 
-
+#' Objective Bayes species richness estimate with the mixed-geometric model
+#' 
+#' @param data TODO(Kathryn)
+#' @param output TODO(Kathryn)
+#' @param plot  TODO(Kathryn)
+#' @param answers TODO(Kathryn)
+#' @param tau TODO(Kathryn)
+#' @param burn.in TODO(Kathryn)
+#' @param iterations TODO(Kathryn)
+#' @param Metropolis.stdev.N TODO(Kathryn)
+#' @param Metropolis.start.T1 TODO(Kathryn)
+#' @param Metropolis.stdev.T1 TODO(Kathryn)
+#' @param Metropolis.start.T2 TODO(Kathryn)
+#' @param Metropolis.stdev.T2 TODO(Kathryn)
+#' @param bars TODO(Kathryn)
+#' 
+#' @importFrom graphics hist par plot
+#' 
 #' @export
 objective_bayes_mixedgeo <- function(data, output=TRUE, plot=TRUE, answers=FALSE, 
                                      tau=10, burn.in=100, iterations=2500, Metropolis.stdev.N=100,
@@ -702,16 +757,18 @@ objective_bayes_mixedgeo <- function(data, output=TRUE, plot=TRUE, answers=FALSE
 
 #' Estimate species richness with an objective Bayes method using a geometric model
 #' 
-#' @param data TODO
-#' @param output TODO
-#' @param plot TODO
-#' @param answers TODO
-#' @param tau TODO
-#' @param burn.in TODO
-#' @param iterations TODO
-#' @param Metropolis.stdev.N TODO
-#' @param Metropolis.start.theta TODO
-#' @param Metropolis.stdev.theta TODO
+#' @param data TODO(Kathryn)(Kathryn)
+#' @param output TODO(Kathryn)(Kathryn)
+#' @param plot TODO(Kathryn)(Kathryn)
+#' @param answers TODO(Kathryn)(Kathryn)
+#' @param tau TODO(Kathryn)
+#' @param burn.in TODO(Kathryn)
+#' @param iterations TODO(Kathryn)
+#' @param Metropolis.stdev.N TODO(Kathryn)
+#' @param Metropolis.start.theta TODO(Kathryn)
+#' @param Metropolis.stdev.theta TODO(Kathryn)
+#' 
+#' @importFrom graphics hist par plot
 #' 
 #' @export 
 objective_bayes_geometric <- function(data, 

@@ -329,9 +329,10 @@ breakaway_nof1 <- function(input_data,
                                       "type" = "Prediction"))
         
         my_plot <- ggplot(plot_data, 
-                          aes(x = x, 
-                              y = y,
-                              col = type, pch = type)) +
+                          aes_string(x = "x", 
+                                     y = "y",
+                                     col = "type", 
+                                     pch = "type")) +
           geom_point() +
           labs(x = "x", y = "f(x+1)/f(x)", title = "Plot of ratios and fitted values: Kemp models (no f1)") +
           theme_bw()
