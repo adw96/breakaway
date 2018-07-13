@@ -59,14 +59,10 @@
 "toy_metadata"
 ################################################################################
 ################################################################################
-#' (Data) A toy OTU table. Covariate info available in `toy_metadata`.
+#' (Data) A toy OTU table. 
 #' 
-#' @format A data frame with 448 rows and 143 columns:
-#' \describe{
-#'   \item{Rows:}{The abundance of each taxon...}
-#'   \item{Columns:}{...in each sample}
-#'   ...
-#' }
+#' Covariate info available in `toy_metadata`. A data frame with 448 rows and 143 columns.
+#' Rows give the abundance of each taxon; columns give the samples
 #' 
 ################################################################################
 "toy_otu_table"

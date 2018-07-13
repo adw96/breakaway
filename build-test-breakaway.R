@@ -24,7 +24,7 @@ library(tibble)
 
 check() 
 
- document()
+document()
 roxygenise()
 build(vignettes = F)
 library(breakaway)

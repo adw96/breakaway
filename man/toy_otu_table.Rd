@@ -3,17 +3,13 @@
 \docType{data}
 \name{toy_otu_table}
 \alias{toy_otu_table}
-\title{(Data) A toy OTU table. Covariate info available in `toy_metadata`.}
-\format{A data frame with 448 rows and 143 columns:
-\describe{
-  \item{Rows:}{The abundance of each taxon...}
-  \item{Columns:}{...in each sample}
-  ...
-}}
+\title{(Data) A toy OTU table.}
+\format{An object of class \code{data.frame} with 448 rows and 143 columns.}
 \usage{
 toy_otu_table
 }
 \description{
-(Data) A toy OTU table. Covariate info available in `toy_metadata`.
+Covariate info available in `toy_metadata`. A data frame with 448 rows and 143 columns.
+Rows give the abundance of each taxon; columns give the samples
 }
 \keyword{datasets}
