@@ -28,8 +28,15 @@ document()
 roxygenise()
 build(vignettes = F)
 library(breakaway)
-breakaway(apples) %>% plot
-breakaway_nof1(apples[-1,]) %>% plot
+
+# TODO fix plot(breakaway(GlobalPatterns))
+# x <- breakaway(GlobalPatterns)
+plot(x, symmetric = T) +  ylim(0, 1e5) ## why 6 warnings?
+plot(x, symmetric = F) +  ylim(0, 1e5) ## why no intervals?
+plot(x, symmetric = F) +  ylim(0, 1e5) +
+  coord_cartesian(ylim = c(0,25000))
+summary(x)$upper
+
 test(directory)
 
 covr::package_coverage()

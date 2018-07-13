@@ -8,12 +8,6 @@ test_that("toy_otu_table inherits from phyloseq", {
 })
 
 
-test_that("use aes_string()", {
-  # check out
-  # https://stackoverflow.com/questions/9439256/how-can-i-handle-r-cmd-check-no-visible-binding-for-global-variable-notes-when
-  expect_true(FALSE)
-})
-
 test_that("make plot alpha_estimates have x axis", {
   expect_true(FALSE)
 })
@@ -26,8 +20,10 @@ test_that("breakaway on phyloseq objects runs in parallel", {
   expect_true(FALSE)
 })
 
-
-test_that("GlobalPatterns runs", {
-  expect_is(GlobalPatterns %>% breakaway,
+test_that("GlobalPatterns runs without warnings", {
+  x <- GlobalPatterns %>% breakaway
+  expect_is(x,
               "alpha_estimates")
+  expect_warning(plot(x), "ggplot")
+  
 })

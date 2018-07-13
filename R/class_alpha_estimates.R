@@ -90,18 +90,26 @@ plot.alpha_estimates <- function(x,
   if (symmetric) {
     # TODO (Amy) make lower bound observed richness
     
-    df$lower <- max(0, df$estimate - 1.96*df$error)
-    df$upper <- df$estimate + 1.96*df$error
+    df$lower_y <- pmax(0, df$estimate - 1.96*df$error)
+    df$upper_y <- df$estimate + 1.96*df$error
     
-  } 
+  } else {
+    df$lower_y <- df$lower 
+    df$upper_y <- df$upper 
+    
+  }
+  # print(df$lower_y)
+  # print(df$upper_y)
+  # print(df, n = 60)
   
   
   ggplot2::ggplot(df, aes_string(x = "xaxis")) +
     ylab("Alpha-diversity estimate") +
     geom_point(aes_string(y = "estimate")) +
-    geom_linerange(aes_string(ymin = "lower", ymax = "upper")) +
+    geom_linerange(aes_string(ymin = "lower_y", ymax = "upper_y")) +
     theme_bw() +
-    xlim(0.5, length(x)+0.5)
+    xlim(0.5, length(x)+0.5) +
+    coord_cartesian()
 }
 
 
