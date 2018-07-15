@@ -98,18 +98,16 @@ plot.alpha_estimates <- function(x,
     df$upper_y <- df$upper 
     
   }
-  # print(df$lower_y)
-  # print(df$upper_y)
-  # print(df, n = 60)
-  
-  
+
+  upper_ylim <- max(df$upper_y*1.2, na.rm = T)
+
   ggplot2::ggplot(df, aes_string(x = "xaxis")) +
     ylab("Alpha-diversity estimate") +
     geom_point(aes_string(y = "estimate")) +
     geom_linerange(aes_string(ymin = "lower_y", ymax = "upper_y")) +
     theme_bw() +
     xlim(0.5, length(x)+0.5) +
-    coord_cartesian()
+    coord_cartesian(ylim = c(0,upper_ylim))
 }
 
 

@@ -24,6 +24,6 @@ test_that("GlobalPatterns runs without warnings", {
   x <- GlobalPatterns %>% breakaway
   expect_is(x,
               "alpha_estimates")
-  expect_warning(plot(x), "ggplot")
   
+  ### All estimates are sensible
 })

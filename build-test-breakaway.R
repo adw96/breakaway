@@ -31,11 +31,11 @@ library(breakaway)
 
 # TODO fix plot(breakaway(GlobalPatterns))
 # x <- breakaway(GlobalPatterns)
-plot(x, symmetric = T) +  ylim(0, 1e5) ## why 6 warnings?
-plot(x, symmetric = F) +  ylim(0, 1e5) ## why no intervals?
-plot(x, symmetric = F) +  ylim(0, 1e5) +
-  coord_cartesian(ylim = c(0,25000))
-summary(x)$upper
+plot(x, symmetric = T)
+plot(x, symmetric = F)
+
+plot(x, symmetric = T) + coord_cartesian(ylim = c(0, 1e5)) ## why 6 warnings?
+plot(x, symmetric = T) + coord_cartesian(ylim = c(0, 1e5)) ## why 6 warnings?
 
 test(directory)
 
