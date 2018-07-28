@@ -4,10 +4,14 @@
 \alias{plot.alpha_estimates}
 \title{Plot function for alpha_estimates class}
 \usage{
-\method{plot}{alpha_estimates}(x, ...)
+\method{plot}{alpha_estimates}(x, method = NULL, fullCI = FALSE, ...)
 }
 \arguments{
-\item{x}{Object of class \code{alpha_estimates}}
+\item{x}{Object of class \code{alpha_estimates}.}
+
+\item{method}{Optional. If there are multiple richness methods included in \code{x}, this can be set to the the desired method to be plotted. Defaults to the method of the first alpha diversity estimate.}
+
+\item{fullCI}{Optional boolean. Indicates whether you want the plot to include the full confidence intervals. Defaults to \code{FALSE}.}
 
 \item{...}{See details}
 }
@@ -15,7 +19,7 @@
 Plot function for alpha_estimates class
 }
 \details{
-... Can currently include "fullCI", a boolean to indicate whether you want the plot to include the full confidence intervals. Defaults to FALSE.
+... does not currently have any implemented options. Optional arguments currently include "fullCI", a  Optional
 }
 \examples{
 \dontrun{
