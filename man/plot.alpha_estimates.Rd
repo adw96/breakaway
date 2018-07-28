@@ -4,14 +4,21 @@
 \alias{plot.alpha_estimates}
 \title{Plot function for alpha_estimates class}
 \usage{
-\method{plot}{alpha_estimates}(x, method = NULL, fullCI = FALSE, ...)
+\method{plot}{alpha_estimates}(x, measure = NULL, color = NULL,
+  shape = NULL, title = NULL, trim_plot = FALSE, ...)
 }
 \arguments{
 \item{x}{Object of class \code{alpha_estimates}.}
 
-\item{method}{Optional. If there are multiple richness methods included in \code{x}, this can be set to the the desired method to be plotted. Defaults to the method of the first alpha diversity estimate.}
+\item{measure}{(Optional). If there are multiple richness measures included in \code{x}, this can be set to the the desired measure to be plotted. Defaults to the measure of the first alpha diversity estimate.}
 
-\item{fullCI}{Optional boolean. Indicates whether you want the plot to include the full confidence intervals. Defaults to \code{FALSE}.}
+\item{color}{(Optional). Default \code{NULL}. The sample variable to map to different colors. Can be a single character string of the variable name in \code{sample_data} or a custom supplied vector with length equal to the number of samples.}
+
+\item{shape}{(Optional). Default \code{NULL}. The sample variable to map to different shapes. Can be a single character string of the variable name in \code{sample_data} or a custom supplied vector with length equal to the number of samples.}
+
+\item{title}{(Optional). Default NULL. Character string. The main title for the graphic.}
+
+\item{trim_plot}{(Optional). Default \code{FALSE}. Boolean indicator for whether you want the plot to include the full confidence intervals.}
 
 \item{...}{See details}
 }
@@ -19,7 +26,7 @@
 Plot function for alpha_estimates class
 }
 \details{
-... does not currently have any implemented options. Optional arguments currently include "fullCI", a  Optional
+... does not currently have any implemented options. Optional arguments currently include "trim_plot", a  Optional
 }
 \examples{
 \dontrun{
