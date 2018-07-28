@@ -56,6 +56,7 @@ test_that("alpha_estimates is robust across taxonomy", {
   expect_is(summary(z), "tbl")
   expect_is(plot(z), "ggplot")
   
+  
   expect_is(GlobalPatterns %>% 
               subset_samples(X.SampleID %in% c("Even2")) %>%
               tax_glom("Order") %>% breakaway, 
