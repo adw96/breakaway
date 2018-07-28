@@ -7,7 +7,7 @@
 chao_bunge(input_data, cutoff = 10, output = NULL, answers = NULL)
 }
 \arguments{
-\item{input_data}{An input type that can be processed by \code{convert()}}
+\item{input_data}{An input type that can be processed by \code{convert()} or a \code{phyloseq} object}
 
 \item{cutoff}{The maximum frequency to use in fitting.}
 
@@ -16,7 +16,7 @@ chao_bunge(input_data, cutoff = 10, output = NULL, answers = NULL)
 \item{answers}{Deprecated; only for backwards compatibility}
 }
 \value{
-An object of class \code{alpha_estimate}
+An object of class \code{alpha_estimate}, or \code{alpha_estimates} for \code{phyloseq} objects
 }
 \description{
 This function implements the species richness estimation procedure outlined

@@ -7,14 +7,14 @@
 chao1(input_data, output = NULL, answers = NULL)
 }
 \arguments{
-\item{input_data}{An input type that can be processed by \code{convert()}}
+\item{input_data}{An input type that can be processed by \code{convert()} or a \code{phyloseq} object}
 
 \item{output}{Deprecated; only for backwards compatibility}
 
 \item{answers}{Deprecated; only for backwards compatibility}
 }
 \value{
-An object of class \code{alpha_estimate}
+An object of class \code{alpha_estimate}, or \code{alpha_estimates} for \code{phyloseq} objects
 }
 \description{
 This function implements the Chao1 richness estimate, which is often

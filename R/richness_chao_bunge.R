@@ -4,23 +4,40 @@
 #' in Chao & Bunge (2002).
 #' 
 #' 
-#' @param input_data An input type that can be processed by \code{convert()}
+#' @param input_data An input type that can be processed by \code{convert()} or a \code{phyloseq} object
 #' @param cutoff The maximum frequency to use in fitting.
 #' @param output Deprecated; only for backwards compatibility
 #' @param answers Deprecated; only for backwards compatibility
-#' @return An object of class \code{alpha_estimate}
+#'
+#' @return An object of class \code{alpha_estimate}, or \code{alpha_estimates} for \code{phyloseq} objects
 #' 
 #' @author Amy Willis
 #' @examples
 #' 
 #' chao_bunge(apples)
 #' 
-#' @export chao_bunge
+#' @export
 chao_bunge <- function(input_data, 
                        cutoff=10, 
                        output=NULL, answers=NULL) {
   
   my_warnings <- NULL
+  
+  
+  if (class(input_data) == "phyloseq") {
+    if (input_data %>% otu_table %>% taxa_are_rows) {
+      return(input_data %>% 
+        get_taxa %>%
+        apply(2, function(x) chao_bunge(make_frequency_count_table(x))) %>%
+        alpha_estimates)
+    } else {
+      return(input_data %>% 
+        otu_table %>%
+        apply(1, function(x) chao_bunge(make_frequency_count_table(x))) %>%
+        alpha_estimates)
+    }
+  }
+
   
   my_data <- convert(input_data)
   
@@ -44,8 +61,29 @@ chao_bunge <- function(input_data,
   k <- 2:cutoff
   m <- 1:cutoff
   numerator <- frequency_index[k]
-  denominator <- 1 - f1*sum(m^ 2*frequency_index[m])/(sum(m*frequency_index[m]))^2 # 
-  diversity  <- d_a + sum(numerator /denominator)
+  denominator <- 1 - f1*sum(m^2*frequency_index[m])/(sum(m*frequency_index[m]))^2 # 
+  if (denominator == 0) {
+    diversity <- NA
+    diversity_se  <- NA
+    f0  <- NA
+    interval_tmp <- NA
+    
+    my_warnings <- c(my_warnings, "zero denominator in estimate for f0")
+    return(alpha_estimate(estimate = diversity,
+                   error = diversity_se,
+                   estimand = "richness",
+                   name = "Chao-Bunge",
+                   interval = interval_tmp,
+                   type = "???",
+                   model = "Negative Binomial",
+                   frequentist = TRUE,
+                   parametric = TRUE,
+                   reasonable = TRUE,
+                   interval_type = "Approximate: log-normal", 
+                   warnings = my_warnings,
+                   other = list(cutoff = cutoff)))
+  }
+  diversity  <- d_a + sum(numerator/denominator)
   
   f0 <- diversity - cc
   
