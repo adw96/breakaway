@@ -1,3 +1,5 @@
+library(breakaway)
+
 test_that("betta isn't stupid", {
   n <- 25
   

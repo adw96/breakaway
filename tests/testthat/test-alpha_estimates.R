@@ -1,3 +1,6 @@
+library(breakaway)
+library(phyloseq)
+
 data("GlobalPatterns")
 
 test_that("alpha_estimates works", {

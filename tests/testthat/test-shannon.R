@@ -1,3 +1,5 @@
+library(breakaway)
+
 test_that("shannon isn't crazy", {
   
   expect_warning(a <- shannon(c(0.02, 0.08)))

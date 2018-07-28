@@ -1,3 +1,5 @@
+library(breakaway)
+
 data("toy_otu_table")
 
 test_that("breakaway gives reasonable std errors", {
