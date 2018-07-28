@@ -1,3 +1,6 @@
+library(breakaway)
+library(phyloseq)
+
 data("GlobalPatterns")
 
 test_that("alpha_estimates works", {
@@ -52,6 +55,7 @@ test_that("alpha_estimates is robust across taxonomy", {
   expect_is(z, "alpha_estimates")
   expect_is(summary(z), "tbl")
   expect_is(plot(z), "ggplot")
+  
   
   expect_is(GlobalPatterns %>% 
               subset_samples(X.SampleID %in% c("Even2")) %>%

@@ -1,3 +1,5 @@
+library(breakaway)
+
 test_that("Updated S3 outputs consistent", {
   
   wlrm_t <- wlrm_transformed(apples)

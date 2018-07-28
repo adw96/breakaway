@@ -4,13 +4,13 @@
 #' This function implements the untransformed version of the species richness
 #' estimation procedure outlined in Rocchetti, Bunge and Bohning (2011).
 #' 
-#' @param input_data An input type that can be processed by \code{convert()}
+#' @param input_data An input type that can be processed by \code{convert()} or a \code{phyloseq} object
 #' @param cutoff Maximum frequency count to use
 #' @param print Deprecated; only for backwards compatibility
 #' @param plot Deprecated; only for backwards compatibility
 #' @param answers Deprecated; only for backwards compatibility
-#' @return An object of class \code{alpha_estimate}
-#' 
+#'
+#' @return An object of class \code{alpha_estimate}, or \code{alpha_estimates} for \code{phyloseq} objects
 #' @note This estimator is based on the negative binomial model and for that
 #' reason generally produces poor fits to microbial data. The result is usually
 #' artificially low standard errors. Caution is advised.
@@ -31,12 +31,27 @@
 #' 
 #' wlrm_untransformed(apples)
 #' 
-#' @export wlrm_untransformed
+#' @export
 wlrm_untransformed  <- function(input_data, 
                                 cutoff=NA,
                                 print=NULL, 
                                 plot=NULL, 
                                 answers=NULL) {
+  
+  if (class(input_data) == "phyloseq") {
+    if (input_data %>% otu_table %>% taxa_are_rows) {
+      return(input_data %>% 
+               get_taxa %>%
+               apply(2, function(x) wlrm_untransformed(make_frequency_count_table(x))) %>%
+               alpha_estimates)
+    } else {
+      return(input_data %>% 
+               otu_table %>%
+               apply(1, function(x) wlrm_untransformed(make_frequency_count_table(x))) %>%
+               alpha_estimates)
+    }
+  }
+  
   my_data <- convert(input_data)
   
   if (my_data[1,1] != 1 || my_data[1,2] == 0) {

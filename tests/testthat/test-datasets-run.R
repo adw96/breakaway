@@ -1,3 +1,5 @@
+library(breakaway)
+
 data("apples")
 data("hawaii")
 data("toy_otu_table")

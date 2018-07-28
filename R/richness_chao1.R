@@ -4,11 +4,11 @@
 #' mistakenly referred to as an index.
 #' 
 #' 
-#' @param input_data An input type that can be processed by \code{convert()}
+#' @param input_data An input type that can be processed by \code{convert()} or a \code{phyloseq} object
 #' @param output Deprecated; only for backwards compatibility
 #' @param answers Deprecated; only for backwards compatibility
 #'
-#' @return An object of class \code{alpha_estimate}
+#' @return An object of class \code{alpha_estimate}, or \code{alpha_estimates} for \code{phyloseq} objects
 #' @note The authors of this package strongly discourage the use of this
 #' estimator.  It is only valid when you wish to assume that every taxa has
 #' equal probability of being observed. You don't really think that's possible,
@@ -20,11 +20,25 @@
 #' chao1(apples)
 #' 
 #' 
-#' @export chao1
+#' @export 
 chao1 <- function(input_data, output=NULL, answers=NULL) {
   
-  my_data <- convert(input_data)
+  if (class(input_data) == "phyloseq") {
+    if (input_data %>% otu_table %>% taxa_are_rows) {
+      return(input_data %>% 
+               get_taxa %>%
+               apply(2, function(x) chao1(make_frequency_count_table(x))) %>%
+               alpha_estimates)
+    } else {
+      return(input_data %>% 
+               otu_table %>%
+               apply(1, function(x) chao1(make_frequency_count_table(x))) %>%
+               alpha_estimates)
+    }
+  }
   
+  my_data <- convert(input_data)
+
   # TODO: this is a stupid way of doing it, find a better one 
   index  <- 1:max(my_data[,1])
   frequency_index <- rep(0, length(index))
@@ -35,7 +49,6 @@ chao1 <- function(input_data, output=NULL, answers=NULL) {
   
   f0 <- f1^2/(2*f2)
   diversity <- n + f0
-  
   diversity_se <- sqrt(f2*(0.5*(f1/f2)^2 + (f1/f2)^3 + 0.25*(f1/f2)^4))
   
   # TODO: write a function to do this

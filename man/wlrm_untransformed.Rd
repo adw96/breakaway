@@ -8,7 +8,7 @@ wlrm_untransformed(input_data, cutoff = NA, print = NULL, plot = NULL,
   answers = NULL)
 }
 \arguments{
-\item{input_data}{An input type that can be processed by \code{convert()}}
+\item{input_data}{An input type that can be processed by \code{convert()} or a \code{phyloseq} object}
 
 \item{cutoff}{Maximum frequency count to use}
 
@@ -19,7 +19,7 @@ wlrm_untransformed(input_data, cutoff = NA, print = NULL, plot = NULL,
 \item{answers}{Deprecated; only for backwards compatibility}
 }
 \value{
-An object of class \code{alpha_estimate}
+An object of class \code{alpha_estimate}, or \code{alpha_estimates} for \code{phyloseq} objects
 }
 \description{
 This function implements the untransformed version of the species richness
