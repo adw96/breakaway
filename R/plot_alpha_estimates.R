@@ -1,6 +1,7 @@
 #' Plot function for alpha_estimates class
 #' 
 #' @param x Object of class \code{alpha_estimates}.
+#' @param data (Optional). Default \code{NULL}. Required object of class \code{phyloseq} if including a \code{sample_data} variable for \code{color} or \code{shape}.
 #' @param measure (Optional). If there are multiple richness measures included in \code{x}, this can be set to the the desired measure to be plotted. Defaults to the measure of the first alpha diversity estimate.
 #' @param color (Optional). Default \code{NULL}. The sample variable to map to different colors. Can be a single character string of the variable name in \code{sample_data} or a custom supplied vector with length equal to the number of samples.
 #' @param shape (Optional). Default \code{NULL}. The sample variable to map to different shapes. Can be a single character string of the variable name in \code{sample_data} or a custom supplied vector with length equal to the number of samples.
@@ -18,7 +19,7 @@
 #' plot(alphas)
 #' }
 #' @export
-plot.alpha_estimates <- function(x, measure = NULL, color = NULL, shape = NULL, title = NULL, trim_plot = FALSE, ...) {
+plot.alpha_estimates <- function(x, data = NULL, measure = NULL, color = NULL, shape = NULL, title = NULL, trim_plot = FALSE, ...) {
   
   if (is.null(measure)) {
     all_measures <- x %>% lapply(function(x) x$name) %>% unlist %>% unique
@@ -53,6 +54,27 @@ plot.alpha_estimates <- function(x, measure = NULL, color = NULL, shape = NULL, 
                    lci =  lci_tmp,
                    uci = uci_tmp,
                    names = names_tmp)
+  
+  if (!is.null(color)) {
+    if (color %in% phyloseq::sample_variables(data)) {
+      df$color <- phyloseq::get_variable(data, color)
+    } else if (length(color) == nrow(df)) {
+      df$color <- color
+    } else {
+      stop("color must either match a variable or be a custom vector of correct length!")
+    }
+  } # End if (!is.null(color))
+  
+  if (!is.null(shape)) {
+    if (shape %in% phyloseq::sample_variables(data)) {
+      df$shape <- phyloseq::get_variable(data, shape)
+    } else if (length(shape) == nrow(df)) {
+      df$shape <- shape
+    } else {
+      stop("shape must either match a variable or be a custom vector of correct length!")
+    }
+  } # End if (!is.null(color))
+  
   yname1 <- measure
   yname2 <- x[[1]]$estimand
   
@@ -64,20 +86,24 @@ plot.alpha_estimates <- function(x, measure = NULL, color = NULL, shape = NULL, 
       ylower <- min(0, 0.95*min(df$uci[!out]))
       yupper <- 1.05*max(df$uci[!out])
       
-      ggplot2::ggplot(df, ggplot2::aes(x = names, xend = names)) +
+      ggplot2::ggplot(df, ggplot2::aes(x = names, xend = names, 
+                                       colour = color, shape = shape)) +
         ggplot2::geom_point(ggplot2::aes(x = names, y = pts)) +
         ggplot2::coord_cartesian(ylim = c(ylower,yupper)) + 
         ggplot2::geom_segment(ggplot2::aes(y = lci, yend = uci)) +
         ggplot2::ylab(paste(yname1, "estimate of", yname2)) +
         ggplot2::xlab("") +
+        ggplot2::labs(title = title) +
         ggplot2::theme_bw() + 
         ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1))
     } else {
-      ggplot2::ggplot(df, ggplot2::aes(x = names, xend = names)) +
+      ggplot2::ggplot(df, ggplot2::aes(x = names, xend = names, 
+                                       colour = color, shape = shape)) +
         ggplot2::geom_point(ggplot2::aes(x = names, y = pts)) +
         ggplot2::geom_segment(ggplot2::aes(y = lci, yend = uci)) +
         ggplot2::ylab(paste(yname1, "estimate of", yname2)) +
         ggplot2::xlab("") +
+        ggplot2::labs(title = title) +
         ggplot2::theme_bw() + 
         ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1))
     } # Close last else - happens with no CI or trim_plot = TRUE
