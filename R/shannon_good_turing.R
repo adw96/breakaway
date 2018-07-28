@@ -1,10 +1,25 @@
 #' The Good-Turing estimate of Shannon diversity
 #' 
 #' 
-#' @param input_data An input type that can be processed by \code{convert()}
-#' @return An object of class \code{alpha_estimate} 
-#' @export good_turing
+#' @param input_data An input type that can be processed by \code{convert()} or a \code{phyloseq} object
+#'
+#' @return An object of class \code{alpha_estimate}, or \code{alpha_estimates} for \code{phyloseq} objects
+#' @export 
 good_turing  <- function(input_data) {
+  
+  if (class(input_data) == "phyloseq") {
+    if (input_data %>% otu_table %>% taxa_are_rows) {
+      return(input_data %>% 
+               get_taxa %>%
+               apply(2, function(x) good_turing(make_frequency_count_table(x))) %>%
+               alpha_estimates)
+    } else {
+      return(input_data %>% 
+               otu_table %>%
+               apply(1, function(x) good_turin(make_frequency_count_table(x))) %>%
+               alpha_estimates)
+    }
+  }
   
   cleaned_data <- convert(input_data)
   
