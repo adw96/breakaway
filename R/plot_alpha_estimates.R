@@ -32,9 +32,19 @@ plot.alpha_estimates <- function(x, method = NULL, fullCI = FALSE, ...) {
   if (length(names_tmp) == 0) {
     names_tmp <- paste("Sample", 1:length(pts_tmp))
   }
+  lci_tmp <- x %>% lapply(function(x) x$interval[1]) %>% unlist
+  uci_tmp <- x %>% lapply(function(x) x$interval[2]) %>% unlist
+  
+  if (is.null(lci_tmp)) {
+    lci_tmp <- pts_tmp*NA
+  }
+  if (is.null(uci_tmp)) {
+    uci_tmp <- pts_tmp*NA
+  }
+  
   df <- data.frame(pts = pts_tmp,
-                   lci = x %>% lapply(function(x) x$interval[1]) %>% unlist,
-                   uci = x %>% lapply(function(x) x$interval[2]) %>% unlist,
+                   lci =  lci_tmp[intersect(names(pts_tmp), names(lci_tmp))],
+                   uci = uci_tmp[intersect(names(pts_tmp), names(uci_tmp))],
                    names = names_tmp)
   yname1 <- method
   yname2 <- x[[1]]$estimand
