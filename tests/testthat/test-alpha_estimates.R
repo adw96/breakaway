@@ -42,7 +42,7 @@ test_that("alpha_estimates is robust across taxonomy", {
   expect_silent({y <- GlobalPatterns %>% 
     subset_samples(SampleType %in% c("Mock")) %>%
     tax_glom("Phylum") %>%
-    breakaway})
+    sample_richness})
   
   expect_is(y, "alpha_estimates")
   expect_is(summary(y), "tbl")
