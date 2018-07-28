@@ -24,7 +24,7 @@
 chao1 <- function(input_data, output=NULL, answers=NULL) {
   
   my_data <- convert(input_data)
-  
+
   # TODO: this is a stupid way of doing it, find a better one 
   index  <- 1:max(my_data[,1])
   frequency_index <- rep(0, length(index))
@@ -35,7 +35,6 @@ chao1 <- function(input_data, output=NULL, answers=NULL) {
   
   f0 <- f1^2/(2*f2)
   diversity <- n + f0
-  
   diversity_se <- sqrt(f2*(0.5*(f1/f2)^2 + (f1/f2)^3 + 0.25*(f1/f2)^4))
   
   # TODO: write a function to do this
