@@ -1,6 +1,6 @@
 # testing and compiling breakaway
-# directory <- "/Users/adwillis/software/breakaway"
-directory <- "/Users/adw96/Documents/software/breakaway"
+directory <- "/Users/adwillis/software/breakaway"
+# directory <- "/Users/adw96/Documents/software/breakaway"
 # directory <- "/Users/amy/Documents/software/breakaway"
 setwd(directory)
 library(devtools)
@@ -29,18 +29,27 @@ roxygenise()
 build(vignettes = F)
 library(breakaway)
 
-# TODO fix plot(breakaway(GlobalPatterns))
-# x <- breakaway(GlobalPatterns)
-plot(x, symmetric = T)
-plot(x, symmetric = F)
 
-plot(x, symmetric = T) + coord_cartesian(ylim = c(0, 1e5)) ## why 6 warnings?
-plot(x, symmetric = T) + coord_cartesian(ylim = c(0, 1e5)) ## why 6 warnings?
+phyloseq::plot_richness(GlobalPatterns, x="SampleType", color="SampleType")
+
+plot(x = breakaway(GlobalPatterns), physeq = GlobalPatterns,
+     xaxis = "SampleType", color = "SampleType")
+
+plot(x = chao_bunge(GlobalPatterns), physeq = GlobalPatterns,
+     xaxis = "SampleType", color = "SampleType")
 
 test(directory)
 
-covr::package_coverage()
+cov <- covr::package_coverage()
+plot(cov)
+zero_coverage(cov)
 
 # rmarkdown::render("README.Rmd")
 # pkgdown::build_site()
+
+
+breakaway(apples) %>% class
+breakaway(GlobalPatterns) %>% class
+sample_richness(apples)
+sample_richness(GlobalPatterns)
 

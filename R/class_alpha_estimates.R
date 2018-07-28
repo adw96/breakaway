@@ -71,8 +71,6 @@ summary.alpha_estimates <- function(object, ...) {
                  "error" = to_vector(object, "error"),
                  "lower" = intervals_df[1, ] %>% c %>% unlist,
                  "upper" = intervals_df[2, ] %>% c %>% unlist)
-  
-  
 }
 
 #' @export
@@ -89,7 +87,6 @@ plot.alpha_estimates <- function(x,
   
   if (symmetric) {
     # TODO (Amy) make lower bound observed richness
-    
     df$lower_y <- pmax(0, df$estimate - 1.96*df$error)
     df$upper_y <- df$estimate + 1.96*df$error
     
