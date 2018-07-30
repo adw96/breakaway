@@ -66,12 +66,15 @@ plot.alpha_estimates <- function(x, data = NULL, measure = NULL, color = NULL, s
   aes_map <- ggplot2::aes_string(colour = color, shape = shape)
   my_gg <- ggplot2::ggplot(df, aes_map) +
     ggplot2::geom_point(ggplot2::aes(x = Sample, y = estimate)) + 
-    ggplot2::geom_segment(ggplot2::aes(x = Sample, xend = Sample, y = lower, yend = upper)) +
     ggplot2::ylab(paste(yname1, "estimate of", yname2)) +
     ggplot2::xlab("") +
     ggplot2::labs(title = title) +
     ggplot2::theme_bw() + 
     ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1))
+  
+  if (!(all(is.na(df$lower)) || all(is.na(df$upper)))) {
+    my_gg <- my_gg + ggplot2::geom_segment(ggplot2::aes(x = Sample, xend = Sample, y = lower, yend = upper))
+  }
   
   if (!trim_plot) {
     fiven <- stats::fivenum(df$upper, na.rm = TRUE)
