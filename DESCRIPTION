@@ -25,7 +25,8 @@ Imports: MASS,
     reshape2,
     R.rsp,
     testthat,
-    tibble
+    tibble,
+    dplyr
 Suggests: covr,
     DT,
     knitr,
