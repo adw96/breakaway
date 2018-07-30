@@ -12,7 +12,6 @@
 #' @details ... does not currently have any implemented options. Optional arguments currently include "trim_plot", a  Optional
 #' 
 #' @import magrittr
-#' @import dplyr
 #' 
 #' @examples
 #' \dontrun{
@@ -40,9 +39,9 @@ plot.alpha_estimates <- function(x, data = NULL, measure = NULL, color = NULL, s
   
   if (!is.null(color)) {
     if (color %in% phyloseq::sample_variables(data)) {
-      df$color <- phyloseq::get_variable(data, color)
+      df[[color]] <- phyloseq::get_variable(data, color)
     } else if (length(color) == nrow(df)) {
-      df$color <- color
+      df[[color]] <- color
     } else {
       stop("color must either match a variable or be a custom vector of correct length!")
     }
@@ -50,9 +49,9 @@ plot.alpha_estimates <- function(x, data = NULL, measure = NULL, color = NULL, s
   
   if (!is.null(shape)) {
     if (shape %in% phyloseq::sample_variables(data)) {
-      df$shape <- phyloseq::get_variable(data, shape)
+      df[[shape]] <- phyloseq::get_variable(data, shape)
     } else if (length(shape) == nrow(df)) {
-      df$shape <- shape
+      df[[shape]] <- shape
     } else {
       stop("shape must either match a variable or be a custom vector of correct length!")
     }
@@ -60,11 +59,14 @@ plot.alpha_estimates <- function(x, data = NULL, measure = NULL, color = NULL, s
   
   yname1 <- measure
   yname2 <- x[[1]]$estimand
+  if (is.null(data)) {
+    df$Sample <- rownames(df)
+  }
   
-  my_gg <- ggplot2::ggplot(df, ggplot2::aes(x = names, xend = names, 
-                                            colour = color, shape = shape)) +
-    ggplot2::geom_point(ggplot2::aes(x = names, y = estimate)) + 
-    ggplot2::geom_segment(ggplot2::aes(y = lower, yend = upper)) +
+  aes_map <- ggplot2::aes_string(colour = color, shape = shape)
+  my_gg <- ggplot2::ggplot(df, aes_map) +
+    ggplot2::geom_point(ggplot2::aes(x = Sample, y = estimate)) + 
+    ggplot2::geom_segment(ggplot2::aes(x = Sample, xend = Sample, y = lower, yend = upper)) +
     ggplot2::ylab(paste(yname1, "estimate of", yname2)) +
     ggplot2::xlab("") +
     ggplot2::labs(title = title) +
@@ -76,8 +78,8 @@ plot.alpha_estimates <- function(x, data = NULL, measure = NULL, color = NULL, s
     iqr <- diff(fiven[c(2, 4)])
     if (!is.na(iqr)) {
       out <- df$upper < (fiven[2L] - 1.5 * iqr) | df$upper > (fiven[4L] + 1.5 * iqr)
-      ylower <- min(0, 0.95*min(df$upper[!out]))
-      yupper <- 1.05*max(df$upper[!out])
+      ylower <- min(0, 0.95*min(df$upper[!out]), na.rm = TRUE)
+      yupper <- 1.05*max(df$upper[!out], na.rm = TRUE)
       
       my_gg <- my_gg +
         ggplot2::coord_cartesian(ylim = c(ylower,yupper)) 
