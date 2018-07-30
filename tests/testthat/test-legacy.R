@@ -1,3 +1,4 @@
+context("legacy")
 library(breakaway)
 
 test_that("Updated S3 outputs consistent", {

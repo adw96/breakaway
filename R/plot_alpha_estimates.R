@@ -27,10 +27,12 @@ plot.alpha_estimates <- function(x, data = NULL, measure = NULL, color = NULL, s
     all_measures <- x %>% lapply(function(x) x$name) %>% unlist %>% unique
     measure <- all_measures[1]
   }
-  
-  df <- summary(x) %>% 
-    dplyr::mutate("Sample" = data %>% sample_names)
-  
+  if (!is.null(data)) {
+    df <- summary(x) %>% 
+      dplyr::mutate("Sample" = data %>% sample_names)
+  } else {
+    df <- summary(x)
+  }
   if (all(is.na(df$estimate))) {
     stop("There are no estimates in this alpha_estimates object!")
   }
@@ -69,12 +71,12 @@ plot.alpha_estimates <- function(x, data = NULL, measure = NULL, color = NULL, s
     ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1))
   
   if (!trim_plot) {
-    fiven <- stats::fivenum(df$uci, na.rm = TRUE)
+    fiven <- stats::fivenum(df$upper, na.rm = TRUE)
     iqr <- diff(fiven[c(2, 4)])
     if (!is.na(iqr)) {
-      out <- df$uci < (fiven[2L] - 1.5 * iqr) | df$uci > (fiven[4L] + 1.5 * iqr)
-      ylower <- min(0, 0.95*min(df$uci[!out]))
-      yupper <- 1.05*max(df$uci[!out])
+      out <- df$uci < (fiven[2L] - 1.5 * iqr) | df$upper > (fiven[4L] + 1.5 * iqr)
+      ylower <- min(0, 0.95*min(df$upper[!out]))
+      yupper <- 1.05*max(df$upper[!out])
       
       my_gg <- my_gg +
         ggplot2::coord_cartesian(ylim = c(ylower,yupper)) 

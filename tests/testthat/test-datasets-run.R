@@ -1,17 +1,18 @@
+context("datatsets run")
 library(breakaway)
 
 data("apples")
 data("hawaii")
 data("toy_otu_table")
 
-random_samples <- sample(x=1:143, size=5, replace=F)
+random_samples <- sample(x = 1:143, size = 5, replace = F)
 tables <- apply(toy_otu_table[,random_samples], 2, make_frequency_count_table)
 datasets <- list(apples, hawaii)
 datasets <- append(datasets, tables)
 dataset_names <- c("apples", 
                    "hawaii", 
                    paste("toy_otu_table_sample", 
-                         random_samples, sep=""))
+                         random_samples, sep = ""))
 
 
 test_that("datasets load", {

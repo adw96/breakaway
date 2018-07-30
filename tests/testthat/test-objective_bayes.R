@@ -1,3 +1,4 @@
+context("objective bayes")
 library(breakaway)
 
 test_that("objective bayes", {

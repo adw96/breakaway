@@ -1,3 +1,4 @@
+context("alpha estimates")
 library(breakaway)
 library(phyloseq)
 

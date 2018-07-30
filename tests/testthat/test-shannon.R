@@ -1,3 +1,4 @@
+context("shannon")
 library(breakaway)
 
 test_that("shannon isn't crazy", {
@@ -21,3 +22,4 @@ test_that("chao_shen works", {
   expect_is(chao_shen(apples), "alpha_estimate")
   
 })
+

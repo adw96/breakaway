@@ -1,3 +1,4 @@
+context("breakaway_reasonable")
 library(breakaway)
 
 data("toy_otu_table")

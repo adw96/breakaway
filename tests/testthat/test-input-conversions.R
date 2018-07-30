@@ -1,3 +1,4 @@
+context("input conversions")
 library(breakaway)
 
 #### Check we can move between different types of input data and return the same values

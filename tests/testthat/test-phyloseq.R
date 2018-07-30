@@ -1,3 +1,4 @@
+context("phyloseq")
 library(breakaway)
 library(phyloseq)
 data("GlobalPatterns")
