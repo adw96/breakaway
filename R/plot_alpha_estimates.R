@@ -12,6 +12,7 @@
 #' @details ... does not currently have any implemented options. Optional arguments currently include "trim_plot", a  Optional
 #' 
 #' @import magrittr
+#' @import dplyr
 #' 
 #' @examples
 #' \dontrun{
@@ -74,7 +75,7 @@ plot.alpha_estimates <- function(x, data = NULL, measure = NULL, color = NULL, s
     fiven <- stats::fivenum(df$upper, na.rm = TRUE)
     iqr <- diff(fiven[c(2, 4)])
     if (!is.na(iqr)) {
-      out <- df$uci < (fiven[2L] - 1.5 * iqr) | df$upper > (fiven[4L] + 1.5 * iqr)
+      out <- df$upper < (fiven[2L] - 1.5 * iqr) | df$upper > (fiven[4L] + 1.5 * iqr)
       ylower <- min(0, 0.95*min(df$upper[!out]))
       yupper <- 1.05*max(df$upper[!out])
       
