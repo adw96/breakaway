@@ -73,38 +73,5 @@ summary.alpha_estimates <- function(object, ...) {
                  "upper" = intervals_df[2, ] %>% c %>% unlist)
 }
 
-#' @export
-plot.alpha_estimates <- function(x, 
-                                 xaxis = NULL, 
-                                 symmetric = TRUE,
-                                 ...) {
-  
-  if (is.null(xaxis)) {
-    xaxis <- 1:length(x)
-  }
-  
-  df <- summary(x) 
-  
-  if (symmetric) {
-    # TODO (Amy) make lower bound observed richness
-    df$lower_y <- pmax(0, df$estimate - 1.96*df$error)
-    df$upper_y <- df$estimate + 1.96*df$error
-    
-  } else {
-    df$lower_y <- df$lower 
-    df$upper_y <- df$upper 
-    
-  }
-
-  upper_ylim <- max(df$upper_y*1.2, na.rm = T)
-
-  ggplot2::ggplot(df, aes_string(x = "xaxis")) +
-    ylab("Alpha-diversity estimate") +
-    geom_point(aes_string(y = "estimate")) +
-    geom_linerange(aes_string(ymin = "lower_y", ymax = "upper_y")) +
-    theme_bw() +
-    xlim(0.5, length(x)+0.5) +
-    coord_cartesian(ylim = c(0,upper_ylim))
-}
 
 

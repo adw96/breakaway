@@ -48,13 +48,14 @@ test_that("alpha_estimates is robust across taxonomy", {
   expect_is(summary(y), "tbl")
   expect_is(plot(y), "ggplot")
   
-  expect_silent({z <- GlobalPatterns %>% 
+  ps <- GlobalPatterns %>% 
     subset_samples(SampleType %in% c("Mock")) %>%
-    tax_glom("Order") %>%
+    tax_glom("Order")
+  expect_silent({z <- ps %>%
     breakaway})
   expect_is(z, "alpha_estimates")
   expect_is(summary(z), "tbl")
-  expect_is(plot(z), "ggplot")
+  expect_is(plot(z, data = ps, color = "SampleType"), "ggplot")
   
   
   expect_is(GlobalPatterns %>% 

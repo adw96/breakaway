@@ -1,7 +1,7 @@
 # testing and compiling breakaway
-directory <- "/Users/adwillis/software/breakaway"
+# directory <- "/Users/adwillis/software/breakaway"
 # directory <- "/Users/adw96/Documents/software/breakaway"
-# directory <- "/Users/amy/Documents/software/breakaway"
+directory <- "/Users/amy/Documents/software/breakaway"
 setwd(directory)
 library(devtools)
 library(roxygen2)
@@ -29,10 +29,12 @@ roxygenise()
 build(vignettes = F)
 library(breakaway)
 
-
+library(phyloseq)
+data("GlobalPatterns")
 phyloseq::plot_richness(GlobalPatterns, x="SampleType", color="SampleType")
 
-plot(x = breakaway(GlobalPatterns), physeq = GlobalPatterns,
+yy <- breakaway(GlobalPatterns)
+plot(yy, data = GlobalPatterns,
      xaxis = "SampleType", color = "SampleType")
 
 plot(x = chao_bunge(GlobalPatterns), physeq = GlobalPatterns,

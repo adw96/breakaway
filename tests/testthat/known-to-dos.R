@@ -7,11 +7,6 @@ test_that("toy_otu_table inherits from phyloseq", {
   
 })
 
-
-test_that("make plot alpha_estimates have x axis", {
-  expect_true(FALSE)
-})
-
 test_that("make aggregated phyloseq object for testing", {
   expect_true(FALSE)
 })
