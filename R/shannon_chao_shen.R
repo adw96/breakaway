@@ -44,7 +44,7 @@ chao_shen_estimate <- function(cleaned_data) {
   n <- sum(cleaned_data[, 2] * cleaned_data[, 1])
   f1 <- ifelse(cleaned_data[1,1] == 1, cleaned_data[1,2], 0)
   
-  p_hat <- to_proportions(cleaned_data, type="frequency count")
+  p_hat <- fc_to_proportions(cleaned_data)
   chat <- 1 - f1/n
   p_tilde <- chat * p_hat
   

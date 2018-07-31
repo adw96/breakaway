@@ -45,7 +45,7 @@ alpha_estimate <- function(estimate = NULL,
   
   alpha_object <- list(estimate = estimate,
                        error = error,
-                       estimand = estimand,
+                       estimand = tolower(estimand),
                        name = name,
                        interval = interval, #ifelse(is.na(estimate), c(NA, NA), interval),
                        interval_type = interval_type,

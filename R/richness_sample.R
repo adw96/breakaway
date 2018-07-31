@@ -34,7 +34,7 @@ sample_richness <- function(input_data) {
   alpha_estimate(estimate = my_est,
                  error = 0,
                  estimand = "richness",
-                 name = "sample",
+                 name = "Plug-in",
                  interval = NA,
                  type = NA,
                  model = "none",
