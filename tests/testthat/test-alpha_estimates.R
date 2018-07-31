@@ -39,7 +39,6 @@ test_that("breakaway runs on matrices objects", {
 
 test_that("alpha_estimates is robust across taxonomy", {
   
-  ## this one
   expect_silent({y <- GlobalPatterns %>% 
     subset_samples(SampleType %in% c("Mock")) %>%
     tax_glom("Phylum") %>%
@@ -56,8 +55,7 @@ test_that("alpha_estimates is robust across taxonomy", {
     breakaway})
   expect_is(z, "alpha_estimates")
   expect_is(summary(z), "tbl")
-  expect_is(plot(z, data = ps, color = "SampleType"), "ggplot")
-  
+  expect_is(plot(z, physeq = ps, color = "SampleType"), "ggplot")
   
   expect_is(GlobalPatterns %>% 
               subset_samples(X.SampleID %in% c("Even2")) %>%
@@ -65,4 +63,3 @@ test_that("alpha_estimates is robust across taxonomy", {
             "alpha_estimates")
   
 })
-

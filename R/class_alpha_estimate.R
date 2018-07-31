@@ -90,6 +90,7 @@ print.alpha_estimate <- function(x, ...) {
     if (!is.null(x$other$cutoff)) {
       cat(paste("  Cutoff: ", x$other$cutoff)) 
     }
+    cat("\n")
   }
 }
 

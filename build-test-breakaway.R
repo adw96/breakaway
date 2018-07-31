@@ -1,4 +1,7 @@
-# testing and compiling breakaway
+# useful commands for developers: testing and compiling breakaway
+
+# Open project
+
 # directory <- "/Users/adwillis/software/breakaway"
 # directory <- "/Users/adw96/Documents/software/breakaway"
 directory <- "/Users/amy/Documents/software/breakaway"
@@ -23,7 +26,6 @@ library(tibble)
 
 
 check() 
-
 document()
 roxygenise()
 build(vignettes = F)
@@ -33,13 +35,6 @@ library(phyloseq)
 data("GlobalPatterns")
 phyloseq::plot_richness(GlobalPatterns, x="SampleType", color="SampleType")
 
-yy <- breakaway(GlobalPatterns)
-plot(yy, data = GlobalPatterns,
-     xaxis = "SampleType", color = "SampleType")
-
-plot(x = chao_bunge(GlobalPatterns), physeq = GlobalPatterns,
-     xaxis = "SampleType", color = "SampleType")
-
 test(directory)
 
 cov <- covr::package_coverage()
@@ -48,10 +43,4 @@ zero_coverage(cov)
 
 # rmarkdown::render("README.Rmd")
 # pkgdown::build_site()
-
-
-breakaway(apples) %>% class
-breakaway(GlobalPatterns) %>% class
-sample_richness(apples)
-sample_richness(GlobalPatterns)
 

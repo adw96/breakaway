@@ -19,28 +19,11 @@ breakaway(input_data, output = NULL, plot = NULL, answers = NULL,
 \item{print}{Deprecated; only for backwards compatibility}
 }
 \value{
-An object of class \code{alpha_estimate} \item{code}{ A category representing algorithm behaviour.
-\samp{code=1} indicates no nonlinear models converged and the transformed
-WLRM diversity estimate of Rocchetti et. al. (2011) is returned.
-\samp{code=2} indicates that the iteratively reweighted model converged and
-was returned. \samp{code=3} indicates that iterative reweighting did not
-converge but a model based on a simplified variance structure was returned
-(in this case, the variance of the frequency ratios is assumed to be
-proportional to the denominator frequency index). Please peruse your fitted
-model before using your diversity estimate.  } \item{name}{ The ``name'' of
-the selected model. The first integer represents the numerator polynomial
-degree and the second integer represents the denominator polynomial degree
-of the model for the frequency ratios. See Willis & Bunge (2015) for
-details.  } \item{para}{ Estimated model parameters and standard errors.  }
-\item{est}{ The estimate of total (observed plus unobserved) diversity.  }
-\item{seest}{ The standard error in the diversity estimate.  } \item{full}{
-The chosen nonlinear model for frequency ratios.  } \item{ci}{ An asymmetric
-95\% confidence interval for diversity.  }
+An object of class \code{alpha_estimate}
 }
 \description{
-This function implements the species richness estimation procedure outlined
-in Willis & Bunge (2015). The diversity estimate, standard error, estimated
-model coefficients, model details and plot of the fitted model are returned.
+breakaway is a wrapper for modern species richness estimation
+for modern datasets
 }
 \note{
 \samp{breakaway} presents an estimator of species richness that is
@@ -63,13 +46,9 @@ breakaway(apples, plot = FALSE, output = FALSE, answers = TRUE)
 \references{
 Willis, A. and Bunge, J. (2015). Estimating diversity via
 frequency ratios. \emph{Biometrics}, \bold{71}(4), 1042--1049.
-
-Rocchetti, I., Bunge, J. and Bohning, D. (2011). Population size estimation
-based upon ratios of recapture probabilities. \emph{Annals of Applied
-Statistics}, \bold{5}.
 }
 \seealso{
-\code{\link{breakaway_nof1}}; \code{\link{apples}}
+\code{\link{breakaway_nof1}}; \code{\link{kemp}}; \code{\link{apples}}
 }
 \author{
 Amy Willis
