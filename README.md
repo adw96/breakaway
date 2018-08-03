@@ -5,9 +5,6 @@ breakaway <img src="docs/breakaway-logo.png" align="right" width="165px"/>
 
 [![Travis-CI Build Status](https://travis-ci.org/adw96/breakaway.svg?branch=master)](https://travis-ci.org/adw96/breakaway) [![Coverage status](https://codecov.io/gh/adw96/breakaway/branch/master/graph/badge.svg)](https://codecov.io/github/adw96/breakaway?branch=master) [![CRAN version](http://www.r-pkg.org/badges/version/breakaway)](https://cran.r-project.org/package=breakaway)
 
-breakaway
-=========
-
 Understanding the drivers of microbial diversity is an important frontier of microbial ecology, and investigating the diversity of samples from microbial ecosystems is a common step in any microbiome analysis. breakaway is the premier package for statistical analysis of microbial diversity. breakaway implements the latest and greatest estimates of different alpha diversity metrics, as well as the most commonly used estimates.
 
 breakaway is undergoing substantial renovations. Please submit an issue if it is interfering with your work!
