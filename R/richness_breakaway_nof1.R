@@ -119,7 +119,7 @@ breakaway_nof1.default <- function(input_data,
                                    answers = NULL, print = NULL, 
                                    force = NULL) {
   
-  my_data <- convert(input_data)
+  my_data <- convert(input_data[,1])
   
   my_data <- my_data[my_data$index > 1, ]
   
