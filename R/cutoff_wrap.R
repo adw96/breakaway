@@ -3,7 +3,6 @@
 #' @param data Frequency count table
 #' 
 #' @return Cutoff value
-#' @export
 cutoff_wrap <- function(data) {
   iss <- data$index
   fis <- data$frequency

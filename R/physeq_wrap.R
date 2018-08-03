@@ -4,7 +4,6 @@
 #' @param physeq \code{phyloseq} object
 #' 
 #' @return Object of class \code{alpha_estimates}
-#' @export
 physeq_wrap <- function(fn, physeq) {
   if (physeq %>% otu_table %>% taxa_are_rows) {
     return(physeq %>% 
