@@ -15,10 +15,13 @@ test_that("breakaway on phyloseq objects runs in parallel", {
   expect_true(FALSE)
 })
 
+test_that("good_turing has std error", {
+  expect_true(FALSE)
+})
+
 test_that("GlobalPatterns runs without warnings", {
   x <- GlobalPatterns %>% breakaway
-  expect_is(x,
-              "alpha_estimates")
+  expect_is(x, "alpha_estimates")
   
   ### All estimates are sensible
 })
