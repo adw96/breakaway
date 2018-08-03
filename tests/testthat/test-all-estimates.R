@@ -1,6 +1,7 @@
-context("test everything")
+context("test all estimates")
 library(breakaway)
 library(magrittr)
+library(phyloseq)
 # library(testthat)
 
 #### #### #### #### #### #### #### #### 
@@ -28,10 +29,10 @@ richness_estimates <- list(sample_richness,
 # 
 # datasets %<>% c(tables)
 # 
-# datasets_ps <- list(GlobalPatterns,
-#                     GlobalPatterns %>%
-#                       subset_samples(SampleType %in% c("Mock")) %>%
-#                       tax_glom("Phylum"))
+datasets_ps <- list(GlobalPatterns,
+                    GlobalPatterns %>%
+                      subset_samples(SampleType %in% c("Mock")) %>%
+                      tax_glom("Phylum"))
 
 #### #### #### #### #### #### #### #### 
 #### All the checks

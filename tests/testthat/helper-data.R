@@ -12,4 +12,3 @@ datasets <- list(hawaii,
                  df2,
                  df3) %>% 
   c(tables)
-

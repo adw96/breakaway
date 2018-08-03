@@ -11,7 +11,7 @@ test_that("breakaway gives reasonable std errors", {
   # this failed before  any(is.infinite(ratiovars)) was added
   for (i in selected_samples) {
     y <- breakaway(toy_otu_table[, i])
-    expect_true(y$error >= 5 | is.na(y$estimate),
+    expect_true(y$error >= 2 | is.na(y$estimate),
                 info = paste("std error is too small for Sample", i))
   }
 })
