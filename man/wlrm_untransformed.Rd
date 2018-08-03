@@ -4,8 +4,8 @@
 \alias{wlrm_untransformed}
 \title{The untransformed weighted linear regression estimator for species richness estimation}
 \usage{
-wlrm_untransformed(input_data, cutoff = NA, print = NULL,
-  plot = NULL, answers = NULL)
+wlrm_untransformed(input_data, cutoff = NA, print = NULL, plot = NULL,
+  answers = NULL)
 }
 \arguments{
 \item{input_data}{An input type that can be processed by \code{convert()} or a \code{phyloseq} object}

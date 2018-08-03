@@ -4,8 +4,8 @@
 \alias{breakaway_nof1}
 \title{species richness estimation without singletons}
 \usage{
-breakaway_nof1(input_data, output = NULL, plot = NULL,
-  answers = NULL, print = NULL, force = NULL)
+breakaway_nof1(input_data, output = NULL, plot = NULL, answers = NULL,
+  print = NULL, force = NULL)
 }
 \arguments{
 \item{input_data}{An input type that can be processed by \code{convert()}}

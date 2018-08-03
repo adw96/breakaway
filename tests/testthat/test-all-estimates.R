@@ -15,22 +15,19 @@ richness_estimates <- list(sample_richness,
                            chao_bunge,
                            wlrm_transformed,
                            wlrm_untransformed,
-                           chao1_bc,
-                           good_turing)
-# Missing: breakaway_nof1
+                           chao1_bc)
+# Missing: breakaway_nof1, good_turing
 
 #### #### #### #### #### #### #### #### 
 #### All the datasets
 #### #### #### #### #### #### #### #### 
 
-df1 <- cbind(c(1,2,3,6), c(8,4,2,1))
-
 random_samples <- sample(x = 1:143, size = 5, replace = F)
 tables <- apply(toy_otu_table[,random_samples], 2, make_frequency_count_table)
 
 datasets <- list(hawaii,
-                 apples,
-                 df1)
+                 apples)
+
 datasets %<>% c(tables)
 
 datasets_ps <- list(GlobalPatterns,
@@ -93,7 +90,7 @@ test_that("All estimates", {
   summaries <- lapply(X = c(mm_ps, mm), 
                       FUN = summary)
   
-  expect_true(lapply(X = lapply(mm[-43], function(x) x$estimate), FUN = is.na) %>%
+  expect_true(lapply(X = lapply(mm, function(x) x$estimate), FUN = is.na) %>%
                 lapply(function(x) !x) %>%
                 unlist %>% all)
   
@@ -135,4 +132,36 @@ test_that("Harder estimates", {
   expect_true(lapply(FUN = warnings_thrown, mm) %>%
                 unlist %>% all)
   
+})
+
+
+#### #### #### #### #### #### #### #### 
+#### Short datasets
+#### #### #### #### #### #### #### #### 
+df1 <- cbind(c(1,2,3,6), c(8,4,2,2))
+
+datasets_short <- list(df1)
+
+test_that("Short datasets", {
+  
+  mm <- lapply(richness_estimates, 
+               function(a){ lapply(datasets_short, function(b){execute(a,b)}) }) %>%
+    unlist(recursive = F)
+  
+  # correct_class
+  lapply(X = mm, 
+         FUN = expect_is, class = "alpha_estimate")
+
+  # valid estimates
+  summaries <- lapply(X = mm, 
+                      FUN = summary)
+  
+  expect_true(lapply(FUN = warnings_thrown, mm) %>%
+                unlist %>% all)
+  
+  expect_true(lapply(FUN = satisfies_bound, mm) %>%
+                unlist %>% all)
+  
+  expect_true(lapply(FUN = finite_ci, mm) %>%
+                unlist %>% all)
 })
