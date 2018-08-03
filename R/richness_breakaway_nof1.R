@@ -115,8 +115,7 @@ breakaway_nof1.data.frame <- function(input_data,
 #' @export
 breakaway_nof1.default <- function(input_data, 
                                    output = NULL, plot = NULL, 
-                                   answers = NULL, print = NULL, 
-                                   force = NULL) {
+                                   answers = NULL, print = NULL) {
   
   my_data <- convert(input_data)
   

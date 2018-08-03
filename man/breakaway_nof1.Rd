@@ -17,8 +17,6 @@ breakaway_nof1(input_data, output = NULL, plot = NULL,
 \item{answers}{Deprecated; only for backwards compatibility}
 
 \item{print}{Deprecated; only for backwards compatibility}
-
-\item{force}{Deprecated; only for backwards compatibility}
 }
 \value{
 An object of class \code{alpha_estimate}  \item{code}{ A category representing algorithm behaviour.
