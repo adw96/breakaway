@@ -4,6 +4,7 @@ Version: 4.6.1
 Date: 2018-07-08
 Authors@R: as.person(c(
     "Amy Willis <adwillis@uw.edu> [aut, cre]",
+    "Bryan D Martin [aut]",
     "Kathryn Barger [aut]",
     "John Bunge [aut]"
   ))
