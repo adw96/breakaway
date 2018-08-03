@@ -145,10 +145,10 @@ betta <- function(chats, ses, X=NA) {
   R <- diag(ses_effective^2); G <- diag(ssq_u,n)
 
   getvar <- function() {
-    C[1:p, 1:p] <- t(X_effective) %*% solve(R) %*% X_effective;
-    C[(p + 1):(n + p), (p + 1):(n + p)] <- solve(R) + solve(G);
-    C[1:p, (p + 1):(n + p)] <- t(X_effective) %*% solve(R);
-    C[(p + 1):(n + p), 1:p] <- solve(R) %*% X_effective;
+    C[1:p, 1:p] <- t(X_effective) %*% solve(R) %*% X_effective
+    C[(p + 1):(n + p), (p + 1):(n + p)] <- solve(R) + solve(G)
+    C[1:p, (p + 1):(n + p)] <- t(X_effective) %*% solve(R)
+    C[(p + 1):(n + p), 1:p] <- solve(R) %*% X_effective
     return(solve(C))
   }
 
