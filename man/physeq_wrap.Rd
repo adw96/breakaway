@@ -4,10 +4,12 @@
 \alias{physeq_wrap}
 \title{Wrapper for phyloseq objects}
 \usage{
-physeq_wrap(input_data)
+physeq_wrap(fn, physeq)
 }
 \arguments{
-\item{input_data}{\code{phyloseq} object}
+\item{fn}{Richness estimator function with \code{breakaway} to be applied to \code{physeq}}
+
+\item{physeq}{\code{phyloseq} object}
 }
 \value{
 Object of class \code{alpha_estimates}
