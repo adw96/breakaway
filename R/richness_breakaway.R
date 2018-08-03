@@ -130,17 +130,11 @@ breakaway.default <- function(input_data,
               breakaway_alpha_estimate <- sample_richness(input_data)
               
             }
-            
-
           }
-          
         }
-        
       }
     }
-    
   }
   breakaway_alpha_estimate$name <- "breakaway"
   breakaway_alpha_estimate
-  
 }
