@@ -2,6 +2,7 @@ context("test all estimates")
 library(breakaway)
 library(magrittr)
 library(phyloseq)
+data("GlobalPatterns")
 set.seed(1)
 # library(testthat)
 
