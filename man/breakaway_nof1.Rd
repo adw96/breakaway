@@ -4,8 +4,8 @@
 \alias{breakaway_nof1}
 \title{species richness estimation without singletons}
 \usage{
-breakaway_nof1(input_data, output = NULL, plot = NULL, answers = NULL,
-  print = NULL, force = NULL)
+breakaway_nof1(input_data, output = NULL, plot = NULL,
+  answers = NULL, print = NULL)
 }
 \arguments{
 \item{input_data}{An input type that can be processed by \code{convert()}}
@@ -17,8 +17,6 @@ breakaway_nof1(input_data, output = NULL, plot = NULL, answers = NULL,
 \item{answers}{Deprecated; only for backwards compatibility}
 
 \item{print}{Deprecated; only for backwards compatibility}
-
-\item{force}{Deprecated; only for backwards compatibility}
 }
 \value{
 An object of class \code{alpha_estimate}  \item{code}{ A category representing algorithm behaviour.

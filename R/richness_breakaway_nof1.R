@@ -1,5 +1,3 @@
-
-
 #' species richness estimation without singletons
 #' 
 #' This function permits estimation of total diversity based on a sample
@@ -17,7 +15,6 @@
 #' @param answers Deprecated; only for backwards compatibility
 #' @param plot Deprecated; only for backwards compatibility
 #' @param print Deprecated; only for backwards compatibility
-#' @param force Deprecated; only for backwards compatibility
 #' @return An object of class \code{alpha_estimate}  \item{code}{ A category representing algorithm behaviour.
 #' \samp{code=1} indicates no nonlinear models converged and the transformed
 #' WLRM diversity estimate of Rocchetti et. al. (2011) is returned.
@@ -59,13 +56,70 @@
 #' breakaway_nof1(apples[-1, ])
 #' breakaway_nof1(apples[-1, ], plot = FALSE, output = FALSE, answers = TRUE)
 #' 
-#' @export breakaway_nof1
+#' @export 
 breakaway_nof1 <- function(input_data, 
                            output = NULL, plot = NULL, 
-                           answers = NULL, print = NULL, 
-                           force = NULL) {
+                           answers = NULL, print = NULL) {
+  UseMethod("breakaway_nof1", input_data)
+}
+
+#' @export
+breakaway_nof1.phyloseq <- function(input_data, 
+                                    output = NULL, plot = NULL, 
+                                    answers = NULL, print = NULL) {
+  
+  if (input_data %>% otu_table %>% taxa_are_rows) {
+    input_data %>% 
+      otu_table %>%
+      apply(2, breakaway_nof1) %>%
+      alpha_estimates
+  } else {
+    input_data %>% 
+      otu_table %>%
+      apply(1, breakaway_nof1) %>%
+      alpha_estimates
+  }
+}
+
+#' @export
+breakaway_nof1.matrix <- function(input_data, 
+                                  output = NULL, plot = NULL, 
+                                  answers = NULL, print = NULL) {
+  
+  input_data %>%
+    as.data.frame %>%
+    breakaway_nof1(output, plot, answers, print)
+  
+}
+
+#' @export
+breakaway_nof1.data.frame <- function(input_data, 
+                                      output = NULL, plot = NULL, 
+                                      answers = NULL, print = NULL) {
+  
+  ## if a frequency count matrix...
+  if (dim(input_data)[2] == 2 & 
+      all(input_data[,1] %>% sort == input_data[,1])) {
+    breakaway_nof1.default(input_data)
+  } else {
+    
+    warning("Assuming taxa are rows")
+    
+    input_data %>% 
+      apply(2, breakaway_nof1) %>%
+      alpha_estimates
+    
+  }
+}
+
+#' @export
+breakaway_nof1.default <- function(input_data, 
+                                   output = NULL, plot = NULL, 
+                                   answers = NULL, print = NULL) {
   
   my_data <- convert(input_data)
+  
+  my_data <- my_data[my_data$index > 1, ]
   
   if (my_data[1, 1] != 2 || my_data[1, 2]==0) {
     kemp_alpha_estimate <- alpha_estimate(estimand = "richness",
@@ -80,14 +134,14 @@ breakaway_nof1 <- function(input_data,
   } else {
     
     n <- sum(my_data$frequency)
-    f2 <- input_data[1,2]
+    f2 <- my_data[1,2]
     
-    cutoff <- ifelse(is.na(which(input_data[-1,1]-input_data[-length(input_data[,1]),1]>1)[1]),length(input_data[,1]),which(input_data[-1,1]-input_data[-length(input_data[,1]),1]>1)[1])
-    input_data <- input_data[1:cutoff,]
-    ys <- (input_data[1:(cutoff-1),1]+1)*input_data[2:cutoff,2]/input_data[1:(cutoff-1),2]
+    cutoff <- ifelse(is.na(which(my_data[-1,1]-my_data[-length(my_data[,1]),1]>1)[1]),length(my_data[,1]),which(my_data[-1,1]-my_data[-length(my_data[,1]),1]>1)[1])
+    my_data <- my_data[1:cutoff,]
+    ys <- (my_data[1:(cutoff-1),1]+1)*my_data[2:cutoff,2]/my_data[1:(cutoff-1),2]
     xs <- 2:cutoff
     xbar <- mean(c(1,xs))
-    lhs <- list("x"=xs-xbar,"y"=input_data[2:cutoff,2]/input_data[1:(cutoff-1),2])
+    lhs <- list("x"=xs-xbar,"y"=my_data[2:cutoff,2]/my_data[1:(cutoff-1),2])
     
     if (cutoff < 6) { ## check for unusual data structures
       
@@ -103,13 +157,11 @@ breakaway_nof1 <- function(input_data,
       
     } else {
       weights_inv <- 1/xs
-      run <- minibreak_all(lhs,xs,ys,input_data,weights_inv, withf1 = FALSE)
+      run <- minibreak_all(lhs,xs,ys,my_data,weights_inv, withf1 = FALSE)
       result <- list()
       choice <- list()
       
       if (sum(as.numeric(run$useful[,5]))==0) {
-        
-        
         kemp_alpha_estimate <- alpha_estimate(estimand = "richness",
                                               estimate = NA,
                                               error = NA,
@@ -121,49 +173,6 @@ breakaway_nof1 <- function(input_data,
                                               warnings = "no kemp models converged",
                                               other = list(outcome = 0,
                                                            code = 1))
-        # 
-        # choice$outcome <- 0
-        # if(output) cat("No breakaway models converged.")
-        # weights_trans <- (1/input_data[-1,2]+1/input_data[-cutoff,2])^-1
-        # lm1 <- lm(log(ys)~xs,weights=weights_trans)
-        # b0_hat <- summary(lm1)$coef[1,1]
-        # b0_se <- summary(lm1)$coef[1,2]
-        # b1_hat <- summary(lm1)$coef[2,1]
-        # b1_se <- summary(lm1)$coef[2,2]
-        # 
-        # f1_pred <- 2*f2*exp(-(b0_hat+b1_hat))
-        # f0_pred <- f1_pred*exp(-b0_hat)
-        # diversity <- f0_pred + f1_pred + n
-        # 
-        # covmatrix <- matrix(c(f2*(1-f2/n),rep(0,8)),nrow=3)
-        # covmatrix[2:3,2:3] <- vcov(lm1)
-        # 
-        # derivs <- c(exp(-(b0_hat+b1_hat))*(1+exp(-b1_hat)),
-        #             f2*exp(-b1_hat)*(1+exp(-b1_hat))*exp(-b0_hat),
-        #             f2*exp(-b0_hat)*(-exp(-b1_hat)-2*exp(-b1_hat)))
-        # 
-        # f0plusf1_var <- 4*t(derivs)%*%covmatrix%*%(derivs)
-        # 
-        # diversity_se <- sqrt(f0plusf1_var+n*(f0_pred+f1_pred)/(n+f0_pred+f1_pred))
-        # 
-        # if(output) {
-        #   cat("################## breakaway ##################\n")
-        #   cat("\tThe best estimate of total diversity is", round(diversity),
-        #       "\n \t with std error",round(diversity_se),"\n")
-        #   cat("\tThe model employed was the WLRM\n")
-        # }
-        # if(answers) {
-        #   result$name <- "WLRM"
-        #   result$para <- summary(lm1)$coef[,1:2]
-        #   result$est <- diversity
-        #   result$seest <- as.vector(diversity_se)
-        #   result$full <- lm1
-        #   d <- exp(1.96*sqrt(log(1+result$seest^2/f0_pred)))
-        #   result$ci <- c(n+f0_pred/d,n+f0_pred*d)
-        #   return(result)
-        # }
-        # 
-        # result$code <- 1
       } else { # something worked for 1/x weighting
         choice$outcome <- 1
         choice$model <- rownames(run$useful)[min(which(run$useful[,5]==1))] #pick smallest
@@ -186,11 +195,11 @@ breakaway_nof1 <- function(input_data,
             weights1 <- 1/ratiovars
           }
           
-          run <- try ( minibreak_all(lhs, xs, ys, input_data, 1/ratiovars, withf1=FALSE), silent = 1)
+          run <- try ( minibreak_all(lhs, xs, ys, my_data, 1/ratiovars, withf1=FALSE), silent = 1)
           
           if ( class(run) == "try-error") {
             ratiovars <- (p[-1]^2/p[-cutoff]^3 + p[-1]/p[-cutoff]^2)/C
-            run <- try ( minibreak_all(lhs,xs,ys,input_data,1/ratiovars, withf1=FALSE), silent = 1)
+            run <- try ( minibreak_all(lhs,xs,ys,my_data,1/ratiovars, withf1=FALSE), silent = 1)
             if ( class(run) == "try-error") {
               # if(output) {print("Numerical errors result in non-convergence") }
               kemp_alpha_estimate <- alpha_estimate(estimand = "richness",
@@ -223,7 +232,7 @@ breakaway_nof1 <- function(input_data,
         }
         if( !choice$outcome) {
           # if(output) cat("Iterative reweighting didn't produce any outcomes after the first iteration, so we use 1/x\n")
-          run <- minibreak_all(lhs,xs,ys,input_data,weights_inv, withf1 = FALSE)
+          run <- minibreak_all(lhs,xs,ys,my_data,weights_inv, withf1 = FALSE)
           choice$outcome <- 1
           choice$model <- rownames(run$useful)[min(which(run$useful[,5]==1))]
           choice$full <-  run[[noquote(choice$model)]]
@@ -298,26 +307,6 @@ breakaway_nof1 <- function(input_data,
         
         d <- exp(1.96*sqrt(log(1 + diversity_se^2/f0_pred)))
         
-        # if(output) {
-        #   cat("################## breakaway ##################\n")
-        #   cat("\tThe best estimate of total diversity is", round(diversity),
-        #       "\n \t with std error",round(diversity_se),"\n")
-        #   cat("\tThe model employed was", choice$model,"\n")
-        #   cat("\tThe function selected was\n\t ", the_function,"\n")
-        #   print(parameter_table)
-        #   cat("xbar\t\t\t",xbar)
-        # }
-        
-        # if(plot)  {
-        #   yhats <- fitted(choice$full)
-        #   par(new=FALSE)
-        #   plot(xs,lhs$y,xlim=c(0,max(xs)+1),ylim=c(min(lhs$y,yhats),max(lhs$y)*1.05),
-        #        ylab="f(x+1)/f(x)",xlab="x",main="Plot of ratios and fitted values under model");
-        #   points(xs,yhats,pch=18)
-        #   points(c(0,1),c(b0_hat,c0_hat),col="red",pch=18)
-        #   legend(0,max(lhs$y),c("Fitted values", "Prediction"),pch=c(18,18),col=c("black", "red"),cex=0.8,bty = "n")
-        # }
-        
         yhats <- fitted(choice$full)
         
         plot_data <- rbind(data.frame("x" = xs, "y" = lhs$y, 
@@ -337,21 +326,10 @@ breakaway_nof1 <- function(input_data,
           labs(x = "x", y = "f(x+1)/f(x)", title = "Plot of ratios and fitted values: Kemp models (no f1)") +
           theme_bw()
         
-        
-        # if(answers) {
-        #   result$name <- choice$model
-        #   result$para <- parameter_table
-        #   result$est <- diversity
-        #   result$seest <- as.vector(diversity_se)
-        #   result$full <- choice$full
-        #   result$ci <- c(n+f0_pred/d,n+f0_pred*d)
-        #   return(result)
-        # }
-        
         kemp_alpha_estimate <- alpha_estimate(estimate = diversity,
                                               error = diversity_se,
                                               model = "Kemp",
-                                              name = "breakaway+nof1",
+                                              name = "breakaway_nof1",
                                               estimand = "richness",
                                               interval = c(n + f0_pred/d, n + f0_pred*d),
                                               interval_type = "Approximate: log-normal", 

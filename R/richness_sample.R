@@ -35,7 +35,7 @@ sample_richness <- function(input_data) {
                  error = 0,
                  estimand = "richness",
                  name = "Plug-in",
-                 interval = NA,
+                 interval = c(my_est, my_est),
                  type = NA,
                  model = "none",
                  frequentist = TRUE,

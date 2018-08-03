@@ -42,29 +42,43 @@ chao1_bc <- function(input_data, output=NULL, answers=NULL) {
   index  <- 1:max(my_data[,1])
   frequency_index <- rep(0, length(index))
   frequency_index[my_data[,1]] <- my_data[,2]
+  n <- sum(frequency_index)
   f1  <- frequency_index[1]
   f2 <- frequency_index[2]
-  n <- sum(frequency_index)
   
-  f0 <- f1*(f1-1)/(2*(f2+1))
-  diversity <- n + f0
-  
-  diversity_se <- sqrt(f1*(f1-1)/(2*(f2+1)) + f1*(2*f1-1)^2/(4*(f2+1)^2) + f1^2*f2*(f1-1)^2/(4*(f2+1)^4))
-  
-  # TODO: write a function to do this
-  d <- exp(1.96*sqrt(log(1 + diversity_se^2 / f0)))
-  
-  ## construct diversity_estimate
-  alpha_estimate(estimate = diversity,
-                 error = diversity_se,
-                 estimand = "richness",
-                 name = "chao1_bc",
-                 interval = c(n + f0/d, n + f0*d),
-                 type = "parametric",
-                 model = "Poisson (homogeneous)",
-                 frequentist = TRUE,
-                 parametric = TRUE,
-                 reasonable = FALSE,
-                 interval_type = "Approximate: log-normal")
-  
+  if (f1 > 0 & f2 > 0) {
+    
+    f0 <- f1*(f1-1)/(2*(f2+1))
+    diversity <- n + f0
+    
+    diversity_se <- sqrt(f1*(f1-1)/(2*(f2+1)) + f1*(2*f1-1)^2/(4*(f2+1)^2) + f1^2*f2*(f1-1)^2/(4*(f2+1)^4))
+    
+    # TODO: write a function to do this
+    d <- exp(1.96*sqrt(log(1 + diversity_se^2 / f0)))
+    a_chao <- alpha_estimate(estimate = diversity,
+                             error = diversity_se,
+                             estimand = "richness",
+                             name = "chao1_bc",
+                             interval = c(n + f0/d, n + f0*d),
+                             type = "parametric",
+                             model = "Poisson (homogeneous)",
+                             frequentist = TRUE,
+                             parametric = TRUE,
+                             reasonable = FALSE,
+                             interval_type = "Approximate: log-normal")
+  } else {
+    a_chao <- alpha_estimate(estimate = n,
+                             error = 0,
+                             estimand = "richness",
+                             name = "chao1_bc",
+                             interval = c(NA, NA),
+                             type = "parametric",
+                             model = "Poisson (homogeneous)",
+                             warnings = "no singletons or doubletons",
+                             frequentist = TRUE,
+                             parametric = TRUE,
+                             reasonable = FALSE,
+                             interval_type = "Approximate: log-normal")
+  }
+  a_chao
 }
