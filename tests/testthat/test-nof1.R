@@ -1,6 +1,5 @@
 context("breakaway nof1")
 library(breakaway)
-library(phyloseq)
 data("apples")
 apples <- apples[-1,]
 # nof1 can't currently take phyloseq!
