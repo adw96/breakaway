@@ -1,4 +1,4 @@
-context("phyloseq")
+context("sampling")
 library(breakaway)
 library(phyloseq)
 data("GlobalPatterns")
