@@ -15,7 +15,6 @@
 #' @param answers Deprecated; only for backwards compatibility
 #' @param plot Deprecated; only for backwards compatibility
 #' @param print Deprecated; only for backwards compatibility
-#' @param force Deprecated; only for backwards compatibility
 #' @return An object of class \code{alpha_estimate}  \item{code}{ A category representing algorithm behaviour.
 #' \samp{code=1} indicates no nonlinear models converged and the transformed
 #' WLRM diversity estimate of Rocchetti et. al. (2011) is returned.

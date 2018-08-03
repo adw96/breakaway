@@ -1,4 +1,4 @@
-context("breakaway is very robust")
+context("breakaway")
 library(breakaway)
 library(phyloseq)
 library(magrittr)
@@ -9,9 +9,6 @@ data("GlobalPatterns")
 #### All the datasets
 #### #### #### #### #### #### #### #### 
 # see helper-data.R
-
-data(GlobalPatterns)
-data("GlobalPatterns")
 
 gp_sub <- GlobalPatterns %>% 
   subset_samples(SampleType %in% c("Mock", "Even2"))
@@ -26,11 +23,11 @@ datasets_ps <- list(GlobalPatterns,
                     gp_order %>% 
                       subset_samples(X.SampleID %in% c("Even2")),
                     gp_order %>% 
-                      subset_samples(X.SampleID %in% c("Mock")),
+                      subset_samples(SampleType %in% c("Mock")),
                     gp_phylum %>% 
                       subset_samples(X.SampleID %in% c("Even2")),
                     gp_phylum %>% 
-                      subset_samples(X.SampleID %in% c("Mock")),
+                      subset_samples(SampleType %in% c("Mock")),
                     gp_order)
 
 
