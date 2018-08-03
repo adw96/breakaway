@@ -1,9 +1,7 @@
-context("Test everything")
+context("test everything")
 library(breakaway)
-library(phyloseq)
 library(magrittr)
 # library(testthat)
-data("GlobalPatterns")
 
 #### #### #### #### #### #### #### #### 
 #### All the estimates
@@ -11,29 +9,29 @@ data("GlobalPatterns")
 richness_estimates <- list(sample_richness,
                            chao1,
                            chao1_bc,
-                           breakaway,
                            chao_bunge,
                            wlrm_transformed,
                            wlrm_untransformed,
-                           chao1_bc)
+                           chao1_bc,
+                           breakaway_nof1)
 # Missing: breakaway_nof1, good_turing
 
 #### #### #### #### #### #### #### #### 
 #### All the datasets
 #### #### #### #### #### #### #### #### 
-
-random_samples <- sample(x = 1:143, size = 5, replace = F)
-tables <- apply(toy_otu_table[,random_samples], 2, make_frequency_count_table)
-
-datasets <- list(hawaii,
-                 apples)
-
-datasets %<>% c(tables)
-
-datasets_ps <- list(GlobalPatterns,
-                    GlobalPatterns %>%
-                      subset_samples(SampleType %in% c("Mock")) %>%
-                      tax_glom("Phylum"))
+# 
+# random_samples <- sample(x = 1:143, size = 5, replace = F)
+# tables <- apply(toy_otu_table[,random_samples], 2, make_frequency_count_table)
+# 
+# datasets <- list(hawaii,
+#                  apples)
+# 
+# datasets %<>% c(tables)
+# 
+# datasets_ps <- list(GlobalPatterns,
+#                     GlobalPatterns %>%
+#                       subset_samples(SampleType %in% c("Mock")) %>%
+#                       tax_glom("Phylum"))
 
 #### #### #### #### #### #### #### #### 
 #### All the checks
@@ -90,78 +88,7 @@ test_that("All estimates", {
   summaries <- lapply(X = c(mm_ps, mm), 
                       FUN = summary)
   
-  expect_true(lapply(X = lapply(mm, function(x) x$estimate), FUN = is.na) %>%
-                lapply(function(x) !x) %>%
-                unlist %>% all)
-  
-  expect_true(lapply(FUN = warnings_thrown, mm) %>%
-                unlist %>% all)
-  
   expect_true(lapply(FUN = satisfies_bound, mm) %>%
                 unlist %>% all)
   
-  expect_true(lapply(FUN = finite_ci, mm) %>%
-                unlist %>% all)
-  
-})
-
-
-#### #### #### #### #### #### #### #### 
-#### Singleton-missing checks
-#### #### #### #### #### #### #### #### 
-
-df2 <- cbind(c(3,6,9,12,15,16), c(3,2,1,15,1,5))
-datasets_nof1 <- list(df2)
-breakaway(df2)
-
-test_that("Harder estimates", {
-  
-  execute <- function(est, df) {
-    est(df)
-  }
-  
-  mm <- lapply(richness_estimates, 
-               function(a){ lapply(datasets_nof1, function(b){execute(a,b)}) }) %>%
-    unlist(recursive = F)
-  
-  # correct_class
-  lapply(X = mm, 
-         FUN = expect_is, class = "alpha_estimate")
-  
-  # valid estimates
-  expect_true(lapply(FUN = warnings_thrown, mm) %>%
-                unlist %>% all)
-  
-})
-
-
-#### #### #### #### #### #### #### #### 
-#### Short datasets
-#### #### #### #### #### #### #### #### 
-df1 <- cbind(c(1,2,3,6), c(8,4,2,2))
-
-datasets_short <- list(df1)
-
-test_that("Short datasets", {
-  
-  mm <- lapply(richness_estimates, 
-               function(a){ lapply(datasets_short, function(b){execute(a,b)}) }) %>%
-    unlist(recursive = F)
-  
-  # correct_class
-  lapply(X = mm, 
-         FUN = expect_is, class = "alpha_estimate")
-
-  # valid estimates
-  summaries <- lapply(X = mm, 
-                      FUN = summary)
-  
-  expect_true(lapply(FUN = warnings_thrown, mm) %>%
-                unlist %>% all)
-  
-  expect_true(lapply(FUN = satisfies_bound, mm) %>%
-                unlist %>% all)
-  
-  expect_true(lapply(FUN = finite_ci, mm) %>%
-                unlist %>% all)
 })
