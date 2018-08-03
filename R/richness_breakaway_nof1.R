@@ -119,7 +119,7 @@ breakaway_nof1.default <- function(input_data,
                                    answers = NULL, print = NULL, 
                                    force = NULL) {
   
-  my_data <- convert(input_data[,1])
+  my_data <- convert(input_data)
   
   my_data <- my_data[my_data$index > 1, ]
   
@@ -136,14 +136,14 @@ breakaway_nof1.default <- function(input_data,
   } else {
     
     n <- sum(my_data$frequency)
-    f2 <- input_data[1,2]
+    f2 <- my_data[1,2]
     
-    cutoff <- ifelse(is.na(which(input_data[-1,1]-input_data[-length(input_data[,1]),1]>1)[1]),length(input_data[,1]),which(input_data[-1,1]-input_data[-length(input_data[,1]),1]>1)[1])
-    input_data <- input_data[1:cutoff,]
-    ys <- (input_data[1:(cutoff-1),1]+1)*input_data[2:cutoff,2]/input_data[1:(cutoff-1),2]
+    cutoff <- ifelse(is.na(which(my_data[-1,1]-my_data[-length(my_data[,1]),1]>1)[1]),length(my_data[,1]),which(my_data[-1,1]-my_data[-length(my_data[,1]),1]>1)[1])
+    my_data <- my_data[1:cutoff,]
+    ys <- (my_data[1:(cutoff-1),1]+1)*my_data[2:cutoff,2]/my_data[1:(cutoff-1),2]
     xs <- 2:cutoff
     xbar <- mean(c(1,xs))
-    lhs <- list("x"=xs-xbar,"y"=input_data[2:cutoff,2]/input_data[1:(cutoff-1),2])
+    lhs <- list("x"=xs-xbar,"y"=my_data[2:cutoff,2]/my_data[1:(cutoff-1),2])
     
     if (cutoff < 6) { ## check for unusual data structures
       
@@ -159,7 +159,7 @@ breakaway_nof1.default <- function(input_data,
       
     } else {
       weights_inv <- 1/xs
-      run <- minibreak_all(lhs,xs,ys,input_data,weights_inv, withf1 = FALSE)
+      run <- minibreak_all(lhs,xs,ys,my_data,weights_inv, withf1 = FALSE)
       result <- list()
       choice <- list()
       
@@ -197,11 +197,11 @@ breakaway_nof1.default <- function(input_data,
             weights1 <- 1/ratiovars
           }
           
-          run <- try ( minibreak_all(lhs, xs, ys, input_data, 1/ratiovars, withf1=FALSE), silent = 1)
+          run <- try ( minibreak_all(lhs, xs, ys, my_data, 1/ratiovars, withf1=FALSE), silent = 1)
           
           if ( class(run) == "try-error") {
             ratiovars <- (p[-1]^2/p[-cutoff]^3 + p[-1]/p[-cutoff]^2)/C
-            run <- try ( minibreak_all(lhs,xs,ys,input_data,1/ratiovars, withf1=FALSE), silent = 1)
+            run <- try ( minibreak_all(lhs,xs,ys,my_data,1/ratiovars, withf1=FALSE), silent = 1)
             if ( class(run) == "try-error") {
               # if(output) {print("Numerical errors result in non-convergence") }
               kemp_alpha_estimate <- alpha_estimate(estimand = "richness",
@@ -234,7 +234,7 @@ breakaway_nof1.default <- function(input_data,
         }
         if( !choice$outcome) {
           # if(output) cat("Iterative reweighting didn't produce any outcomes after the first iteration, so we use 1/x\n")
-          run <- minibreak_all(lhs,xs,ys,input_data,weights_inv, withf1 = FALSE)
+          run <- minibreak_all(lhs,xs,ys,my_data,weights_inv, withf1 = FALSE)
           choice$outcome <- 1
           choice$model <- rownames(run$useful)[min(which(run$useful[,5]==1))]
           choice$full <-  run[[noquote(choice$model)]]

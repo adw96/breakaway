@@ -33,7 +33,7 @@ true_hill <- function(input, q) {
   } 
   
   if (q == 1) {
-    hh <- exp(shannon_true)
+    hh <- exp(true_shannon(input))
   } else {
     hh <- (sum(input^q))^(1/(1-q))
   }
@@ -71,7 +71,7 @@ true_simpson <- function(input) {
 #' dealing with a microbial sample, use DivNet instead.
 #' @export 
 true_gini <- function(input) {
-  1-simpson(input)
+  1-true_simpson(input)
 }
 
 #' Calculate the true Shannon's equitability index
