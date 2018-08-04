@@ -68,17 +68,8 @@ breakaway_nof1.phyloseq <- function(input_data,
                                     output = NULL, plot = NULL, 
                                     answers = NULL, print = NULL) {
   
-  if (input_data %>% otu_table %>% taxa_are_rows) {
-    input_data %>% 
-      otu_table %>%
-      apply(2, breakaway_nof1) %>%
-      alpha_estimates
-  } else {
-    input_data %>% 
-      otu_table %>%
-      apply(1, breakaway_nof1) %>%
-      alpha_estimates
-  }
+  physeq_wrap(fn = breakaway_nof1, physeq = input_data)
+  
 }
 
 #' @export
@@ -136,12 +127,7 @@ breakaway_nof1.default <- function(input_data,
     n <- sum(my_data$frequency)
     f2 <- my_data[1,2]
     
-    cutoff <- ifelse(is.na(which(my_data[-1,1]-my_data[-length(my_data[,1]),1]>1)[1]),length(my_data[,1]),which(my_data[-1,1]-my_data[-length(my_data[,1]),1]>1)[1])
-    my_data <- my_data[1:cutoff,]
-    ys <- (my_data[1:(cutoff-1),1]+1)*my_data[2:cutoff,2]/my_data[1:(cutoff-1),2]
-    xs <- 2:cutoff
-    xbar <- mean(c(1,xs))
-    lhs <- list("x"=xs-xbar,"y"=my_data[2:cutoff,2]/my_data[1:(cutoff-1),2])
+    cutoff <- cutoff_wrap(my_data, cutoff) 
     
     if (cutoff < 6) { ## check for unusual data structures
       
@@ -156,6 +142,12 @@ breakaway_nof1.default <- function(input_data,
                                             warnings = "insufficient contiguous frequencies")
       
     } else {
+      my_data <- my_data[1:cutoff,]
+      ys <- (my_data[1:(cutoff-1),1]+1)*my_data[2:cutoff,2]/my_data[1:(cutoff-1),2]
+      xs <- 2:cutoff
+      xbar <- mean(c(1,xs))
+      lhs <- list("x"=xs-xbar,"y"=my_data[2:cutoff,2]/my_data[1:(cutoff-1),2])
+      
       weights_inv <- 1/xs
       run <- minibreak_all(lhs,xs,ys,my_data,weights_inv, withf1 = FALSE)
       result <- list()

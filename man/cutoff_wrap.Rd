@@ -4,10 +4,10 @@
 \alias{cutoff_wrap}
 \title{Wrapper for phyloseq objects}
 \usage{
-cutoff_wrap(data)
+cutoff_wrap(my_data, requested = NA)
 }
 \arguments{
-\item{data}{Frequency count table}
+\item{my_data}{Frequency count table}
 }
 \value{
 Cutoff value

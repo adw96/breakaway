@@ -66,6 +66,29 @@ test_that("All estimates", {
   mm <- lapply(X = datasets, breakaway) 
   
   mm_ps <- lapply(X = datasets_ps, breakaway)
+  # lapply(X = datasets_ps, function(x) x %>% sample_names %>% length)
+  # datasets_ps[[1]] %>% breakaway
+  # datasets_ps[[2]] %>% breakaway
+  # datasets_ps[[3]] %>% breakaway
+  # datasets_ps[[4]] %>% breakaway
+  # datasets_ps[[3]] %>% breakaway
+  # data("GlobalPatterns")
+  # fc <- (GlobalPatterns %>%
+  #          otu_table %>%
+  #          as.matrix)[,4] %>%
+  #   make_frequency_count_table
+  # fc %>% 
+  #   kemp
+  # 
+  # fc <- (datasets_ps[[4]] %>%
+  #          otu_table %>%
+  #          as.matrix) %>%
+  #   make_frequency_count_table
+  # fc %>% 
+  #   kemp
+  
+  # 3 has issues
+  
   
   # correct_class
   lapply(X = mm, 

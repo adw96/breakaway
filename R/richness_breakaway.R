@@ -50,17 +50,8 @@ breakaway.phyloseq <- function(input_data,
                                output = NULL, plot = NULL, 
                                answers = NULL, print = NULL) {
   
-  if (input_data %>% otu_table %>% taxa_are_rows) {
-    input_data %>% 
-      otu_table %>%
-      apply(2, breakaway) %>%
-      alpha_estimates
-  } else {
-    input_data %>% 
-      otu_table %>%
-      apply(1, breakaway) %>%
-      alpha_estimates
-  }
+  physeq_wrap(fn = breakaway, physeq = input_data)
+  
 }
 
 #' @export

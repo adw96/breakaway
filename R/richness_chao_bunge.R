@@ -25,19 +25,8 @@ chao_bunge <- function(input_data,
   
   
   if (class(input_data) == "phyloseq") {
-    if (input_data %>% otu_table %>% taxa_are_rows) {
-      return(input_data %>% 
-               get_taxa %>%
-               apply(2, function(x) chao_bunge(make_frequency_count_table(x))) %>%
-               alpha_estimates)
-    } else {
-      return(input_data %>% 
-               otu_table %>%
-               apply(1, function(x) chao_bunge(make_frequency_count_table(x))) %>%
-               alpha_estimates)
-    }
+    return(physeq_wrap(fn = chao_bunge, physeq = input_data))
   }
-  
   
   my_data <- convert(input_data)
   

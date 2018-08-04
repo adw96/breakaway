@@ -28,12 +28,8 @@ plot.alpha_estimates <- function(x, physeq = NULL, measure = NULL, color = NULL,
     measure <- all_measures[1]
   }
   
-  if (!is.null(physeq)) {
-    df <- summary(x) %>% 
-      dplyr::mutate("Sample" = physeq %>% sample_names)
-  } else {
-    df <- summary(x)
-  }
+  df <- summary(x, physeq) 
+  
   if (all(is.na(df$estimate))) {
     stop("There are no estimates in this alpha_estimates object!")
   }
@@ -60,13 +56,13 @@ plot.alpha_estimates <- function(x, physeq = NULL, measure = NULL, color = NULL,
   
   yname1 <- measure
   yname2 <- x[[1]]$estimand
-  if (is.null(physeq)) {
-    df$Sample <- rownames(df)
+  if (is.null(physeq) & !is.null(rownames(df))) {
+    df$sample_names <- rownames(df)
   }
   
   aes_map <- ggplot2::aes_string(colour = color, shape = shape)
   my_gg <- ggplot2::ggplot(df, aes_map) +
-    ggplot2::geom_point(ggplot2::aes(x = Sample, y = estimate)) + 
+    ggplot2::geom_point(ggplot2::aes(x = sample_names, y = estimate)) + 
     ggplot2::ylab(paste(yname1, "estimate of", yname2)) +
     ggplot2::xlab("") +
     ggplot2::labs(title = title) +
@@ -74,7 +70,7 @@ plot.alpha_estimates <- function(x, physeq = NULL, measure = NULL, color = NULL,
     ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1))
   
   if (!(all(is.na(df$lower)) || all(is.na(df$upper)))) {
-    my_gg <- my_gg + ggplot2::geom_segment(ggplot2::aes(x = Sample, xend = Sample, y = lower, yend = upper))
+    my_gg <- my_gg + ggplot2::geom_segment(ggplot2::aes(x = sample_names, xend = sample_names, y = lower, yend = upper))
   }
   
   if (!trim_plot) {
