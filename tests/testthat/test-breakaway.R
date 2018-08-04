@@ -77,17 +77,17 @@ test_that("All estimates", {
   #          otu_table %>%
   #          as.matrix)[,4] %>%
   #   make_frequency_count_table
-  # fc %>% 
+  # fc %>%
   #   kemp
   # 
   # fc <- (datasets_ps[[4]] %>%
   #          otu_table %>%
   #          as.matrix) %>%
   #   make_frequency_count_table
-  # fc %>% 
+  # fc %>%
   #   kemp
-  
-  # 3 has issues
+  # 
+  # # 3 has issues
   
   
   # correct_class

@@ -114,7 +114,7 @@ kemp.default <- function(input_data,
     n <- sum(my_data$frequency)
     f1 <- my_data[1, 2]
     
-    cutoff <- cutoff_wrap(my_data, cutoff) 
+    cutoff <- cutoff_wrap(my_data, requested = NA) 
     
     if (cutoff < 6) { ## check for unusual data structures
       

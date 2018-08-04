@@ -64,7 +64,7 @@ wlrm_untransformed  <- function(input_data,
     # TODO fix 
     f1 <- my_data[1,2]
     
-    cutoff <- cutoff_wrap(my_data, cutoff) 
+    cutoff <- cutoff_wrap(my_data, requested = cutoff) 
     
     if (cutoff < 4) {
       wlrm_alpha_estimate <- alpha_estimate(estimand = "richness",
