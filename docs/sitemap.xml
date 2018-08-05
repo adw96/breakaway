@@ -40,31 +40,52 @@
     <loc>http://adw96.github.io/breakaway/reference/chao_bunge.html</loc>
   </url>
   <url>
+    <loc>http://adw96.github.io/breakaway/reference/chao_shen.html</loc>
+  </url>
+  <url>
     <loc>http://adw96.github.io/breakaway/reference/check_format.html</loc>
   </url>
   <url>
     <loc>http://adw96.github.io/breakaway/reference/convert.html</loc>
   </url>
   <url>
-    <loc>http://adw96.github.io/breakaway/reference/gini.html</loc>
+    <loc>http://adw96.github.io/breakaway/reference/cutoff_wrap.html</loc>
+  </url>
+  <url>
+    <loc>http://adw96.github.io/breakaway/reference/good_turing.html</loc>
   </url>
   <url>
     <loc>http://adw96.github.io/breakaway/reference/hawaii.html</loc>
   </url>
   <url>
-    <loc>http://adw96.github.io/breakaway/reference/hill.html</loc>
+    <loc>http://adw96.github.io/breakaway/reference/kemp.html</loc>
   </url>
   <url>
-    <loc>http://adw96.github.io/breakaway/reference/inverse_simpson.html</loc>
+    <loc>http://adw96.github.io/breakaway/reference/make_design_matrix.html</loc>
   </url>
   <url>
     <loc>http://adw96.github.io/breakaway/reference/make_frequency_count_table.html</loc>
   </url>
   <url>
-    <loc>http://adw96.github.io/breakaway/reference/proportions_instead.html</loc>
+    <loc>http://adw96.github.io/breakaway/reference/objective_bayes_geometric.html</loc>
   </url>
   <url>
-    <loc>http://adw96.github.io/breakaway/reference/resample_estimate.html</loc>
+    <loc>http://adw96.github.io/breakaway/reference/objective_bayes_mixedgeo.html</loc>
+  </url>
+  <url>
+    <loc>http://adw96.github.io/breakaway/reference/objective_bayes_negbin.html</loc>
+  </url>
+  <url>
+    <loc>http://adw96.github.io/breakaway/reference/objective_bayes_poisson.html</loc>
+  </url>
+  <url>
+    <loc>http://adw96.github.io/breakaway/reference/physeq_wrap.html</loc>
+  </url>
+  <url>
+    <loc>http://adw96.github.io/breakaway/reference/plot.alpha_estimates.html</loc>
+  </url>
+  <url>
+    <loc>http://adw96.github.io/breakaway/reference/proportions_instead.html</loc>
   </url>
   <url>
     <loc>http://adw96.github.io/breakaway/reference/rnbinomtable.html</loc>
@@ -73,22 +94,25 @@
     <loc>http://adw96.github.io/breakaway/reference/rztnbinomtable.html</loc>
   </url>
   <url>
+    <loc>http://adw96.github.io/breakaway/reference/sample_inverse_simpson.html</loc>
+  </url>
+  <url>
+    <loc>http://adw96.github.io/breakaway/reference/sample_richness.html</loc>
+  </url>
+  <url>
+    <loc>http://adw96.github.io/breakaway/reference/sample_shannon.html</loc>
+  </url>
+  <url>
+    <loc>http://adw96.github.io/breakaway/reference/sample_shannon_e.html</loc>
+  </url>
+  <url>
+    <loc>http://adw96.github.io/breakaway/reference/sample_simpson.html</loc>
+  </url>
+  <url>
     <loc>http://adw96.github.io/breakaway/reference/sample_size_estimate.html</loc>
   </url>
   <url>
     <loc>http://adw96.github.io/breakaway/reference/sample_size_figure.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/shannon.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/simpson.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/subsample_otu.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/to_proportions.html</loc>
   </url>
   <url>
     <loc>http://adw96.github.io/breakaway/reference/toy_metadata.html</loc>
@@ -98,6 +122,24 @@
   </url>
   <url>
     <loc>http://adw96.github.io/breakaway/reference/toy_taxonomy.html</loc>
+  </url>
+  <url>
+    <loc>http://adw96.github.io/breakaway/reference/true_gini.html</loc>
+  </url>
+  <url>
+    <loc>http://adw96.github.io/breakaway/reference/true_hill.html</loc>
+  </url>
+  <url>
+    <loc>http://adw96.github.io/breakaway/reference/true_inverse_simpson.html</loc>
+  </url>
+  <url>
+    <loc>http://adw96.github.io/breakaway/reference/true_shannon.html</loc>
+  </url>
+  <url>
+    <loc>http://adw96.github.io/breakaway/reference/true_shannon_e.html</loc>
+  </url>
+  <url>
+    <loc>http://adw96.github.io/breakaway/reference/true_simpson.html</loc>
   </url>
   <url>
     <loc>http://adw96.github.io/breakaway/reference/wlrm_transformed.html</loc>

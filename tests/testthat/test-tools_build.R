@@ -5,9 +5,9 @@ library(phyloseq)
 values <- sample(0:5,250,TRUE)
 
 OTU1 <- otu_table(values %>% matrix(nrow = 10, ncol = 25), 
-                  taxa_are_rows = FALSE)
+                  taxa_are_rows = FALSE) # 25 sp, 10 sa
 OTU2 <- otu_table(values %>% matrix(nrow = 10, ncol = 25), 
-                  taxa_are_rows = TRUE)
+                  taxa_are_rows = TRUE) # 10 sp, 25 sa
 
 test_that("tools_build works as intended", {
   
@@ -17,7 +17,7 @@ test_that("tools_build works as intended", {
   expect_true(all(build_frequency_count_tables(OTU1) %>% names ==
                     paste("sa", 1:10, sep = "")))
   expect_true(all(build_frequency_count_tables(OTU2) %>% names ==
-                    paste("sa", 1:10, sep = "")))
+                    paste("sa", 1:25, sep = "")))
 
   expect_is(proportions_instead(values), "numeric")
 })
