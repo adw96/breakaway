@@ -4,10 +4,10 @@
 \alias{proportions_instead}
 \title{OTU table to relative abundances}
 \usage{
-proportions_instead(otu_table)
+proportions_instead(the_table)
 }
 \arguments{
-\item{otu_table}{An OTU table}
+\item{the_table}{An OTU table}
 }
 \description{
 OTU table to relative abundances

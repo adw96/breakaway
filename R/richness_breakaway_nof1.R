@@ -92,13 +92,14 @@ breakaway_nof1.data.frame <- function(input_data,
   ## if a frequency count matrix...
   if (dim(input_data)[2] == 2 & 
       all(input_data[,1] %>% sort == input_data[,1])) {
-    breakaway_nof1.default(input_data)
+    breakaway_nof1.default(input_data,
+                           output, plot, answers, print)
   } else {
     
     warning("Assuming taxa are rows")
     
     input_data %>% 
-      apply(2, breakaway_nof1) %>%
+      apply(2, breakaway_nof1, output, plot, answers, print) %>%
       alpha_estimates
     
   }
@@ -184,9 +185,9 @@ breakaway_nof1.default <- function(input_data,
           bs <- p[-1]/p[-cutoff]^2 * (1-exp(-C*p[-cutoff]))^2/(1-exp(-C*p[-1])) * (1-C*p[-1]/(exp(C*p[-1])-1))
           ratiovars <- (as + bs)/C
           
-          if(its==0) {
-            weights1 <- 1/ratiovars
-          }
+          # if(its==0) {
+          #   weights1 <- 1/ratiovars
+          # }
           
           run <- try ( minibreak_all(lhs, xs, ys, my_data, 1/ratiovars, withf1=FALSE), silent = 1)
           
@@ -211,7 +212,12 @@ breakaway_nof1.default <- function(input_data,
           }
           
           choice <- list()
-          if (class(run) == "try-error" | sum(as.numeric(run$useful[,5]))==0) {
+          if (class(run) == "try-error") {
+            choice$outcome <- 0
+          } else if (sum(as.numeric(run$useful[,5]))==0 | 
+                     any(is.infinite(ratiovars)) |
+                     ratiovars[1] > 1e20 |
+                     any(ratiovars < 0)) {
             choice$outcome <- 0
           } else {
             choice$outcome <- 1

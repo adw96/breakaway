@@ -4,10 +4,10 @@
 \alias{build_frequency_count_tables}
 \title{Build frequency count tables from an OTU table}
 \usage{
-build_frequency_count_tables(otu_table)
+build_frequency_count_tables(the_table)
 }
 \arguments{
-\item{otu_table}{An OTU table as a data frame or a matrix. Columns are the
+\item{the_table}{An OTU table as a data frame or a matrix. Columns are the
 samples and rows give the taxa.}
 }
 \value{

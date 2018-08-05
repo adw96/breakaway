@@ -11,19 +11,7 @@ convert <- function(input_data) {
   
   if (class(input_data) == "character") {
     
-    filename <- input_data
-    ext <- substr(filename, nchar(filename) - 2, nchar(filename))
-    
-    if (ext %in% c("csv", "txt")) {
-      
-      output_data <- read.table(file=filename, header=0, sep=",")
-      # TODO figure out if there is a header
-      
-    } else {
-      
-      stop("Input is a string, but not a valid file path.")
-      
-    }
+    stop("breakaway no longer supports file paths as inputs")
     
   } else if ("data.frame" %in% class(input_data) | 
              "matrix" %in% class(input_data)) {
