@@ -34,13 +34,13 @@ sample_size_estimate <- function(control_group_est, se_est, diff = 5,
         iter <- iter + 1
       }
     }
-    cat("Power at a sample size of ", n, ": ", 100*mean(pvalues < alpha), "%\n", sep="")
+    message(paste("Power at a sample size of ", n, ": ", 100*mean(pvalues < alpha), "%\n", sep=""))
     n <- n + precision
   }
-  cat("Sample size needed: ", n - precision, "\n") ## bc incremented
-  cat("Note: This is number of subjects *per group* i.e.", n-precision, "from the control", 
+  message(paste("Sample size needed: ", n - precision, "\n")) ## bc incremented
+  message(paste("Note: This is number of subjects *per group* i.e.", n-precision, "from the control", 
       "group and", n-precision, "from the test group. It should be considered a lower bound",
-      "at best! Please consult Amy with any questions. ")
+      "at best! Please consult Amy with any questions. "))
 }
 
 

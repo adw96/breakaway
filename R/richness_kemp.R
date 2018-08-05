@@ -49,33 +49,24 @@
 #' 
 #' @export 
 kemp <- function(input_data, 
-                      output = NULL, plot = NULL, 
-                      answers = NULL, print = NULL) {
+                 output = NULL, plot = NULL, 
+                 answers = NULL, print = NULL) {
   UseMethod("kemp", input_data)
 }
 
 #' @export
 kemp.phyloseq <- function(input_data, 
-                               output = NULL, plot = NULL, 
-                               answers = NULL, print = NULL) {
+                          output = NULL, plot = NULL, 
+                          answers = NULL, print = NULL) {
   
-  if (input_data %>% otu_table %>% taxa_are_rows) {
-    input_data %>% 
-      otu_table %>%
-      apply(2, kemp) %>%
-      alpha_estimates
-  } else {
-    input_data %>% 
-      otu_table %>%
-      apply(1, kemp) %>%
-      alpha_estimates
-  }
+  physeq_wrap(fn = kemp, physeq = input_data,
+              output, plot, answers, print)
 }
 
 #' @export
 kemp.matrix <- function(input_data, 
-                             output = NULL, plot = NULL, 
-                             answers = NULL, print = NULL) {
+                        output = NULL, plot = NULL, 
+                        answers = NULL, print = NULL) {
   
   input_data %>%
     as.data.frame %>%
@@ -85,8 +76,8 @@ kemp.matrix <- function(input_data,
 
 #' @export
 kemp.data.frame <- function(input_data, 
-                                 output = NULL, plot = NULL, 
-                                 answers = NULL, print = NULL) {
+                            output = NULL, plot = NULL, 
+                            answers = NULL, print = NULL) {
   
   ## if a frequency count matrix...
   if (dim(input_data)[2] == 2 & 
@@ -105,8 +96,8 @@ kemp.data.frame <- function(input_data,
 
 #' @export
 kemp.default <- function(input_data, 
-                              output = NULL, plot = NULL, 
-                              answers = NULL, print = NULL) {
+                         output = NULL, plot = NULL, 
+                         answers = NULL, print = NULL) {
   
   my_data <- convert(input_data)
   
@@ -124,24 +115,7 @@ kemp.default <- function(input_data,
     n <- sum(my_data$frequency)
     f1 <- my_data[1, 2]
     
-    ## kemp's default is to cut off at the first break in frequencies
-    
-    ## finds the break in contiguity
-    iss <- my_data$index
-    fis <- my_data$frequency
-    length_fis <- length(fis)
-    
-    breaks <- which(iss[-1] - iss[-length_fis] > 1)
-    cutoff <- ifelse(is.na(breaks[1]), length_fis, breaks[1])
-    
-    ## set up structures
-    my_data <- my_data[1:cutoff,]
-    ratios <- my_data[-1, 2]/my_data[-cutoff, 2]
-    xs <- 1:(cutoff-1)
-    ys <- (xs+1)*ratios
-    xbar <- mean(xs)
-    lhs <- list("x" = xs-xbar,"y" = ratios)
-    
+    cutoff <- cutoff_wrap(my_data, requested = NA) 
     
     if (cutoff < 6) { ## check for unusual data structures
       
@@ -157,13 +131,26 @@ kemp.default <- function(input_data,
       
     } else {
       
+      ## set up structures
+      my_data <- my_data[1:cutoff, ]
+      ratios <- my_data[-1, 2]/my_data[-cutoff, 2]
+      xs <- 1:(cutoff-1)
+      ys <- (xs+1)*ratios
+      xbar <- mean(xs)
+      
+      lhs <- list("x" = xs-xbar, "y" = ratios)
+      
+      stopifnot(length(lhs$x) == length(lhs$y))
+      
+      stopifnot(length(lhs$x) == length(xs))
+      
       weights_inv <- 1/xs
       run <- minibreak_all(lhs, xs, ys, my_data, weights_inv, withf1 = TRUE)
       result <- list()
       choice <- list()
       
       ### If no models converged...
-      if (sum(as.numeric(run$useful[,5]))==0) {
+      if (sum(as.numeric(run$useful[,5])) == 0) {
         
         kemp_alpha_estimate <- alpha_estimate(estimand = "richness",
                                               estimate = NA,
@@ -196,9 +183,9 @@ kemp.default <- function(input_data,
           bs <- p[-1]/p[-cutoff]^2 * (1-exp(-C*p[-cutoff]))^2/(1-exp(-C*p[-1])) * (1-C*p[-1]/(exp(C*p[-1])-1))
           ratiovars <- (as + bs)/C
           
-          # if(its==0) {
-          #   weights1 <- 1/ratiovars
-          # }
+          if (its == 0) {
+            weights1 <- 1/ratiovars
+          }
           
           run <- try ( minibreak_all(lhs,xs,ys,my_data,1/ratiovars, withf1 = TRUE), silent = 1)
           
@@ -327,7 +314,6 @@ kemp.default <- function(input_data,
       }
     }
   }
-  
   kemp_alpha_estimate
   
 }
@@ -351,6 +337,9 @@ rootcheck <- function(model,lhs,nof1=FALSE) {
 
 sqerror <- function(model, lhs) {
   fits <- fitted(model)
+  
+  stopifnot( length(lhs$y) == length(fits))
+  
   return(sum(((lhs$y-fits)^2)/fits))
 }
 
@@ -359,6 +348,10 @@ residse <- function(model) {
 }
 
 minibreak_all <- function(lhs, xs, ys, input_data, myweights, withf1 = NULL) {
+  
+  stopifnot( length(lhs[[1]]) == length(lhs[[2]]))
+  
+  stopifnot( length(lhs$x) == length(xs))
   
   if (is.null(withf1)) stop("Empty argument `withf1`")
   
@@ -377,7 +370,13 @@ minibreak_all <- function(lhs, xs, ys, input_data, myweights, withf1 = NULL) {
   start_1_0 <- list(beta0 = model_1_0$coef[1], beta1 = model_1_0$coef[2])
   
   lhs2 <- lhs; lhs2$x <- xs # otherwise singularity
-  result_1_0 <- try( nls( lhs2$y ~ structure_1_0(x,beta0,beta1), data = lhs2, start_1_0, weights=myweights), silent=T )
+  stopifnot( length(lhs2[[1]]) == length(lhs2[[2]]))
+  
+  # result_1_0 <-  nls( lhs2$y ~ structure_1_0(x,beta0,beta1), 
+  #                         data = lhs2, start_1_0, weights=myweights)
+  result_1_0 <- try( nls( lhs2$y ~ structure_1_0(x,beta0,beta1),
+                          data = lhs2, start_1_0, weights=myweights),
+                     silent=T )
   if(class(result_1_0) == "try-error") {
     coef_1_0 <- c(start_1_0$beta0,start_1_0$beta1)
   } else {

@@ -14,18 +14,9 @@
 #' 
 #' @export 
 sample_richness <- function(input_data) {
+  
   if (class(input_data) == "phyloseq") {
-    if (input_data %>% otu_table %>% taxa_are_rows) {
-      return(input_data %>% 
-               get_taxa %>%
-               apply(2, function(x) sample_richness(make_frequency_count_table(x))) %>%
-               alpha_estimates)
-    } else {
-      return(input_data %>% 
-               otu_table %>%
-               apply(1, function(x) sample_richness(make_frequency_count_table(x))) %>%
-               alpha_estimates)
-    }
+    return(physeq_wrap(fn = sample_richness, physeq = input_data))
   }
   
   my_est <- as.numeric(colSums(convert(input_data))["frequency"])

@@ -44,20 +44,27 @@ print.alpha_estimates <- function(x, ...) {
   
   cat(paste("A collection of", n, "alpha diversity estimates:\n\n"))
   
-  lapply(x, print)
+  # Unfortunately I don't know how to 
+  for (i in 1:n) {
+    cat(paste("$", names(x)[i]), "\n", sep = "")
+    print(x[[i]])
+    cat(paste("\n"))
+  }
+  # lapply(x, print)
   return(NULL)
 }
 
 #' @export
 summary.alpha_estimates <- function(object, ...) {
-  # data frame of points to plot
+  
+  dots <- list(...)
   
   to_vector <- function(object, piece) {
     object %>% 
       lapply(function(x) {x[[piece]]}) %>%
       unlist 
   }
-
+  
   get_interval <- function(x) {
     if (is.null(x[["interval"]])) {
       c(NA, NA)
@@ -67,11 +74,18 @@ summary.alpha_estimates <- function(object, ...) {
   }
   intervals_df <- lapply(object, get_interval) %>% rbind.data.frame
   
-  tibble::tibble("estimate" = to_vector(object, "estimate"),
-                 "error" = to_vector(object, "error"),
-                 "lower" = intervals_df[1, ] %>% c %>% unlist,
-                 "upper" = intervals_df[2, ] %>% c %>% unlist)
+  tb <- tibble::tibble("estimate" = to_vector(object, "estimate"),
+                       "error" = to_vector(object, "error"),
+                       "lower" = intervals_df[1, ] %>% c %>% unlist,
+                       "upper" = intervals_df[2, ] %>% c %>% unlist)
+  
+  if (length(dots) > 0) {
+    if(class(dots[[1]]) == "phyloseq") {
+      tb %<>%
+        tibble::add_column("sample_names" = dots[[1]] %>% sample_names)
+    }
+  }
+  
+  tb 
+  
 }
-
-
-

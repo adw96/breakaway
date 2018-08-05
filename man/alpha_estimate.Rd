@@ -6,9 +6,8 @@
 \usage{
 alpha_estimate(estimate = NULL, error = NULL, estimand = NULL,
   name = NULL, interval = NULL, interval_type = NULL, type = NULL,
-  model = NULL, warnings = NULL, frequentist = NULL,
-  parametric = NULL, plot = NULL, reasonable = NULL, other = NULL,
-  ...)
+  model = NULL, warnings = NULL, frequentist = NULL, parametric = NULL,
+  plot = NULL, reasonable = NULL, other = NULL, ...)
 }
 \arguments{
 \item{estimate}{The estimate}

@@ -33,23 +33,14 @@
 #' 
 #' @export
 wlrm_untransformed  <- function(input_data, 
-                                cutoff=NA,
-                                print=NULL, 
-                                plot=NULL, 
-                                answers=NULL) {
+                                cutoff = NA,
+                                print = NULL, 
+                                plot = NULL, 
+                                answers = NULL) {
   
   if (class(input_data) == "phyloseq") {
-    if (input_data %>% otu_table %>% taxa_are_rows) {
-      return(input_data %>% 
-               get_taxa %>%
-               apply(2, function(x) wlrm_untransformed(make_frequency_count_table(x))) %>%
-               alpha_estimates)
-    } else {
-      return(input_data %>% 
-               otu_table %>%
-               apply(1, function(x) wlrm_untransformed(make_frequency_count_table(x))) %>%
-               alpha_estimates)
-    }
+    return(physeq_wrap(fn = wlrm_untransformed, physeq = input_data,
+                       cutoff, print, plot, answers))
   }
   
   my_data <- convert(input_data)
@@ -74,14 +65,7 @@ wlrm_untransformed  <- function(input_data,
     # TODO fix 
     f1 <- my_data[1,2]
     
-    if (is.na(cutoff)) {
-      iss <- my_data$index
-      fis <- my_data$frequency
-      length_fis <- length(fis)
-      
-      breaks <- which(iss[-1] - iss[-length_fis] > 1)
-      cutoff <- ifelse(is.na(breaks[1]), length_fis, breaks[1])
-    }
+    cutoff <- cutoff_wrap(my_data, requested = cutoff) 
     
     if (cutoff < 4) {
       wlrm_alpha_estimate <- alpha_estimate(estimand = "richness",
