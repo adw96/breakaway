@@ -4,7 +4,7 @@
 \alias{physeq_wrap}
 \title{Wrapper for phyloseq objects}
 \usage{
-physeq_wrap(fn, physeq)
+physeq_wrap(fn, physeq, ...)
 }
 \arguments{
 \item{fn}{Richness estimator function with \code{breakaway} to be applied to \code{physeq}}

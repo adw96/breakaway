@@ -24,7 +24,8 @@
 chao1 <- function(input_data, output=NULL, answers=NULL) {
   
   if (class(input_data) == "phyloseq") {
-    return(physeq_wrap(fn = chao1, physeq = input_data))
+    return(physeq_wrap(fn = chao1, physeq = input_data,
+                       output, answers))
   }
   
   my_data <- convert(input_data)

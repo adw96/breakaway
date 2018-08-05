@@ -68,7 +68,8 @@ breakaway_nof1.phyloseq <- function(input_data,
                                     output = NULL, plot = NULL, 
                                     answers = NULL, print = NULL) {
   
-  physeq_wrap(fn = breakaway_nof1, physeq = input_data)
+  physeq_wrap(fn = breakaway_nof1, physeq = input_data, 
+              output, plot, answers, print)
   
 }
 
@@ -127,7 +128,7 @@ breakaway_nof1.default <- function(input_data,
     n <- sum(my_data$frequency)
     f2 <- my_data[1,2]
     
-    cutoff <- cutoff_wrap(my_data, cutoff) 
+    cutoff <- cutoff_wrap(my_data) 
     
     if (cutoff < 6) { ## check for unusual data structures
       

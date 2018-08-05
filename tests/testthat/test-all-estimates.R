@@ -23,13 +23,13 @@ richness_estimates <- list(sample_richness,
 #### All the datasets
 #### #### #### #### #### #### #### #### 
 # 
-# random_samples <- sample(x = 1:143, size = 5, replace = F)
-# tables <- apply(toy_otu_table[,random_samples], 2, make_frequency_count_table)
+random_samples <- sample(x = 1:143, size = 5, replace = F)
+tables <- apply(toy_otu_table[,random_samples], 2, make_frequency_count_table)
 # 
-# datasets <- list(hawaii,
-#                  apples)
-# 
-# datasets %<>% c(tables)
+datasets <- list(hawaii,
+                 apples)
+
+datasets %<>% c(tables)
 # 
 datasets_ps <- list(GlobalPatterns,
                     GlobalPatterns %>%

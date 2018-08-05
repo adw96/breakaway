@@ -34,12 +34,13 @@
 #' @export
 wlrm_untransformed  <- function(input_data, 
                                 cutoff = NA,
-                                print=NULL, 
-                                plot=NULL, 
-                                answers=NULL) {
+                                print = NULL, 
+                                plot = NULL, 
+                                answers = NULL) {
   
   if (class(input_data) == "phyloseq") {
-    return(physeq_wrap(fn = wlrm_untransformed, physeq = input_data))
+    return(physeq_wrap(fn = wlrm_untransformed, physeq = input_data,
+                       cutoff, print, plot, answers))
   }
   
   my_data <- convert(input_data)

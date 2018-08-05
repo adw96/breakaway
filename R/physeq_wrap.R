@@ -4,7 +4,7 @@
 #' @param physeq \code{phyloseq} object
 #' 
 #' @return Object of class \code{alpha_estimates}
-physeq_wrap <- function(fn, physeq) {
+physeq_wrap <- function(fn, physeq, ...) {
   
   if (physeq %>% otu_table %>% taxa_are_rows) {
     otus <- physeq %>% 
@@ -16,7 +16,7 @@ physeq_wrap <- function(fn, physeq) {
   }
   
   ests <- otus %>%
-    apply(1, function(x) fn(make_frequency_count_table(x))) %>%
+    apply(1, function(x) fn(make_frequency_count_table(x), ...)) %>%
     alpha_estimates
   
   names(ests) <- physeq %>% sample_names

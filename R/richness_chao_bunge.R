@@ -25,7 +25,8 @@ chao_bunge <- function(input_data,
   
   
   if (class(input_data) == "phyloseq") {
-    return(physeq_wrap(fn = chao_bunge, physeq = input_data))
+    return(physeq_wrap(fn = chao_bunge, physeq = input_data,
+                       cutoff, output, answers))
   }
   
   my_data <- convert(input_data)

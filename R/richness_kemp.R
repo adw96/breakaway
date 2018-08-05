@@ -59,7 +59,8 @@ kemp.phyloseq <- function(input_data,
                           output = NULL, plot = NULL, 
                           answers = NULL, print = NULL) {
   
-  physeq_wrap(fn = kemp, physeq = input_data)
+  physeq_wrap(fn = kemp, physeq = input_data,
+              output, plot, answers, print)
 }
 
 #' @export
