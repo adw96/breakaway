@@ -1,6 +1,7 @@
 #' Wrapper for phyloseq objects
 #' 
 #' @param my_data Frequency count table
+#' @param requested The user-requested cutoff
 #' 
 #' @return Cutoff value
 cutoff_wrap <- function(my_data, requested = NA) {

@@ -1,7 +1,8 @@
 #' Wrapper for phyloseq objects
 #' 
-#' @param fn Richness estimator function with \code{breakaway} to be applied to \code{physeq}
+#' @param fn alpha diversity estimator function with \code{breakaway} to be applied to \code{physeq}
 #' @param physeq \code{phyloseq} object
+#' @param ... Additional arguments for fn
 #' 
 #' @return Object of class \code{alpha_estimates}
 physeq_wrap <- function(fn, physeq, ...) {

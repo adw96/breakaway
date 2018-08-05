@@ -7,9 +7,11 @@
 physeq_wrap(fn, physeq, ...)
 }
 \arguments{
-\item{fn}{Richness estimator function with \code{breakaway} to be applied to \code{physeq}}
+\item{fn}{alpha diversity estimator function with \code{breakaway} to be applied to \code{physeq}}
 
 \item{physeq}{\code{phyloseq} object}
+
+\item{...}{Additional arguments for fn}
 }
 \value{
 Object of class \code{alpha_estimates}

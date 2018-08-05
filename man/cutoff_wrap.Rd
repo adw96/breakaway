@@ -8,6 +8,8 @@ cutoff_wrap(my_data, requested = NA)
 }
 \arguments{
 \item{my_data}{Frequency count table}
+
+\item{requested}{The user-requested cutoff}
 }
 \value{
 Cutoff value
