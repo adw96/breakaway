@@ -16,7 +16,7 @@ good_turing  <- function(input_data) {
     } else {
       return(input_data %>% 
                otu_table %>%
-               apply(1, function(x) good_turin(make_frequency_count_table(x))) %>%
+               apply(1, function(x) good_turing(make_frequency_count_table(x))) %>%
                alpha_estimates)
     }
   }
