@@ -1,11 +1,15 @@
 pandoc: 1.17.2
 pkgdown: 1.1.0.9000
 pkgdown_sha: b2798656f04ce282edea3e12734ba5588c6acd6e
+<<<<<<< Updated upstream
 articles:
   breakaway: breakaway.html
   extended-tutorial: extended-tutorial.html
   resample-estimates: resample-estimates.html
   sample-size-calculations: sample-size-calculations.html
+=======
+articles: []
+>>>>>>> Stashed changes
 urls:
   reference: http://adw96.github.io/breakaway/reference
   article: http://adw96.github.io/breakaway/articles
