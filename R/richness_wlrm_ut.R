@@ -25,7 +25,8 @@
 #' @importFrom graphics legend points
 #' @importFrom utils head read.table
 #' 
-#' @import ggplot2 
+#' @import ggplot2  
+#' @import stats 
 #' 
 #' @examples
 #' 

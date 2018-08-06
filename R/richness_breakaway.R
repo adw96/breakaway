@@ -26,6 +26,7 @@
 #' @import magrittr
 #' @import ggplot2
 #' @import phyloseq
+#' @importFrom stats coef dexp dgeom dnbinom dpois fitted lm model.matrix nls optim pchisq pnorm predict quantile rbeta rbinom rnbinom rnorm runif sd var vcov
 #' 
 #' @seealso \code{\link{breakaway_nof1}}; \code{\link{kemp}}; \code{\link{apples}}
 #' 
