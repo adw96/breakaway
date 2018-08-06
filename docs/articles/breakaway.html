@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">breakaway</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.6.2</span>
       </span>
     </div>
 
@@ -82,7 +82,7 @@
       <h1>Getting started with breakaway</h1>
                         <h4 class="author">Amy Willis</h4>
             
-            <h4 class="date">2018-07-08</h4>
+            <h4 class="date">2018-08-05</h4>
       
       
       <div class="hidden name"><code>breakaway.Rmd</code></div>
@@ -110,8 +110,7 @@
 <h2 class="hasAnchor">
 <a href="#loading-the-package-and-data" class="anchor"></a>Loading the package and data</h2>
 <p>Download the latest version of the package from github.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### Run the first two lines at home! ####
-<span class="kw">library</span>(breakaway)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(breakaway)
 <span class="kw">data</span>(toy_otu_table)
 <span class="kw">data</span>(toy_metadata)
 
@@ -136,13 +135,13 @@ meta_data &lt;-<span class="st"> </span>toy_metadata
 <p>We’re now going to “collapse” the otu_data’s columns (samples) into frequency tables. Frequency tables…</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">frequencytablelist &lt;-<span class="st"> </span><span class="kw"><a href="../reference/build_frequency_count_tables.html">build_frequency_count_tables</a></span>(otu_data)
 <span class="kw">head</span>(frequencytablelist[[<span class="dv">63</span>]])</code></pre></div>
-<pre><code>##      Index Frequency
-## [1,]     1        35
-## [2,]     2        22
-## [3,]     3        15
-## [4,]     4        17
-## [5,]     5        11
-## [6,]     6        10</code></pre>
+<pre><code>##   index frequency
+## 1     1        35
+## 2     2        22
+## 3     3        15
+## 4     4        17
+## 5     5        11
+## 6     6        10</code></pre>
 <p>Interpretation: In this sample, there were 57 different species observed only once (singletons), 25 different species observed only twice, …, 1 species observed 171 times.</p>
 </div>
 <div id="estimating-species-richness" class="section level2">
@@ -150,38 +149,19 @@ meta_data &lt;-<span class="st"> </span>toy_metadata
 <a href="#estimating-species-richness" class="anchor"></a>Estimating species richness</h2>
 <p>Let’s run breakaway on the first frequency count table</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/breakaway.html">breakaway</a></span>(frequencytablelist[[<span class="dv">1</span>]])</code></pre></div>
-<pre><code>## ################## breakaway ##################
-##  The best estimate of total diversity is 359 
-##       with std error 326 
-##  The model employed was model_1_1 
-##  The function selected was
-##    f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar))/(1+alpha1*(x-xbar)) 
-##        Coef estimates Coef std errors
-## beta0      1.00985062      0.17827686
-## beta1      0.10949387      0.06709399
-## alpha1     0.08960885      0.09572573
-## xbar          8.5</code></pre>
+<pre><code>## Estimate of richness from method breakaway:
+##   Estimate is 359 with standard error 325.81
+##   Confidence interval: (258, 18180)</code></pre>
 <p>You should get some output to screen, including your estimate &amp; s.e., and a plot of the fits to the ratios. Note that it is not a fit to the frequencies, it is a fit to the ratios of frequencies. You would never need to include this type of plot in one of your papers. It is solely for you to check for model misspecification. What’s model misspecification? If the black diamonds don’t remotely follow the pattern of the white circles, that’s model misspecification.</p>
 <p>Sometimes, breakaway’s usual procedure doesn’t work, that is, it gives a negative estimate, which is of course silly. In that case, breakaway returns a different model’s result. It’s called the WLRM. There isn’t a picture. Here is an example of a case where breakaway returns the WLRM.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/breakaway.html">breakaway</a></span>(frequencytablelist[[<span class="dv">60</span>]])</code></pre></div>
-<pre><code>## We used 1/x weighting. 
-## ################## breakaway ##################
-##  The best estimate of total diversity is 414 
-##       with std error 18 
-##  The model employed was model_1_1 
-##  The function selected was
-##    f_{x+1}/f_{x} ~ (beta0+beta1*(x-xbar))/(1+alpha1*(x-xbar)) 
-##        Coef estimates Coef std errors
-## beta0     1.274646798      0.27932103
-## beta1     0.031057755      0.08576988
-## alpha1   -0.002888851      0.07627283
-## xbar          15</code></pre>
+<pre><code>## Estimate of richness from method breakaway:
+##   Estimate is 414 with standard error 17.53
+##   Confidence interval: (373, 1111)</code></pre>
 <p>breakaway can defer to the WLRM for several reasons. Perhaps there are too many singletons. Perhaps there isn’t a long enough tail. Perhaps there is false diversity. In this case, there was probably not enough data. Let’s see if this failure was sensitive to the singleton count by running breakaway_nof1. This requires no singleton count (implicit is that the singleton count was erroneous) and predicts it from the other frequencies.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/breakaway_nof1.html">breakaway_nof1</a></span>(frequencytablelist[[<span class="dv">60</span>]][-<span class="dv">1</span>,])</code></pre></div>
-<pre><code>## No breakaway models converged.################## breakaway ##################
-##  The best estimate of total diversity is 358 
-##       with std error 10 
-##  The model employed was the WLRM</code></pre>
+<pre><code>## Estimate of richness from method breakaway_nof1:
+##   Estimate is NA with standard error NA</code></pre>
 <p>The reference for this method: Willis, A. (2016). Species richness estimation with high diversity but spurious singletons.</p>
 <p>breakaway_nof1 is an exploratory tool for assessing sensitivity of breakaway to the singleton count. You should not use it for diversity estimation – only diversity <em>exploration</em> :)</p>
 <p>Let’s move on to looking at the Objective Bayes procedures of Kathryn Barger. It’s the latest and greatest in diversity estimation!</p>
@@ -310,7 +290,7 @@ meta_data &lt;-<span class="st"> </span>toy_metadata
 
 
       <footer><div class="copyright">
-  <p>Developed by Amy Willis, Kathryn Barger, John Bunge.</p>
+  <p>Developed by Amy Willis, Bryan D Martin, Kathryn Barger, John Bunge.</p>
 </div>
 
 <div class="pkgdown">

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>modelling total diversity with random effects — betta_random • breakaway</title>
+<title>Species richness estimation with Kemp-type models — kemp • breakaway</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,11 @@
 
 
 
-<meta property="og:title" content="modelling total diversity with random effects — betta_random" />
+<meta property="og:title" content="Species richness estimation with Kemp-type models — kemp" />
 
-<meta property="og:description" content="This function extends betta() to permit random effects modelling." />
+<meta property="og:description" content="This function implements the species richness estimation procedure outlined
+in Willis &amp;amp; Bunge (2015). The diversity estimate, standard error, estimated
+model coefficients, model details and plot of the fitted model are returned." />
 
 <meta property="og:image" content="http://adw96.github.io/breakaway/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -115,172 +117,90 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>modelling total diversity with random effects</h1>
+    <h1>Species richness estimation with Kemp-type models</h1>
     
-    <div class="hidden name"><code>betta_random.Rd</code></div>
+    <div class="hidden name"><code>kemp.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This function extends betta() to permit random effects modelling.</p>
+    <p>This function implements the species richness estimation procedure outlined
+in Willis &amp; Bunge (2015). The diversity estimate, standard error, estimated
+model coefficients, model details and plot of the fitted model are returned.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>betta_random</span>(<span class='no'>chats</span>, <span class='no'>ses</span>, <span class='kw'>X</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>groups</span>)</pre>
+    <pre class="usage"><span class='fu'>kemp</span>(<span class='no'>input_data</span>, <span class='kw'>output</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>answers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>print</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>chats</th>
-      <td><p>A vector of estimates of total diversity at different sampling
-locations.</p></td>
+      <th>input_data</th>
+      <td><p>An input type that can be processed by <code><a href='convert.html'>convert()</a></code></p></td>
     </tr>
     <tr>
-      <th>ses</th>
-      <td><p>The standard errors in <samp>chats</samp>, the diversity estimates.</p></td>
+      <th>output</th>
+      <td><p>Deprecated; only for backwards compatibility</p></td>
     </tr>
     <tr>
-      <th>X</th>
-      <td><p>A numeric matrix of covariates corresponding to fixed effects. If
-not supplied, an intercept-only model will be fit.</p></td>
+      <th>plot</th>
+      <td><p>Deprecated; only for backwards compatibility</p></td>
     </tr>
     <tr>
-      <th>groups</th>
-      <td><p>A categorical variable representing the random-effects groups
-that each of the estimates belong to.</p></td>
+      <th>answers</th>
+      <td><p>Deprecated; only for backwards compatibility</p></td>
+    </tr>
+    <tr>
+      <th>print</th>
+      <td><p>Deprecated; only for backwards compatibility</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
-
-<dt>table</dt><dd><p>A coefficient table for the model parameters. The
-columns give the parameter estimates, standard errors, and p-values,
-respectively. This model is only as effective as your diversity estimation
-procedure; for this reason please confirm that your estimates are
-appropriate and that your model is not misspecified. betta_pic may be
-useful for this purpose.</p></dd> <dt>cov</dt><dd><p>Estimated covariance matrix of the
-parameter estimates.</p></dd> <dt>ssq_u</dt><dd><p>The estimate of the heterogeneity
-variance.</p></dd> <dt>ssq_g</dt><dd><p>Estimates of within-group variance. The estimate
-will be zero for groups with only one observation.</p></dd> <dt>homogeneity</dt><dd><p>The test statistic and p-value for the test of homogeneity.</p></dd>
-<dt>global</dt><dd><p>The test statistic and p-value for the test of model
-explanatory power.</p></dd> <dt>blups</dt><dd><p>The conditional expected values of the
-diversity estimates (conditional on the random effects). Estimates of
-variability for the random effects case are unavailable at this time; please
-contact the maintainer if needed.</p></dd>
+    <p>An object of class <code>alpha_estimate</code></p>
+<dt>code</dt><dd><p>A category representing algorithm behaviour.
+<samp>code=1</samp> indicates no nonlinear models converged and the transformed
+WLRM diversity estimate of Rocchetti et. al. (2011) is returned.
+<samp>code=2</samp> indicates that the iteratively reweighted model converged and
+was returned. <samp>code=3</samp> indicates that iterative reweighting did not
+converge but a model based on a simplified variance structure was returned
+(in this case, the variance of the frequency ratios is assumed to be
+proportional to the denominator frequency index). Please peruse your fitted
+model before using your diversity estimate.</p></dd> <dt>name</dt><dd><p>The ``name'' of
+the selected model. The first integer represents the numerator polynomial
+degree and the second integer represents the denominator polynomial degree
+of the model for the frequency ratios. See Willis &amp; Bunge (2015) for
+details.</p></dd> <dt>para</dt><dd><p>Estimated model parameters and standard errors.</p></dd>
+<dt>est</dt><dd><p>The estimate of total (observed plus unobserved) diversity.</p></dd>
+<dt>seest</dt><dd><p>The standard error in the diversity estimate.</p></dd> <dt>full</dt><dd><p>The chosen nonlinear model for frequency ratios.</p></dd> <dt>ci</dt><dd><p>An asymmetric
+95% confidence interval for diversity.</p></dd>
 
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Willis, A., Bunge, J., and Whitman, T. (2015). Inference for
-changes in biodiversity. <em>arXiv preprint.</em></p>
+    <p>Willis, A. and Bunge, J. (2015). Estimating diversity via
+frequency ratios. <em>Biometrics</em>, <b>71</b>(4), 1042--1049.</p>
+<p>Rocchetti, I., Bunge, J. and Bohning, D. (2011). Population size estimation
+based upon ratios of recapture probabilities. <em>Annals of Applied
+Statistics</em>, <b>5</b>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='betta.html'>betta</a></code>;</p></div>
+    <div class='dont-index'><p><code><a href='breakaway.html'>breakaway</a></code>; <code><a href='breakaway_nof1.html'>breakaway_nof1</a></code>; <code><a href='apples.html'>apples</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<span class='fu'>betta_random</span>(<span class='fu'>c</span>(<span class='fl'>2000</span>, <span class='fl'>3000</span>, <span class='fl'>4000</span>, <span class='fl'>3000</span>), <span class='fu'>c</span>(<span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>150</span>, <span class='fl'>180</span>), <span class='kw'>X</span> <span class='kw'>=</span> <span class='fu'>cbind</span>(<span class='kw'>Int</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-    <span class='kw'>Cont_var</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>100</span>, <span class='fl'>150</span>, <span class='fl'>100</span>, <span class='fl'>50</span>)), <span class='kw'>groups</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"a"</span>, <span class='st'>"a"</span>, <span class='st'>"a"</span>, <span class='st'>"b"</span>))</div><div class='output co'>#&gt; $table
-#&gt;              Estimates Standard Errors p-values
-#&gt; Int      3000.32999173       384.97695    0.000
-#&gt; Cont_var   -0.02907528         4.35074    0.995
-#&gt; 
-#&gt; $cov
-#&gt;                 Int   Cont_var
-#&gt; Int      860819.418 -8851.3807
-#&gt; Cont_var  -8851.381   109.9433
-#&gt; 
-#&gt; $ssq_u
-#&gt;        
-#&gt; 241802 
-#&gt; 
-#&gt; $ssq_group
-#&gt;        a        b 
-#&gt; 701816.2      0.0 
-#&gt; 
-#&gt; $homogeneity
-#&gt; [1] 144.1595   0.0000
-#&gt; 
-#&gt; $global
-#&gt; [1] 6.064440e+01 6.883383e-15
-#&gt; 
-#&gt; $blups
-#&gt; [1] 2744.513 2996.960 3248.350 2999.867
+<span class='fu'>kemp</span>(<span class='no'>apples</span>)</div><div class='output co'>#&gt; Estimate of richness from method kemp:
+#&gt;   Estimate is 1552 with standard error 304.71
+#&gt;   Confidence interval: (1007, 47805)
+#&gt; </div><div class='input'><span class='fu'>kemp</span>(<span class='no'>apples</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>output</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>answers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Estimate of richness from method kemp:
+#&gt;   Estimate is 1552 with standard error 304.71
+#&gt;   Confidence interval: (1007, 47805)
 #&gt; </div><div class='input'>
-<span class='co'>## handles missing data</span>
-<span class='fu'>betta_random</span>(<span class='fu'>c</span>(<span class='fl'>2000</span>, <span class='fl'>3000</span>, <span class='fl'>4000</span>, <span class='fl'>3000</span>), <span class='fu'>c</span>(<span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>150</span>, <span class='fl'>NA</span>), <span class='kw'>groups</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"a"</span>, <span class='fl'>NA</span>,
-    <span class='st'>"b"</span>, <span class='st'>"b"</span>))</div><div class='output co'>#&gt; $table
-#&gt;      Estimates Standard Errors p-values
-#&gt; [1,]      3000        1004.049    0.003
-#&gt; 
-#&gt; $cov
-#&gt;         [,1]
-#&gt; [1,] 1008115
-#&gt; 
-#&gt; $ssq_u
-#&gt;       
-#&gt; 2e+06 
-#&gt; 
-#&gt; $ssq_group
-#&gt; a b 
-#&gt; 0 0 
-#&gt; 
-#&gt; $homogeneity
-#&gt; [1] 144.4444   0.0000
-#&gt; 
-#&gt; $global
-#&gt; [1] 8.92755 0.00000
-#&gt; 
-#&gt; $blups
-#&gt; [1] 2004.975       NA 3988.875       NA
-#&gt; </div><div class='input'>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -6,9 +6,8 @@ df1 <- cbind(c(1,2,3,6), c(8,4,2,2))
 df2 <- cbind(c(3,6,9,12,15,16), c(3,2,1,15,1,5))
 df3 <- cbind(c(1,2,5,6,7,9), c(7,8,2,4,1,2))
 
-datasets <- list(hawaii,
+datasets <- c(list(hawaii,
                  apples,
                  df1,
                  df2,
-                 df3) %>% 
-  c(tables)
+                 df3), tables)

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Estimate the sample size needed to do an unpaired one-way test using betta — sample_size_estimate • breakaway</title>
+<title>Plot function for alpha_estimates class — plot.alpha_estimates • breakaway</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Estimate the sample size needed to do an unpaired one-way test using betta — sample_size_estimate" />
+<meta property="og:title" content="Plot function for alpha_estimates class — plot.alpha_estimates" />
 
-<meta property="og:description" content="Estimate the sample size needed to do an unpaired one-way test using betta" />
+<meta property="og:description" content="Plot function for alpha_estimates class" />
 
 <meta property="og:image" content="http://adw96.github.io/breakaway/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -115,70 +115,80 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Estimate the sample size needed to do an unpaired one-way test using betta</h1>
+    <h1>Plot function for alpha_estimates class</h1>
     
-    <div class="hidden name"><code>sample_size_estimate.Rd</code></div>
+    <div class="hidden name"><code>plot.alpha_estimates.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Estimate the sample size needed to do an unpaired one-way test using betta</p>
+    <p>Plot function for alpha_estimates class</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>sample_size_estimate</span>(<span class='no'>control_group_est</span>, <span class='no'>se_est</span>, <span class='kw'>diff</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
-  <span class='kw'>prop</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>samples</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>5</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for alpha_estimates</span>
+<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='kw'>physeq</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>measure</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>shape</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trim_plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>control_group_est</th>
-      <td><p>An estimate of the alpha diversity parameter for
-the control group</p></td>
+      <th>x</th>
+      <td><p>Object of class <code>alpha_estimates</code>.</p></td>
     </tr>
     <tr>
-      <th>se_est</th>
-      <td><p>An estimate of the (common) standard deviation</p></td>
+      <th>physeq</th>
+      <td><p>(Optional). Default <code>NULL</code>. Required object of class <code>phyloseq</code> if including a <code>sample_data</code> variable for <code>color</code> or <code>shape</code>.</p></td>
     </tr>
     <tr>
-      <th>diff</th>
-      <td><p>An estimate of the difference between the control and
-non-control groups</p></td>
+      <th>measure</th>
+      <td><p>(Optional). If there are multiple richness measures included in <code>x</code>, this can be set to the the desired measure to be plotted. Defaults to the measure of the first alpha diversity estimate.</p></td>
     </tr>
     <tr>
-      <th>alpha</th>
-      <td><p>Minimum significance level desired</p></td>
+      <th>color</th>
+      <td><p>(Optional). Default <code>NULL</code>. The sample variable to map to different colors. Can be a single character string of the variable name in <code>sample_data</code> or a custom supplied vector with length equal to the number of samples.</p></td>
     </tr>
     <tr>
-      <th>prop</th>
-      <td><p>Desired power</p></td>
+      <th>shape</th>
+      <td><p>(Optional). Default <code>NULL</code>. The sample variable to map to different shapes. Can be a single character string of the variable name in <code>sample_data</code> or a custom supplied vector with length equal to the number of samples.</p></td>
     </tr>
     <tr>
-      <th>samples</th>
-      <td><p>Number of bootstrap resamples used to estimate the sample
-size. Increase for a more accurate estimate.</p></td>
+      <th>title</th>
+      <td><p>(Optional). Default NULL. Character string. The main title for the graphic.</p></td>
     </tr>
     <tr>
-      <th>precision</th>
-      <td><p>How much to increment the sample size as we try to increase
-the power</p></td>
+      <th>trim_plot</th>
+      <td><p>(Optional). Default <code>FALSE</code>. Boolean indicator for whether you want the plot to include the full confidence intervals.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>See details</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>An estimate of the necessary sample size and some details</p>
+    <p>... does not currently have any implemented options. Optional arguments currently include "trim_plot", a  Optional</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'>library</span>(<span class='no'>phyloseq</span>)
+<span class='fu'>data</span>(<span class='no'>GlobalPatterns</span>)
+<span class='no'>alphas</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='breakaway.html'>breakaway</a></span>(<span class='no'>GlobalPatterns</span>)
+<span class='fu'>plot</span>(<span class='no'>alphas</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-          </ul>
+      <li><a href="#details">Details</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

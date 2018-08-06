@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Estimate the sample size needed to do an unpaired one-way test using betta — sample_size_estimate • breakaway</title>
+<title>Calculate the true Simpson index — true_simpson • breakaway</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Estimate the sample size needed to do an unpaired one-way test using betta — sample_size_estimate" />
+<meta property="og:title" content="Calculate the true Simpson index — true_simpson" />
 
-<meta property="og:description" content="Estimate the sample size needed to do an unpaired one-way test using betta" />
+<meta property="og:description" content="Calculate the true Simpson index" />
 
 <meta property="og:image" content="http://adw96.github.io/breakaway/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -115,60 +115,36 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Estimate the sample size needed to do an unpaired one-way test using betta</h1>
+    <h1>Calculate the true Simpson index</h1>
     
-    <div class="hidden name"><code>sample_size_estimate.Rd</code></div>
+    <div class="hidden name"><code>true_simpson.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Estimate the sample size needed to do an unpaired one-way test using betta</p>
+    <p>Calculate the true Simpson index</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>sample_size_estimate</span>(<span class='no'>control_group_est</span>, <span class='no'>se_est</span>, <span class='kw'>diff</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
-  <span class='kw'>prop</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>samples</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>5</span>)</pre>
+    <pre class="usage"><span class='fu'>true_simpson</span>(<span class='no'>input</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>control_group_est</th>
-      <td><p>An estimate of the alpha diversity parameter for
-the control group</p></td>
-    </tr>
-    <tr>
-      <th>se_est</th>
-      <td><p>An estimate of the (common) standard deviation</p></td>
-    </tr>
-    <tr>
-      <th>diff</th>
-      <td><p>An estimate of the difference between the control and
-non-control groups</p></td>
-    </tr>
-    <tr>
-      <th>alpha</th>
-      <td><p>Minimum significance level desired</p></td>
-    </tr>
-    <tr>
-      <th>prop</th>
-      <td><p>Desired power</p></td>
-    </tr>
-    <tr>
-      <th>samples</th>
-      <td><p>Number of bootstrap resamples used to estimate the sample
-size. Increase for a more accurate estimate.</p></td>
-    </tr>
-    <tr>
-      <th>precision</th>
-      <td><p>How much to increment the sample size as we try to increase
-the power</p></td>
+      <th>input</th>
+      <td><p>A vector of proportions.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An estimate of the necessary sample size and some details</p>
+    <p>The Simpson index of the population given by input.</p>
+    
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>This function is intended for population-level data. If you are
+dealing with a microbial sample, use DivNet instead.</p>
     
 
   </div>
@@ -178,6 +154,8 @@ the power</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#note">Note</a></li>
           </ul>
 
   </div>

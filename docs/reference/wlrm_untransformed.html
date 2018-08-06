@@ -64,7 +64,7 @@ estimation procedure outlined in Rocchetti, Bunge and Bohning (2011)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">breakaway</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.6.2</span>
       </span>
     </div>
 
@@ -128,15 +128,15 @@ estimation procedure outlined in Rocchetti, Bunge and Bohning (2011).</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>wlrm_untransformed</span>(<span class='no'>input_data</span>, <span class='kw'>cutoff</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>answers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>wlrm_untransformed</span>(<span class='no'>input_data</span>, <span class='kw'>cutoff</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>answers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>input_data</th>
-      <td><p>An input type that can be processed by <code><a href='convert.html'>convert()</a></code></p></td>
+      <td><p>An input type that can be processed by <code><a href='convert.html'>convert()</a></code> or a <code>phyloseq</code> object</p></td>
     </tr>
     <tr>
       <th>cutoff</th>
@@ -158,7 +158,7 @@ estimation procedure outlined in Rocchetti, Bunge and Bohning (2011).</p>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of class <code>alpha_estimate</code></p>
+    <p>An object of class <code>alpha_estimate</code>, or <code>alpha_estimates</code> for <code>phyloseq</code> objects</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -211,7 +211,7 @@ Amy Willis
 
       <footer>
       <div class="copyright">
-  <p>Developed by Amy Willis, Kathryn Barger, John Bunge.</p>
+  <p>Developed by Amy Willis, Bryan D Martin, Kathryn Barger, John Bunge.</p>
 </div>
 
 <div class="pkgdown">
