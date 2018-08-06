@@ -32,9 +32,8 @@
 
 <meta property="og:title" content="Species richness estimation with breakaway — breakaway" />
 
-<meta property="og:description" content="This function implements the species richness estimation procedure outlined
-in Willis &amp;amp; Bunge (2015). The diversity estimate, standard error, estimated
-model coefficients, model details and plot of the fitted model are returned." />
+<meta property="og:description" content="breakaway is a wrapper for modern species richness estimation
+for modern datasets" />
 
 <meta property="og:image" content="http://adw96.github.io/breakaway/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -65,7 +64,7 @@ model coefficients, model details and plot of the fitted model are returned." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">breakaway</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.6.3</span>
       </span>
     </div>
 
@@ -124,9 +123,8 @@ model coefficients, model details and plot of the fitted model are returned." />
 
     <div class="ref-description">
     
-    <p>This function implements the species richness estimation procedure outlined
-in Willis &amp; Bunge (2015). The diversity estimate, standard error, estimated
-model coefficients, model details and plot of the fitted model are returned.</p>
+    <p>breakaway is a wrapper for modern species richness estimation
+for modern datasets</p>
     
     </div>
 
@@ -161,23 +159,6 @@ model coefficients, model details and plot of the fitted model are returned.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>alpha_estimate</code></p>
-<dt>code</dt><dd><p>A category representing algorithm behaviour.
-<samp>code=1</samp> indicates no nonlinear models converged and the transformed
-WLRM diversity estimate of Rocchetti et. al. (2011) is returned.
-<samp>code=2</samp> indicates that the iteratively reweighted model converged and
-was returned. <samp>code=3</samp> indicates that iterative reweighting did not
-converge but a model based on a simplified variance structure was returned
-(in this case, the variance of the frequency ratios is assumed to be
-proportional to the denominator frequency index). Please peruse your fitted
-model before using your diversity estimate.</p></dd> <dt>name</dt><dd><p>The ``name'' of
-the selected model. The first integer represents the numerator polynomial
-degree and the second integer represents the denominator polynomial degree
-of the model for the frequency ratios. See Willis &amp; Bunge (2015) for
-details.</p></dd> <dt>para</dt><dd><p>Estimated model parameters and standard errors.</p></dd>
-<dt>est</dt><dd><p>The estimate of total (observed plus unobserved) diversity.</p></dd>
-<dt>seest</dt><dd><p>The standard error in the diversity estimate.</p></dd> <dt>full</dt><dd><p>The chosen nonlinear model for frequency ratios.</p></dd> <dt>ci</dt><dd><p>An asymmetric
-95% confidence interval for diversity.</p></dd>
-
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -196,22 +177,21 @@ dataset may contain these errors, and recommend the use of
 
     <p>Willis, A. and Bunge, J. (2015). Estimating diversity via
 frequency ratios. <em>Biometrics</em>, <b>71</b>(4), 1042--1049.</p>
-<p>Rocchetti, I., Bunge, J. and Bohning, D. (2011). Population size estimation
-based upon ratios of recapture probabilities. <em>Annals of Applied
-Statistics</em>, <b>5</b>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='breakaway_nof1.html'>breakaway_nof1</a></code>; <code><a href='apples.html'>apples</a></code></p></div>
+    <div class='dont-index'><p><code><a href='breakaway_nof1.html'>breakaway_nof1</a></code>; <code><a href='kemp.html'>kemp</a></code>; <code><a href='apples.html'>apples</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='fu'>breakaway</span>(<span class='no'>apples</span>)</div><div class='output co'>#&gt; Estimate of richness from method breakaway:
 #&gt;   Estimate is 1552 with standard error 304.71
-#&gt;   Confidence interval: (1007, 47805)</div><div class='input'><span class='fu'>breakaway</span>(<span class='no'>apples</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>output</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>answers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Estimate of richness from method breakaway:
+#&gt;   Confidence interval: (1007, 47805)
+#&gt; </div><div class='input'><span class='fu'>breakaway</span>(<span class='no'>apples</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>output</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>answers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Estimate of richness from method breakaway:
 #&gt;   Estimate is 1552 with standard error 304.71
-#&gt;   Confidence interval: (1007, 47805)</div><div class='input'>
+#&gt;   Confidence interval: (1007, 47805)
+#&gt; </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -239,7 +219,7 @@ Amy Willis
 
       <footer>
       <div class="copyright">
-  <p>Developed by Amy Willis, Kathryn Barger, John Bunge.</p>
+  <p>Developed by Amy Willis, Bryan D Martin, Kathryn Barger, John Bunge.</p>
 </div>
 
 <div class="pkgdown">

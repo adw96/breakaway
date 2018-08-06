@@ -29,7 +29,6 @@ If there is something that you would like explained please feel free to request 
 Download the latest version of the package from github.
 
 ```{r}
-### Run the first two lines at home! ####
 library(breakaway)
 data(toy_otu_table)
 data(toy_metadata)

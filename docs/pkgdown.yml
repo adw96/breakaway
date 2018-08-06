@@ -1,6 +1,6 @@
 pandoc: 1.17.2
 pkgdown: 1.1.0.9000
-pkgdown_sha: 63e2ec4ed54da283d47fbe93f20bc1dd6de6fb1a
+pkgdown_sha: b2798656f04ce282edea3e12734ba5588c6acd6e
 articles:
   breakaway: breakaway.html
   extended-tutorial: extended-tutorial.html

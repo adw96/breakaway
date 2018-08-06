@@ -70,7 +70,7 @@ plot of the fitted model are returned." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">breakaway</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.6.3</span>
       </span>
     </div>
 
@@ -140,8 +140,8 @@ plot of the fitted model are returned.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>breakaway_nof1</span>(<span class='no'>input_data</span>, <span class='kw'>output</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>answers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>print</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>force</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>breakaway_nof1</span>(<span class='no'>input_data</span>, <span class='kw'>output</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>answers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -164,10 +164,6 @@ plot of the fitted model are returned.</p>
     </tr>
     <tr>
       <th>print</th>
-      <td><p>Deprecated; only for backwards compatibility</p></td>
-    </tr>
-    <tr>
-      <th>force</th>
       <td><p>Deprecated; only for backwards compatibility</p></td>
     </tr>
     </table>
@@ -222,11 +218,13 @@ diversity but spurious singletons. <em>arXiv.</em></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'>breakaway_nof1</span>(<span class='no'>apples</span>[-<span class='fl'>1</span>, ])</div><div class='output co'>#&gt; Estimate of richness from method breakaway+nof1:
+<span class='fu'>breakaway_nof1</span>(<span class='no'>apples</span>[-<span class='fl'>1</span>, ])</div><div class='output co'>#&gt; Estimate of richness from method breakaway_nof1:
 #&gt;   Estimate is 1500 with standard error 1341.35
-#&gt;   Confidence interval: (725, 139033)</div><div class='input'><span class='fu'>breakaway_nof1</span>(<span class='no'>apples</span>[-<span class='fl'>1</span>, ], <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>output</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>answers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Estimate of richness from method breakaway+nof1:
+#&gt;   Confidence interval: (725, 139033)
+#&gt; </div><div class='input'><span class='fu'>breakaway_nof1</span>(<span class='no'>apples</span>[-<span class='fl'>1</span>, ], <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>output</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>answers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Estimate of richness from method breakaway_nof1:
 #&gt;   Estimate is 1500 with standard error 1341.35
-#&gt;   Confidence interval: (725, 139033)</div><div class='input'>
+#&gt;   Confidence interval: (725, 139033)
+#&gt; </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -254,7 +252,7 @@ Amy Willis
 
       <footer>
       <div class="copyright">
-  <p>Developed by Amy Willis, Kathryn Barger, John Bunge.</p>
+  <p>Developed by Amy Willis, Bryan D Martin, Kathryn Barger, John Bunge.</p>
 </div>
 
 <div class="pkgdown">

@@ -61,7 +61,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">breakaway</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.6.3</span>
       </span>
     </div>
 
@@ -206,6 +206,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="chao_shen.html">chao_shen()</a></code> </p>
+        </td>
+        <td><p>The Chao-Shen estimate of Shannon diversity</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="check_format.html">check_format()</a></code> </p>
         </td>
         <td><p>Run some basic checks on a possible frequency count table</p></td>
@@ -218,9 +224,15 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="gini.html">gini()</a></code> </p>
+          <p><code><a href="cutoff_wrap.html">cutoff_wrap()</a></code> </p>
         </td>
-        <td><p>Plug-in Gini-Simpson index</p></td>
+        <td><p>Wrapper for phyloseq objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="good_turing.html">good_turing()</a></code> </p>
+        </td>
+        <td><p>The Good-Turing estimate of Shannon diversity</p></td>
       </tr><tr>
         
         <td>
@@ -230,15 +242,15 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="hill.html">hill()</a></code> </p>
+          <p><code><a href="kemp.html">kemp()</a></code> </p>
         </td>
-        <td><p>Plug-in Hill numbers</p></td>
+        <td><p>Species richness estimation with Kemp-type models</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="inverse_simpson.html">inverse_simpson()</a></code> </p>
+          <p><code><a href="make_design_matrix.html">make_design_matrix()</a></code> </p>
         </td>
-        <td><p>Plug-in Inverse Simpson index</p></td>
+        <td><p>Make design matrix</p></td>
       </tr><tr>
         
         <td>
@@ -248,15 +260,45 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="proportions_instead.html">proportions_instead()</a></code> </p>
+          <p><code><a href="objective_bayes_geometric.html">objective_bayes_geometric()</a></code> </p>
         </td>
-        <td><p>OTU table to relative abundances</p></td>
+        <td><p>Estimate species richness with an objective Bayes method using a geometric model</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="resample_estimate.html">resample_estimate()</a></code> </p>
+          <p><code><a href="objective_bayes_mixedgeo.html">objective_bayes_mixedgeo()</a></code> </p>
         </td>
-        <td><p>Resampling-based estimates of alpha diversity</p></td>
+        <td><p>Objective Bayes species richness estimate with the mixed-geometric model</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="objective_bayes_negbin.html">objective_bayes_negbin()</a></code> </p>
+        </td>
+        <td><p>Objective Bayes species richness estimate with the Negative Binomial model</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="objective_bayes_poisson.html">objective_bayes_poisson()</a></code> </p>
+        </td>
+        <td><p>Objective Bayes species richness estimate with the Poisson model</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="physeq_wrap.html">physeq_wrap()</a></code> </p>
+        </td>
+        <td><p>Wrapper for phyloseq objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot.alpha_estimates.html">plot(<i>&lt;alpha_estimates&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Plot function for alpha_estimates class</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="proportions_instead.html">proportions_instead()</a></code> </p>
+        </td>
+        <td><p>OTU table to relative abundances</p></td>
       </tr><tr>
         
         <td>
@@ -273,6 +315,36 @@ tables.</p></td>
       </tr><tr>
         
         <td>
+          <p><code><a href="sample_inverse_simpson.html">sample_inverse_simpson()</a></code> </p>
+        </td>
+        <td><p>Plug-in Inverse Simpson diversity</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sample_richness.html">sample_richness()</a></code> </p>
+        </td>
+        <td><p>Sample richness estimator</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sample_shannon.html">sample_shannon()</a></code> </p>
+        </td>
+        <td><p>Plug-in Shannon diversity</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sample_shannon_e.html">sample_shannon_e()</a></code> </p>
+        </td>
+        <td><p>Plug-in Shannon's E ("Equitability")</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sample_simpson.html">sample_simpson()</a></code> </p>
+        </td>
+        <td><p>Plug-in Simpson diversity</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="sample_size_estimate.html">sample_size_estimate()</a></code> </p>
         </td>
         <td><p>Estimate the sample size needed to do an unpaired one-way test using betta</p></td>
@@ -285,30 +357,6 @@ tables.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="shannon.html">shannon()</a></code> </p>
-        </td>
-        <td><p>Plug-in Shannon index</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="simpson.html">simpson()</a></code> </p>
-        </td>
-        <td><p>Plug-in Simpson index</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="subsample_otu.html">subsample_otu()</a></code> </p>
-        </td>
-        <td><p>Resampling the taxa of your OTU table</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="to_proportions.html">to_proportions()</a></code> </p>
-        </td>
-        <td><p>convert to proportions</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="toy_metadata.html">toy_metadata</a></code> </p>
         </td>
         <td><p>(Data) Data frame of covariate information about toy_otu_table.</p></td>
@@ -317,13 +365,49 @@ tables.</p></td>
         <td>
           <p><code><a href="toy_otu_table.html">toy_otu_table</a></code> </p>
         </td>
-        <td><p>(Data) A toy OTU table. Covariate info available in `toy_metadata`.</p></td>
+        <td><p>(Data) A toy OTU table.</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="toy_taxonomy.html">toy_taxonomy</a></code> </p>
         </td>
         <td><p>(Data) The taxonomy of the OTUs in `toy_otu_table`.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="true_gini.html">true_gini()</a></code> </p>
+        </td>
+        <td><p>Calculate the true Gini-Simpson index</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="true_hill.html">true_hill()</a></code> </p>
+        </td>
+        <td><p>Calculate the true Hill numbers</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="true_inverse_simpson.html">true_inverse_simpson()</a></code> </p>
+        </td>
+        <td><p>Calculate the true Inverse Simpson index</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="true_shannon.html">true_shannon()</a></code> </p>
+        </td>
+        <td><p>Calculate the true Shannon index based on proportions</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="true_shannon_e.html">true_shannon_e()</a></code> </p>
+        </td>
+        <td><p>Calculate the true Shannon's equitability index</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="true_simpson.html">true_simpson()</a></code> </p>
+        </td>
+        <td><p>Calculate the true Simpson index</p></td>
       </tr><tr>
         
         <td>
@@ -351,7 +435,7 @@ tables.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Amy Willis, Kathryn Barger, John Bunge.</p>
+  <p>Developed by Amy Willis, Bryan D Martin, Kathryn Barger, John Bunge.</p>
 </div>
 
 <div class="pkgdown">

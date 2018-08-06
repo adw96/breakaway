@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">breakaway</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.6.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">4.6.3</span>
       </span>
     </div>
 
@@ -88,23 +88,39 @@
 <a href="#breakaway" class="anchor"></a>breakaway <img src="breakaway-logo.png" align="right" width="165px">
 </h1></div>
 
-<p>Understanding the drivers of microbial diversity is an important frontier of microbial ecology, and investigating the diversity of samples from microbial ecosystems is a common step in any microbiome analysis. breakaway is the premier package for statistical analysis of microbial diversity. breakaway implements the latest and greatest estimates of different alpha diversity metrics, as well as the most commonly used estimates.</p>
-<p>breakaway is undergoing substantial renovations. Please submit an issue if it is interfering with your work!</p>
+<p><code>breakaway</code> is the premier package for statistical analysis of microbial diversity. <code>breakaway</code> implements the latest and greatest estimates of richness, as well as the most commonly used estimates. Understanding the drivers of microbial diversity is an important frontier of microbial ecology, and investigating the diversity of samples from microbial ecosystems is a common step in any microbiome analysis.</p>
+<p><a href="https://github.com/adw96/DivNet"><code>DivNet</code></a> is a new package by the same authors for estimating Shannon diversity, and other diversity indices. <code>breakaway</code> focuses on richness while <code>DivNet</code> focuses on Shannon, Simpson, and other alpha diversities as well as some beta diversity indices. Check it out!</p>
+<p><code>breakaway</code> has undergone substantial renovations to make it more modern, easy-to-use, and robust. If functionality that you previously enjoyed in <code>breakaway</code> no longer exists, please submit an <a href="https://github.com/adw96/breakaway/issues">issue</a>!</p>
+<div id="citing-breakaway" class="section level3">
+<h3 class="hasAnchor">
+<a href="#citing-breakaway" class="anchor"></a>Citing breakaway</h3>
+<p>The <code>R</code> package <code>breakaway</code> implements a number of different richness estimates. Please cite the following if you use them:</p>
+<ul>
+<li>
+<code><a href="reference/breakaway.html">breakaway()</a></code> and <code><a href="reference/kemp.html">kemp()</a></code>: Willis, A. &amp; Bunge, J. (2015). Estimating diversity via frequency ratios. Biometrics.</li>
+<li>
+<code><a href="reference/betta.html">betta()</a></code>: Willis, A., Bunge, J., &amp; Whitman, T. (2017). Improved detection of changes in species richness in high diversity microbial communities. JRSS-C.</li>
+<li>
+<code><a href="reference/breakaway_nof1.html">breakaway_nof1()</a></code>: Willis, A. (2016+). Species richness estimation with high diversity but spurious singletons. arXiv.</li>
+<li>
+<code>objective_bayes_*()</code>: Barger, K. &amp; Bunge, J. (2010). Objective Bayesian estimation for the number of species. Bayesian Analysis.</li>
+</ul>
+</div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <div id="development-version" class="section level3">
 <h3 class="hasAnchor">
 <a href="#development-version" class="anchor"></a>Development version</h3>
-<p>You can install breakaway from github with:</p>
+<p>You can install <code>breakaway</code> from github with:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
 devtools::<span class="kw">install_github</span>(<span class="st">"adw96/breakaway"</span>)</code></pre></div>
-<p>breakaway is actively maintained and continually expanding and developing its scope! Is there a method you would like to have implemented in breakaway? Submit a pull request or contact the <a href="http://faculty.washington.edu/adwillis/">maintainer</a>!</p>
+<p><code>breakaway</code> is actively maintained and continually expanding and developing its scope! Is there a method you would like to have implemented in breakaway? Submit a pull request or contact the <a href="http://faculty.washington.edu/adwillis/">maintainer</a>!</p>
 </div>
 <div id="cran" class="section level3">
 <h3 class="hasAnchor">
 <a href="#cran" class="anchor"></a>CRAN</h3>
-<p>For now, breakaway is no longer being updated on CRAN. You can access v3.0 on CRAN <a href="https://cran.r-project.org/web/packages/breakaway/index.html">here</a> or with</p>
+<p>For now, <code>breakaway</code> is no longer being updated on CRAN. You can access v3.0 on CRAN <a href="https://cran.r-project.org/web/packages/breakaway/index.html">here</a> or with</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"breakaway"</span>)</code></pre></div>
 </div>
 </div>
@@ -112,22 +128,20 @@ devtools::<span class="kw">install_github</span>(<span class="st">"adw96/breakaw
 <h2 class="hasAnchor">
 <a href="#humans" class="anchor"></a>Humans</h2>
 <p>Maintainer: <a href="http://faculty.washington.edu/adwillis/">Amy Willis</a></p>
-<p>Authors: <a href="http://faculty.washington.edu/adwillis/">Amy Willis</a>, <a href="http://hnrca.tufts.edu/kathryn-barger-ph-d/">Kathryn Barger</a> and <a href="https://stat.cornell.edu/people/faculty/john-bunge">John Bunge</a></p>
+<p>Authors: <a href="http://faculty.washington.edu/adwillis/">Amy Willis</a>, <a href="https://bryandmartin.github.io/">Bryan Martin</a>, <a href="http://hnrca.tufts.edu/kathryn-barger-ph-d/">Kathryn Barger</a> and <a href="https://stat.cornell.edu/people/faculty/john-bunge">John Bunge</a></p>
 </div>
 <div id="upcoming-features" class="section level2">
 <h2 class="hasAnchor">
 <a href="#upcoming-features" class="anchor"></a>Upcoming features</h2>
 <ul>
 <li>extended tutorials</li>
-<li>phyloseq integration</li>
-<li>CatchAll in R</li>
-<li>better unit testing</li>
-<li>longitudinal models for the microbiome</li>
-<li>better graphics</li>
-<li>automated estimator selection based on data structure</li>
-<li>new format for modelling functions</li>
+<li><del>phyloseq integration</del></li>
+<li><del>better unit testing</del></li>
+<li><del>better graphics</del></li>
+<li><del>automated estimator selection based on data structure</del></li>
+<li><del>new format for modelling functions</del></li>
 </ul>
-<p>Do you have a request for us? Let us know!</p>
+<p>Do you have a request for us? Let us know! We want folks to use <code>breakaway</code> and are committed to making it as easy to use as possible.</p>
 </div>
 </div>
   </div>

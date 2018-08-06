@@ -23,6 +23,7 @@
 #' @keywords diversity models
 #' 
 #' @import ggplot2 
+#' @import stats 
 #' 
 #' @examples
 #' 

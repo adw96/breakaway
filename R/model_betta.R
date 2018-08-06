@@ -47,6 +47,9 @@
 #' authors believe this to be the first attempt at modelling total diversity in
 #' a way that accounts for its estimated nature.
 #' @author Amy Willis
+#' 
+#' @importFrom stats coef dexp dgeom dnbinom dpois fitted lm model.matrix nls optim pchisq pnorm predict quantile rbeta rbinom rnbinom rnorm runif sd var vcov
+#' 
 #' @seealso \code{\link{breakaway}}; \code{\link{breakaway_nof1}};
 #' \code{\link{apples}}
 #' @references Willis, A., Bunge, J., and Whitman, T. (2015). Inference for
@@ -202,32 +205,13 @@ betta <- function(chats, ses, X=NA) {
 #' variability for the random effects case are unavailable at this time; please
 #' contact the maintainer if needed.  }
 #' @author Amy Willis
+#' 
+#' @importFrom stats coef dexp dgeom dnbinom dpois fitted lm model.matrix nls optim pchisq pnorm predict quantile rbeta rbinom rnbinom rnorm runif sd var vcov
 #' @seealso \code{\link{betta}}; 
 #' @references Willis, A., Bunge, J., and Whitman, T. (2015). Inference for
 #' changes in biodiversity. \emph{arXiv preprint.}
 #' @keywords diversity
 #' @examples
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
 #' 
 #' betta_random(c(2000, 3000, 4000, 3000), c(100, 200, 150, 180), X = cbind(Int = 1, 
 #'     Cont_var = c(100, 150, 100, 50)), groups = c("a", "a", "a", "b"))
@@ -235,27 +219,6 @@ betta <- function(chats, ses, X=NA) {
 #' ## handles missing data
 #' betta_random(c(2000, 3000, 4000, 3000), c(100, 200, 150, NA), groups = c("a", NA, 
 #'     "b", "b"))
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
 #' 
 #' @export betta_random
 betta_random <- function(chats, ses, X=NA, groups) {
