@@ -15,6 +15,8 @@ true_shannon <- function(input) {
   if (!is_proportions(input)) {
     stop("Shannon can only be calculated on proportions.\nUse sample_shannon() instead.\n")
   } 
+  
+  input <- input[input > 0] 
 
   -sum(input*log(input, base=exp(1)))
 }
@@ -31,6 +33,8 @@ true_hill <- function(input, q) {
   if (!is_proportions(input)) {
     stop("Hill numbers can only be calculated on proportions.\nUse sample_shannon() instead.\n")
   } 
+  
+  input <- input[input > 0] 
   
   if (q == 1) {
     hh <- exp(true_shannon(input))
@@ -87,6 +91,8 @@ true_shannon_e <- function(input) {
     stop("Shannon can only be calculated on proportions.\nUse sample_shannon() instead.\n")
   } 
   
-  true_shannon(input) / log(sum (input > 0))
+  input <- input[input > 0] 
+  
+  true_shannon(input) / log(length(input))
 
 }

@@ -4,10 +4,9 @@
 \alias{objective_bayes_poisson}
 \title{Objective Bayes species richness estimate with the Poisson model}
 \usage{
-objective_bayes_poisson(data, output = TRUE, plot = TRUE,
-  answers = FALSE, tau = 10, burn.in = 100, iterations = 2500,
-  Metropolis.stdev.N = 75, Metropolis.start.lambda = 1,
-  Metropolis.stdev.lambda = 0.3, bars = 5)
+objective_bayes_poisson(data, output = TRUE, plot = TRUE, answers = FALSE,
+  tau = 10, burn.in = 100, iterations = 2500, Metropolis.stdev.N = 75,
+  Metropolis.start.lambda = 1, Metropolis.stdev.lambda = 0.3, bars = 5)
 }
 \arguments{
 \item{data}{TODO(Kathryn)}
