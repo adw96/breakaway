@@ -14,7 +14,6 @@
 #' @param Metropolis.stdev.T2 TODO(Kathryn)
 #' @param bars TODO(Kathryn)
 #'  
-#' @importFrom mvtnorm rmvnorm
 #' @importFrom stats acf
 #' @importFrom graphics hist par plot
 #' 
@@ -69,6 +68,8 @@ objective_bayes_negbin <- function(data,
   # storage for deviance replicates
   D.post<-rep(0,iterations)
   
+  
+  
   for (i in 2:iterations){
     
     # print every 500th iteration number
@@ -78,7 +79,8 @@ objective_bayes_negbin <- function(data,
     
     ## propose value T1T2 from a bivariate normal dist.; make sure T1T2.new > {-1,0}
     repeat {
-      T1T2.new <- rmvnorm(1, c(T1T2[i-1,1],T1T2[i-1,2]),matrix(c(Metropolis.stdev.T1,0,0,Metropolis.stdev.T2),nrow=2))
+      T1T2.new <- rmvnorm(1, c(T1T2[i-1,1],T1T2[i-1,2]),
+                          matrix(c(Metropolis.stdev.T1,0,0,Metropolis.stdev.T2),nrow=2))
       if(T1T2.new[1]>(-1) & T1T2.new[2]>0)
         break
     }
@@ -994,4 +996,39 @@ objective_bayes_geometric <- function(data,
     return(final_results)
   }
   
+}
+
+rmvnorm <- function (n, mean = rep(0, nrow(sigma)), sigma = diag(length(mean)), 
+                     method = c("eigen", "svd", "chol"), pre0.9_9994 = FALSE) {
+  if (!isSymmetric(sigma, tol = sqrt(.Machine$double.eps), 
+                   check.attributes = FALSE)) {
+    stop("sigma must be a symmetric matrix")
+  }
+  if (length(mean) != nrow(sigma)) 
+    stop("mean and sigma have non-conforming size")
+  method <- match.arg(method)
+  R <- if (method == "eigen") {
+    ev <- eigen(sigma, symmetric = TRUE)
+    if (!all(ev$values >= -sqrt(.Machine$double.eps) * abs(ev$values[1]))) {
+      warning("sigma is numerically not positive semidefinite")
+    }
+    t(ev$vectors %*% (t(ev$vectors) * sqrt(pmax(ev$values, 
+                                                0))))
+  }
+  else if (method == "svd") {
+    s. <- svd(sigma)
+    if (!all(s.$d >= -sqrt(.Machine$double.eps) * abs(s.$d[1]))) {
+      warning("sigma is numerically not positive semidefinite")
+    }
+    t(s.$v %*% (t(s.$u) * sqrt(pmax(s.$d, 0))))
+  }
+  else if (method == "chol") {
+    R <- chol(sigma, pivot = TRUE)
+    R[, order(attr(R, "pivot"))]
+  }
+  retval <- matrix(rnorm(n * ncol(sigma)), nrow = n, byrow = !pre0.9_9994) %*% 
+    R
+  retval <- sweep(retval, 2, mean, "+")
+  colnames(retval) <- names(mean)
+  retval
 }
