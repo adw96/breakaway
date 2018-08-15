@@ -37,9 +37,9 @@ plot.alpha_estimates <- function(x, physeq = NULL, measure = NULL,
   
   if (!is.null(color)) {
     if (color %in% phyloseq::sample_variables(physeq)) {
-      df[[color]] <- phyloseq::get_variable(physeq, color)
+      df[["color"]] <- phyloseq::get_variable(physeq, color)
     } else if (length(color) == nrow(df)) {
-      df[[color]] <- color
+      df[["color"]] <- color
     } else {
       stop("color must either match a variable or be a custom vector of correct length!")
     }
@@ -47,9 +47,9 @@ plot.alpha_estimates <- function(x, physeq = NULL, measure = NULL,
   
   if (!is.null(shape)) {
     if (shape %in% phyloseq::sample_variables(physeq)) {
-      df[[shape]] <- phyloseq::get_variable(physeq, shape)
+      df[["shape"]] <- phyloseq::get_variable(physeq, shape)
     } else if (length(shape) == nrow(df)) {
-      df[[shape]] <- shape
+      df[["shape"]] <- shape
     } else {
       stop("shape must either match a variable or be a custom vector of correct length!")
     }
