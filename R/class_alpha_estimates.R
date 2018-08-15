@@ -84,6 +84,13 @@ summary.alpha_estimates <- function(object, ...) {
       tibble::add_column("sample_names" = names(object))
   }
   
+  tb %<>%
+    tibble::add_column("name" = lapply(object, function(x) x$name) %>% unlist)
+  
+  tb %<>%
+    tibble::add_column("model" = lapply(object, function(x) x$model) %>% unlist)
+  
+  
   tb 
   
 }

@@ -98,7 +98,7 @@ breakaway.default <- function(input_data,
   
   if (!is.null(breakaway_alpha_estimate$warnings) |
       breakaway_alpha_estimate$error >  breakaway_alpha_estimate$estimate) {
-      
+    
     breakaway_alpha_estimate <- wlrm_untransformed(input_data)
     
     if (!is.null(breakaway_alpha_estimate$warnings)) {
@@ -107,7 +107,7 @@ breakaway.default <- function(input_data,
       
       if (!is.null(breakaway_alpha_estimate$warnings)) {
         
-        breakaway_alpha_estimate <- wlrm_transformed(input_data)
+        breakaway_alpha_estimate <- poisson_model(input_data)
         
         if (!is.null(breakaway_alpha_estimate$warnings)) {
           
@@ -115,13 +115,18 @@ breakaway.default <- function(input_data,
           
           if (!is.null(breakaway_alpha_estimate$warnings)) {
             
-            breakaway_alpha_estimate <- chao1(input_data)
+            breakaway_alpha_estimate <- wlrm_transformed(input_data)
             
             if (!is.null(breakaway_alpha_estimate$warnings)) {
               
-              warning("Could not estimate missing taxa; outputting sample richness")
-              breakaway_alpha_estimate <- sample_richness(input_data)
+              breakaway_alpha_estimate <- chao1(input_data)
               
+              if (!is.null(breakaway_alpha_estimate$warnings)) {
+                
+                warning("Could not estimate missing taxa; outputting sample richness")
+                breakaway_alpha_estimate <- sample_richness(input_data)
+                
+              }
             }
           }
         }

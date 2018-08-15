@@ -32,6 +32,8 @@ chao_bunge <- function(input_data,
   
   my_data <- convert(input_data)
   
+  cutoff <- cutoff_wrap(my_data, requested = cutoff) 
+  
   input_data <- my_data
   cc <- sum(input_data[,2])
   
@@ -45,7 +47,8 @@ chao_bunge <- function(input_data,
     my_warnings <- c(my_warnings, "cutoff exceeds minimum frequency count index")
     cutoff <- max(my_data[, 1])
   }
-  my_data <- my_data[ my_data[,1] <= cutoff, ]
+  
+  my_data <- my_data[my_data[,1] <= cutoff, ]
   cutoff <- max(my_data[,1])
   
   d_a <- sum(input_data[input_data[,1] > cutoff, 2])
@@ -53,13 +56,13 @@ chao_bunge <- function(input_data,
   m <- 1:cutoff
   numerator <- frequency_index[k]
   denominator <- 1 - f1*sum(m^2*frequency_index[m])/(sum(m*frequency_index[m]))^2 # 
-  if (denominator == 0) {
+  if (denominator %in% c(0, 1)) {
     diversity <- NA
     diversity_se  <- NA
     f0  <- NA
     interval_tmp <- NA
     
-    my_warnings <- c(my_warnings, "zero denominator in estimate for f0")
+    my_warnings <- c(my_warnings, "zero or one denominator in estimate for f0")
     ca <- alpha_estimate(estimate = diversity,
                          error = diversity_se,
                          estimand = "richness",
