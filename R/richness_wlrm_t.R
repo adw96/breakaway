@@ -38,7 +38,8 @@ wlrm_transformed <- function(input_data,
                              answers = NULL) {
   
   
-  if (class(input_data) == "phyloseq") {
+  if ((intersect(class(input_data), 
+                 c("phyloseq", "otu_table")) %>% length) > 0) {
     return(physeq_wrap(fn = wlrm_transformed, physeq = input_data,
                        cutoff, print, plot, answers))
   }

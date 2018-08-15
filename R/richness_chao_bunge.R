@@ -24,7 +24,8 @@ chao_bunge <- function(input_data,
   my_warnings <- NULL
   
   
-  if (class(input_data) == "phyloseq") {
+  if ((intersect(class(input_data), 
+                 c("phyloseq", "otu_table")) %>% length) > 0) {
     return(physeq_wrap(fn = chao_bunge, physeq = input_data,
                        cutoff, output, answers))
   }
