@@ -21,7 +21,8 @@
 #' plot(alphas)
 #' }
 #' @export
-plot.alpha_estimates <- function(x, physeq = NULL, measure = NULL, color = NULL, shape = NULL, title = NULL, trim_plot = FALSE, ...) {
+plot.alpha_estimates <- function(x, physeq = NULL, measure = NULL, 
+                                 color = NULL, shape = NULL, title = NULL, trim_plot = FALSE, ...) {
   
   if (is.null(measure)) {
     all_measures <- x %>% lapply(function(x) x$name) %>% unlist %>% unique

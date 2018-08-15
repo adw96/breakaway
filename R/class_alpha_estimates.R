@@ -79,11 +79,9 @@ summary.alpha_estimates <- function(object, ...) {
                        "lower" = intervals_df[1, ] %>% c %>% unlist,
                        "upper" = intervals_df[2, ] %>% c %>% unlist)
   
-  if (length(dots) > 0) {
-    if(class(dots[[1]]) == "phyloseq") {
-      tb %<>%
-        tibble::add_column("sample_names" = dots[[1]] %>% sample_names)
-    }
+  if (!is.null(names(object))) {
+    tb %<>%
+      tibble::add_column("sample_names" = names(object))
   }
   
   tb 

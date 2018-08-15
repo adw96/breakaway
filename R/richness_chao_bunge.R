@@ -112,6 +112,7 @@ chao_bunge <- function(input_data,
       
     }
     
+    ### quick hack to see what this does: what if f0-hat = 0?
     d <- ifelse(f0 == 0,
                 1,
                 exp(1.96*sqrt(log(1+diversity_se^2/f0))))
