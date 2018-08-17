@@ -96,6 +96,7 @@ breakaway.default <- function(input_data,
   if (is.null(my_data)) {
     return(alpha_estimate(estimate = 0, 
                           error = 0,
+                          name = "Plug-in",
                           estimand = "richness",
                           warnings = "All counts are zero",
                           reasonable = F))
