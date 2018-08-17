@@ -55,7 +55,10 @@ convert <- function(input_data) {
 #' @return A checked frequency count table
 check_format <- function(output_data) {
   
-  if (length(output_data) <= 1) stop("Input data to `check_format` is of length 1 or 0.")
+  if (length(output_data) <= 1) {
+    warning("Input data to `check_format` is of length 1 or 0.")
+    return(NULL)
+  }
   
   if(!(class(output_data) %in% c("matrix", "data.frame"))) stop("Input should be a matrix or a data frame")
   

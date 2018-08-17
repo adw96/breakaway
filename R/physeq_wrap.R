@@ -1,19 +1,25 @@
 #' Wrapper for phyloseq objects
 #' 
 #' @param fn alpha diversity estimator function with \code{breakaway} to be applied to \code{physeq}
-#' @param physeq \code{phyloseq} object
+#' @param physeq A \code{phyloseq} object, or an object of class \code{otu_table} 
 #' @param ... Additional arguments for fn
 #' 
 #' @return Object of class \code{alpha_estimates}
 physeq_wrap <- function(fn, physeq, ...) {
   
-  if (physeq %>% otu_table %>% taxa_are_rows) {
-    otus <- physeq %>% 
-      get_taxa %>% 
-      t
+  if (class(physeq) == "otu_table") {
+    ot <- physeq
+  } else if (class(physeq) == "phyloseq") {
+    ot <- physeq %>% otu_table
   } else {
-    otus <- physeq %>% 
-      otu_table
+    stop(paste("Unknown type passed to physeq_wrap; object is of class",
+               class(physeq)))
+  }
+  
+  if (ot %>% taxa_are_rows) {
+    otus <- physeq %>% get_taxa %>% t
+  } else {
+    otus <- ot
   }
   
   ests <- otus %>%

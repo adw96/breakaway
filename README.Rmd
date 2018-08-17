@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 
 
 `breakaway` is the premier package for statistical analysis of microbial diversity. `breakaway` implements the latest and greatest estimates of richness, as well as the most commonly used estimates.
-Understanding the drivers of microbial diversity is an important frontier of microbial ecology, and investigating the diversity of samples from microbial ecosystems is a common step in any microbiome analysis. 
+Understanding the drivers of microbial diversity is an important frontier of microbial ecology, and investigating the diversity of samples from microbial ecosystems is a common step in any microbiome analysis.
 
 [`DivNet`](https://github.com/adw96/DivNet) is a new package by the same authors for estimating Shannon diversity, and other diversity indices. `breakaway` focuses on richness while `DivNet` focuses on Shannon, Simpson, and other alpha diversities as well as some beta diversity indices. Check it out!
 
@@ -53,7 +53,7 @@ devtools::install_github("adw96/breakaway")
 
 ### CRAN
 
-For now, `breakaway` is no longer being updated on CRAN. You can access v3.0 on CRAN [here](https://cran.r-project.org/web/packages/breakaway/index.html) or with
+For now, `breakaway` is no longer being updated on CRAN. You can access v3.0 on CRAN [here](https://CRAN.R-project.org/package=breakaway) or with
 ```R
 install.packages("breakaway")
 ```

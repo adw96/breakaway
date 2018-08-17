@@ -23,7 +23,8 @@
 chao1_bc <- function(input_data, output=NULL, answers=NULL) {
   
   
-  if (class(input_data) == "phyloseq") {
+  if ((intersect(class(input_data), 
+                 c("phyloseq", "otu_table")) %>% length) > 0) {
     return(physeq_wrap(fn = chao1_bc, physeq = input_data,
                        output, answers))
   }

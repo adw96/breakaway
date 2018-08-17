@@ -1,6 +1,6 @@
 Package: breakaway
 Title: Species Richness Estimation and Modeling
-Version: 4.6.4
+Version: 4.6.6
 Date: 2018-07-08
 Authors@R: as.person(c(
     "Amy Willis <adwillis@uw.edu> [aut, cre]",
@@ -22,6 +22,7 @@ Imports: MASS,
     graphics,
     magrittr,
     ggplot2,
+    mvtnorm,
     reshape2,
     R.rsp,
     testthat,

@@ -21,7 +21,8 @@
 #' plot(alphas)
 #' }
 #' @export
-plot.alpha_estimates <- function(x, physeq = NULL, measure = NULL, color = NULL, shape = NULL, title = NULL, trim_plot = FALSE, ...) {
+plot.alpha_estimates <- function(x, physeq = NULL, measure = NULL, 
+                                 color = NULL, shape = NULL, title = NULL, trim_plot = FALSE, ...) {
   
   if (is.null(measure)) {
     all_measures <- x %>% lapply(function(x) x$name) %>% unlist %>% unique
@@ -36,9 +37,9 @@ plot.alpha_estimates <- function(x, physeq = NULL, measure = NULL, color = NULL,
   
   if (!is.null(color)) {
     if (color %in% phyloseq::sample_variables(physeq)) {
-      df[[color]] <- phyloseq::get_variable(physeq, color)
+      df[["color"]] <- phyloseq::get_variable(physeq, color)
     } else if (length(color) == nrow(df)) {
-      df[[color]] <- color
+      df[["color"]] <- color
     } else {
       stop("color must either match a variable or be a custom vector of correct length!")
     }
@@ -46,9 +47,9 @@ plot.alpha_estimates <- function(x, physeq = NULL, measure = NULL, color = NULL,
   
   if (!is.null(shape)) {
     if (shape %in% phyloseq::sample_variables(physeq)) {
-      df[[shape]] <- phyloseq::get_variable(physeq, shape)
+      df[["shape"]] <- phyloseq::get_variable(physeq, shape)
     } else if (length(shape) == nrow(df)) {
-      df[[shape]] <- shape
+      df[["shape"]] <- shape
     } else {
       stop("shape must either match a variable or be a custom vector of correct length!")
     }
@@ -60,9 +61,9 @@ plot.alpha_estimates <- function(x, physeq = NULL, measure = NULL, color = NULL,
     df$sample_names <- rownames(df)
   }
   
-  aes_map <- ggplot2::aes_string(colour = color, shape = shape)
+  aes_map <- ggplot2::aes_string(color = "color", shape = "shape")
   my_gg <- ggplot2::ggplot(df, aes_map) +
-    ggplot2::geom_point(ggplot2::aes(x = sample_names, y = estimate)) + 
+    ggplot2::geom_point(ggplot2::aes_string(x = "sample_names", y = "estimate")) + 
     ggplot2::ylab(paste(yname1, "estimate of", yname2)) +
     ggplot2::xlab("") +
     ggplot2::labs(title = title) +
@@ -70,7 +71,8 @@ plot.alpha_estimates <- function(x, physeq = NULL, measure = NULL, color = NULL,
     ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1))
   
   if (!(all(is.na(df$lower)) || all(is.na(df$upper)))) {
-    my_gg <- my_gg + ggplot2::geom_segment(ggplot2::aes(x = sample_names, xend = sample_names, y = lower, yend = upper))
+    my_gg <- my_gg + 
+      ggplot2::geom_segment(ggplot2::aes_string(x = "sample_names", xend = "sample_names", y = "lower", yend = "upper"))
   }
   
   if (!trim_plot) {

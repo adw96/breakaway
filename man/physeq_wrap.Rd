@@ -9,7 +9,7 @@ physeq_wrap(fn, physeq, ...)
 \arguments{
 \item{fn}{alpha diversity estimator function with \code{breakaway} to be applied to \code{physeq}}
 
-\item{physeq}{\code{phyloseq} object}
+\item{physeq}{A \code{phyloseq} object, or an object of class \code{otu_table}}
 
 \item{...}{Additional arguments for fn}
 }
