@@ -43,7 +43,10 @@ plot.alpha_estimates <- function(x, physeq = NULL, measure = NULL,
     } else {
       stop("color must either match a variable or be a custom vector of correct length!")
     }
-  } # End if (!is.null(color))
+  } 
+  # else {
+  #   df[["color"]] <- "black"
+  # }
   
   if (!is.null(shape)) {
     if (shape %in% phyloseq::sample_variables(physeq)) {
@@ -53,7 +56,10 @@ plot.alpha_estimates <- function(x, physeq = NULL, measure = NULL,
     } else {
       stop("shape must either match a variable or be a custom vector of correct length!")
     }
-  } # End if (!is.null(color))
+  } 
+  # else {
+  #   df[["shape"]] <- "1"
+  # }
   
   yname1 <- measure
   yname2 <- x[[1]]$estimand
@@ -61,8 +67,29 @@ plot.alpha_estimates <- function(x, physeq = NULL, measure = NULL,
     df$sample_names <- rownames(df)
   }
   
-  aes_map <- ggplot2::aes_string(color = "color", shape = "shape")
-  my_gg <- ggplot2::ggplot(df, aes_map) +
+  # print("df,  n = 100")
+  # print(df,  n = 100)
+  # 
+  # print("color")
+  # print(df$color)
+  # 
+  # print("shape")
+  # print(df$shape)
+  
+  if (is.null(shape) & is.null(color)) {
+    my_gg <- ggplot2::ggplot(df)
+  } else if (is.null(shape) & !is.null(color)) {
+    aes_map <- ggplot2::aes_string(color = "color")
+    my_gg <- ggplot2::ggplot(df, aes_map)
+  } else if (!is.null(shape) & is.null(color)) {
+    aes_map <- ggplot2::aes_string(shape = "shape")
+    my_gg <- ggplot2::ggplot(df, aes_map)
+  } else if (!is.null(shape) & !is.null(color)) {
+    aes_map <- ggplot2::aes_string(color = "color", shape = "shape")
+    my_gg <- ggplot2::ggplot(df, aes_map)
+  }
+  
+  my_gg <- my_gg +
     ggplot2::geom_point(ggplot2::aes_string(x = "sample_names", y = "estimate")) + 
     ggplot2::ylab(paste(yname1, "estimate of", yname2)) +
     ggplot2::xlab("") +
@@ -72,7 +99,8 @@ plot.alpha_estimates <- function(x, physeq = NULL, measure = NULL,
   
   if (!(all(is.na(df$lower)) || all(is.na(df$upper)))) {
     my_gg <- my_gg + 
-      ggplot2::geom_segment(ggplot2::aes_string(x = "sample_names", xend = "sample_names", y = "lower", yend = "upper"))
+      ggplot2::geom_segment(ggplot2::aes_string(x = "sample_names", xend = "sample_names", 
+                                                y = "lower", yend = "upper"))
   }
   
   if (!trim_plot) {
