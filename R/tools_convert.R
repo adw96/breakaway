@@ -26,7 +26,8 @@ convert <- function(input_data) {
   } else if (class(input_data) %in% c("numeric", "integer")) {
     
     # must be vector of counts
-    if (isTRUE(all.equal(sum(input_data), 1))) {
+    if (isTRUE(all.equal(sum(input_data), 1)) &
+        length(unique(input_data)) > 2) {
       stop("species richness estimates cannot accept relative abundances")
     }
     

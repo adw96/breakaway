@@ -93,13 +93,19 @@ breakaway.default <- function(input_data,
                               answers = NULL, print = NULL) {
   
   my_data <- convert(input_data)
+
+  ### here is where we catch dumb edge cases
   if (is.null(my_data)) {
     return(alpha_estimate(estimate = 0, 
                           error = 0,
                           name = "Plug-in",
+                          model = "none",
                           estimand = "richness",
                           warnings = "All counts are zero",
-                          reasonable = F))
+                          reasonable = F,
+                          interval=c(0,0)))
+  } else if (length(my_data$index) == 1) {
+    return(sample_richness(input_data))
   }
   
   breakaway_alpha_estimate <- kemp(input_data)

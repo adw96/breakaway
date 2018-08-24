@@ -12,11 +12,16 @@
 poisson_model <- function(input_data, 
                           cutoff = 10) {
   
-  my_data <- convert(input_data)
-  
   input_data <- convert(input_data)
+
+  # print(input_data)
   included <- input_data[input_data$index <= cutoff, ]
   excluded <- input_data[input_data$index > cutoff, ]
+  
+  if (nrow(included) == 0) {
+    included <- input_data
+    excluded <- list("index" = Inf, "frequency" = 0)
+  }
   
   # s = sum f_j
   cc <- included$frequency %>% sum
