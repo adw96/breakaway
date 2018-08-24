@@ -5,6 +5,7 @@ Date: 2018-07-08
 Authors@R: as.person(c(
     "Amy Willis <adwillis@uw.edu> [aut, cre]",
     "Bryan D Martin [aut]",
+    "Pauline Trinh [aut]",
     "Kathryn Barger [aut]",
     "John Bunge [aut]"
   ))
@@ -30,6 +31,7 @@ Imports: MASS,
 Suggests: covr,
     DT,
     knitr,
+    RCurl,
     rmarkdown,
     plyr
 VignetteBuilder: knitr
