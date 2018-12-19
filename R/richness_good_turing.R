@@ -1,4 +1,4 @@
-#' The Good-Turing estimate of Shannon diversity
+#' The Good-Turing estimate of species richness
 #' 
 #' 
 #' @param input_data An input type that can be processed by \code{convert()} or a \code{phyloseq} object
