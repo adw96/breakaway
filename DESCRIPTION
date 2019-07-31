@@ -1,6 +1,6 @@
 Package: breakaway
 Title: Species Richness Estimation and Modeling
-Version: 4.6.8
+Version: 4.6.9
 Date: 2018-07-08
 Authors@R: as.person(c(
     "Amy Willis <adwillis@uw.edu> [aut, cre]",
@@ -9,11 +9,11 @@ Authors@R: as.person(c(
     "Kathryn Barger [aut]",
     "John Bunge [aut]"
   ))
-Description: Understanding the drivers of microbial diversity is an important frontier of microbial ecology, and investigating the diversity of samples from microbial ecosystems is a common step in any microbiome analysis. `breakaway` is the premier package for statistical analysis of microbial diversity. `breakaway` implements the latest and greatest estimates of different alpha diversity metrics, as well as the most commonly used estimates.
+Description: Understanding the drivers of microbial diversity is an important frontier of microbial ecology, and investigating the diversity of samples from microbial ecosystems is a common step in any microbiome analysis. `breakaway` is the premier package for statistical analysis of microbial diversity. `breakaway` implements the latest and greatest estimates of species richness, as well as the most commonly used estimates.
 License: GPL-2
 BugReports: https://github.com/adw96/breakaway/issues
 LazyData: true
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Depends:
     R (>= 2.10)
 Imports: MASS,

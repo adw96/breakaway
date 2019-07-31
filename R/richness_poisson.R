@@ -12,8 +12,21 @@
 poisson_model <- function(input_data, 
                           cutoff = 10) {
   
-  input_data <- convert(input_data)
-
+  my_warnings <- NULL
+  
+  if ((intersect(class(input_data), 
+                 c("phyloseq", "otu_table")) %>% length) > 0) {
+    return(physeq_wrap(fn = poisson_model, physeq = input_data,
+                       cutoff))
+  }
+  
+  
+  my_data <- convert(input_data)
+  
+  # cutoff <- cutoff_wrap(my_data, requested = cutoff) 
+  
+  input_data <- my_data
+  
   # print(input_data)
   included <- input_data[input_data$index <= cutoff, ]
   excluded <- input_data[input_data$index > cutoff, ]
@@ -21,6 +34,7 @@ poisson_model <- function(input_data,
   if (nrow(included) == 0) {
     included <- input_data
     excluded <- list("index" = Inf, "frequency" = 0)
+    warning("Cut-off was too low: no data available for estimation")
   }
   
   # s = sum f_j
@@ -36,18 +50,30 @@ poisson_model <- function(input_data,
     (1-exp(-lambda))/lambda - cc/nn
   }
   
-  # eqn nonlinear; so use Newton's method
-  lambda_hat <- uniroot(poisson_fn, c(0.0001, 1000000))$root
   
-  ccc_subset <- cc / (1-exp(-lambda_hat)) 
-  ccc_hat <- ccc_subset + cc_excluded
+  if (cc == nn) {
+    
+    warning("Only one frequency count was observed below cutoff.\nConsider increasing cutoff.")
+    
+    lambda_hat <- 0 # maximiser of poisson_fn is zero
+    ccc_hat <- cc + cc_excluded
+    ccc_se <- 0
+    f0 <- 0
+    d <- 1
+    
+  } else {
+    # eqn nonlinear; so use Newton's method
+    lambda_hat <- uniroot(poisson_fn, c(0.0001, 1000000))$root
+    
+    ccc_subset <- cc / (1-exp(-lambda_hat)) 
+    ccc_hat <- ccc_subset + cc_excluded
+    
+    ccc_se <- sqrt(ccc_subset/(exp(lambda_hat)-1-lambda_hat))
+    
+    f0 <- ccc_subset - cc # previously ccc_hat - (cc + cc_excluded)
+    d <- exp(1.96*sqrt(log(1+ccc_se^2/f0)))
+  }
   
-  ccc_se <- sqrt(ccc_subset/(exp(lambda_hat)-1-lambda_hat))
-  
-  f0 <- ccc_hat - (cc + cc_excluded)
-  d <- ifelse(f0 == 0,
-              1,
-              exp(1.96*sqrt(log(1+ccc_se^2/f0))))
   
   alpha_estimate(estimate = ccc_hat,
                  error = ccc_se,
