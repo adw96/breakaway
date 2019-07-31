@@ -1,0 +1,123 @@
+---
+title: "Introduction to diversity estimation"
+author: "Amy Willis"
+date: "`r Sys.Date()`"
+output: 
+  output: rmarkdown::github_document
+vignette: >
+  %\VignetteIndexEntry{intro-diversity-estimation}
+  %\VignetteEngine{rmarkdown::render}
+  %\VignetteEncoding{UTF-8}
+---
+
+`breakaway` is a package for estimating species richness. This vignette is designed to lead you through how species richness estimation works, and show you how to get an estimate of the species richness in a population based on a sample drawn from that population.
+
+We will also talk about diagnosing and fixing model misspecification. 
+
+## Preliminaries
+
+Download the latest version of the package from github.
+
+```{r}
+# install.packages("devtools")
+devtools::install_github("adw96/breakaway")
+library(breakaway)
+```
+
+Note that we are not continuing to maintain the CRAN version of `breakaway` at this time, so avoid `install.packages(breakaway)`.
+
+If you are not accustomed to using the pipe in `R` (the operator `%>%`), I strongly encourage you to start using it. It will make your code easier to read and write. Here is how to install and load it:
+
+```{r}
+# install.packages("magrittr")
+library(magrittr)
+```
+
+## Why bother with species richness estimation?
+
+Typically, when you sample species all groups from a population, you won't see every individual in the population. This means that you may not see every species in the population. The species richness that you observed in your sample will generally be lower than the actual species richness in your population.
+
+Sometimes this doesn't cause a problem for modeling or inference. However, especially when some populations are sampled more intensively than others (e.g., your sequencing depth is higher in some samples than others), samples should not be directly compared without adjustment. 
+
+The best way to correct this issue is to estimate the number of species that are present in your population but missing from the sample. `breakaway` provides software to do this.
+
+Note that while this problem has been called "species richness" for historical reasons, you can also estimate the richness at the level of strain (or sub-species), genus, family, etc. The input data that you provide determines the taxonomic order on which breakaway estimates the richness. Therefore, if you would like to estimate strain richness, simply give breakaway abundance data at the strain level.
+
+## How does species richness estimation work?
+
+Species richness estimates use the structure of the data that you observed to predict how many species were missing. Essentially, if there are only a few species in the sample that were observed rarely, that suggests that you probably observed most of the diversity in the community. The total species richness estimate would be close to the observed species richness. Alternatively, if there were many species in the sample that were observed infrequently (such as once or twice), this suggests that there were many species that were observed zero times. In this case, the species richness estimate would be larger than the observed species richness. `breakaway` uses statistical models to determine how much larger it should be.
+
+## Estimating the diversity of human host associated microbes
+
+In their very cool paper "Extensive Unexplored Human Microbiome Diversity Revealed by Over 150,000 Genomes from Metagenomes Spanning Age, Geography, and Lifestyle" (doi.org/10.1016/j.cell.2019.01.001)[doi.org/10.1016/j.cell.2019.01.001], Pasolli and co-authors assembled 4,930 species-level genome bins using publicly available shotgun metagenomic data. Our goal is to estimate the species-level diversity of human host associated microbes.
+
+First, let's read in the data:
+
+```{r}
+# install.packages("openxlsx")
+pasolli_et_al <- openxlsx::read.xlsx("https://ars.els-cdn.com/content/image/1-s2.0-S0092867419300017-mmc4.xlsx", sheet = 2)
+```
+
+The "frequency count table" is the basic data structure for estimating species richness. It is a table with two columns: the second column indicates the number of species observed `j` times, where the first column contains `j`. Let's take a look at the first 10 columns of the frequency count table for the Pasolli et al dataset:
+
+```{r}
+ft <- pasolli_et_al$`#.Samples` %>% make_frequency_count_table
+ft %>% head(10)
+```
+
+So 1972 species were observed once, 692 were observed twice, and 52 were observed ten times. 
+
+```{r}
+ft %>% tail(10)
+```
+
+The common species are at the other end of the frequency count table: the most common species was observed 3453 times. 
+
+Let's take a look to see how many species were observed in the dataset:
+
+```{r}
+ft %>% sample_richness
+```
+
+Cool! We corroborated the abstract of the paper and saw that 4930 species level genome bins were identified.
+
+## Species richness estimation with breakaway
+
+The simplest way to estimate species richness with breakaway is as follows:
+
+```{r}
+estimated_richness <- breakaway(ft)
+estimated_richness
+```
+
+So breakaway estimates that there are 7724 species level genome bins in the population of human host associated species level genome bins. That's `7724 - 4930 = 2794` more to discover, how exciting! It also gives us an estimate of the standard deviation in the estimate: about 2496. That's pretty large, reflecting that species richness estimation is a challenging prediction problem. Do not shy away from large standard errors -- they remind you that there is a lot of uncertainty in the estimate!
+
+## Investigating model misspecification
+
+The method breakaway actually fits a suite of models, and then selects which is the best amongst them. Check out [the paper](https://onlinelibrary.wiley.com/doi/full/10.1111/biom.12332) for more details. But how can we diagnose if the model is reasonable?
+
+First, we need to find out what model was fit:
+
+```{r}
+estimated_richness$model
+```
+
+Kemp models were originally described in [the breakaway paper](https://onlinelibrary.wiley.com/doi/full/10.1111/biom.12332). They are based on fitting flexible non-linear models (that have a probabilistic interpretation!) to ratios of contiguous frequency counts. We can therefore investigate model specification by looking at the plot of fitted ratios:
+
+```{r}
+plot(estimated_richness)
+```
+
+Yikes! That doesn't look so good. We are definitely not following the curve near x = 0. 
+
+It looks like what is happening is the breakaway is putting too much value on high frequency counts. This isn't good, since we want to be prioritising the low-frequency counts. The way to do that is with the `cutoff` parameter. `cutoff` specifies the maximum number of frequency counts to use in fitting. 
+
+TODO(Amy): finish up
+
+<!-- ```{r} -->
+<!-- breakaway(ft, cutoff = 15 ) %$% model -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- ft[1:18, ] %>% breakaway %>% summary -->
+<!-- ``` -->

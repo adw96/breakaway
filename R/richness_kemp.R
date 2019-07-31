@@ -471,8 +471,6 @@ minibreak_all <- function(lhs, xs, ys, input_data, myweights, withf1 = NULL) {
   
   rootsokay <- as.logical(lapply(workinginfo, rootcheck, lhs,nof1=!withf1))
   
-  # print(workinginfo %>% names)
-  
   ## issue: model 1_0 is different
   
   sqerrors <- lapply(workinginfo, sqerror, lhs = lhs)
@@ -485,8 +483,6 @@ minibreak_all <- function(lhs, xs, ys, input_data, myweights, withf1 = NULL) {
   } else {
     useable <- rootsokay & (f0est>0) & (f1est>0)
   }
-  
-  # stop("no")
   
   workinginfo$useful <- cbind(f0est, rootsokay, sqerrors, residses,useable)
   return(workinginfo)
