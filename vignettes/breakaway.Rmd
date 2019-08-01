@@ -118,6 +118,8 @@ The above discussion focused exclusively on richness. Check out `github.com/adw9
 
 ## Modelling alpha diversity
 
+Update: You should actually be doing this using [DivNet](https://github.com/adw96/DivNet). 
+
 <!-- TODO: Fix this to use DivNet -->
 
 <!-- Let's do some comparisons across samples... accounting for variability of course! -->

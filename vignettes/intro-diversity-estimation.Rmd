@@ -18,16 +18,18 @@ We will also talk about diagnosing and fixing model misspecification.
 
 Download the latest version of the package from github.
 
-```{r, eval=FALSE}
+```{r}
 # install.packages("devtools")
 # devtools::install_github("adw96/breakaway")
 library(breakaway)
 ```
 
-```{r, eval=TRUE, include=FALSE}
-devtools::load_all()
-library(breakaway)
-```
+
+<!-- ```{r, eval=TRUE, include=FALSE} -->
+<!-- devtools::load_all() -->
+<!-- library(breakaway) -->
+<!-- ``` -->
+
 
 Note that we are not continuing to maintain the CRAN version of `breakaway` at this time, so avoid `install.packages("breakaway")`.
 
