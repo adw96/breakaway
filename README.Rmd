@@ -51,17 +51,20 @@ devtools::install_github("adw96/breakaway")
 
 `breakaway` is actively maintained and continually expanding and developing its scope! Is there a method you would like to have implemented in breakaway? Submit a pull request or contact the [maintainer](http://faculty.washington.edu/adwillis/)!
 
+### Documentation
+
+The best place to start is the [vignettes](https://github.com/adw96/breakaway/tree/master/vignettes) directory. After loading the package, type `vignette("intro-diversity-estimation")` to load the vignette!
+
+Documentation for functions can be found in the [man](https://github.com/adw96/breakaway/tree/master/man) directory. A pdf of all documentation can be found in [breakaway-manual.pdf](https://github.com/adw96/breakaway/tree/master/breakaway-manual.pdf) directory for easy viewing on the web.
+
 ### CRAN
 
-For now, `breakaway` is no longer being updated on CRAN. You can access v3.0 on CRAN [here](https://CRAN.R-project.org/package=breakaway) or with
-```R
-install.packages("breakaway")
-```
+For now, `breakaway` is no longer being updated on CRAN. You can access v3.0 on CRAN [here](https://CRAN.R-project.org/package=breakaway) or with `install.packages("breakaway")`.
 
 ## Humans
 Maintainer: [Amy Willis](http://faculty.washington.edu/adwillis/)
 
-Authors: [Amy Willis](http://faculty.washington.edu/adwillis/), [Bryan Martin](https://bryandmartin.github.io/), [Kathryn Barger](http://hnrca.tufts.edu/kathryn-barger-ph-d/) and [John Bunge](https://stat.cornell.edu/people/faculty/john-bunge)
+Authors: [Amy Willis](http://faculty.washington.edu/adwillis/), [Bryan Martin](https://bryandmartin.github.io/), [Pauline Trinh](https://twitter.com/paulinetrinh), [Kathryn Barger](http://hnrca.tufts.edu/kathryn-barger-ph-d/) and [John Bunge](https://stat.cornell.edu/people/faculty/john-bunge)
 
 
 ## Upcoming features

@@ -6,7 +6,7 @@ output:
   output: rmarkdown::github_document
 vignette: >
   %\VignetteIndexEntry{intro-diversity-estimation}
-  %\VignetteEngine{rmarkdown::render}
+  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
