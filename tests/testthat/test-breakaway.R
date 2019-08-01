@@ -63,58 +63,29 @@ satisfies_bound <- function(est) {
 
 test_that("All estimates", {
   
-  mm <- lapply(X = datasets, breakaway) 
-  
   mm_ps <- lapply(X = datasets_ps, breakaway)
-  # lapply(X = datasets_ps, function(x) x %>% sample_names %>% length)
-  # datasets_ps[[1]] %>% breakaway
-  # datasets_ps[[2]] %>% breakaway
-  # datasets_ps[[3]] %>% breakaway
-  # datasets_ps[[4]] %>% breakaway
-  # datasets_ps[[3]] %>% breakaway
-  # data("GlobalPatterns")
-  # fc <- (GlobalPatterns %>%
-  #          otu_table %>%
-  #          as.matrix)[,4] %>%
-  #   make_frequency_count_table
-  # fc %>%
-  #   kemp
-  # 
-  # fc <- (datasets_ps[[4]] %>%
-  #          otu_table %>%
-  #          as.matrix) %>%
-  #   make_frequency_count_table
-  # fc %>%
-  #   kemp
-  # 
-  # # 3 has issues
-  
-  
-  # correct_class
-  lapply(X = mm, 
-         FUN = expect_is, class = "alpha_estimate")
   
   lapply(X = mm_ps, 
          FUN = expect_is, class = "alpha_estimates")
   
   # valid estimates
-  summaries <- lapply(X = c(mm_ps, mm), 
+  summaries <- lapply(X = mm_ps, 
                       FUN = summary)
-
-  # shouldn't be true for breakaway_nof1, the 9th estimate
-  expect_true(lapply(X = lapply(mm, 
-                                function(x) x$estimate), FUN = is.na) %>%
-                lapply(function(x) !x) %>%
-                unlist %>% all)
-  
-  expect_true(lapply(FUN = warnings_thrown, mm) %>%
-                unlist %>% all)
-  
-  expect_true(lapply(FUN = satisfies_bound, mm) %>%
-                unlist %>% all)
-  
-  ## dataset 4
-  expect_true(lapply(FUN = finite_ci, mm) %>%
-                unlist %>% all)
+# 
+#   # shouldn't be true for breakaway_nof1, the 9th estimate
+#   expect_true(lapply(X = lapply(mm,
+#                                 function(x) x$estimate), FUN = is.na) %>%
+#                 lapply(function(x) !x) %>%
+#                 unlist %>% all)
+# 
+#   expect_true(lapply(FUN = warnings_thrown, mm) %>%
+#                 unlist %>% all)
+# 
+#   expect_true(lapply(FUN = satisfies_bound, mm) %>%
+#                 unlist %>% all)
+# 
+#   ## dataset 4
+#   expect_true(lapply(FUN = finite_ci, mm) %>%
+#                 unlist %>% all)
   
 })

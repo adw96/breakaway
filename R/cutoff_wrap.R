@@ -1,4 +1,4 @@
-#' Wrapper for phyloseq objects
+#' Find a cut-off for estimates relying on contiguous counts
 #' 
 #' @param my_data Frequency count table
 #' @param requested The user-requested cutoff

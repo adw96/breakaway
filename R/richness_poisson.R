@@ -23,6 +23,7 @@ poisson_model <- function(input_data,
   
   my_data <- convert(input_data)
   
+  if (is.na(cutoff)) cutoff <- 10
   # cutoff <- cutoff_wrap(my_data, requested = cutoff) 
   
   input_data <- my_data

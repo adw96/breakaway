@@ -6,10 +6,12 @@
 #' 
 #' 
 #' @param input_data An input type that can be processed by \code{convert()}
+#' @param cutoff The maximum frequency count to use for model fitting
 #' @param output Deprecated; only for backwards compatibility
 #' @param answers Deprecated; only for backwards compatibility
 #' @param plot Deprecated; only for backwards compatibility
 #' @param print Deprecated; only for backwards compatibility
+#' @param ... Additional arguments will be ignored; this is for backward compatibility
 #' @return An object of class \code{alpha_estimate} \item{code}{ A category representing algorithm behaviour.
 #' \samp{code=1} indicates no nonlinear models converged and the transformed
 #' WLRM diversity estimate of Rocchetti et. al. (2011) is returned.
@@ -48,56 +50,54 @@
 #' kemp(apples, plot = FALSE, output = FALSE, answers = TRUE)
 #' 
 #' @export 
-kemp <- function(input_data, 
+kemp <- function(input_data,
+                 cutoff = NA, 
                  output = NULL, plot = NULL, 
-                 answers = NULL, print = NULL) {
+                 answers = NULL, print = NULL, ...) {
   UseMethod("kemp", input_data)
 }
 
 #' @export
-kemp.phyloseq <- function(input_data, 
-                          output = NULL, plot = NULL, 
-                          answers = NULL, print = NULL) {
+kemp.phyloseq <- function(input_data,
+                          cutoff = NA, ...) {
   
-  physeq_wrap(fn = kemp, physeq = input_data,
-              output, plot, answers, print)
+  physeq_wrap(fn = kemp, 
+              physeq = input_data,
+              cutoff = cutoff)
 }
 
 #' @export
-kemp.matrix <- function(input_data, 
-                        output = NULL, plot = NULL, 
-                        answers = NULL, print = NULL) {
+kemp.matrix <- function(input_data,
+                        cutoff = NA, ...) {
   
   input_data %>%
     as.data.frame %>%
-    kemp(output, plot, answers, print)
+    kemp(cutoff = cutoff)
   
 }
 
 #' @export
-kemp.data.frame <- function(input_data, 
-                            output = NULL, plot = NULL, 
-                            answers = NULL, print = NULL) {
+kemp.data.frame <- function(input_data,
+                            cutoff = NA, ...) {
   
   ## if a frequency count matrix...
   if (dim(input_data)[2] == 2 & 
       all(input_data[,1] %>% sort == input_data[,1])) {
-    kemp.default(input_data)
+    kemp.default(input_data, cutoff = cutoff)
   } else {
     
     warning("Assuming taxa are rows")
     
     input_data %>% 
-      apply(2, kemp) %>%
+      apply(2, kemp, cutoff = cutoff) %>%
       alpha_estimates
     
   }
 }
 
 #' @export
-kemp.default <- function(input_data, 
-                         output = NULL, plot = NULL, 
-                         answers = NULL, print = NULL) {
+kemp.default <- function(input_data,
+                         cutoff = NA, ...)  {
   
   my_data <- convert(input_data)
   
@@ -115,7 +115,7 @@ kemp.default <- function(input_data,
     n <- sum(my_data$frequency)
     f1 <- my_data[1, 2]
     
-    cutoff <- cutoff_wrap(my_data, requested = NA) 
+    cutoff <- cutoff_wrap(my_data, requested = cutoff) 
     
     if (cutoff < 6) { ## check for unusual data structures
       
@@ -466,7 +466,6 @@ minibreak_all <- function(lhs, xs, ys, input_data, myweights, withf1 = NULL) {
     
     f0est <- as.numeric(f1est)/as.numeric(b0est)
     
-    
   }
   
   rootsokay <- as.logical(lapply(workinginfo, rootcheck, lhs,nof1=!withf1))
@@ -474,7 +473,6 @@ minibreak_all <- function(lhs, xs, ys, input_data, myweights, withf1 = NULL) {
   ## issue: model 1_0 is different
   
   sqerrors <- lapply(workinginfo, sqerror, lhs = lhs)
-  
   
   residses <- lapply(workinginfo, residse)
   

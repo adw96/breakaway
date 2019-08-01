@@ -2,7 +2,7 @@
 % Please edit documentation in R/cutoff_wrap.R
 \name{cutoff_wrap}
 \alias{cutoff_wrap}
-\title{Wrapper for phyloseq objects}
+\title{Find a cut-off for estimates relying on contiguous counts}
 \usage{
 cutoff_wrap(my_data, requested = NA)
 }
@@ -15,5 +15,5 @@ cutoff_wrap(my_data, requested = NA)
 Cutoff value
 }
 \description{
-Wrapper for phyloseq objects
+Find a cut-off for estimates relying on contiguous counts
 }

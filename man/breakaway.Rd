@@ -4,11 +4,13 @@
 \alias{breakaway}
 \title{Species richness estimation with breakaway}
 \usage{
-breakaway(input_data, output = NULL, plot = NULL, answers = NULL,
-  print = NULL)
+breakaway(input_data, cutoff = NA, output = NULL, plot = NULL,
+  answers = NULL, print = NULL, ...)
 }
 \arguments{
 \item{input_data}{An input type that can be processed by \code{convert()}}
+
+\item{cutoff}{The maximum frequency count to use for model fitting}
 
 \item{output}{Deprecated; only for backwards compatibility}
 
@@ -17,6 +19,8 @@ breakaway(input_data, output = NULL, plot = NULL, answers = NULL,
 \item{answers}{Deprecated; only for backwards compatibility}
 
 \item{print}{Deprecated; only for backwards compatibility}
+
+\item{...}{Additional arguments will be ignored; this is for backward compatibility}
 }
 \value{
 An object of class \code{alpha_estimate}

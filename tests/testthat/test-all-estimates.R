@@ -75,10 +75,10 @@ test_that("All estimates", {
                function(a){ lapply(datasets, function(b){execute(a,b)}) }) %>%
     unlist(recursive = F)
   
-  mm_ps <- lapply(richness_estimates, 
-                  function(a){ lapply(datasets_ps, function(b){
-                    execute(a,b)}) }) %>%
-    unlist(recursive = F)
+  expect_warning({mm_ps <- lapply(richness_estimates, 
+                                  function(a){ lapply(datasets_ps, function(b){
+                                    execute(a,b)}) }) %>%
+    unlist(recursive = F)})
   
   # correct_class
   lapply(X = mm, 
