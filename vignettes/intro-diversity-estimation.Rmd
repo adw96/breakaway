@@ -61,7 +61,7 @@ In their very cool paper "Extensive Unexplored Human Microbiome Diversity Reveal
 First, let's read in the data:
 
 ```{r, cache=TRUE}
-install.packages("openxlsx")
+# install.packages("openxlsx")
 pasolli_et_al <- openxlsx::read.xlsx("https://ars.els-cdn.com/content/image/1-s2.0-S0092867419300017-mmc4.xlsx", sheet = 2)
 ```
 

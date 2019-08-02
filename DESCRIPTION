@@ -31,6 +31,7 @@ Imports: MASS,
 Suggests: covr,
     DT,
     knitr,
+    openxlsx,
     RCurl,
     rmarkdown,
     plyr
