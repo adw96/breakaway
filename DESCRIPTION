@@ -16,24 +16,28 @@ LazyData: true
 RoxygenNote: 6.1.1
 Depends:
     R (>= 3.5.0)
-Imports: MASS,
-    stats,
-    utils,
-    phyloseq,
+Imports: dplyr,
+    ggplot2,
     graphics,
     magrittr,
-    ggplot2,
-    reshape2,
+    MASS,
+    phyloseq,
     R.rsp,
+    reshape2,
+    stats,
     testthat,
     tibble,
-    dplyr
-Suggests: covr,
+    utils
+Suggests: corncob,
+    covr,
+    devtools,
+    DivNet,
     DT,
     knitr,
     openxlsx,
+    plyr,
     RCurl,
     rmarkdown,
-    plyr
+    tidyverse
 VignetteBuilder: knitr
 URL: https://adw96.github.io/breakaway/

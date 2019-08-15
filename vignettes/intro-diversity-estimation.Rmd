@@ -25,17 +25,11 @@ library(breakaway)
 ```
 
 
-<!-- ```{r, eval=TRUE, include=FALSE} -->
-<!-- devtools::load_all() -->
-<!-- library(breakaway) -->
-<!-- ``` -->
-
-
 Note that we are not continuing to maintain the CRAN version of `breakaway` at this time, so avoid `install.packages("breakaway")`.
 
 If you are not accustomed to using the pipe in `R` (the operator `%>%`), I strongly encourage you to start using it. It will make your code easier to read and write. Here is how to install and load it:
 
-```{r, cache=TRUE}
+```{r}
 # install.packages("magrittr")
 library(magrittr)
 ```
@@ -60,7 +54,7 @@ In their very cool paper "Extensive Unexplored Human Microbiome Diversity Reveal
 
 First, let's read in the data:
 
-```{r, cache=TRUE}
+```{r}
 # install.packages("openxlsx")
 pasolli_et_al <- openxlsx::read.xlsx("https://ars.els-cdn.com/content/image/1-s2.0-S0092867419300017-mmc4.xlsx", sheet = 2)
 ```
@@ -132,10 +126,7 @@ estimated_richness_10 <- breakaway(ft, cutoff = 10)
 estimated_richness_10
 ```
 
-Wow! That changed our original estimate of `r round(estimated_richness$estimate)` significantly -- now we think there are `r round(estimated_richness_10$estimate)` species level genome bins! What's happening?
-
-
-*Note: At time of writing (August 2019), `breakaway` produced an estimate of 7724. If this number has changed significantly since then, it's because we are constantly making improvements to the code base, which may change estimates -- usually by a little but sometimes by more. Please let me know or [log an issue](https://github.com/adw96/breakaway/issues) to let us know if this occured!*
+Wow! That changed our original estimate of `r round(estimated_richness$estimate)` significantly -- now we think there are `r format(round(estimated_richness_10$estimate), scientific=FALSE)` species level genome bins! What's happening?
 
 Essentially the structure of this data indicates that there are a huge number of unobserved species. If you follow the curve of the frequency ratios (the plot above), it looks like the y-intercept is going to be close to $y=0$. `breakaway`'s estimate predicts that the number of unobserved species is 
 
@@ -144,6 +135,8 @@ $$
 $$ 
 
 Therefore, as that intercept gets close to zero, the estimate of the number of unobserved species gets really large! Intuitively, this makes sense -- if there are so many rare species, we cannot reliably predict how many unobserved species there are. There is some minimal amount of information needed to estimate total species richness! 
+
+*Note: At time of writing (August 2019), `breakaway`, with the default settings, produced an estimate of 7724. If this number has changed significantly since then, it's because we are constantly making improvements to the code base, which may change estimates -- usually by a little but sometimes by more. Please let me know or [log an issue](https://github.com/adw96/breakaway/issues) to let us know if this occured!*
 
 ## Conclusions
 
