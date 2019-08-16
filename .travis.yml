@@ -10,6 +10,9 @@ r_github_packages:
   - r-lib/covr
   - bryandmartin/corncob
 
+before_install:
+  - Rscript -e 'if (!requireNamespace("DivNet", quietly = TRUE)){devtools::install_github("adw96/DivNet")}'
+
 after_success:
   - Rscript -e 'covr::codecov()'
 

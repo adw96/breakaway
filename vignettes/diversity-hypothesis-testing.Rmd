@@ -29,7 +29,7 @@ library(phyloseq)
 Let's use the Whitman et al dataset from `corncob` as our example. 
 
 ```{r}
-devtools::install_github("bryandmartin/corncob")
+# devtools::install_github("bryandmartin/corncob")
 library(corncob)
 data("soil_phylo")
 soil_phylo %>% sample_data %>% head
@@ -108,7 +108,7 @@ A future version of breakaway hopes to make this interface easier to use a more 
 Maybe you don't care about richness... but you care about Shannon or Simpson diversity! [`DivNet`](https://github.com/adw96/DivNet) is our `R` package for estimating Shannon and Simpson diversity. 
 
 ```{r, include=FALSE}
-devtools::install_github("adw96/DivNet")
+# devtools::install_github("adw96/DivNet")
 library(DivNet)
 ```
 
