@@ -29,6 +29,10 @@
 #' of diversity estimates by ``sharing strength'' across the samples.  }
 #' \item{blupses}{ The estimated standard deviation (standard errors) in the
 #' blups.  }
+#' \item{loglikelihood}{ The log likelihood of the fitted model.  }
+#' \item{aic}{ The Akaike information criterion for the fitted model. }
+#' \item{aicc}{ The finite sample correction of the Akaike information criterion for the fitted model.  }
+#' \item{r_squared_wls}{  The weighted R^2 statistic, appropriate for heteroskedastic linear models. }
 #' @note Ecologists who are interested in the way species richness varies with
 #' covariate information often run a regression-type analysis on the observed
 #' diversity using their covariate information as predictors. However, in many
@@ -114,7 +118,7 @@
 betta <- function(chats, ses, X=NA) {
   if (isTRUE(is.na(X))) { X <- matrix(rep(1,length(chats)),ncol=1) }
   
-  consider <- !(is.na(chats) | is.na(ses) | apply(is.na(X),1,sum))
+  consider <- !(is.na(chats) | is.na(ses) | apply(is.na(X), 1, sum))
   
   chats_effective <- chats[consider]
   ses_effective <- ses[consider]
@@ -127,7 +131,7 @@ betta <- function(chats, ses, X=NA) {
     ssq_u <- input[1]
     beta <- input[2:length(input)]
     W <- diag(1/(ssq_u + ses_effective^2))
-    -0.5*(sum(log(ssq_u + ses_effective^2) + (chats_effective-X_effective %*% beta)^2/(ssq_u + ses_effective^2))  +  log(det(t(X_effective) %*% W %*% X_effective)))
+    -0.5*(sum(log(ssq_u + ses_effective^2) + (chats_effective - X_effective %*% beta)^2/(ssq_u + ses_effective^2))  +  log(det(t(X_effective) %*% W %*% X_effective)))
   }
   
   mystart <- c(var(chats_effective), solve(t(X_effective) %*% X_effective) %*% t(X_effective) %*% chats_effective)
@@ -144,7 +148,7 @@ betta <- function(chats, ses, X=NA) {
   
   global <- t(beta) %*% (t(X_effective) %*% W %*% X_effective) %*% beta ## global test
   
-  Q <- sum((chats_effective-X_effective %*% beta)^2/ses_effective^2)
+  Q <- sum((chats_effective - X_effective %*% beta)^2/ses_effective^2)
   R <- diag(ses_effective^2)
   G <- diag(ssq_u,n)
   
@@ -165,7 +169,7 @@ betta <- function(chats, ses, X=NA) {
   mytable$homogeneity <- c(Q, 1-pchisq(Q, n-p))
   mytable$global <- c(global, 1-pchisq(global, p-1))
   
-  us <-  c(ssq_u*W %*% (chats_effective-X_effective %*% beta))
+  us <-  c(ssq_u*W %*% (chats_effective - X_effective %*% beta))
   blups <- rep(NA, length(chats)) 
   blups[consider] <- c(X_effective %*% beta + us)
   mytable$blups <- blups
@@ -187,8 +191,13 @@ betta <- function(chats, ses, X=NA) {
   # k = # fitted parameters = 1 + p (one variance term; p regression terms)
   mytable$aic <- -2 * logLhat + 2 * (1 + p)
   
-  # TODO: AICc = AIC + (2k^2+2k)/(n-k-1)
+  # AICc = AIC + (2k^2+2k)/(n-k-1)
   mytable$aicc <- mytable$aic + (2*(1 + p)^2 + 2*(1 + p))/(n - (1 + p) - 1)
+  
+  # R-squared (WLS): Eqn 7 of Willett & Singer, 1988, American Statistician.
+  mytable$r_squared_wls <- 1 - sum((chats_effective - X_effective %*% beta)^2) / 
+    (sum(chats_effective^2) - n*(mean(chats_effective))^2)
+    
   
   return(mytable)
 }
@@ -251,7 +260,7 @@ betta_random <- function(chats, ses, X=NA, groups) {
     ssq_group <- input[(p+2):(p+gs+1)]
     group_variance <- ssq_group[groups_effective]
     W <- diag(1/(ssq_u+ses_effective^2+group_variance))
-    -0.5*(sum(log(ssq_u+ses_effective^2+group_variance)+(chats_effective-X_effective %*% beta)^2/(ssq_u+ses_effective^2+group_variance)) + log(det(t(X_effective) %*% W %*% X_effective)))
+    -0.5*(sum(log(ssq_u+ses_effective^2+group_variance)+(chats_effective - X_effective %*% beta)^2/(ssq_u+ses_effective^2+group_variance)) + log(det(t(X_effective) %*% W %*% X_effective)))
   }
   
   within_groups_start <- c(by(chats_effective, groups_effective, var, simplify = T))
@@ -276,7 +285,7 @@ betta_random <- function(chats, ses, X=NA, groups) {
   
   global <- t(beta) %*% (t(X_effective) %*% W %*% X_effective) %*% beta ## global test
   
-  Q <- sum((chats_effective-X_effective %*% beta)^2/ses_effective^2)
+  Q <- sum((chats_effective - X_effective %*% beta)^2/ses_effective^2)
   
   mytable <- list()
   mytable$table <- cbind("Estimates"=beta,"Standard Errors"=sqrt(vars),"p-values"=round(2*(1-pnorm(abs(beta/sqrt(vars)))),3))
@@ -287,7 +296,7 @@ betta_random <- function(chats, ses, X=NA, groups) {
   mytable$homogeneity <- c(Q,1-pchisq(Q,n-p))
   mytable$global <- c(global,1-pchisq(global,p-1))
   
-  us <-  c(ssq_u*W %*% (chats_effective-X_effective %*% beta))
+  us <-  c(ssq_u*W %*% (chats_effective - X_effective %*% beta))
   blups <- rep(NA, length(chats))
   blups[consider] <- c(X_effective %*% beta + us)
   mytable$blups <- blups

@@ -25,5 +25,7 @@ test_that("betta isn't stupid", {
   # AIC and AICc should indicate that bb fits better than bb_noX
   expect_true(bb$aic < bb_noX$aic)
   expect_true(bb$aicc < bb_noX$aicc)
-  
+  expect_equal(bb$r_squared_wls, 1)
+  expect_equal(bb_noX$r_squared_wls, 0)
+
 })

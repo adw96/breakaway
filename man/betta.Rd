@@ -34,6 +34,10 @@ estimators of total diversity rather than \samp{Chats} may reduce variance
 of diversity estimates by ``sharing strength'' across the samples.  }
 \item{blupses}{ The estimated standard deviation (standard errors) in the
 blups.  }
+\item{loglikelihood}{ The log likelihood of the fitted model.  }
+\item{aic}{ The Akaike information criterion for the fitted model. }
+\item{aicc}{ The finite sample correction of the Akaike information criterion for the fitted model.  }
+\item{r_squared_wls}{  The weighted R^2 statistic, appropriate for heteroskedastic linear models. }
 }
 \description{
 This function tests for heterogeneity of total diversity (observed plus
