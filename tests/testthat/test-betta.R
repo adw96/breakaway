@@ -22,4 +22,8 @@ test_that("betta isn't stupid", {
                       c(rep(2, n), rep(2, n)),
                       cbind(1, c(rep(0, n), rep(1, n)))), "ggplot")
   
+  # AIC and AICc should indicate that bb fits better than bb_noX
+  expect_true(bb$aic < bb_noX$aic)
+  expect_true(bb$aicc < bb_noX$aicc)
+  
 })
