@@ -173,7 +173,11 @@ betta <- function(chats, ses, X=NA) {
     blupvars[consider] <- c(sqrt(diag(cbind(X_effective, diag(1, n)) %*% C %*% t(cbind(X_effective, diag(1, n))))))
     mytable$blupses <- blupvars
   }
-
+  
+  # TODO
+  mytable$aic
+  mytable$aicc
+  
   return(mytable)
 }
 

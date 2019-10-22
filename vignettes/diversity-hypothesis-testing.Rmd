@@ -12,6 +12,10 @@ vignette: >
   
   
 This tutorial will talk through hypothesis testing for alpha diversity indices using the functions `betta` and `betta_random`. 
+
+## Disclaimer
+
+*Disclaimer*: If you have not taken a introductory statistics class or devoted serious time to learning introductory statistics, I strongly encourage you to reconsider doing so before ever quoting a p-value or doing modeling of any kind. An introductory statistics class will teach you valuable skills that will serve you well throughout your entire scientific career, including the use and abuse of p-values in science, how to responsibly fit models and test null hypotheses, and an appreciation for how easy it is to inflate the statistical significance of a result. Please equip yourself with the statistical skills and scepticism necessary to responsibly test and discuss null hypothesis significance testing.
   
 ## Preliminaries
   
@@ -125,7 +129,7 @@ Let's treat all samples as independent observations (`X = NULL`) and fit the Div
 
 (Check out the full documentation for details, including how to run in parallel)
 
-```{r, include=FALSE, cache=TRUE}
+```{r, include=TRUE, cache=TRUE, message=FALSE, results="hide"}
 dv <- DivNet::divnet(soil_phylum, X = NULL)
 ```
 
@@ -158,3 +162,9 @@ bt_day_fixed_id_random$table
 and similarly for no random effects. 
 
 And there you have it! That's how to do hypothesis testing for diversity! 
+
+If you use our tools, please don't forget to cite them! 
+
+- `breakaway`: Willis & Bunge. (2015). *Estimating diversity via frequency ratios*. Biometrics. [doi:10.1111/biom.12332](https://doi.org/10.1111/biom.12332). 
+- `DivNet`: Willis & Martin. (2018+). *DivNet: Estimating diversity in networked communities*. bioRxiv. [10.1101/305045](https://doi.org/10.1101/305045). 
+- `betta`: Willis, Bunge & Whitman. (2016). *Improved detection of changes in species richness in high diversity microbial communities*. Journal of the Royal Statistical Society: Series C. [doi:10.1111/rssc.12206](https://doi.org/10.1111/rssc.12206). 
