@@ -1,10 +1,12 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
-
 language: r
 warnings_are_errors: true
 sudo: false
 cache: packages
+
+before_install:
+  - Rscript -e 'if (!requireNamespace("BiocManager", quietly = TRUE)){install.packages("BiocManager")}; BiocManager::install(c("phyloseq"), ask = FALSE)'
 
 r_github_packages:
   - r-lib/covr
@@ -12,9 +14,6 @@ r_github_packages:
 
 after_success:
   - Rscript -e 'covr::codecov()'
-
-bioc_packages:
-  - phyloseq
 
 env:
   - R_KEEP_PKG_SOURCE=yes
