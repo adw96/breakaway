@@ -118,7 +118,7 @@ The above discussion focused exclusively on richness. Check out `github.com/adw9
 
 ## Modelling alpha diversity
 
-Update: You should actually be doing this using [DivNet](https://github.com/adw96/DivNet). 
+See the vignette *Introduction to hypothesis testing for diversity*. 
 
 <!-- TODO: Fix this to use DivNet -->
 
@@ -177,7 +177,7 @@ Update: You should actually be doing this using [DivNet](https://github.com/adw9
 <!-- ``` -->
 <!-- being true in every spot is a necessary but not sufficient condition for the following to work properly. -->
 
-##MODEL SPECIES RICHNESS, TEST SIGNIFICANCE, INTERPRET RESULTS
+<!-- ##MODEL SPECIES RICHNESS, TEST SIGNIFICANCE, INTERPRET RESULTS -->
 
 <!-- Let's go ahead and try to fit our model and take a look at the results -->
 
