@@ -150,15 +150,16 @@ betta <- function(chats, ses, X=NA) {
   
   Q <- sum((chats_effective - X_effective %*% beta)^2/ses_effective^2)
   R <- diag(ses_effective^2)
-  G <- diag(ssq_u,n)
+  G <- diag(ssq_u, n)
   
-  getvar <- function() {
-    C[1:p, 1:p] <- t(X_effective) %*% solve(R) %*% X_effective
-    C[(p + 1):(n + p), (p + 1):(n + p)] <- solve(R) + solve(G)
-    C[1:p, (p + 1):(n + p)] <- t(X_effective) %*% solve(R)
-    C[(p + 1):(n + p), 1:p] <- solve(R) %*% X_effective
-    return(solve(C))
-  }
+  # getvar <- function() {
+  #   var_matrix <- matrix(NA, nrow=(n + p), ncol=(n + p))
+  #   var_matrix[1:p, 1:p] <- t(X_effective) %*% solve(R) %*% X_effective
+  #   var_matrix[(p + 1):(n + p), (p + 1):(n + p)] <- solve(R) + solve(G)
+  #   var_matrix[1:p, (p + 1):(n + p)] <- t(X_effective) %*% solve(R)
+  #   var_matrix[(p + 1):(n + p), 1:p] <- solve(R) %*% X_effective
+  #   return(solve(var_matrix))
+  # }
   
   mytable <- list()
   mytable$table <- cbind("Estimates"=beta, 
@@ -174,12 +175,20 @@ betta <- function(chats, ses, X=NA) {
   blups[consider] <- c(X_effective %*% beta + us)
   mytable$blups <- blups
   
-  if (class(try(getvar(), silent=T)) != "try-error") {
-    C <- getvar()
-    blupvars <- rep(NA, length(chats))
-    blupvars[consider] <- c(sqrt(diag(cbind(X_effective, diag(1, n)) %*% C %*% t(cbind(X_effective, diag(1, n))))))
-    mytable$blupses <- blupvars
-  }
+  # if (class(try(getvar(), silent=T)) != "try-error") {
+  # get BLUPs SEs
+  var_matrix <- matrix(NA, nrow=(n + p), ncol=(n + p))
+  var_matrix[1:p, 1:p] <- t(X_effective) %*% solve(R) %*% X_effective
+  var_matrix[(p + 1):(n + p), (p + 1):(n + p)] <- solve(R) + MASS::ginv(G)
+  var_matrix[1:p, (p + 1):(n + p)] <- t(X_effective) %*% solve(R)
+  var_matrix[(p + 1):(n + p), 1:p] <- solve(R) %*% X_effective
+  var_matrix_inv <- MASS::ginv(var_matrix)
+  blupvars <- rep(NA, length(chats))
+  blupvars[consider] <- (cbind(X_effective, diag(1, n)) %*%
+                           var_matrix_inv %*%
+                           t(cbind(X_effective, diag(1, n)))) %>% diag %>% sqrt %>% c
+  mytable$blupses <- blupvars
+  # }
   
   # For n-dimensional MVN random variable, likelihood is...
   logLhat <- -0.5*(n*log(2*pi) + # -n/2 * log(2 * pi) +
@@ -197,7 +206,7 @@ betta <- function(chats, ses, X=NA) {
   # R-squared (WLS): Eqn 7 of Willett & Singer, 1988, American Statistician.
   mytable$r_squared_wls <- 1 - sum((chats_effective - X_effective %*% beta)^2) / 
     (sum(chats_effective^2) - n*(mean(chats_effective))^2)
-    
+  
   
   return(mytable)
 }

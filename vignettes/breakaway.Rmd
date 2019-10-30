@@ -33,7 +33,7 @@ library(breakaway)
 data(toy_otu_table)
 data(toy_metadata)
 
-## For historical reasons we going to call them:
+## For historical reasons we're going to call them:
 otu_data <- toy_otu_table
 meta_data <- toy_metadata
 head(meta_data)
