@@ -27,5 +27,7 @@ test_that("betta isn't stupid", {
   expect_true(bb$aicc < bb_noX$aicc)
   expect_equal(bb$r_squared_wls, 1)
   expect_equal(bb_noX$r_squared_wls, 0)
+  
+  
 
 })

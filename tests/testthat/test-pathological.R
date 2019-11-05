@@ -12,10 +12,6 @@ test_that("issues that are fixed on github stay fixed", {
                                 16, 19, 20, 22, 23, 24, 25, 28), Freq = c(69, 15, 8, 23, 4, 1, 
                                                                           5, 3, 3, 2, 3, 1, 2, 1, 1, 1, 1, 2, 1, 2)), row.names = c(NA, 
                                                                                                                                     -20L), class = "data.frame")
-  issue68 %>% head
-  breakaway(issue68) %>% summary
-  breakaway(issue68) 
-  sample_richness(issue68)
-  # plot(breakaway(issue68))
-  
+  expect_true(breakaway(issue68)$estimate > 200)
+
 })

@@ -328,16 +328,22 @@ kemp.default <- function(input_data,
   
 }
 
-rootcheck <- function(model, lhs,nof1=FALSE) {
-  if(length(coef(model))==2)  {
+rootcheck <- function(model, lhs, nof1=FALSE) {
+  # TODO rewrite to be clearer
+  if(length(coef(model)) == 2)  {
     root <- -coef(model)[1]/coef(model)[2]
   } else {
-    root <- Re(polyroot(c(1,coef(model)[substring(names(coef(model)),1,1)=="a"]))[
-      abs(Im(polyroot(c(1,coef(model)[substring(names(coef(model)),1,1)=="a"]))))<10^-5])
+    model_coefs_names <- model %>% coef %>% names %>% substring(1, 1)
+    a_coefs <- model_coefs_names == "a"
+    numerator_coefs <- c(1, coef(model)[a_coefs])
+    numerator_roots <- numerator_coefs %>% polyroot
+    root <- numerator_roots[(numerator_roots %>% Im %>% abs) < 10^-5] %>% Re
   }
-  if (length(root)==0) {
-    outcome <- 1
-  } else if (sum((root > ifelse(nof1, min(lhs$x-1), min(lhs$x))) & (root < max(lhs$x)))==0 ) { #uses sum of pointwise booleans to ensure any roots are caught
+  if (length(root) == 0 | 
+      (sum((root > ifelse(nof1, min(lhs$x - 2), min(lhs$x - 1))) & (root < max(lhs$x))) == 0 )) { 
+    # uses sum of pointwise booleans to ensure any roots are caught
+    # edit 2019/11/04: want to make sure root is not between f1 = 1 and f1 = 0
+    # This was issue with issue68
     outcome <- 1
   } else {
     outcome <- 0
@@ -349,7 +355,7 @@ sqerror <- function(model, lhs) {
   fits <- fitted(model)
   
   stopifnot( length(lhs$y) == length(fits))
-
+  
   return(sum(((lhs$y-fits)^2)/fits))
 }
 
@@ -468,7 +474,10 @@ minibreak_all <- function(lhs, xs, ys, input_data, myweights, withf1 = NULL) {
     
   }
   
-  rootsokay <- as.logical(lapply(workinginfo, rootcheck, lhs,nof1=!withf1))
+  rootsokay <- as.logical(lapply(workinginfo, 
+                                 rootcheck, 
+                                 lhs, 
+                                 nof1 =! withf1))
   
   ## issue: model 1_0 is different
   
@@ -482,6 +491,6 @@ minibreak_all <- function(lhs, xs, ys, input_data, myweights, withf1 = NULL) {
     useable <- rootsokay & (f0est>0) & (f1est>0)
   }
   
-  workinginfo$useful <- cbind(f0est, rootsokay, sqerrors, residses,useable)
+  workinginfo$useful <- cbind(f0est, rootsokay, sqerrors, residses, useable)
   return(workinginfo)
 }
