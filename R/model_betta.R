@@ -12,6 +12,7 @@
 #' @param ses The standard errors in \samp{chats}, the diversity estimates.
 #' @param X A numeric matrix of covariates. If not supplied, an intercept-only
 #' model will be fit.
+#' @param initial_est (Optional) A vector of length 1 + ncol(X) giving the starting values for the likelihood maximisation search. The first element is the starting estimate for sigma^2_u, and the remaining elements are the starting elements for beta. Defaults to NULL, in which case the starting values outlined in the paper are used. 
 #' @return \item{table}{ A coefficient table for the model parameters. The
 #' columns give the parameter estimates, standard errors, and p-values,
 #' respectively. This model is only as effective as your diversity estimation
@@ -115,8 +116,9 @@
 #' 
 #' 
 #' @export betta
-betta <- function(chats, ses, X=NA) {
-  if (isTRUE(is.na(X))) { X <- matrix(rep(1,length(chats)),ncol=1) }
+betta <- function(chats, ses, X = NA, 
+                  initial_est = NULL) {
+  if (isTRUE(is.na(X))) { X <- matrix(rep(1,length(chats)),ncol = 1) }
   
   consider <- !(is.na(chats) | is.na(ses) | apply(is.na(X), 1, sum))
   
@@ -134,12 +136,45 @@ betta <- function(chats, ses, X=NA) {
     -0.5*(sum(log(ssq_u + ses_effective^2) + (chats_effective - X_effective %*% beta)^2/(ssq_u + ses_effective^2))  +  log(det(t(X_effective) %*% W %*% X_effective)))
   }
   
-  mystart <- c(var(chats_effective), solve(t(X_effective) %*% X_effective) %*% t(X_effective) %*% chats_effective)
-  output <- optim(mystart, likelihood, 
-                  hessian = FALSE, 
-                  control = list(fnscale = -1),
-                  lower = c(0, rep(-Inf, p)), 
-                  method = "L-BFGS-B") # fnscale => maximises if -ve
+  if (any(is.null(initial_est))) {
+    initial_est <- c(var(chats_effective), solve(t(X_effective) %*% X_effective) %*% t(X_effective) %*% chats_effective)
+  }
+  output <- try(optim(initial_est, 
+                      likelihood, 
+                      hessian = FALSE, 
+                      control = list(fnscale = -1), # fnscale => maximises if -ve
+                      lower = c(0, rep(-Inf, p)), 
+                      method = "L-BFGS-B"), 
+                silent = TRUE)
+  
+  # while loop
+  i = 0
+  
+  # perturb the initialisation incrementally, up to 200 times
+  
+  while ("try-error" %in% class(output) & i < 200) {
+    i <- i + 1
+    
+    perturb <- rnorm(n = length(initial_est), 
+                     mean = c(0,0), 
+                     sd = 0.001 * i * abs(initial_est))
+    initial_est_perturbed <- pmax(c(0, rep(-Inf, p)), 
+                                  initial_est + perturb)
+    output <- try(optim(initial_est_perturbed, 
+                        likelihood, 
+                        hessian = FALSE, 
+                        control = list(fnscale = -1), # fnscale => maximises if -ve
+                        lower = c(0, rep(-Inf, p)), 
+                        method = "L-BFGS-B"), 
+                  silent = TRUE)
+  } 
+  
+  if ("try-error" %in% class(output) ) {
+    stop(paste("The starting value and 200 perturbations were not", 
+               "enough to find a maximum likelihood solution.", 
+               "Please try again with a new choice of `initial_est`."))
+  }
+  
   ssq_u <- output$par[1]
   beta <- output$par[2:length(output$par)]
   
@@ -151,15 +186,6 @@ betta <- function(chats, ses, X=NA) {
   Q <- sum((chats_effective - X_effective %*% beta)^2/ses_effective^2)
   R <- diag(ses_effective^2)
   G <- diag(ssq_u, n)
-  
-  # getvar <- function() {
-  #   var_matrix <- matrix(NA, nrow=(n + p), ncol=(n + p))
-  #   var_matrix[1:p, 1:p] <- t(X_effective) %*% solve(R) %*% X_effective
-  #   var_matrix[(p + 1):(n + p), (p + 1):(n + p)] <- solve(R) + solve(G)
-  #   var_matrix[1:p, (p + 1):(n + p)] <- t(X_effective) %*% solve(R)
-  #   var_matrix[(p + 1):(n + p), 1:p] <- solve(R) %*% X_effective
-  #   return(solve(var_matrix))
-  # }
   
   mytable <- list()
   mytable$table <- cbind("Estimates"=beta, 
@@ -275,11 +301,11 @@ betta_random <- function(chats, ses, X=NA, groups) {
   within_groups_start <- c(by(chats_effective, groups_effective, var, simplify = T))
   within_groups_start[which(is.na(within_groups_start))]  <- 0
   
-  mystart <- c(var(chats_effective),
-               solve(t(X_effective) %*% X_effective) %*% t(X_effective) %*% chats_effective,
-               within_groups_start)
+  initial_est <- c(var(chats_effective),
+                   solve(t(X_effective) %*% X_effective) %*% t(X_effective) %*% chats_effective,
+                   within_groups_start)
   
-  output <- optim(mystart, 
+  output <- optim(initial_est, 
                   likelihood, 
                   hessian=FALSE, 
                   control=list(fnscale=-1),

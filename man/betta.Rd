@@ -4,7 +4,7 @@
 \alias{betta}
 \title{Modelling total diversity with betta}
 \usage{
-betta(chats, ses, X = NA)
+betta(chats, ses, X = NA, initial_est = NULL)
 }
 \arguments{
 \item{chats}{A vector of estimates of total diversity at different sampling
@@ -15,6 +15,8 @@ case but not enforced.}
 
 \item{X}{A numeric matrix of covariates. If not supplied, an intercept-only
 model will be fit.}
+
+\item{initial_est}{(Optional) A vector of length 1 + ncol(X) giving the starting values for the likelihood maximisation search. The first element is the starting estimate for sigma^2_u, and the remaining elements are the starting elements for beta. Defaults to NULL, in which case the starting values outlined in the paper are used.}
 }
 \value{
 \item{table}{ A coefficient table for the model parameters. The
