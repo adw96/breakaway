@@ -70,6 +70,16 @@ breakaway.matrix <- function(input_data,
 }
 
 #' @export
+breakaway.tbl_df <- function(input_data, 
+                             cutoff = NA, ...) {
+  
+  input_data %>%
+    as.data.frame %>%
+    breakaway(cutoff = cutoff)
+  
+}
+
+#' @export
 breakaway.data.frame <- function(input_data,
                                  cutoff = NA, ...) {
   

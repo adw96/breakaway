@@ -84,6 +84,18 @@ breakaway_nof1.matrix <- function(input_data,
   
 }
 
+
+#' @export
+breakaway_nof1.tbl_df <- function(input_data, 
+                                  output = NULL, plot = NULL, 
+                                  answers = NULL, print = NULL) {
+  
+  input_data %>%
+    as.data.frame %>%
+    breakaway_nof1(output, plot, answers, print)
+  
+}
+
 #' @export
 breakaway_nof1.data.frame <- function(input_data, 
                                       output = NULL, plot = NULL, 
@@ -115,15 +127,8 @@ breakaway_nof1.default <- function(input_data,
   my_data <- my_data[my_data$index > 1, ]
   
   if (my_data[1, 1] != 2 || my_data[1, 2]==0) {
-    kemp_alpha_estimate <- alpha_estimate(estimand = "richness",
-                                          estimate = NA,
-                                          error = NA,
-                                          model = "Kemp",
-                                          name = "breakaway_nof1",
-                                          frequentist = TRUE, 
-                                          parametric = TRUE,
-                                          reasonable = FALSE,
-                                          warnings = "no doubleton count")
+    kemp_alpha_estimate <- poisson_model_nof1(input_data=my_data)
+    kemp_alpha_estimate$warnings = "no doubleton count"
   } else {
     
     n <- sum(my_data$frequency)
@@ -133,22 +138,24 @@ breakaway_nof1.default <- function(input_data,
     
     if (cutoff < 6) { ## check for unusual data structures
       
-      kemp_alpha_estimate <- alpha_estimate(estimand = "richness",
-                                            estimate = NA,
-                                            error = NA,
-                                            model = "Kemp",
-                                            name = "breakaway_nof1",
-                                            frequentist = TRUE, 
-                                            parametric = TRUE,
-                                            reasonable = FALSE,
-                                            warnings = "insufficient contiguous frequencies")
+      kemp_alpha_estimate <- poisson_model_nof1(input_data=my_data)
+      # alpha_estimate(estimand = "richness",
+      #                                       estimate = NA,
+      #                                       error = NA,
+      #                                       model = "Kemp",
+      #                                       name = "breakaway_nof1",
+      #                                       frequentist = TRUE, 
+      #                                       parametric = TRUE,
+      #                                       reasonable = FALSE,
+      #                                       warnings = "insufficient contiguous frequencies")
       
     } else {
       my_data <- my_data[1:cutoff,]
       ys <- (my_data[1:(cutoff-1),1]+1)*my_data[2:cutoff,2]/my_data[1:(cutoff-1),2]
       xs <- 2:cutoff
       xbar <- mean(c(1,xs))
-      lhs <- list("x"=xs-xbar,"y"=my_data[2:cutoff,2]/my_data[1:(cutoff-1),2])
+      lhs <- list("x"=xs-xbar,
+                  "y"=my_data[2:cutoff,2]/my_data[1:(cutoff-1),2])
       
       weights_inv <- 1/xs
       run <- minibreak_all(lhs,xs,ys,my_data,weights_inv, withf1 = FALSE)
@@ -156,17 +163,13 @@ breakaway_nof1.default <- function(input_data,
       choice <- list()
       
       if (sum(as.numeric(run$useful[,5]))==0) {
-        kemp_alpha_estimate <- alpha_estimate(estimand = "richness",
-                                              estimate = NA,
-                                              error = NA,
-                                              model = "Kemp",
-                                              name = "breakaway_nof1",
-                                              frequentist = TRUE, 
-                                              parametric = TRUE,
-                                              reasonable = FALSE,
-                                              warnings = "no kemp models converged",
-                                              other = list(outcome = 0,
-                                                           code = 1))
+        
+        kemp_alpha_estimate <- poisson_model_nof1(input_data=my_data, 
+                                                  cutoff=cutoff)
+        kemp_alpha_estimate$warnings = "no kemp models converged"
+        kemp_alpha_estimate$other = list(outcome = 0,
+                                         code = 1)
+        
       } else { # something worked for 1/x weighting
         choice$outcome <- 1
         choice$model <- rownames(run$useful)[min(which(run$useful[,5]==1))] #pick smallest

@@ -60,9 +60,10 @@ summary.alpha_estimates <- function(object, ...) {
   dots <- list(...)
   
   to_vector <- function(object, piece) {
-    object %>% 
+    unlisted_object <- object %>% 
       lapply(function(x) {x[[piece]]}) %>%
       unlist 
+    ifelse(is.null(unlisted_object), NA, unlisted_object)
   }
   
   get_interval <- function(x) {

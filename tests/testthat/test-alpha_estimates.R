@@ -1,10 +1,21 @@
-# context("alpha estimates")
-# library(breakaway)
+context("alpha estimates")
+library(breakaway)
 # library(phyloseq)
-# 
+
 # data("GlobalPatterns")
 # 
-# test_that("alpha_estimates works", {
+test_that("alpha_estimates works", {
+  
+  my_alpha_estimates <- alpha_estimates(
+    alpha_estimate(estimate=1000, error=NULL, name = "tmp", model = "tmp", estimand = "tmp"),
+    alpha_estimate(estimate=1100, error=NULL, name = "tmp", model = "tmp", estimand = "tmp")
+  )
+  expect_is(summary(my_alpha_estimates), "data.frame")
+})
+
+
+# 
+# test_that("breakaway runs on phyloseq objects", {
 #   
 #   expect_silent({y <- alpha_estimates(breakaway(apples), 
 #                                       chao_bunge(apples))})
@@ -15,10 +26,6 @@
 #   expect_is(plot(y, xaxis = 3:4, symmetric = FALSE), "ggplot")
 #   expect_equal(summary(y)[1,1] %>% unlist %>% unname, 
 #                breakaway(apples)$estimate)
-#   
-# })
-# 
-# test_that("breakaway runs on phyloseq objects", {
 #   
 #   ## this one
 #   expect_is(breakaway(GlobalPatterns %>% 

@@ -9,7 +9,7 @@
 #' @export
 convert <- function(input_data) {
   
-  if (class(input_data) == "character") {
+  if (all(class(input_data) == "character")) {
     
     stop("breakaway no longer supports file paths as inputs")
     
@@ -19,6 +19,10 @@ convert <- function(input_data) {
     # determine if frequency count table or vector
     if (dim(input_data)[2] != 2) {
       stop("input_data is a data.frame or matrix but not a frequency count table.\n")
+    }
+    
+    if ("tbl_df" %in% class(input_data)) {
+      input_data <- input_data %>% as.data.frame
     }
 
     output_data <- input_data
