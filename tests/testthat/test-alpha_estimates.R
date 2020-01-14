@@ -1,16 +1,26 @@
 context("alpha estimates")
 library(breakaway)
-# library(phyloseq)
+library(phyloseq)
+library(magrittr)
 
-# data("GlobalPatterns")
-# 
+data("GlobalPatterns")
+
 test_that("alpha_estimates works", {
   
+  # fix #77
   my_alpha_estimates <- alpha_estimates(
     alpha_estimate(estimate=1000, error=NULL, name = "tmp", model = "tmp", estimand = "tmp"),
     alpha_estimate(estimate=1100, error=NULL, name = "tmp", model = "tmp", estimand = "tmp")
   )
   expect_is(summary(my_alpha_estimates), "data.frame")
+  expect_lt(object=summary(my_alpha_estimates)$estimate[1],
+            expected=summary(my_alpha_estimates)$estimate[2])
+  
+  ba <- GlobalPatterns %>%
+    subset_samples(SampleType == "Soil") %>%
+    breakaway %>% 
+    summary
+  expect_false(all(ba$estimate == ba$estimate[1]))
 })
 
 

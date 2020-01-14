@@ -63,7 +63,12 @@ summary.alpha_estimates <- function(object, ...) {
     unlisted_object <- object %>% 
       lapply(function(x) {x[[piece]]}) %>%
       unlist 
-    ifelse(is.null(unlisted_object), NA, unlisted_object)
+    
+    if (unlisted_object %>% is.null %>% all) {
+      rep(NA, object %>% length)
+    } else {
+      unlisted_object
+    }
   }
   
   get_interval <- function(x) {

@@ -1,6 +1,6 @@
 Package: breakaway
 Title: Species Richness Estimation and Modeling
-Version: 4.6.14
+Version: 4.6.16
 Date: 2019-11-05
 Authors@R: as.person(c(
     "Amy Willis <adwillis@uw.edu> [aut, cre]",
