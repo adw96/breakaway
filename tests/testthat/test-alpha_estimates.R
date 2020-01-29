@@ -3,9 +3,10 @@ library(breakaway)
 library(phyloseq)
 library(magrittr)
 
-data("GlobalPatterns")
 
 test_that("alpha_estimates works", {
+  
+  data("GlobalPatterns")
   
   # fix #77
   my_alpha_estimates <- alpha_estimates(
@@ -16,10 +17,12 @@ test_that("alpha_estimates works", {
   expect_lt(object=summary(my_alpha_estimates)$estimate[1],
             expected=summary(my_alpha_estimates)$estimate[2])
   
-  ba <- GlobalPatterns %>%
+  ba_raw <- GlobalPatterns %>%
     subset_samples(SampleType == "Soil") %>%
-    breakaway %>% 
+    breakaway 
+  ba <- ba_raw %>% 
     summary
+  ba
   expect_false(all(ba$estimate == ba$estimate[1]))
 })
 
