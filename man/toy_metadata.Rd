@@ -4,14 +4,16 @@
 \name{toy_metadata}
 \alias{toy_metadata}
 \title{(Data) Data frame of covariate information about toy_otu_table.}
-\format{A data frame with 143 rows and 4 variables:
+\format{
+A data frame with 143 rows and 4 variables:
 \describe{
   \item{Years}{Year of sampling}
   \item{bloom2}{Did the sample correspond to a bloom event?}
   \item{Period}{What season was sampled?}
   \item{Site}{Where was the sample taken from?}
   ...
-}}
+}
+}
 \usage{
 toy_metadata
 }

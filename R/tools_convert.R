@@ -65,7 +65,7 @@ check_format <- function(output_data) {
     return(NULL)
   }
   
-  if(!(class(output_data) %in% c("matrix", "data.frame"))) stop("Input should be a matrix or a data frame")
+  if(length(intersect(class(output_data), c("matrix", "data.frame"))) == 0) stop("Input should be a matrix or a data frame")
   
   if(length(dim(output_data)) != 2) stop("Input should have 2 columns")
   

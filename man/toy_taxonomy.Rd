@@ -4,7 +4,9 @@
 \name{toy_taxonomy}
 \alias{toy_taxonomy}
 \title{(Data) The taxonomy of the OTUs in `toy_otu_table`.}
-\format{An object of class \code{factor} of length 448.}
+\format{
+An object of class \code{factor} of length 448.
+}
 \usage{
 toy_taxonomy
 }

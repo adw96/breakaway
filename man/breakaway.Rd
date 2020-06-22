@@ -4,8 +4,15 @@
 \alias{breakaway}
 \title{Species richness estimation with breakaway}
 \usage{
-breakaway(input_data, cutoff = NA, output = NULL, plot = NULL,
-  answers = NULL, print = NULL, ...)
+breakaway(
+  input_data,
+  cutoff = NA,
+  output = NULL,
+  plot = NULL,
+  answers = NULL,
+  print = NULL,
+  ...
+)
 }
 \arguments{
 \item{input_data}{An input type that can be processed by \code{convert()}}

@@ -4,7 +4,9 @@
 \name{toy_otu_table}
 \alias{toy_otu_table}
 \title{(Data) A toy OTU table.}
-\format{An object of class \code{data.frame} with 448 rows and 143 columns.}
+\format{
+An object of class \code{data.frame} with 448 rows and 143 columns.
+}
 \usage{
 toy_otu_table
 }

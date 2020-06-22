@@ -4,9 +4,18 @@
 \alias{betta_pic}
 \title{function for plotting total diversity}
 \usage{
-betta_pic(y, se, x = 1:length(y), ylimu = NULL, myy = NULL,
-  mymain = NULL, mycol = NULL, labs = NULL, mypch = NULL,
-  myxlim = NULL)
+betta_pic(
+  y,
+  se,
+  x = 1:length(y),
+  ylimu = NULL,
+  myy = NULL,
+  mymain = NULL,
+  mycol = NULL,
+  labs = NULL,
+  mypch = NULL,
+  myxlim = NULL
+)
 }
 \arguments{
 \item{y}{A vector of estimates of total diversity. Other parameter estimates

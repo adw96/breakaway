@@ -4,8 +4,16 @@
 \alias{plot.alpha_estimates}
 \title{Plot function for alpha_estimates class}
 \usage{
-\method{plot}{alpha_estimates}(x, physeq = NULL, measure = NULL,
-  color = NULL, shape = NULL, title = NULL, trim_plot = FALSE, ...)
+\method{plot}{alpha_estimates}(
+  x,
+  physeq = NULL,
+  measure = NULL,
+  color = NULL,
+  shape = NULL,
+  title = NULL,
+  trim_plot = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{Object of class \code{alpha_estimates}.}

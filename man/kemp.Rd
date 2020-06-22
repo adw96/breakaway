@@ -4,8 +4,15 @@
 \alias{kemp}
 \title{Species richness estimation with Kemp-type models}
 \usage{
-kemp(input_data, cutoff = NA, output = NULL, plot = NULL,
-  answers = NULL, print = NULL, ...)
+kemp(
+  input_data,
+  cutoff = NA,
+  output = NULL,
+  plot = NULL,
+  answers = NULL,
+  print = NULL,
+  ...
+)
 }
 \arguments{
 \item{input_data}{An input type that can be processed by \code{convert()}}

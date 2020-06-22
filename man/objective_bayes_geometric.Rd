@@ -4,10 +4,18 @@
 \alias{objective_bayes_geometric}
 \title{Estimate species richness with an objective Bayes method using a geometric model}
 \usage{
-objective_bayes_geometric(data, output = TRUE, plot = TRUE,
-  answers = FALSE, tau = 10, burn.in = 100, iterations = 2500,
-  Metropolis.stdev.N = 75, Metropolis.start.theta = 1,
-  Metropolis.stdev.theta = 0.3)
+objective_bayes_geometric(
+  data,
+  output = TRUE,
+  plot = TRUE,
+  answers = FALSE,
+  tau = 10,
+  burn.in = 100,
+  iterations = 2500,
+  Metropolis.stdev.N = 75,
+  Metropolis.start.theta = 1,
+  Metropolis.stdev.theta = 0.3
+)
 }
 \arguments{
 \item{data}{TODO(Kathryn)(Kathryn)}

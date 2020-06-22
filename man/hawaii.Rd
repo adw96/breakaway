@@ -4,12 +4,14 @@
 \name{hawaii}
 \alias{hawaii}
 \title{(Data) Frequency count table of soil microbes in Hawaii.}
-\format{A data frame with 198 rows and 2 variables:
+\format{
+A data frame with 198 rows and 2 variables:
 \describe{
   \item{index}{an index variable}
   \item{frequency}{number of taxa that were observed with this frequency}
   ...
-}}
+}
+}
 \source{
 \url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
 }

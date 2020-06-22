@@ -4,11 +4,21 @@
 \alias{objective_bayes_mixedgeo}
 \title{Objective Bayes species richness estimate with the mixed-geometric model}
 \usage{
-objective_bayes_mixedgeo(data, output = TRUE, plot = TRUE,
-  answers = FALSE, tau = 10, burn.in = 100, iterations = 2500,
-  Metropolis.stdev.N = 100, Metropolis.start.T1 = 1,
-  Metropolis.stdev.T1 = 2, Metropolis.start.T2 = 3,
-  Metropolis.stdev.T2 = 2, bars = 3)
+objective_bayes_mixedgeo(
+  data,
+  output = TRUE,
+  plot = TRUE,
+  answers = FALSE,
+  tau = 10,
+  burn.in = 100,
+  iterations = 2500,
+  Metropolis.stdev.N = 100,
+  Metropolis.start.T1 = 1,
+  Metropolis.stdev.T1 = 2,
+  Metropolis.start.T2 = 3,
+  Metropolis.stdev.T2 = 2,
+  bars = 3
+)
 }
 \arguments{
 \item{data}{TODO(Kathryn)}

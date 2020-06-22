@@ -4,11 +4,21 @@
 \alias{objective_bayes_negbin}
 \title{Objective Bayes species richness estimate with the Negative Binomial model}
 \usage{
-objective_bayes_negbin(data, output = TRUE, plot = TRUE,
-  answers = FALSE, tau = 10, burn.in = 1000, iterations = 5000,
-  Metropolis.stdev.N = 100, Metropolis.start.T1 = -0.8,
-  Metropolis.stdev.T1 = 0.01, Metropolis.start.T2 = 0.8,
-  Metropolis.stdev.T2 = 0.01, bars = 5)
+objective_bayes_negbin(
+  data,
+  output = TRUE,
+  plot = TRUE,
+  answers = FALSE,
+  tau = 10,
+  burn.in = 1000,
+  iterations = 5000,
+  Metropolis.stdev.N = 100,
+  Metropolis.start.T1 = -0.8,
+  Metropolis.stdev.T1 = 0.01,
+  Metropolis.start.T2 = 0.8,
+  Metropolis.stdev.T2 = 0.01,
+  bars = 5
+)
 }
 \arguments{
 \item{data}{TODO(Kathryn)}

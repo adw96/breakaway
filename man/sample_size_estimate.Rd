@@ -4,8 +4,15 @@
 \alias{sample_size_estimate}
 \title{Estimate the sample size needed to do an unpaired one-way test using betta}
 \usage{
-sample_size_estimate(control_group_est, se_est, diff = 5, alpha = 0.05,
-  prop = 0.8, samples = 20, precision = 5)
+sample_size_estimate(
+  control_group_est,
+  se_est,
+  diff = 5,
+  alpha = 0.05,
+  prop = 0.8,
+  samples = 20,
+  precision = 5
+)
 }
 \arguments{
 \item{control_group_est}{An estimate of the alpha diversity parameter for
