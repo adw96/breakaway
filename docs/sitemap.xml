@@ -85,6 +85,12 @@
     <loc>http://adw96.github.io/breakaway/reference/plot.alpha_estimates.html</loc>
   </url>
   <url>
+    <loc>http://adw96.github.io/breakaway/reference/poisson_model.html</loc>
+  </url>
+  <url>
+    <loc>http://adw96.github.io/breakaway/reference/poisson_model_nof1.html</loc>
+  </url>
+  <url>
     <loc>http://adw96.github.io/breakaway/reference/proportions_instead.html</loc>
   </url>
   <url>
@@ -151,12 +157,9 @@
     <loc>http://adw96.github.io/breakaway/articles/breakaway.html</loc>
   </url>
   <url>
-    <loc>http://adw96.github.io/breakaway/articles/extended-tutorial.html</loc>
+    <loc>http://adw96.github.io/breakaway/articles/diversity-hypothesis-testing.html</loc>
   </url>
   <url>
-    <loc>http://adw96.github.io/breakaway/articles/resample-estimates.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/articles/sample-size-calculations.html</loc>
+    <loc>http://adw96.github.io/breakaway/articles/intro-diversity-estimation.html</loc>
   </url>
 </urlset>
