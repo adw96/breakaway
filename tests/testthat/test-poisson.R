@@ -35,8 +35,14 @@ row.names(mytab) <- c("HAMBI-0012", "HAMBI-1117", "HAMBI-0135", "HAMBI-0002",
                       "HAMBI-3452", "HAMBI-2443", "HAMBI-4527", "HAMBI-4673", "HAMBI-9999",
                       "HAMBI-5862", "HAMBI-1111")
 
+issue92 <- data.frame("x" = c(405, 1016, 2154, 5126, 5537, 6248, 11467, 23834, 47225, 65885, 116542, 124083, 190920, 1303602, 1707824, 1773553, 1966716, 2672048, 9362283), 
+                      "f" = c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1))
+
 test_that("no issues with few rare species dataset", {
   myphylo <- phyloseq(otu_table(mytab, taxa_are_rows = TRUE)) 
   expect_warning(breakaway(myphylo))
   expect_is(poisson_model(myphylo, cutoff = 100), "alpha_estimates")
+  
+  expect_warning(breakaway(issue92))
+  
 })
