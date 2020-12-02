@@ -243,12 +243,21 @@ betta <- function(chats, ses, X = NA,
 #' 
 #' 
 #' @param chats A vector of estimates of total diversity at different sampling
-#' locations.
-#' @param ses The standard errors in \samp{chats}, the diversity estimates.
+#' locations. Required with the \code{groups} argument, and optionally with the 
+#' \code{X} argument.
+#' @param ses The standard errors in \code{chats}, the diversity estimates. This
+#' can either be a vector of standard errors, or a string that describes the name
+#' of the variable in the data dataframe that contains the standard errors. 
 #' @param X A numeric matrix of covariates corresponding to fixed effects. If
-#' not supplied, an intercept-only model will be fit.
+#' not supplied, an intercept-only model will be fit. Optional with the \code{chats} 
+#' and \code{groups} arguments.
 #' @param groups A categorical variable representing the random-effects groups
-#' that each of the estimates belong to.
+#' that each of the estimates belong to. Required with the \code{chats} argument and 
+#' optionally with the \code{X} argument. 
+#' @param formula A formula object of the form \equation{y ~ x | group}. Required with 
+#' the \code{data} argument. 
+#' @param data A dataframe containing the response, response standard errors, covariates, 
+#' and grouping variable. Required with the \code{formula} argument. 
 #' @return \item{table}{ A coefficient table for the model parameters. The
 #' columns give the parameter estimates, standard errors, and p-values,
 #' respectively. This model is only as effective as your diversity estimation
@@ -280,8 +289,32 @@ betta <- function(chats, ses, X = NA,
 #' betta_random(c(2000, 3000, 4000, 3000), c(100, 200, 150, NA), groups = c("a", NA, 
 #'     "b", "b"))
 #' 
-#' @export betta_random
-betta_random <- function(chats, ses, X=NA, groups) {
+#' @export 
+betta_random <- function(chats = NULL, ses, X = NULL, groups = NULL, formula = NULL, data = NULL) {
+  if (!is.null(formula)) {
+    if (is.null(data)) {
+      stop("Please include a dataframe that corresponds with your formula.")
+    }
+  } else {
+    if (is.null(chats)) {
+      stop("Please include 'ses' along with either the arguments 'chats' and 'groups' 
+           or the arguments 'formula' and 'data'.")
+    }
+    if (is.null(groups)) {
+      stop("Please include a vector of group memberships as 'groups'.")
+    }
+  }
+  if (!is.null(formula)) {
+    if (length(ses) == 1 & is.character(ses)) {
+      ses = data[,ses]
+    }
+    group_var <- lme4:::barnames(lme4::findbars(lme4:::RHSForm(formula)))
+    groups <- data[,group_var]
+    full_form <- lme4:::subbars(formula)
+    sm_form <- update(full_form, paste("~.-",group_var))
+    X <- stats::model.matrix(sm_form, data)
+    chats <- stats::model.response(stats::model.frame(formula = sm_form, data = data))
+  }
   if (isTRUE(is.na(X))) { X <- matrix(rep(1,length(chats)),ncol=1) }
   consider <- !(is.na(chats) | is.na(ses) | is.na(groups) | apply(is.na(X),1,sum))
   
