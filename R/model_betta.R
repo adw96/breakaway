@@ -254,7 +254,7 @@ betta <- function(chats, ses, X = NA,
 #' @param groups A categorical variable representing the random-effects groups
 #' that each of the estimates belong to. Required with the \code{chats} argument and 
 #' optionally with the \code{X} argument. 
-#' @param formula A formula object of the form \equation{y ~ x | group}. Required with 
+#' @param formula A formula object of the form \eqn{y ~ x | group}. Required with 
 #' the \code{data} argument. 
 #' @param data A dataframe containing the response, response standard errors, covariates, 
 #' and grouping variable. Required with the \code{formula} argument. 
@@ -315,7 +315,7 @@ betta_random <- function(chats = NULL, ses, X = NULL, groups = NULL, formula = N
     X <- stats::model.matrix(sm_form, data)
     chats <- stats::model.response(stats::model.frame(formula = sm_form, data = data))
   }
-  if (isTRUE(is.na(X))) { X <- matrix(rep(1,length(chats)),ncol=1) }
+  if (isTRUE(is.null(X))) { X <- matrix(rep(1,length(chats)),ncol=1) }
   consider <- !(is.na(chats) | is.na(ses) | is.na(groups) | apply(is.na(X),1,sum))
   
   chats_effective <- chats[consider]; ses_effective <- ses[consider]; X_effective <- as.matrix(X[consider,])

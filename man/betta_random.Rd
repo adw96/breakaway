@@ -4,19 +4,37 @@
 \alias{betta_random}
 \title{modelling total diversity with random effects}
 \usage{
-betta_random(chats, ses, X = NA, groups)
+betta_random(
+  chats = NULL,
+  ses,
+  X = NULL,
+  groups = NULL,
+  formula = NULL,
+  data = NULL
+)
 }
 \arguments{
 \item{chats}{A vector of estimates of total diversity at different sampling
-locations.}
+locations. Required with the \code{groups} argument, and optionally with the 
+\code{X} argument.}
 
-\item{ses}{The standard errors in \samp{chats}, the diversity estimates.}
+\item{ses}{The standard errors in \code{chats}, the diversity estimates. This
+can either be a vector of standard errors, or a string that describes the name
+of the variable in the data dataframe that contains the standard errors.}
 
 \item{X}{A numeric matrix of covariates corresponding to fixed effects. If
-not supplied, an intercept-only model will be fit.}
+not supplied, an intercept-only model will be fit. Optional with the \code{chats} 
+and \code{groups} arguments.}
 
 \item{groups}{A categorical variable representing the random-effects groups
-that each of the estimates belong to.}
+that each of the estimates belong to. Required with the \code{chats} argument and 
+optionally with the \code{X} argument.}
+
+\item{formula}{A formula object of the form \eqn{y ~ x | group}. Required with 
+the \code{data} argument.}
+
+\item{data}{A dataframe containing the response, response standard errors, covariates, 
+and grouping variable. Required with the \code{formula} argument.}
 }
 \value{
 \item{table}{ A coefficient table for the model parameters. The
