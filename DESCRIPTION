@@ -1,11 +1,12 @@
 Package: breakaway
 Title: Species Richness Estimation and Modeling
-Version: 4.7.2
+Version: 4.7.3
 Date: 2020-06-22
 Authors@R: as.person(c(
     "Amy Willis <adwillis@uw.edu> [aut, cre]",
     "Bryan D Martin [aut]",
     "Pauline Trinh [aut]",
+    "Sarah Teichman [aut]",
     "Kathryn Barger [aut]",
     "John Bunge [aut]"
   ))

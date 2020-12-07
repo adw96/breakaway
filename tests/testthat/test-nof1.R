@@ -1,12 +1,14 @@
 context("breakaway nof1")
 library(breakaway)
-library(tibble)
-data("apples")
-apples_nof1 <- apples[-1,]
+library(tidyverse)
 
 # nof1 can't currently take phyloseq!
 
 test_that("breakaway nof1 works", {
+  
+  data("apples")
+  apples_nof1 <- apples[-1,]
+  
   ### Sample 111 was a particular problem after change
   expect_is(apples_nof1 %>% breakaway_nof1, "alpha_estimate")
   

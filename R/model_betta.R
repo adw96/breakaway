@@ -284,9 +284,14 @@ betta <- function(chats, ses, X = NA,
 #' @keywords diversity
 #' @examples
 #' 
-#' betta_random(c(2000, 3000, 4000, 3000), c(100, 200, 150, 180), X = cbind(Int = 1, 
-#'     Cont_var = c(100, 150, 100, 50)), groups = c("a", "a", "a", "b"))
+#' df <- data.frame(chats = c(2000, 3000, 4000, 3000), ses = c(100, 200, 150, 180), Cont_var = c(100, 150, 100, 50), groups = c("a", "a", "a", "b"))
 #' 
+#' # formula notation
+#' betta_random(formula = chats ~ Cont_var| groups, ses = "ses",  data = df)    
+#' 
+#' # direct input
+#' betta_random(c(2000, 3000, 4000, 3000), c(100, 200, 150, 180), X = cbind(Int = 1, Cont_var = c(100, 150, 100, 50)), groups = c("a", "a", "a", "b"))
+#'     
 #' ## handles missing data
 #' betta_random(c(2000, 3000, 4000, 3000), c(100, 200, 150, NA), groups = c("a", NA, 
 #'     "b", "b"))
@@ -312,7 +317,7 @@ betta_random <- function(chats = NULL, ses, X = NULL, groups = NULL, formula = N
     }
     group_var <- lme4:::barnames(lme4::findbars(lme4:::RHSForm(formula)))
     groups <- data[,group_var]
-    full_form <- lme4:::subbars(formula)
+    full_form <- lme4::subbars(formula)
     sm_form <- update(full_form, paste("~.-",group_var))
     X <- stats::model.matrix(sm_form, data)
     chats <- stats::model.response(stats::model.frame(formula = sm_form, data = data))

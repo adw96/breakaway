@@ -36,4 +36,40 @@ test_that("betta isn't stupid", {
             "list")
   
   
+  df <- data.frame(chats = c(2000, 3000, 4000, 3000),
+                   ses = c(100, 200, 150, 180),
+                   Cont_var = c(100, 150, 100, 50),
+                   groups = c("a", "a", "a", "b"))
+  b_formula <- betta_random(ses = "ses", 
+                            formula = chats ~ Cont_var | groups, data = df)
+  b_inputs <- betta_random(df$chats, df$ses, 
+                           X = cbind(Int = 1, df$Cont_var), 
+                           groups = df$groups)
+  
+  expect_is(b_formula, "list")
+  expect_is(b_inputs, "list")
+  expect_true(all.equal(b_formula$table[2, ], b_inputs$table[2, ]))
+  
+  df2 <- data.frame(chats = c(2000, 3000, 4000, 3000),
+                    ses = c(100, 200, 150, NA),
+                    groups = c("a", NA, "b", "b"))
+  
+  expect_is(betta_random(ses = "ses", formula = chats ~ 1 | groups, data = df2), 
+            "list")
+  
+  
+  df_uncouth <- data.frame(pooleen = c(2000, 3000, 4000, 3000),
+                           dayved = c(100, 200, 150, 180),
+                           brybry = c(100, 150, 100, 50),
+                           sarsh = c("a", "a", "a", "b"))
+  expect_is(
+    betta_random(ses = "dayved",
+                 formula = pooleen ~ brybry | sarsh, data = df_uncouth), 
+    "list")
+  expect_is(
+    betta_random(ses = dayved,
+                 formula = pooleen ~ brybry | sarsh, data = df_uncouth), 
+    "list")
+  
+  
 })
