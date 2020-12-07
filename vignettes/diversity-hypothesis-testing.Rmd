@@ -9,7 +9,10 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-  
+
+```{r, include=FALSE}
+options(rmarkdown.html_vignette.check_title = FALSE) 
+```
   
 This tutorial will talk through hypothesis testing for alpha diversity indices using the functions `betta` and `betta_random`. 
 

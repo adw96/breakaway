@@ -276,6 +276,8 @@ betta <- function(chats, ses, X = NA,
 #' @author Amy Willis
 #' 
 #' @importFrom stats coef dexp dgeom dnbinom dpois fitted lm model.matrix nls optim pchisq pnorm predict quantile rbeta rbinom rnbinom rnorm runif sd var vcov
+#' @import lme4 
+#' 
 #' @seealso \code{\link{betta}}; 
 #' @references Willis, A., Bunge, J., and Whitman, T. (2015). Inference for
 #' changes in biodiversity. \emph{arXiv preprint.}

@@ -13,12 +13,13 @@ Description: Understanding the drivers of microbial diversity is an important fr
 License: GPL-2
 BugReports: https://github.com/adw96/breakaway/issues
 LazyData: true
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Depends:
     R (>= 3.5.0)
 Imports: dplyr,
     ggplot2,
     graphics,
+    lme4,
     magrittr,
     MASS,
     phyloseq,
