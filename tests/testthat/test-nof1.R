@@ -1,11 +1,10 @@
 context("breakaway nof1")
 library(breakaway)
-library(tidyverse)
 
 # nof1 can't currently take phyloseq!
 
 test_that("breakaway nof1 works", {
-  
+  library(tidyverse)
   data("apples")
   apples_nof1 <- apples[-1,]
   

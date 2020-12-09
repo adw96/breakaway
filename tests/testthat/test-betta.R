@@ -40,7 +40,7 @@ test_that("betta isn't stupid", {
                    ses = c(100, 200, 150, 180),
                    Cont_var = c(100, 150, 100, 50),
                    groups = c("a", "a", "a", "b"))
-  b_formula <- betta_random(ses = "ses", 
+  b_formula <- betta_random(ses = ses, 
                             formula = chats ~ Cont_var | groups, data = df)
   b_inputs <- betta_random(df$chats, df$ses, 
                            X = cbind(Int = 1, df$Cont_var), 
@@ -54,7 +54,7 @@ test_that("betta isn't stupid", {
                     ses = c(100, 200, 150, NA),
                     groups = c("a", NA, "b", "b"))
   
-  expect_is(betta_random(ses = "ses", formula = chats ~ 1 | groups, data = df2), 
+  expect_is(betta_random(ses = ses, formula = chats ~ 1 | groups, data = df2), 
             "list")
   
   
@@ -63,7 +63,7 @@ test_that("betta isn't stupid", {
                            brybry = c(100, 150, 100, 50),
                            sarsh = c("a", "a", "a", "b"))
   expect_is(
-    betta_random(ses = "dayved",
+    betta_random(ses = dayved,
                  formula = pooleen ~ brybry | sarsh, data = df_uncouth), 
     "list")
   expect_is(
