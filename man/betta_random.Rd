@@ -19,8 +19,9 @@ locations. Required with the \code{groups} argument, and optionally with the
 \code{X} argument.}
 
 \item{ses}{The standard errors in \code{chats}, the diversity estimates. This
-can either be a vector of standard errors, or a string that describes the name
-of the variable in the data dataframe that contains the standard errors.}
+can either be a vector of standard errors (with the arguments \code{chats} and 
+\code{X}), or the name of the variable in the dataframe \code{data} that contains 
+the standard errors (with the arguments \code{formula} and \code{data}).}
 
 \item{X}{A numeric matrix of covariates corresponding to fixed effects. If
 not supplied, an intercept-only model will be fit. Optional with the \code{chats} 
@@ -61,7 +62,7 @@ This function extends betta() to permit random effects modelling.
 df <- data.frame(chats = c(2000, 3000, 4000, 3000), ses = c(100, 200, 150, 180), Cont_var = c(100, 150, 100, 50), groups = c("a", "a", "a", "b"))
 
 # formula notation
-betta_random(formula = chats ~ Cont_var| groups, ses = "ses",  data = df)    
+betta_random(formula = chats ~ Cont_var| groups, ses = ses,  data = df)    
 
 # direct input
 betta_random(c(2000, 3000, 4000, 3000), c(100, 200, 150, 180), X = cbind(Int = 1, Cont_var = c(100, 150, 100, 50)), groups = c("a", "a", "a", "b"))

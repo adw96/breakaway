@@ -86,10 +86,13 @@ Suppose we want to fit the model with Day as a fixed effect. Here's how we do th
 combined_richness <- meta %>%
   left_join(summary(richness_soil),
             by = "sample_names")
-
+# Old way (still works)
 bt_day_fixed <- betta(chats = combined_richness$estimate,
                       ses = combined_richness$error,
                       X = model.matrix(~Day, data = combined_richness))
+# Fancy new way
+bt_day_fixed <- betta(formula = estimate ~ Day, 
+                      ses = error, data = combined_richness)
 bt_day_fixed$table
 ```
 
@@ -106,7 +109,7 @@ bt_day_fixed_id_random <- betta_random(chats = combined_richness$estimate,
 # Fancy new way -- thanks to Sarah Teichman for implementing!
 bt_day_fixed_id_random <-
   betta_random(formula = estimate ~ Day | ID, 
-               ses = "error",  data = combined_richness)
+               ses = error,  data = combined_richness)
 bt_day_fixed_id_random$table
 ```
 
@@ -160,7 +163,7 @@ You might notice that the estimates are not different from the plug-in estimate 
 
 ```{r}
 bt_day_fixed_id_random <- betta_random(formula = estimate ~ Day | ID, 
-               ses = "error",  data = combined_shannon)
+               ses = error,  data = combined_shannon)
 bt_day_fixed_id_random$table
 ```
 

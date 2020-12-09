@@ -8,10 +8,17 @@
 #' 
 #' @param chats A vector of estimates of total diversity at different sampling
 #' locations. \samp{breakaway} estimates are suggested in the high-diversity
-#' case but not enforced.
-#' @param ses The standard errors in \samp{chats}, the diversity estimates.
+#' case but not enforced. 
+#' @param ses The standard errors in \code{chats}, the diversity estimates. This
+#' can either be a vector of standard errors (with the arguments \code{chats} and 
+#' \code{X}), or the name of the variable in the dataframe \code{data} that contains 
+#' the standard errors (with the arguments \code{formula} and \code{data}). 
 #' @param X A numeric matrix of covariates. If not supplied, an intercept-only
-#' model will be fit.
+#' model will be fit. This is optional with the \code{chats} argument. 
+#' @param formula A formula object of the form \eqn{y ~ x | group}. Required with 
+#' the \code{data} argument. 
+#' @param data A dataframe containing the response, response standard errors, covariates, 
+#' and grouping variable. Required with the \code{formula} argument. 
 #' @param initial_est (Optional) A vector of length 1 + ncol(X) giving the starting values for the likelihood maximisation search. The first element is the starting estimate for sigma^2_u, and the remaining elements are the starting elements for beta. Defaults to NULL, in which case the starting values outlined in the paper are used. 
 #' @return \item{table}{ A coefficient table for the model parameters. The
 #' columns give the parameter estimates, standard errors, and p-values,
@@ -81,10 +88,13 @@
 #' 
 #' 
 #' 
+#' df <- data.frame(chats = c(2000, 3000, 4000, 3000), ses = c(100, 200, 150, 180),
+#'                  Cont_var = c(100, 150, 100, 50))
 #' 
+#' # formula notation 
+#' betta(formula = chats ~ Cont_var, ses = ses, data = df)
 #' 
-#' 
-#' 
+#' # direct input 
 #' betta(c(2000, 3000, 4000, 3000), c(100, 200, 150, 180), cbind(1, c(100, 150, 100, 
 #'     50)))
 #' 
@@ -116,9 +126,24 @@
 #' 
 #' 
 #' @export betta
-betta <- function(chats, ses, X = NA, 
-                  initial_est = NULL) {
-  if (isTRUE(is.na(X))) { X <- matrix(rep(1,length(chats)),ncol = 1) }
+betta <- function(chats = NULL, ses, X = NULL, 
+                  initial_est = NULL, formula = NULL, data = NULL) {
+  if (!is.null(formula)) {
+    if (is.null(data)) {
+      stop("Please include a dataframe that corresponds with your formula.")
+    }
+  } else {
+    if (is.null(chats)) {
+      stop("Please include 'ses' along with either the argument 'chats' 
+           or the arguments 'formula' and 'data'.")
+    }
+  }
+  if (!is.null(formula)) {
+    ses <- data[,deparse(substitute(ses))]
+    X <- stats::model.matrix(formula, data)
+    chats <- stats::model.response(stats::model.frame(formula = formula, data = data))
+  }
+  if (isTRUE(is.null(X))) { X <- matrix(rep(1,length(chats)),ncol = 1) }
   
   consider <- !(is.na(chats) | is.na(ses) | apply(is.na(X), 1, sum))
   
@@ -246,8 +271,9 @@ betta <- function(chats, ses, X = NA,
 #' locations. Required with the \code{groups} argument, and optionally with the 
 #' \code{X} argument.
 #' @param ses The standard errors in \code{chats}, the diversity estimates. This
-#' can either be a vector of standard errors, or a string that describes the name
-#' of the variable in the data dataframe that contains the standard errors. 
+#' can either be a vector of standard errors (with the arguments \code{chats} and 
+#' \code{X}), or the name of the variable in the dataframe \code{data} that contains 
+#' the standard errors (with the arguments \code{formula} and \code{data}). 
 #' @param X A numeric matrix of covariates corresponding to fixed effects. If
 #' not supplied, an intercept-only model will be fit. Optional with the \code{chats} 
 #' and \code{groups} arguments.
@@ -287,7 +313,7 @@ betta <- function(chats, ses, X = NA,
 #' df <- data.frame(chats = c(2000, 3000, 4000, 3000), ses = c(100, 200, 150, 180), Cont_var = c(100, 150, 100, 50), groups = c("a", "a", "a", "b"))
 #' 
 #' # formula notation
-#' betta_random(formula = chats ~ Cont_var| groups, ses = "ses",  data = df)    
+#' betta_random(formula = chats ~ Cont_var| groups, ses = ses,  data = df)    
 #' 
 #' # direct input
 #' betta_random(c(2000, 3000, 4000, 3000), c(100, 200, 150, 180), X = cbind(Int = 1, Cont_var = c(100, 150, 100, 50)), groups = c("a", "a", "a", "b"))
@@ -312,9 +338,7 @@ betta_random <- function(chats = NULL, ses, X = NULL, groups = NULL, formula = N
     }
   }
   if (!is.null(formula)) {
-    if (length(ses) == 1 & is.character(ses)) {
-      ses = data[,ses]
-    }
+    ses <- data[,deparse(substitute(ses))]
     group_var <- lme4:::barnames(lme4::findbars(lme4:::RHSForm(formula)))
     groups <- data[,group_var]
     full_form <- lme4::subbars(formula)
