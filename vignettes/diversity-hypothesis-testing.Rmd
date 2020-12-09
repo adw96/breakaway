@@ -90,7 +90,7 @@ combined_richness <- meta %>%
 bt_day_fixed <- betta(chats = combined_richness$estimate,
                       ses = combined_richness$error,
                       X = model.matrix(~Day, data = combined_richness))
-# Fancy new way
+# Fancy new way -- thanks to Sarah Teichman for implementing!
 bt_day_fixed <- betta(formula = estimate ~ Day, 
                       ses = error, data = combined_richness)
 bt_day_fixed$table
@@ -106,7 +106,7 @@ bt_day_fixed_id_random <- betta_random(chats = combined_richness$estimate,
                                        ses = combined_richness$error,
                                        X = model.matrix(~Day, data = combined_richness),
                                        groups=combined_richness$ID)
-# Fancy new way -- thanks to Sarah Teichman for implementing!
+# Fancy new way 
 bt_day_fixed_id_random <-
   betta_random(formula = estimate ~ Day | ID, 
                ses = error,  data = combined_richness)
