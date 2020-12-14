@@ -18,3 +18,8 @@ after_success:
 env:
   - _R_S3_METHOD_LOOKUP_BASEENV_AFTER_GLOBALENV_=true
   - _R_S3_METHOD_LOOKUP_USE_TOPENV_AS_DEFENV_=true
+
+addons:
+  apt:
+    packages:
+      - libgit2-dev
