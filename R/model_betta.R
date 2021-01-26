@@ -226,7 +226,7 @@ betta <- function(chats = NULL, ses, X = NULL,
   blups[consider] <- c(X_effective %*% beta + us)
   mytable$blups <- blups
   
-  # if (class(try(getvar(), silent=T)) != "try-error") {
+  if (class(try(getvar(), silent=T)) != "try-error") {
   # get BLUPs SEs
   var_matrix <- matrix(NA, nrow=(n + p), ncol=(n + p))
   var_matrix[1:p, 1:p] <- t(X_effective) %*% solve(R) %*% X_effective
@@ -239,7 +239,7 @@ betta <- function(chats = NULL, ses, X = NULL,
                            var_matrix_inv %*%
                            t(cbind(X_effective, diag(1, n)))) %>% diag %>% sqrt %>% c
   mytable$blupses <- blupvars
-  # }
+   }
   
   # For n-dimensional MVN random variable, likelihood is...
   logLhat <- -0.5*(n*log(2*pi) + # -n/2 * log(2 * pi) +
