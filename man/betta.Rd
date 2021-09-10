@@ -19,8 +19,8 @@ locations. \samp{breakaway} estimates are suggested in the high-diversity
 case but not enforced.}
 
 \item{ses}{The standard errors in \code{chats}, the diversity estimates. This
-can either be a vector of standard errors (with the arguments \code{chats} and 
-\code{X}), or the name of the variable in the dataframe \code{data} that contains 
+can either be a vector of standard errors (with the arguments \code{chats} and
+\code{X}), or the name of the variable in the dataframe \code{data} that contains
 the standard errors (with the arguments \code{formula} and \code{data}).}
 
 \item{X}{A numeric matrix of covariates. If not supplied, an intercept-only
@@ -28,10 +28,10 @@ model will be fit. This is optional with the \code{chats} argument.}
 
 \item{initial_est}{(Optional) A vector of length 1 + ncol(X) giving the starting values for the likelihood maximisation search. The first element is the starting estimate for sigma^2_u, and the remaining elements are the starting elements for beta. Defaults to NULL, in which case the starting values outlined in the paper are used.}
 
-\item{formula}{A formula object of the form \eqn{y ~ x | group}. Required with 
+\item{formula}{A formula object of the form \eqn{y ~ x | group}. Required with
 the \code{data} argument.}
 
-\item{data}{A dataframe containing the response, response standard errors, covariates, 
+\item{data}{A dataframe containing the response, response standard errors, covariates,
 and grouping variable. Required with the \code{formula} argument.}
 }
 \value{
@@ -103,11 +103,11 @@ a way that accounts for its estimated nature.
 df <- data.frame(chats = c(2000, 3000, 4000, 3000), ses = c(100, 200, 150, 180),
                  Cont_var = c(100, 150, 100, 50))
 
-# formula notation 
+# formula notation
 betta(formula = chats ~ Cont_var, ses = ses, data = df)
 
-# direct input 
-betta(c(2000, 3000, 4000, 3000), c(100, 200, 150, 180), cbind(1, c(100, 150, 100, 
+# direct input
+betta(c(2000, 3000, 4000, 3000), c(100, 200, 150, 180), cbind(1, c(100, 150, 100,
     50)))
 
 ## handles missing data
