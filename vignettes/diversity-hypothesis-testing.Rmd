@@ -169,7 +169,35 @@ bt_day_fixed_id_random$table
 
 and similarly for no random effects.
 
+If you are interested in generating confidence intervals for and testing hypotheses about
+linear combinations of fixed effects estimated in a `betta` or `betta_random` model, we
+recommend using the 'betta_lincom' function.
+
+For example, to generate a confidence interval for $\beta_0 + \beta_1$ (i.e., intercept plus
+'Day2' coefficient, or in other words, the mean Shannon diversity in soils on day 82 of the experiment) in the Shannon diversity model we fit in the previous code chunk,
+we run the following code:
+
+```{r}
+
+betta_lincom(fitted_betta = bt_day_fixed_id_random,
+             linear_com = c(1,1),
+             signif_cutoff = 0.05)
+
+
+```
+
+Here, we've set the `linear_com` argument equal to `c(1,1)` to tell `betta_lincom` to construct
+a confidence interval for $1 \times \beta_0 + 1 \times \beta_1$. Because we set `signif_cutoff` equal to $0.05$, `betta_lincom` returns a $95\%  = (1 - 0.05)*100\%$ confidence interval.
+The p-value reported here
+is for a test of the null hypothesis that $1 \times \beta_0 + 1 \times \beta_1 = 0$ -- 
+unsurprisingly, this is small. (If you are confused about why this is ``unsurprising,''think about what $1 \times \beta_0 + 1 \times \beta_1 = 0$ 
+represents and when a Shannon diversity can be zero).
+
+The syntax and output using `betta_lincom` with a `betta` object as input is exactly the same 
+as with a `betta_random` object, so we haven't included a separate example for this case.
+
 And there you have it! That's how to do hypothesis testing for diversity!
+
 
 If you use our tools, please don't forget to cite them!
 
