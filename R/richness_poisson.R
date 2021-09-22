@@ -65,7 +65,9 @@ poisson_model <- function(input_data,
   } else {
     # eqn nonlinear; so use Newton's method
     # for large lambda, lambda/(1-exp(-lambda)) \approx lambda, so choose upper bound above n/c
-    lambda_hat <- uniroot(poisson_fn, c(cc / nn, nn/cc + 100))$root
+    # for large lambda, lambda/(1-exp(-lambda)) \approx lambda, so choose lower bound below 
+    
+    lambda_hat <- uniroot(poisson_fn, c(cc / (100*nn), nn/cc + 100))$root
     
     ccc_subset <- cc / (1-exp(-lambda_hat)) 
     ccc_hat <- ccc_subset + cc_excluded
