@@ -61,4 +61,5 @@ jobs:
         run: |
           install.packages(c("remotes"))
           if (!requireNamespace("BiocManager", quietly = TRUE)){install.packages("BiocManager")}; BiocManager::install(c("phyloseq"), ask = FALSE)
+          remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
