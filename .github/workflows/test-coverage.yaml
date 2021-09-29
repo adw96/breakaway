@@ -28,3 +28,9 @@ jobs:
       - name: Test coverage
         run: covr::codecov()
         shell: Rscript {0}
+        
+      - name: Install dependencies
+        run: |
+          install.packages(c("remotes"))
+          if (!requireNamespace("BiocManager", quietly = TRUE)){install.packages("BiocManager")}; BiocManager::install(c("phyloseq"), ask = FALSE)
+        shell: Rscript {0}
