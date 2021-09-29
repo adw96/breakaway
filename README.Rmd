@@ -15,9 +15,10 @@ knitr::opts_chunk$set(
 # breakaway <img src="docs/breakaway-logo.png" align="right" width="165px"/>
 
 
-[![Travis-CI Build Status](https://travis-ci.org/adw96/breakaway.svg?branch=master)](https://travis-ci.org/adw96/breakaway)
-[![Coverage status](https://codecov.io/gh/adw96/breakaway/branch/master/graph/badge.svg)](https://codecov.io/github/adw96/breakaway?branch=master)
-
+<!-- badges: start -->
+  [![R-CMD-check](https://github.com/adw96/breakaway/workflows/R-CMD-check/badge.svg)](https://github.com/adw96/breakaway/actions)
+  [![codecov.io](https://codecov.io/gh/adw96/breakaway/coverage.svg?branch=master)](https://codecov.io/gh/adw96/breakaway?branch=master)
+  <!-- badges: end -->
 
 `breakaway` is the premier package for statistical analysis of microbial diversity. `breakaway` implements the latest and greatest estimates of richness, as well as the most commonly used estimates.
 Understanding the drivers of microbial diversity is an important frontier of microbial ecology, and investigating the diversity of samples from microbial ecosystems is a common step in any microbiome analysis.
