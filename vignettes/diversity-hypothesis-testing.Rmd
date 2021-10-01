@@ -138,7 +138,7 @@ Let's treat all samples as independent observations (`X = NULL`) and fit the Div
 
 (Check out the full documentation for details, including how to run in parallel)
 
-```{r, include=TRUE, cache=TRUE, message=FALSE, results="hide"}
+```{r, include=TRUE, message=FALSE, results="hide"}
 dv <- DivNet::divnet(soil_phylum, X = NULL)
 ```
 
