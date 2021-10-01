@@ -2,8 +2,7 @@
 title: "Introduction to hypothesis testing for diversity"
 author: "Amy Willis"
 date: "`r Sys.Date()`"
-output: 
-  output: rmarkdown::github_document
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{intro-hypothesis-testing}
   %\VignetteEngine{knitr::rmarkdown}

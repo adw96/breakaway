@@ -2,14 +2,17 @@
 title: "Introduction to diversity estimation"
 author: "Amy Willis"
 date: "`r Sys.Date()`"
-output: 
-  output: rmarkdown::github_document
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{intro-diversity-estimation}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r, include=FALSE}
+options(rmarkdown.html_vignette.check_title = FALSE) 
+```
+  
 `breakaway` is a package for estimating species richness. This vignette will lead you through how species richness estimation works, how to get an estimate of species richness using `breakaway`.
 
 We will also talk about diagnosing and fixing model misspecification. 
