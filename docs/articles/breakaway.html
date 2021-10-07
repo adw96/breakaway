@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">breakaway</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.7.5</span>
       </span>
     </div>
 
@@ -46,7 +46,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -75,7 +75,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/adw96/breakaway/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -89,13 +89,13 @@
 
       
 
-      </header><script src="breakaway_files/header-attrs-2.2/header-attrs.js"></script><div class="row">
+      </header><script src="breakaway_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Getting started with breakaway</h1>
                         <h4 class="author">Amy Willis</h4>
             
-            <h4 class="date">2020-07-10</h4>
+            <h4 class="date">2021-10-07</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/adw96/breakaway/blob/master/vignettes/breakaway.Rmd"><code>vignettes/breakaway.Rmd</code></a></small>
       <div class="hidden name"><code>breakaway.Rmd</code></div>
@@ -108,46 +108,25 @@
 <div id="vignette-info" class="section level2">
 <h2 class="hasAnchor">
 <a href="#vignette-info" class="anchor"></a>Vignette Info</h2>
-<p>This vignette will lead you through</p>
-<ul>
-<li>loading in your data and covariate information</li>
-<li>creating frequency tables</li>
-<li>using <code>breakaway</code> to estimate species richness</li>
-<li>using the objective bayes methods to estimate species richness</li>
-<li>estimating various alpha diversity indices and providing a very basic resample-based method for ascribing variability to them</li>
-<li>using <code>betta</code> to model changes in alpha diversity with covariates</li>
-</ul>
-<p>If there is something that you would like explained please feel free to request it!</p>
+<p>This vignette will lead you through the most basic way to use <code>breakaway</code>. For a more in depth discussion of how and why estimating species richness is possible, check out the <em>Introduction to diversity estimation</em> vignette.</p>
 </div>
-<div id="loading-the-package-and-data" class="section level2">
+<div id="diving-in" class="section level2">
 <h2 class="hasAnchor">
-<a href="#loading-the-package-and-data" class="anchor"></a>Loading the package and data</h2>
+<a href="#diving-in" class="anchor"></a>Diving in!</h2>
 <p>Download the latest version of the package from github.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">breakaway</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">toy_otu_table</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">toy_metadata</span>)
-
-<span class="co">## For historical reasons we're going to call them:</span>
-<span class="no">otu_data</span> <span class="kw">&lt;-</span> <span class="no">toy_otu_table</span>
-<span class="no">meta_data</span> <span class="kw">&lt;-</span> <span class="no">toy_metadata</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">meta_data</span>)</pre></body></html></div>
-<pre><code>##         Years bloom2 Period     Site
-## Sample1  2008     no Spring Littoral
-## Sample2  2008     no Spring  Pelagic
-## Sample3  2008     no Spring  Pelagic
-## Sample4  2008     no Summer  Pelagic
-## Sample5  2007     no Summer Littoral
-## Sample6  2007     no Summer  Pelagic</code></pre>
-<p>It is important that the column names of the OTU table is the same as the rownames of the covariate information. Remember to reorder them if they don’t match! You can check this with</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="no">otu_data</span>) <span class="kw">==</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="no">meta_data</span>))</pre></body></html></div>
-<pre><code>## [1] TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://adw96.github.io/breakaway/">breakaway</a></span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">toy_otu_table</span><span class="op">)</span>
+<span class="co">## For historical reasons we're going to rename it:</span>
+<span class="va">otu_data</span> <span class="op">&lt;-</span> <span class="va">toy_otu_table</span></code></pre></div>
 </div>
 <div id="creating-frequency-tables" class="section level2">
 <h2 class="hasAnchor">
 <a href="#creating-frequency-tables" class="anchor"></a>Creating frequency tables</h2>
 <p>We’re now going to “collapse” the otu_data’s columns (samples) into frequency tables. Frequency tables…</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">frequencytablelist</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/build_frequency_count_tables.html">build_frequency_count_tables</a></span>(<span class="no">otu_data</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">frequencytablelist</span><span class="kw">[[</span><span class="fl">63</span>]])</pre></body></html></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">frequencytablelist</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/build_frequency_count_tables.html">build_frequency_count_tables</a></span><span class="op">(</span><span class="va">otu_data</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">frequencytablelist</span><span class="op">[[</span><span class="fl">63</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <pre><code>##   index frequency
 ## 1     1        35
 ## 2     2        22
@@ -155,133 +134,51 @@
 ## 4     4        17
 ## 5     5        11
 ## 6     6        10</code></pre>
-<p>Interpretation: In this sample, there were 57 different species observed only once (singletons), 25 different species observed only twice, …, 1 species observed 171 times.</p>
+<p>Interpretation: In this sample, there were 35 different species observed only once (singletons), 22 different species observed only twice, …, 1 species observed 2922 times.</p>
 </div>
 <div id="estimating-species-richness" class="section level2">
 <h2 class="hasAnchor">
 <a href="#estimating-species-richness" class="anchor"></a>Estimating species richness</h2>
 <p>Let’s run breakaway on the first frequency count table</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="../reference/breakaway.html">breakaway</a></span>(<span class="no">frequencytablelist</span><span class="kw">[[</span><span class="fl">1</span>]])</pre></body></html></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/breakaway.html">breakaway</a></span><span class="op">(</span><span class="va">frequencytablelist</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <pre><code>## Estimate of richness from method breakaway:
 ##   Estimate is 359
 ##  with standard error 325.81
 ##   Confidence interval: (258, 18180)</code></pre>
-<p>You should get some output to screen, including your estimate &amp; s.e., and a plot of the fits to the ratios. Note that it is not a fit to the frequencies, it is a fit to the ratios of frequencies. You would never need to include this type of plot in one of your papers. It is solely for you to check for model misspecification. What’s model misspecification? If the black diamonds don’t remotely follow the pattern of the white circles, that’s model misspecification.</p>
+<p>You should get some output to screen, including your estimate &amp; s.e. You can also investigate a plot of the fits to the ratios as follows:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/breakaway.html">breakaway</a></span><span class="op">(</span><span class="va">frequencytablelist</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><img src="breakaway_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p>Note that it is not a fit to the frequencies, it is a fit to the ratios of frequencies. You would never need to include this type of plot in one of your papers. It is solely for you to check for model misspecification. What’s model misspecification? If the model fit (pink circles) don’t remotely follow the pattern of the observed ratios (green triangles), that’s model misspecification.</p>
 <p>Sometimes, breakaway’s usual procedure doesn’t work, that is, it gives a negative estimate, which is of course silly. In that case, breakaway returns a different model’s result. It’s called the WLRM. There isn’t a picture. Here is an example of a case where breakaway returns the WLRM.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="../reference/breakaway.html">breakaway</a></span>(<span class="no">frequencytablelist</span><span class="kw">[[</span><span class="fl">60</span>]])</pre></body></html></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/breakaway.html">breakaway</a></span><span class="op">(</span><span class="va">frequencytablelist</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <pre><code>## Estimate of richness from method breakaway:
-##   Estimate is 414
-##  with standard error 17.53
-##   Confidence interval: (373, 1111)</code></pre>
-<p>breakaway can defer to the WLRM for several reasons. Perhaps there are too many singletons. Perhaps there isn’t a long enough tail. Perhaps there is false diversity. In this case, there was probably not enough data. Let’s see if this failure was sensitive to the singleton count by running breakaway_nof1. This requires no singleton count (implicit is that the singleton count was erroneous) and predicts it from the other frequencies.</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu"><a href="../reference/breakaway_nof1.html">breakaway_nof1</a></span>(<span class="no">frequencytablelist</span><span class="kw">[[</span><span class="fl">60</span>]][-<span class="fl">1</span>,])</pre></body></html></div>
+##   Estimate is 346
+##  with standard error 42.82
+##   Confidence interval: (283, 2669)
+##   Cutoff:  15</code></pre>
+<p>breakaway can defer to the WLRM for several reasons. Perhaps there are too many singletons. Perhaps there isn’t a long enough tail. Perhaps there is false diversity. Regardless, we can see if this failure was sensitive to the singleton count by running <code><a href="../reference/breakaway_nof1.html">breakaway_nof1()</a></code>. This requires no singleton count (implicit is that the singleton count was erroneous) and predicts it from the other frequencies:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/breakaway_nof1.html">breakaway_nof1</a></span><span class="op">(</span><span class="va">frequencytablelist</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span>,<span class="op">]</span><span class="op">)</span></code></pre></div>
 <pre><code>## Estimate of richness from method PoissonModel:
-##   Estimate is 223
-##  with standard error 0.08
-##   Confidence interval: (223, 223)</code></pre>
-<p>The reference for this method: Willis, A. (2016). Species richness estimation with high diversity but spurious singletons.</p>
-<p>breakaway_nof1 is an exploratory tool for assessing sensitivity of breakaway to the singleton count. You should not use it for diversity estimation – only diversity <em>exploration</em> :)</p>
-<p>Let’s move on to looking at the Objective Bayes procedures of Kathryn Barger. It’s the latest and greatest in diversity estimation!</p>
-<p>There are 4 different types of objective bayes estimates, due to 4 different models. If you have time play with all of them! For now we are just going to look at the negative binomial.</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="co">## Uncomment this at home: just takes a while for compiling</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">2</span>)
-<span class="co">#objective_bayes_negbin(frequencytablelist[[1]], plot = F)</span>
-
-<span class="co">### Play with these later</span>
-<span class="co">#objective_bayes_poisson(frequencytablelist[[60]])$results</span>
-<span class="co">#objective_bayes_geometric(frequencytablelist[[60]])$results</span>
-<span class="co">#objective_bayes_mixedgeo(frequencytablelist[[60]])$results</span></pre></body></html></div>
-<p>That’s a lot of information! Bayesians are very good at generating a lot of information. This is because rather than a single estimate you see the distribution of estimates (remember that the Bayesian paradigm believes the parameter to be random =&gt; it has a distribution)</p>
-<p>Let’s talk about some of the information: $results mode.N/mean.N/median.N : the mode/mean / median estimate $results L/UCI.N: A 95% percent interval estimate for the richness The picture at the bottom: The distribution of estimates</p>
+##   Estimate is 75
+##  with standard error 0.47
+##   Confidence interval: (75, 77)</code></pre>
+<p>The reference for <code><a href="../reference/breakaway_nof1.html">breakaway_nof1()</a></code> is: Willis, A. (2016). Species richness estimation with high diversity but spurious singletons.</p>
+<p>breakaway_nof1 is an exploratory tool for assessing sensitivity of breakaway to the singleton count. I recommend it as a sensitivity analysis rather than for diversity estimation.</p>
 </div>
-<div id="estimating-alpha-and-beta-diversity" class="section level2">
+<div id="next-steps" class="section level2">
 <h2 class="hasAnchor">
-<a href="#estimating-alpha-and-beta-diversity" class="anchor"></a>Estimating alpha and beta diversity</h2>
-<p>The above discussion focused exclusively on richness. Check out <code>github.com/adw96/DivNet</code> for alpha and beta diversity tutorials!</p>
-</div>
-<div id="modelling-alpha-diversity" class="section level2">
-<h2 class="hasAnchor">
-<a href="#modelling-alpha-diversity" class="anchor"></a>Modelling alpha diversity</h2>
-<p>See the vignette <em>Introduction to hypothesis testing for diversity</em>.</p>
-<!-- TODO: Fix this to use DivNet -->
-<!-- Let's do some comparisons across samples... accounting for variability of course! -->
-<!-- We're going to do this procedure for shannon evenness, and estimate it using the plug-in estimate. This is not meant to imply that you should be interested in Shannon! Just that some people are. -->
-<!-- Feel free to substitute in whatever alpha diversity/evenness/richness procedure you're interested in! -->
-<!-- To do this we will start by iterating on Shannon on every one of our samples. It may take a minute or two to run. Feel like a stretch? Go ahead! -->
-<!-- This section may take a while. Do you know if your neighbour likes bagels? Would they order a croissant over a bagel? Now is a great time to find out! -->
-<!-- ```{r} -->
-<!-- estimates_shannon <- matrix(NA,nrow=dim(otu_data)[2],ncol=4) -->
-<!-- rownames(estimates_shannon) <- colnames(otu_data) -->
-<!-- colnames(estimates_shannon) <- c("shannon_est","shannon_seest","shannon_lcb","shannon_ucb") -->
-<!-- for (i in 1:dim(otu_data)[2]) { -->
-<!--   #resample_estimate(otu_data[,i], shannon, my_sample_size = ns) -->
-<!--   samples <- replicate(500, resample_estimate(otu_data[,i], shannon, my_sample_size = ns)) -->
-<!--   estimates_shannon[i,1] <- mean(samples) -->
-<!--   estimates_shannon[i,2] <- sd(samples) -->
-<!--   estimates_shannon[i,3:4] <- quantile(samples, c(0.025, 0.975)) -->
-<!-- } -->
-<!-- ``` -->
-<!-- Here gives us our estimates and standard errors so we can have a look estimates_shannon[,1:2] We can even (normal-ish) plot intervals. The x-axis is just against the enumeration of the lakes. It is not meaningful. -->
-<!-- The following plotting command may be different to ones you have seen before. It's a really quick way of visualizing the error in your samples and quickly spotting outliers. NOTE: Outliers have SMALL LINES, which means high precision, and are generally far away from points near them. -->
-<!-- ```{r} -->
-<!-- betta_pic(estimates_shannon[,1], estimates_shannon[,2]) -->
-<!-- ``` -->
-<!-- No obvious outliers here. -->
-<!-- Lets look at the effect of summer samples -->
-<!-- ```{r} -->
-<!-- col_by_seasons <- ifelse(meta_data$Period=="Autum","black",ifelse(meta_data$Period=="Spring","pink","red")) -->
-<!-- betta_pic(estimates_shannon[,1], estimates_shannon[,2], mycol = col_by_seasons) -->
-<!-- legend("bottom",c("Spring","Summer","Autumn"),col=c("pink","red","black"),cex=0.8,lwd=3,box.col=F) -->
-<!-- ``` -->
-<!-- Don't forget that because we are plotting diversity *estimates*, we need to plot *lines* (i.e. confidence intervals) not points (point estimates). That's very important. -->
-<!-- We're now going to create our "design" matrix, a.k.a. "X matrix." To do this we're going to cheat a little. We're going to use an existing R method, lm, to save us the hassle. We are going to investigate the effect of temperature and site -->
-<!-- ```{r} -->
-<!-- covar_matrix <- model.matrix(lm(rnorm(dim(meta_data)[1])~(meta_data$Site)*(meta_data$Period))) -->
-<!-- head(covar_matrix) -->
-<!-- colnames(covar_matrix) <- c("Int", "SiteP", "Spring", "Summer", "SitePSpring", "SitePSummer") -->
-<!-- ``` -->
-<!-- Details (skip if uninterested): lm(y~x+z) is a function that fits a regression line to y using the variables x and z. It has a very nice interface that saves you doing the hard work (aka "math") to create your design matrix. The function we are going to use has no such nice interface. For that reason, we steal the design matrix out of lm()'s implementation. lm(y~x*z) looks at interactions. In this case, we are seeing if the evenness trend as a function of temperature changes depending on the site. -->
-<!-- Easter egg: if you can put your own data (from your own research) in the *exact* same form as the above example, you don't need to understand what happens below. You can just copy it :) Hint: The biggest problem you may have in implementing the above is the ordering of the data and the metadata. The following: -->
-<!-- ```{r} -->
-<!-- colnames(otu_data)==rownames(meta_data) -->
-<!-- ``` -->
-<!-- being true in every spot is a necessary but not sufficient condition for the following to work properly. -->
-<!-- ##MODEL SPECIES RICHNESS, TEST SIGNIFICANCE, INTERPRET RESULTS -->
-<!-- Let's go ahead and try to fit our model and take a look at the results -->
-<!-- ```{r} -->
-<!-- results <- betta(estimates_shannon[,1],estimates_shannon[,2],covar_matrix) -->
-<!-- results$table -->
-<!-- ``` -->
-<!-- Interpretation is idential to regression. -->
-<!-- Here are some things to quickly note: -->
-<!-- Firstly, significance of Spring means that the average Shannon diversity of the Spring samples is significantly higher than non-Spring AT SITE L. It's more by 0.40 on average. -->
-<!-- The non-signif of the SiteP variables means there is no significant difference between Sites P and L, in both summer and not... AFTER ACCOUNTING FOR  ESTIMATION ERROR! -->
-<!-- Notice that a regression on the Shannon estimates notes more evidence against the "site has no effect" null: -->
-<!-- ```{r} -->
-<!-- summary(lm(estimates_shannon[,1] ~ meta_data$Site*(meta_data$Period=="Summ")))$coef[,c(1,4)] -->
-<!-- ``` -->
-<!-- Not such a big deal in this case, but may be with more, marginal results/more variables. -->
-<!-- You should always use betta() when modelling and doing inference on functions of your OTU table! -->
-<!-- sigsq_u (in full results output) being significant means there is still *heterogeneity* in the lakes. "Not all lakes have the same Shannon diversity even after accounting for season & site." (microscale heterogeneity, pH, chemical factors, depth...?) -->
-<!-- If you are unfamiliar with regression analysis, we would recommend taking an introductory course in regression analysis. You will not regret it (after some period of time)! -->
-<!-- Congratulations! You have finished the first tutorial! -->
-<!-- An important note: I'm not pushing Shannon. You can repeat all of the above analysis with your own favourite index. Suppose I am more interested in Simpson, or inverse Simpson, or Shannon adjusted for population size. Here is how I would do this: -->
-<!-- Define a function to take otu columns and estimate the Simpson index using the plug-in estimate -->
-<!-- ```{r} -->
-<!-- simpson  <-  function(data) { -->
-<!--   data <- data/sum(data) -->
-<!--   sum(data^2) -->
-<!-- } -->
-<!-- ``` -->
-<!-- Exercise: define a function to calculate the inverse of the plug-in Simpson index  estimate -->
-<!-- To estimate the bootstrap mean and standard error of the simpson index, we do the following -->
-<!-- ```{r} -->
-<!-- simpson_resamples <- replicate(100, resample_estimate(otu_data[,1], simpson)) -->
-<!-- hist(simpson_resamples) -->
-<!-- mean(simpson_resamples) -->
-<!-- sd(simpson_resamples) -->
-<!-- ``` -->
-<!-- This is just for the first column. You would do this for every sample (in a loop), then use these as inputs to betta. -->
+<a href="#next-steps" class="anchor"></a>Next steps</h2>
+<ul>
+<li>The above discussion focused exclusively on richness. Check out <code>github.com/adw96/DivNet</code> for alpha and beta diversity tutorials!</li>
+<li>To learn about modelling alpha diversity, see the vignette <em>Introduction to hypothesis testing for diversity</em>
+</li>
+<li>To hear more details about how species richness estimation works, check out <em>Introduction to diversity estimation</em>
+</li>
+</ul>
 </div>
   </div>
 
@@ -296,11 +193,11 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Amy Willis, Bryan D Martin, Pauline Trinh, Kathryn Barger, John Bunge.</p>
+  <p>Developed by Amy Willis, Bryan D Martin, Pauline Trinh, Sarah Teichman, David Clausen, Kathryn Barger, John Bunge.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

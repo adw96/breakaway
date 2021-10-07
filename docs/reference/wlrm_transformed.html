@@ -81,7 +81,7 @@ estimation procedure outlined in Rocchetti, Bunge and Bohning (2011)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">breakaway</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.7.5</span>
       </span>
     </div>
 
@@ -89,7 +89,7 @@ estimation procedure outlined in Rocchetti, Bunge and Bohning (2011)." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -118,7 +118,7 @@ estimation procedure outlined in Rocchetti, Bunge and Bohning (2011)." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/adw96/breakaway/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -145,13 +145,13 @@ estimation procedure outlined in Rocchetti, Bunge and Bohning (2011)." />
 estimation procedure outlined in Rocchetti, Bunge and Bohning (2011).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>wlrm_transformed</span>(
-  <span class='no'>input_data</span>,
-  <span class='kw'>cutoff</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>print</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>answers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>wlrm_transformed</span><span class='op'>(</span>
+  <span class='va'>input_data</span>,
+  cutoff <span class='op'>=</span> <span class='cn'>NA</span>,
+  print <span class='op'>=</span> <span class='cn'>NULL</span>,
+  plot <span class='op'>=</span> <span class='cn'>NULL</span>,
+  answers <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -195,14 +195,19 @@ Applied Statistics</em>, <b>5</b>.</p>
 
     <div class='dont-index'><p><code><a href='breakaway.html'>breakaway</a></code>; <code><a href='apples.html'>apples</a></code>;
 <code><a href='wlrm_untransformed.html'>wlrm_untransformed</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Amy Willis</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'>wlrm_transformed</span>(<span class='no'>apples</span>)</div><div class='output co'>#&gt; Estimate of richness from method wlrm_transformed:
+<span class='fu'>wlrm_transformed</span><span class='op'>(</span><span class='va'>apples</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Estimate of richness from method wlrm_transformed:
 #&gt;   Estimate is 1179
 #&gt;  with standard error 28.18
 #&gt;   Confidence interval: (1014, 3291)
-#&gt;   Cutoff:  33</div><div class='input'><span class='fu'>wlrm_transformed</span>(<span class='no'>apples</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>print</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>answers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Estimate of richness from method wlrm_transformed:
+#&gt;   Cutoff:  33</div><div class='input'><span class='fu'>wlrm_transformed</span><span class='op'>(</span><span class='va'>apples</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span>, print <span class='op'>=</span> <span class='cn'>FALSE</span>, answers <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Estimate of richness from method wlrm_transformed:
 #&gt;   Estimate is 1179
 #&gt;  with standard error 28.18
 #&gt;   Confidence interval: (1014, 3291)
@@ -219,11 +224,11 @@ Applied Statistics</em>, <b>5</b>.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Amy Willis, Bryan D Martin, Pauline Trinh, Kathryn Barger, John Bunge.</p>
+  <p>Developed by Amy Willis, Bryan D Martin, Pauline Trinh, Sarah Teichman, David Clausen, Kathryn Barger, John Bunge.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

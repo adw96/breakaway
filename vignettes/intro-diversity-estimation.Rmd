@@ -66,13 +66,13 @@ ft <- pasolli_et_al$`#.Samples` %>% make_frequency_count_table
 ft %>% head(10)
 ```
 
-So 1972 species were observed once, 692 were observed twice, and 52 were observed ten times. 
+So `r ft[which(ft$Var1==1),2]` species were observed once, `r ft[which(ft$Var1==2),2]` were observed twice, and `r ft[which(ft$Var1==10),2]` were observed ten times. 
 
 ```{r}
 ft %>% tail(10)
 ```
 
-The common species are at the other end of the frequency count table: the most common species was observed 3453 times. There was only one species observed 3453 times.
+The common species are at the other end of the frequency count table: the most common species was observed 3453 times. There was only `ft[nrow(ft), 2]` species observed `r ft[nrow(ft), 1]` times.
 
 Let's take a look to see how many species were observed in the dataset:
 
@@ -136,7 +136,7 @@ $$
 
 Therefore, as that intercept gets close to zero, the estimate of the number of unobserved species gets really large! Intuitively, this makes sense -- if there are so many rare species, we cannot reliably predict how many unobserved species there are. There is some minimal amount of information needed to estimate total species richness! 
 
-*Note: At time of writing (August 2019), `breakaway`, with the default settings, produced an estimate of 7724. If this number has changed significantly since then, it's because we are constantly making improvements to the code base, which may change estimates -- usually by a little but sometimes by more. Please let me know or [log an issue](https://github.com/adw96/breakaway/issues) to let us know if this occured!*
+*Note: Last time we checked (September 2021), `breakaway`, with the default settings, produced an estimate of 7724. If this number has changed significantly since then, it's because we are constantly making improvements to the code base, which may change estimates -- usually by a little but sometimes by more. Please let me know or [log an issue](https://github.com/adw96/breakaway/issues) to let us know if this occured!*
 
 ## Conclusions
 
