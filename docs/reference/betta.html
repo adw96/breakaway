@@ -83,7 +83,7 @@ explaining diversity and a hypothesis test for heterogeneity." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">breakaway</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.7.5</span>
       </span>
     </div>
 
@@ -91,7 +91,7 @@ explaining diversity and a hypothesis test for heterogeneity." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -120,7 +120,7 @@ explaining diversity and a hypothesis test for heterogeneity." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/adw96/breakaway/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -149,7 +149,14 @@ that may explain diversity. It returns the significance of the covariates in
 explaining diversity and a hypothesis test for heterogeneity.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>betta</span>(<span class='no'>chats</span>, <span class='no'>ses</span>, <span class='kw'>X</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>initial_est</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>betta</span><span class='op'>(</span>
+  chats <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>ses</span>,
+  X <span class='op'>=</span> <span class='cn'>NULL</span>,
+  initial_est <span class='op'>=</span> <span class='cn'>NULL</span>,
+  formula <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -162,16 +169,29 @@ case but not enforced.</p></td>
     </tr>
     <tr>
       <th>ses</th>
-      <td><p>The standard errors in <samp>chats</samp>, the diversity estimates.</p></td>
+      <td><p>The standard errors in <code>chats</code>, the diversity estimates. This
+can either be a vector of standard errors (with the arguments <code>chats</code> and 
+<code>X</code>), or the name of the variable in the dataframe <code>data</code> that contains 
+the standard errors (with the arguments <code>formula</code> and <code>data</code>).</p></td>
     </tr>
     <tr>
       <th>X</th>
       <td><p>A numeric matrix of covariates. If not supplied, an intercept-only
-model will be fit.</p></td>
+model will be fit. This is optional with the <code>chats</code> argument.</p></td>
     </tr>
     <tr>
       <th>initial_est</th>
       <td><p>(Optional) A vector of length 1 + ncol(X) giving the starting values for the likelihood maximisation search. The first element is the starting estimate for sigma^2_u, and the remaining elements are the starting elements for beta. Defaults to NULL, in which case the starting values outlined in the paper are used.</p></td>
+    </tr>
+    <tr>
+      <th>formula</th>
+      <td><p>A formula object of the form \(y ~ x | group\). Required with 
+the <code>data</code> argument.</p></td>
+    </tr>
+    <tr>
+      <th>data</th>
+      <td><p>A dataframe containing the response, response standard errors, covariates, 
+and grouping variable. Required with the <code>formula</code> argument.</p></td>
     </tr>
     </table>
 
@@ -230,6 +250,9 @@ changes in biodiversity. <em>arXiv preprint.</em></p>
 
     <div class='dont-index'><p><code><a href='breakaway.html'>breakaway</a></code>; <code><a href='breakaway_nof1.html'>breakaway_nof1</a></code>;
 <code><a href='apples.html'>apples</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Amy Willis</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -249,12 +272,52 @@ changes in biodiversity. <em>arXiv preprint.</em></p>
 
 
 
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>chats <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2000</span>, <span class='fl'>3000</span>, <span class='fl'>4000</span>, <span class='fl'>3000</span><span class='op'>)</span>, ses <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>150</span>, <span class='fl'>180</span><span class='op'>)</span>,
+                 Cont_var <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>150</span>, <span class='fl'>100</span>, <span class='fl'>50</span><span class='op'>)</span><span class='op'>)</span>
 
-
-
-
-<span class='fu'>betta</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2000</span>, <span class='fl'>3000</span>, <span class='fl'>4000</span>, <span class='fl'>3000</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>150</span>, <span class='fl'>180</span>), <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>100</span>, <span class='fl'>150</span>, <span class='fl'>100</span>,
-    <span class='fl'>50</span>)))</div><div class='output co'>#&gt; $table
+<span class='co'># formula notation </span>
+<span class='fu'>betta</span><span class='op'>(</span>formula <span class='op'>=</span> <span class='va'>chats</span> <span class='op'>~</span> <span class='va'>Cont_var</span>, ses <span class='op'>=</span> <span class='va'>ses</span>, data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $table
+#&gt;                Estimates Standard Errors p-values
+#&gt; (Intercept) 2.995149e+03      416.145952        0
+#&gt; Cont_var    1.730997e-03        3.931275        1
+#&gt; 
+#&gt; $cov
+#&gt;             (Intercept)    Cont_var
+#&gt; (Intercept)  1575149.61 -14038.4223
+#&gt; Cont_var      -14038.42    140.5715
+#&gt; 
+#&gt; $ssq_u
+#&gt; [1] 666667.8
+#&gt; 
+#&gt; $homogeneity
+#&gt; [1] 143.9291   0.0000
+#&gt; 
+#&gt; $global
+#&gt; [1] 5.180787e+01 6.120660e-13
+#&gt; 
+#&gt; $blups
+#&gt; [1] 2014.709 2999.740 3967.199 2999.779
+#&gt; 
+#&gt; $blupses
+#&gt; [1]  99.44868 198.55147 148.15536 178.94475
+#&gt; 
+#&gt; $loglikelihood
+#&gt; [1] -32.03712
+#&gt; 
+#&gt; $aic
+#&gt; [1] 70.07423
+#&gt; 
+#&gt; $aicc
+#&gt; [1] Inf
+#&gt; 
+#&gt; $r_squared_wls
+#&gt; [1] -4.376681e-05
+#&gt; </div><div class='input'>
+<span class='co'># direct input </span>
+<span class='fu'>betta</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2000</span>, <span class='fl'>3000</span>, <span class='fl'>4000</span>, <span class='fl'>3000</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>150</span>, <span class='fl'>180</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>150</span>, <span class='fl'>100</span>, 
+    <span class='fl'>50</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $table
 #&gt;         Estimates Standard Errors p-values
 #&gt; [1,] 2.995149e+03      416.145952        0
 #&gt; [2,] 1.730997e-03        3.931275        1
@@ -292,7 +355,8 @@ changes in biodiversity. <em>arXiv preprint.</em></p>
 #&gt; [1] -4.376681e-05
 #&gt; </div><div class='input'>
 <span class='co'>## handles missing data</span>
-<span class='fu'>betta</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2000</span>, <span class='fl'>3000</span>, <span class='fl'>4000</span>, <span class='fl'>3000</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>150</span>, <span class='fl'>NA</span>))</div><div class='output co'>#&gt; $table
+<span class='fu'>betta</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2000</span>, <span class='fl'>3000</span>, <span class='fl'>4000</span>, <span class='fl'>3000</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>150</span>, <span class='cn'>NA</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $table
 #&gt;      Estimates Standard Errors p-values
 #&gt; [1,]      3000        584.2429        0
 #&gt; 
@@ -328,7 +392,8 @@ changes in biodiversity. <em>arXiv preprint.</em></p>
 #&gt; [1] -2.220446e-16
 #&gt; </div><div class='input'>
 <span class='co'>## A test for heterogeneity of apples diversity estimates vs butterfly estimates</span>
-<span class='fu'>betta</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1552</span>, <span class='fl'>1500</span>, <span class='fl'>884</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>305</span>, <span class='fl'>675</span>, <span class='fl'>205</span>), <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1</span>)))</div><div class='output co'>#&gt; $table
+<span class='fu'>betta</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1552</span>, <span class='fl'>1500</span>, <span class='fl'>884</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>305</span>, <span class='fl'>675</span>, <span class='fl'>205</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $table
 #&gt;      Estimates Standard Errors p-values
 #&gt; [1,]      1526        294.0600     0.00
 #&gt; [2,]      -642        424.3689     0.13
@@ -398,11 +463,11 @@ changes in biodiversity. <em>arXiv preprint.</em></p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Amy Willis, Bryan D Martin, Pauline Trinh, Kathryn Barger, John Bunge.</p>
+  <p>Developed by Amy Willis, Bryan D Martin, Pauline Trinh, Sarah Teichman, David Clausen, Kathryn Barger, John Bunge.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

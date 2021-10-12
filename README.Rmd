@@ -18,14 +18,11 @@ knitr::opts_chunk$set(
 [![Travis-CI Build Status](https://travis-ci.org/adw96/breakaway.svg?branch=master)](https://travis-ci.org/adw96/breakaway)
 [![Coverage status](https://codecov.io/gh/adw96/breakaway/branch/master/graph/badge.svg)](https://codecov.io/github/adw96/breakaway?branch=master)
 
-
-`breakaway` is the premier package for statistical analysis of microbial diversity. `breakaway` implements the latest and greatest estimates of richness, as well as the most commonly used estimates.
 Understanding the drivers of microbial diversity is an important frontier of microbial ecology, and investigating the diversity of samples from microbial ecosystems is a common step in any microbiome analysis.
 
-[`DivNet`](https://github.com/adw96/DivNet) is a new package by the same authors for estimating Shannon diversity, and other diversity indices. `breakaway` focuses on richness while `DivNet` focuses on Shannon, Simpson, and other alpha diversities as well as some beta diversity indices. Check it out!
+`breakaway` is the premier package for statistical analysis of microbial diversity. `breakaway` implements the latest and greatest estimates of richness, as well as the most commonly used estimates.
 
-`breakaway` has undergone substantial renovations to make it more modern, easy-to-use, and robust. If functionality that you previously enjoyed in `breakaway` no longer exists, please submit an [issue](https://github.com/adw96/breakaway/issues)!
-
+[`DivNet`](https://github.com/adw96/DivNet) is a package by the `breakaway` authors for estimating Shannon diversity, and other diversity indices. `breakaway` focuses on richness while `DivNet` focuses on Shannon, Simpson, and other alpha diversities as well as some beta diversity indices. Check it out!
 
 ### Citing breakaway
 
@@ -59,8 +56,8 @@ devtools::install_github("adw96/breakaway")
 
 Maintainer: [Amy Willis](http://statisticaldiversitylab.com)
 
-Authors: [Amy Willis](http://statisticaldiversitylab.com), [Bryan Martin](https://bryandmartin.github.io/), [Pauline Trinh](https://twitter.com/paulinetrinh), [Kathryn Barger](http://hnrca.tufts.edu/kathryn-barger-ph-d/) and [John Bunge](https://stat.cornell.edu/people/faculty/john-bunge)
+Authors: [Amy Willis](http://statisticaldiversitylab.com),  [John Bunge](https://stat.cornell.edu/people/faculty/john-bunge), [Bryan Martin](https://bryandmartin.github.io/), [Pauline Trinh](https://twitter.com/paulinetrinh), [Kathryn Barger](http://hnrca.tufts.edu/kathryn-barger-ph-d/), [David Clausen](https://www.biostat.washington.edu/people/david-clausen) and [Sarah Teichman](https://svteichman.github.io/). 
 
 Do you have a request for us? Let us know! We want folks to use `breakaway` and are committed to making it as easy to use as possible. 
 
-Do you have a question? Check out the [wiki](https://github.com/adw96/breakaway/wiki), then shoot us an email. We receive a lot of emails from users, so we try to answer questions on the Wiki rather than responding to everyone individually.
+Do you have a question? Check out the above documentation list, then shoot us an email or open a [Discussion](https://github.com/adw96/breakaway/discussions). We receive a lot of emails from users, so we try to answer questions on the Wiki rather than responding to everyone individually.
