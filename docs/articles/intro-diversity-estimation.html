@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">breakaway</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.7.5</span>
       </span>
     </div>
 
@@ -46,7 +46,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -75,7 +75,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/adw96/breakaway/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -89,13 +89,13 @@
 
       
 
-      </header><script src="intro-diversity-estimation_files/header-attrs-2.2/header-attrs.js"></script><div class="row">
+      </header><script src="intro-diversity-estimation_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to diversity estimation</h1>
                         <h4 class="author">Amy Willis</h4>
             
-            <h4 class="date">2020-07-10</h4>
+            <h4 class="date">2021-10-07</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/adw96/breakaway/blob/master/vignettes/intro-diversity-estimation.Rmd"><code>vignettes/intro-diversity-estimation.Rmd</code></a></small>
       <div class="hidden name"><code>intro-diversity-estimation.Rmd</code></div>
@@ -110,13 +110,15 @@
 <h2 class="hasAnchor">
 <a href="#preliminaries" class="anchor"></a>Preliminaries</h2>
 <p>Download the latest version of the package from github.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="co"># install.packages("devtools")</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
 <span class="co"># devtools::install_github("adw96/breakaway")</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">breakaway</span>)</pre></body></html></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://adw96.github.io/breakaway/">breakaway</a></span><span class="op">)</span></code></pre></div>
 <p>Note that we are not continuing to maintain the CRAN version of <code>breakaway</code> at this time, so avoid <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("breakaway")</a></code>.</p>
-<p>If you are not accustomed to using the pipe in <code>R</code> (the operator <code><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></code>), I strongly encourage you to start using it. It will make your code easier to read and write. Here is how to install and load it:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="co"># install.packages("magrittr")</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">magrittr</span>)</pre></body></html></div>
+<p>If you are not accustomed to using the pipe in <code>R</code> (the operator <code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code>), I strongly encourage you to start using it. It will make your code easier to read and write. Here is how to install and load it:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># install.packages("magrittr")</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span></code></pre></div>
 </div>
 <div id="why-bother-with-species-richness-estimation" class="section level2">
 <h2 class="hasAnchor">
@@ -124,7 +126,7 @@
 <p>Typically, when you sample species (or groups) from a population, you won’t see every <em>individual</em> in the population. This means that you may not see every <em>species</em> in the population. The species richness that you observed in your sample will generally be lower than the species richness in your population.</p>
 <p>The best way to correct this issue is to estimate the number of species that are present in your population but missing from the sample. <code>breakaway</code> provides software to do this.</p>
 <p>Sometimes modeling observed richness is fine and doesn’t cause a problem for modeling or inference. However, <em>especially</em> when some populations are sampled more intensively than others (e.g., your sequencing depth is higher in some samples than others), samples should not be directly compared without adjustment. We recommend getting into the habit of estimating the number of missing species before making conclusions about diversity.</p>
-<p>Note that while this problem has been called “species richness” for historical reasons, you can also estimate the richness at the level of strain (or sub-species), genus, family, etc. The input data that you provide determines the taxonomic order on which <code>breakaway</code> estimates the richness. Therefore, if you would like to estimate strain richness, simply give <code>breakaway</code> abundance data at the strain level. <code>phyloseq</code> has a nice function called <code>tax_glom()</code> that can help with this.</p>
+<p>Note that while this problem has been called “species richness” for historical reasons, you can also estimate the richness at the level of strain (or sub-species), genus, family, etc. The input data that you provide determines the taxonomic order on which <code>breakaway</code> estimates the richness. Therefore, if you would like to estimate strain richness, simply give <code>breakaway</code> abundance data at the strain level. <code>phyloseq</code> has a nice function called <code><a href="https://rdrr.io/pkg/phyloseq/man/tax_glom.html">tax_glom()</a></code> that can help with this.</p>
 </div>
 <div id="how-does-species-richness-estimation-work" class="section level2">
 <h2 class="hasAnchor">
@@ -136,11 +138,13 @@
 <a href="#estimating-the-diversity-of-human-host-associated-microbes" class="anchor"></a>Estimating the diversity of human host associated microbes</h2>
 <p>In their very cool paper “Extensive Unexplored Human Microbiome Diversity Revealed by Over 150,000 Genomes from Metagenomes Spanning Age, Geography, and Lifestyle” (<a href="https://doi.org/10.1016/j.cell.2019.01.001">doi.org/10.1016/j.cell.2019.01.001</a>), Pasolli and co-authors assembled 4,930 species-level genome bins using publicly available shotgun metagenomic data. Our goal is to estimate the species-level diversity of human host associated microbes.</p>
 <p>First, let’s read in the data:</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co"># install.packages("openxlsx")</span>
-<span class="no">pasolli_et_al</span> <span class="kw">&lt;-</span> <span class="kw pkg">openxlsx</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/read.xlsx.html">read.xlsx</a></span>(<span class="st">"https://ars.els-cdn.com/content/image/1-s2.0-S0092867419300017-mmc4.xlsx"</span>, <span class="kw">sheet</span> <span class="kw">=</span> <span class="fl">2</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># install.packages("openxlsx")</span>
+<span class="va">pasolli_et_al</span> <span class="op">&lt;-</span> <span class="fu">openxlsx</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/read.xlsx.html">read.xlsx</a></span><span class="op">(</span><span class="st">"https://ars.els-cdn.com/content/image/1-s2.0-S0092867419300017-mmc4.xlsx"</span>, sheet <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <p>The “frequency count table” is the basic data structure for estimating species richness. It is a table with two columns: the second column indicates the number of species observed <code>j</code> times, where the first column contains <code>j</code>. Let’s take a look at the first 10 columns of the frequency count table for the Pasolli et al dataset:</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">ft</span> <span class="kw">&lt;-</span> <span class="no">pasolli_et_al</span>$<span class="no">`#.Samples`</span> <span class="kw">%&gt;%</span> <span class="no">make_frequency_count_table</span>
-<span class="no">ft</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fl">10</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ft</span> <span class="op">&lt;-</span> <span class="va">pasolli_et_al</span><span class="op">$</span><span class="va">`#.Samples`</span> <span class="op">%&gt;%</span> <span class="va">make_frequency_count_table</span>
+<span class="va">ft</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></code></pre></div>
 <pre><code>##    Var1 Freq
 ## 1     1 1972
 ## 2     2  692
@@ -153,7 +157,8 @@
 ## 9     9   64
 ## 10   10   52</code></pre>
 <p>So 1972 species were observed once, 692 were observed twice, and 52 were observed ten times.</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">ft</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span>(<span class="fl">10</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ft</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></code></pre></div>
 <pre><code>##     Var1 Freq
 ## 298 1584    1
 ## 299 1629    1
@@ -165,23 +170,25 @@
 ## 305 2559    1
 ## 306 2983    1
 ## 307 3453    1</code></pre>
-<p>The common species are at the other end of the frequency count table: the most common species was observed 3453 times. There was only one species observed 3453 times.</p>
+<p>The common species are at the other end of the frequency count table: the most common species was observed 3453 times. There was only <code>ft[nrow(ft), 2]</code> species observed 3453 times.</p>
 <p>Let’s take a look to see how many species were observed in the dataset:</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">ft</span> <span class="kw">%&gt;%</span> <span class="no">sample_richness</span></pre></body></html></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ft</span> <span class="op">%&gt;%</span> <span class="va">sample_richness</span></code></pre></div>
 <pre><code>## Estimate of richness from method Plug-in:
 ##   Estimate is 4930
 ##  with standard error 0
 ##   Confidence interval: (4930, 4930)</code></pre>
 <p>Cool! We corroborated the abstract of the paper and saw that 4930 species level genome bins were identified.</p>
-<p>If you’re not accustomed to using <code><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></code>, here is a quick demo: <code>argument %&gt;% function</code>. It’s equivalent to executing <code>function(argument)</code>. So essentially we just ran <code><a href="../reference/sample_richness.html">sample_richness(ft)</a></code>, but we stated the argument first. The pipe operator <code><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></code> becomes especially useful when you want to compound multiple functions. <a href="https://www.datacamp.com/community/tutorials/pipe-r-tutorial">Here</a> is a great introduction, and <a href="https://github.com/adw96/biostat561/blob/master/lecture2/lecture2.pdf">here</a> is a lecture I gave to our department’s PhD students about it.</p>
+<p>If you’re not accustomed to using <code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code>, here is a quick demo: <code>argument %&gt;% function</code>. It’s equivalent to executing <code>function(argument)</code>. So essentially we just ran <code><a href="../reference/sample_richness.html">sample_richness(ft)</a></code>, but we stated the argument first. The pipe operator <code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code> becomes especially useful when you want to compound multiple functions. <a href="https://www.datacamp.com/community/tutorials/pipe-r-tutorial">Here</a> is a great introduction, and <a href="https://github.com/adw96/biostat561/blob/master/lecture2/lecture2.pdf">here</a> is a lecture I gave to our department’s PhD students about it.</p>
 </div>
 <div id="species-richness-estimation-with-breakaway" class="section level2">
 <h2 class="hasAnchor">
 <a href="#species-richness-estimation-with-breakaway" class="anchor"></a>Species richness estimation with <code>breakaway</code>
 </h2>
 <p>The simplest way to estimate species richness with <code>breakaway</code> is as follows:</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">estimated_richness</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/breakaway.html">breakaway</a></span>(<span class="no">ft</span>)
-<span class="no">estimated_richness</span></pre></body></html></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">estimated_richness</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/breakaway.html">breakaway</a></span><span class="op">(</span><span class="va">ft</span><span class="op">)</span>
+<span class="va">estimated_richness</span></code></pre></div>
 <pre><code>## Estimate of richness from method breakaway:
 ##   Estimate is 7724
 ##  with standard error 2495.5
@@ -194,17 +201,20 @@
 <a href="#investigating-model-misspecification" class="anchor"></a>Investigating model misspecification</h2>
 <p>The method <code>breakaway</code> actually fits a suite of models, and then selects which is the best amongst them. Check out <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/biom.12332">the paper</a> for more details. But how can we diagnose if the model is reasonable?</p>
 <p>First, we need to find out what model was fit:</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">estimated_richness</span>$<span class="no">model</span></pre></body></html></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">estimated_richness</span><span class="op">$</span><span class="va">model</span></code></pre></div>
 <pre><code>## [1] "Kemp"</code></pre>
 <p>Kemp models were originally described in <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/biom.12332">the breakaway paper</a>. They are based on fitting flexible non-linear models (that have a probabilistic interpretation!) to ratios of contiguous frequency counts. We can therefore investigate model specification by looking at the plot of fitted ratios:</p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">estimated_richness</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">estimated_richness</span><span class="op">)</span></code></pre></div>
 <p><img src="intro-diversity-estimation_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 <p>Yikes! That doesn’t look so good. We are definitely not following the curve near x = 0.</p>
 <p>It looks like what is happening is that <code>breakaway</code> is putting too much value on high frequency counts. This isn’t good, since we want to be prioritising the low-frequency counts. The way to do that is with the <code>cutoff</code> parameter. <code>cutoff</code> specifies the maximum number of frequency counts to use in fitting.</p>
 <p>Based on the above plot, I’m going to make the subjective decision to only use the first 10 frequency counts for estimation. The pattern in the frequency counts appears to level off significantly after 10 counts, and furthermore, species level genome bins observed more than 10 times are likely to be uninformative for the structure of rare species.</p>
 <p>To use only the first 10 frequency counts, we run</p>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="no">estimated_richness_10</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/breakaway.html">breakaway</a></span>(<span class="no">ft</span>, <span class="kw">cutoff</span> <span class="kw">=</span> <span class="fl">10</span>)
-<span class="no">estimated_richness_10</span></pre></body></html></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">estimated_richness_10</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/breakaway.html">breakaway</a></span><span class="op">(</span><span class="va">ft</span>, cutoff <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
+<span class="va">estimated_richness_10</span></code></pre></div>
 <pre><code>## Estimate of richness from method breakaway:
 ##   Estimate is 28290
 ##  with standard error 7561.18
@@ -216,7 +226,7 @@
 \text{number of species observed once} \div \text{the fitted intercept on the frequency ratio plot}.
 \]</span></p>
 <p>Therefore, as that intercept gets close to zero, the estimate of the number of unobserved species gets really large! Intuitively, this makes sense – if there are so many rare species, we cannot reliably predict how many unobserved species there are. There is some minimal amount of information needed to estimate total species richness!</p>
-<p><em>Note: At time of writing (August 2019), <code>breakaway</code>, with the default settings, produced an estimate of 7724. If this number has changed significantly since then, it’s because we are constantly making improvements to the code base, which may change estimates – usually by a little but sometimes by more. Please let me know or <a href="https://github.com/adw96/breakaway/issues">log an issue</a> to let us know if this occured!</em></p>
+<p><em>Note: Last time we checked (September 2021), <code>breakaway</code>, with the default settings, produced an estimate of 7724. If this number has changed significantly since then, it’s because we are constantly making improvements to the code base, which may change estimates – usually by a little but sometimes by more. Please let me know or <a href="https://github.com/adw96/breakaway/issues">log an issue</a> to let us know if this occured!</em></p>
 </div>
 <div id="conclusions" class="section level2">
 <h2 class="hasAnchor">
@@ -227,18 +237,21 @@
 <h2 class="hasAnchor">
 <a href="#postscript-on-model-selection" class="anchor"></a>Postscript on model selection</h2>
 <p>As mentioned previously, <code>breakaway</code> executes a model selection routine. We see that with the new cut-off, we have a different model:</p>
-<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="no">estimated_richness_10</span> <span class="kw">%$%</span> <span class="no">model</span></pre></body></html></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">estimated_richness_10</span> <span class="op">%$%</span> <span class="va">model</span></code></pre></div>
 <pre><code>## [1] "Negative Binomial"</code></pre>
 <p>So <code>breakaway</code> ended up choosing the <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/j.0006-341X.2002.00531.x?sid=nlm%3Apubmed">Chao-Bunge</a> estimator, which is based on a Negative Binomial model. This model is less flexible than the Kemp models discussed previously, but has lower variance in estimation. Essentially if the standard error exceeds the estimate in the Kemp model, <code>breakaway</code> moves on to less complex estimates which have lower variance. Unfortunately the Chao-Bunge doesn’t lend itself to diagnosing model misspecification.</p>
 <p>If you are happy to take on higher variance (e.g., because you have multiple samples and ultimately you will combine them together), you can do so with the following:</p>
-<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="no">estimated_richness_kemp_10</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/kemp.html">kemp</a></span>(<span class="no">ft</span>, <span class="kw">cutoff</span> <span class="kw">=</span> <span class="fl">10</span>)
-<span class="no">estimated_richness_kemp_10</span></pre></body></html></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">estimated_richness_kemp_10</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/kemp.html">kemp</a></span><span class="op">(</span><span class="va">ft</span>, cutoff <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
+<span class="va">estimated_richness_kemp_10</span></code></pre></div>
 <pre><code>## Estimate of richness from method kemp:
 ##   Estimate is 30741
 ##  with standard error 38552.78
 ##   Confidence interval: (4969, 16986096)</code></pre>
 <p>Kemp estimates always allow you to check for model misspecification:</p>
-<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="no">estimated_richness_kemp_10</span> <span class="kw">%$%</span> <span class="no">plot</span></pre></body></html></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">estimated_richness_kemp_10</span> <span class="op">%$%</span> <span class="va">plot</span></code></pre></div>
 <p><img src="intro-diversity-estimation_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
 <p>Now this looks pretty good!</p>
 </div>
@@ -255,11 +268,11 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Amy Willis, Bryan D Martin, Pauline Trinh, Kathryn Barger, John Bunge.</p>
+  <p>Developed by Amy Willis, Bryan D Martin, Pauline Trinh, Sarah Teichman, David Clausen, Kathryn Barger, John Bunge.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

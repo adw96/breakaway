@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">breakaway</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.7.5</span>
       </span>
     </div>
 
@@ -46,7 +46,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -75,7 +75,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/adw96/breakaway/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -89,13 +89,13 @@
 
       
 
-      </header><script src="diversity-hypothesis-testing_files/header-attrs-2.2/header-attrs.js"></script><div class="row">
+      </header><script src="diversity-hypothesis-testing_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to hypothesis testing for diversity</h1>
                         <h4 class="author">Amy Willis</h4>
             
-            <h4 class="date">2020-07-10</h4>
+            <h4 class="date">2021-10-07</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/adw96/breakaway/blob/master/vignettes/diversity-hypothesis-testing.Rmd"><code>vignettes/diversity-hypothesis-testing.Rmd</code></a></small>
       <div class="hidden name"><code>diversity-hypothesis-testing.Rmd</code></div>
@@ -115,10 +115,11 @@
 <a href="#preliminaries" class="anchor"></a>Preliminaries</h2>
 <p>Download the latest version of the package from github.</p>
 <p>Let’s use the Whitman et al dataset from <code>corncob</code> as our example.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="co"># devtools::install_github("bryandmartin/corncob")</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">corncob</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"soil_phylo"</span>)
-<span class="no">soil_phylo</span> <span class="kw">%&gt;%</span> <span class="no">sample_data</span> <span class="kw">%&gt;%</span> <span class="no">head</span></pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># devtools::install_github("bryandmartin/corncob")</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bryandmartin/corncob">corncob</a></span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"soil_phylo"</span><span class="op">)</span>
+<span class="va">soil_phylo</span> <span class="op">%&gt;%</span> <span class="va">sample_data</span> <span class="op">%&gt;%</span> <span class="va">head</span></code></pre></div>
 <pre><code>##      Plants DayAmdmt Amdmt ID Day
 ## S009      1       01     1  D   0
 ## S204      1       21     1  D   2
@@ -127,17 +128,20 @@
 ## S026      0       00     0  A   0
 ## S023      1       00     0  C   0</code></pre>
 <p>I’m only going to consider samples amended with biochar, and I want to look at the effect of <code>Day</code>. This will tell us how much diversity in the soil changed from Day 0 to Day 82. (Just to be confusing, Day 82 is called Day 2 in the dataset.)</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">subset_soil</span> <span class="kw">&lt;-</span> <span class="no">soil_phylo</span> <span class="kw">%&gt;%</span>
-  <span class="fu">subset_samples</span>(<span class="no">Amdmt</span> <span class="kw">==</span> <span class="fl">1</span>) <span class="kw">%&gt;%</span> <span class="co"># only biochar</span>
-  <span class="fu">subset_samples</span>(<span class="no">Day</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">2</span>))  <span class="co"># only Days 0 and 82</span></pre></body></html></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">subset_soil</span> <span class="op">&lt;-</span> <span class="va">soil_phylo</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_samples-methods.html">subset_samples</a></span><span class="op">(</span><span class="va">Amdmt</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># only biochar</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_samples-methods.html">subset_samples</a></span><span class="op">(</span><span class="va">Day</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>  <span class="co"># only Days 0 and 82</span></code></pre></div>
 <p>I now run breakaway on these samples to get richness estimates, and plot them.</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">richness_soil</span> <span class="kw">&lt;-</span> <span class="no">subset_soil</span> <span class="kw">%&gt;%</span> <span class="no">breakaway</span>
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">richness_soil</span>, <span class="kw">physeq</span><span class="kw">=</span><span class="no">subset_soil</span>, <span class="kw">color</span><span class="kw">=</span><span class="st">"Day"</span>, <span class="kw">shape</span> <span class="kw">=</span> <span class="st">"ID"</span>)</pre></body></html></div>
-<p><img src="diversity-hypothesis-testing_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">richness_soil</span> <span class="op">&lt;-</span> <span class="va">subset_soil</span> <span class="op">%&gt;%</span> <span class="va">breakaway</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">richness_soil</span>, physeq<span class="op">=</span><span class="va">subset_soil</span>, color<span class="op">=</span><span class="st">"Day"</span>, shape <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></code></pre></div>
+<p><img src="diversity-hypothesis-testing_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <p>Don’t freak out! Those are wide error bars, but nothing went wrong – it’s just really hard to estimate the true number of unknown species in soil. <code>breakaway</code> was developed to deal with this, and to make sure that we account for that uncertainty when we do inference.</p>
 <p>We can get a table of the estimates and their uncertainties as follows:</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">richness_soil</span>) <span class="kw">%&gt;%</span> <span class="no">as_tibble</span></pre></body></html></div>
-<pre><code>## # A tibble: 32 x 7
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">richness_soil</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="va">as_tibble</span></code></pre></div>
+<pre><code>## # A tibble: 32 × 7
 ##    estimate  error lower   upper sample_names name      model            
 ##       &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;            
 ##  1    5257.  203.  4010.  54003. S009         breakaway Kemp             
@@ -157,52 +161,63 @@
 <h2 class="hasAnchor">
 <a href="#inference" class="anchor"></a>Inference</h2>
 <p>The first step to doing inference is to decide on your design matrix. We need to grab our covariates into a data frame (or tibble), so let’s start by doing that:</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">meta</span> <span class="kw">&lt;-</span> <span class="no">subset_soil</span> <span class="kw">%&gt;%</span>
-  <span class="no">sample_data</span> <span class="kw">%&gt;%</span>
-  <span class="no">as_tibble</span> <span class="kw">%&gt;%</span>
-  <span class="fu">mutate</span>(<span class="st">"sample_names"</span> <span class="kw">=</span> <span class="no">subset_soil</span> <span class="kw">%&gt;%</span> <span class="no">sample_names</span> )</pre></body></html></div>
-<pre><code>## Warning in class(x) &lt;- c(setdiff(subclass, tibble_class), tibble_class): Setting
-## class(x) to multiple strings ("tbl_df", "tbl", ...); result will no longer be an
-## S4 object</code></pre>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">meta</span> <span class="op">&lt;-</span> <span class="va">subset_soil</span> <span class="op">%&gt;%</span>
+  <span class="va">sample_data</span> <span class="op">%&gt;%</span>
+  <span class="va">as_tibble</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span><span class="st">"sample_names"</span> <span class="op">=</span> <span class="va">subset_soil</span> <span class="op">%&gt;%</span> <span class="va">sample_names</span> <span class="op">)</span></code></pre></div>
 <p>That warning is not a problem – it’s just telling us that it’s not a phyloseq object anymore.</p>
 <p>Suppose we want to fit the model with Day as a fixed effect. Here’s how we do that,</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">combined_richness</span> <span class="kw">&lt;-</span> <span class="no">meta</span> <span class="kw">%&gt;%</span>
-  <span class="fu">left_join</span>(<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">richness_soil</span>),
-            <span class="kw">by</span> <span class="kw">=</span> <span class="st">"sample_names"</span>)
-<span class="no">bt_day_fixed</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/betta.html">betta</a></span>(<span class="kw">chats</span> <span class="kw">=</span> <span class="no">combined_richness</span>$<span class="no">estimate</span>,
-                      <span class="kw">ses</span> <span class="kw">=</span> <span class="no">combined_richness</span>$<span class="no">error</span>,
-                      <span class="kw">X</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix</a></span>(~<span class="no">Day</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">combined_richness</span>))
-<span class="no">bt_day_fixed</span>$<span class="no">table</span></pre></body></html></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">combined_richness</span> <span class="op">&lt;-</span> <span class="va">meta</span> <span class="op">%&gt;%</span>
+  <span class="fu">left_join</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">richness_soil</span><span class="op">)</span>,
+            by <span class="op">=</span> <span class="st">"sample_names"</span><span class="op">)</span>
+<span class="co"># Old way (still works)</span>
+<span class="va">bt_day_fixed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/betta.html">betta</a></span><span class="op">(</span>chats <span class="op">=</span> <span class="va">combined_richness</span><span class="op">$</span><span class="va">estimate</span>,
+                      ses <span class="op">=</span> <span class="va">combined_richness</span><span class="op">$</span><span class="va">error</span>,
+                      X <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix</a></span><span class="op">(</span><span class="op">~</span><span class="va">Day</span>, data <span class="op">=</span> <span class="va">combined_richness</span><span class="op">)</span><span class="op">)</span>
+<span class="co"># Fancy new way -- thanks to Sarah Teichman for implementing!</span>
+<span class="va">bt_day_fixed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/betta.html">betta</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">estimate</span> <span class="op">~</span> <span class="va">Day</span>, 
+                      ses <span class="op">=</span> <span class="va">error</span>, data <span class="op">=</span> <span class="va">combined_richness</span><span class="op">)</span>
+<span class="va">bt_day_fixed</span><span class="op">$</span><span class="va">table</span></code></pre></div>
 <pre><code>##             Estimates Standard Errors p-values
 ## (Intercept) 4547.1078        125.8542    0.000
 ## Day2         139.5325        170.1855    0.412</code></pre>
 <p>So we see an estimated increase in richness after 82 days of 122 taxa, with the standard error in the estimate of 171. A hypothesis test for a change in richness would <em>not be rejected</em> at any reasonable cut-off (p = 0.475).</p>
 <p>Alternatively, we could fit the model with plot ID as a random effect. Here’s how we do that:</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">bt_day_fixed_id_random</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/betta_random.html">betta_random</a></span>(<span class="kw">chats</span> <span class="kw">=</span> <span class="no">combined_richness</span>$<span class="no">estimate</span>,
-                                       <span class="kw">ses</span> <span class="kw">=</span> <span class="no">combined_richness</span>$<span class="no">error</span>,
-                                       <span class="kw">X</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix</a></span>(~<span class="no">Day</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">combined_richness</span>),
-                                       <span class="kw">groups</span><span class="kw">=</span><span class="no">combined_richness</span>$<span class="no">ID</span>)
-<span class="no">bt_day_fixed_id_random</span>$<span class="no">table</span></pre></body></html></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Old way (still works)</span>
+<span class="va">bt_day_fixed_id_random</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/betta_random.html">betta_random</a></span><span class="op">(</span>chats <span class="op">=</span> <span class="va">combined_richness</span><span class="op">$</span><span class="va">estimate</span>,
+                                       ses <span class="op">=</span> <span class="va">combined_richness</span><span class="op">$</span><span class="va">error</span>,
+                                       X <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix</a></span><span class="op">(</span><span class="op">~</span><span class="va">Day</span>, data <span class="op">=</span> <span class="va">combined_richness</span><span class="op">)</span>,
+                                       groups<span class="op">=</span><span class="va">combined_richness</span><span class="op">$</span><span class="va">ID</span><span class="op">)</span>
+<span class="co"># Fancy new way </span>
+<span class="va">bt_day_fixed_id_random</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/betta_random.html">betta_random</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">estimate</span> <span class="op">~</span> <span class="va">Day</span> <span class="op">|</span> <span class="va">ID</span>, 
+               ses <span class="op">=</span> <span class="va">error</span>,  data <span class="op">=</span> <span class="va">combined_richness</span><span class="op">)</span>
+<span class="va">bt_day_fixed_id_random</span><span class="op">$</span><span class="va">table</span></code></pre></div>
 <pre><code>##             Estimates Standard Errors p-values
 ## (Intercept) 4475.4249        119.2010     0.00
 ## Day2         257.7939        161.2601     0.11</code></pre>
-<p>Under this different model, we see an estimated increase in richness after 82 days of 234 taxa, with the standard error in the estimate of 163. A hypothesis test for a change in richness still would <em>not be rejected</em> at any reasonable cut-off (p = 0.153).</p>
-<p>The overall structure of <code>betta</code> and <code>betta_random</code> is to input your design matrix as <code>X</code>, and your random effects as <code>groups</code>, where the latter is a categorical variable.</p>
-<p>A future version of breakaway hopes to make this interface easier to use a more familiar to users of <code>lme4</code> and other mixed effects models. If this is late 2020 and it’s not done, please come and find me (Amy) and make me feel embarrassed.</p>
+<p>Under this different model, we see an estimated increase in richness after 82 days of 258 taxa, with the standard error in the estimate of 161. A hypothesis test for a change in richness still would <em>not be rejected</em> at any reasonable cut-off (p = 0.11).</p>
+<p>If you choose to use the old way, the structure of <code>betta_random</code> is to input your design matrix as <code>X</code>, and your random effects as <code>groups</code>, where the latter is a categorical variable. Otherwise, the input looks like how you would hand this off to a regular mixed effects model in the package <code>lme4</code>!</p>
 </div>
 <div id="using-betta-with-divnet" class="section level1">
 <h1 class="hasAnchor">
 <a href="#using-betta-with-divnet" class="anchor"></a>Using <code>betta</code> with DivNet</h1>
 <p>Maybe you don’t care about richness… but you care about Shannon or Simpson diversity! <a href="https://github.com/adw96/DivNet"><code>DivNet</code></a> is our <code>R</code> package for estimating Shannon and Simpson diversity.</p>
 <p>DivNet can be slow when you have a large number of taxa (but we are working on it!), so to illustrate we are going to estimate phylum-level Shannon diversity:</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">soil_phylum</span> <span class="kw">&lt;-</span> <span class="no">subset_soil</span> <span class="kw">%&gt;%</span>
-  <span class="fu">tax_glom</span>(<span class="kw">taxrank</span><span class="kw">=</span><span class="st">"Phylum"</span>)</pre></body></html></div>
-<p>Easter egg: <code><a href="https://rdrr.io/pkg/phyloseq/man/tax_glom.html">phyloseq::tax_glom</a></code> can be incredibly slow! <a href="https://github.com/mikemc">Mike McLaren</a> is a total champ and rewrote it faster – check out his package <a href="https://github.com/mikemc/speedyseq"><code>speedyseq</code></a> and <code>speedyseq::tax_glom</code> in particular.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">soil_phylum</span> <span class="op">&lt;-</span> <span class="va">subset_soil</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/tax_glom.html">tax_glom</a></span><span class="op">(</span>taxrank<span class="op">=</span><span class="st">"Phylum"</span><span class="op">)</span></code></pre></div>
+<p>Easter egg: <code><a href="https://rdrr.io/pkg/phyloseq/man/tax_glom.html">phyloseq::tax_glom</a></code> can be incredibly slow! <a href="https://github.com/mikemc">Mike McLaren</a> is a total champ and rewrote it faster – check out his package <a href="https://github.com/mikemc/speedyseq"><code>speedyseq</code></a> and <code><a href="https://mikemc.github.io/speedyseq/reference/tax_glom.html">speedyseq::tax_glom</a></code> in particular.</p>
 <p>Let’s treat all samples as independent observations (<code>X = NULL</code>) and fit the DivNet model:</p>
 <p>(Check out the full documentation for details, including how to run in parallel)</p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="no">dv</span> <span class="kw">&lt;-</span> <span class="kw pkg">DivNet</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/DivNet/man/divnet.html">divnet</a></span>(<span class="no">soil_phylum</span>, <span class="kw">X</span> <span class="kw">=</span> <span class="kw">NULL</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dv</span> <span class="op">&lt;-</span> <span class="fu">DivNet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DivNet/man/divnet.html">divnet</a></span><span class="op">(</span><span class="va">soil_phylum</span>, X <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
 <p>This produces an object containing common diversity estimates:</p>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="no">dv</span></pre></body></html></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dv</span></code></pre></div>
 <pre><code>## An object of class `diversityEstimates` with the following elements:
 ##   -  shannon 
 ##   -  simpson 
@@ -217,34 +232,44 @@
 ## Access individual components with, e.g., object$shannon and object$`shannon-variance`
 ## Use function testDiversity() to test hypotheses about diversity</code></pre>
 <p>We can look at the first few Shannon diversity estimates with the following:</p>
-<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="no">combined_shannon</span> <span class="kw">&lt;-</span> <span class="no">meta</span> <span class="kw">%&gt;%</span>
-  <span class="fu">left_join</span>(<span class="no">dv</span>$<span class="no">shannon</span> <span class="kw">%&gt;%</span> <span class="no">summary</span>,
-            <span class="kw">by</span> <span class="kw">=</span> <span class="st">"sample_names"</span>)
-<span class="no">combined_shannon</span></pre></body></html></div>
-<pre><code>## # A tibble: 32 x 12
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">combined_shannon</span> <span class="op">&lt;-</span> <span class="va">meta</span> <span class="op">%&gt;%</span>
+  <span class="fu">left_join</span><span class="op">(</span><span class="va">dv</span><span class="op">$</span><span class="va">shannon</span> <span class="op">%&gt;%</span> <span class="va">summary</span>,
+            by <span class="op">=</span> <span class="st">"sample_names"</span><span class="op">)</span>
+<span class="va">combined_shannon</span></code></pre></div>
+<pre><code>## # A tibble: 32 × 12
 ##    Plants DayAmdmt Amdmt ID    Day   sample_names estimate   error lower upper
 ##    &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;           &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 1      01       1     D     0     S009             2.04 0.00379  2.04  2.05
-##  2 1      21       1     D     2     S204             1.98 0.00125  1.98  1.98
-##  3 0      01       1     B     0     S012             2.00 0.00479  2.00  2.01
-##  4 0      21       1     B     2     S207             2.04 0.00291  2.04  2.05
-##  5 0      21       1     B     2     S202             2.01 0.00317  2.01  2.02
-##  6 0      01       1     B     0     S007             2.04 0.00346  2.04  2.05
-##  7 0      01       1     B     0     S022             2.04 0.0104   2.02  2.06
-##  8 1      01       1     D     0     S024             2.01 0.00263  2.00  2.01
-##  9 0      01       1     B     0     S032             1.99 0.00287  1.99  2.00
-## 10 0      21       1     B     2     S212             2.02 0.00327  2.02  2.03
+##  1 1      01       1     D     0     S009             2.04 0.00350  2.04  2.05
+##  2 1      21       1     D     2     S204             1.98 0.00113  1.98  1.98
+##  3 0      01       1     B     0     S012             2.00 0.00492  1.99  2.01
+##  4 0      21       1     B     2     S207             2.04 0.00307  2.04  2.05
+##  5 0      21       1     B     2     S202             2.01 0.00203  2.01  2.02
+##  6 0      01       1     B     0     S007             2.04 0.00483  2.03  2.05
+##  7 0      01       1     B     0     S022             2.04 0.00288  2.03  2.04
+##  8 1      01       1     D     0     S024             2.01 0.00377  2.00  2.01
+##  9 0      01       1     B     0     S032             1.99 0.00439  1.99  2.00
+## 10 0      21       1     B     2     S212             2.02 0.00235  2.02  2.03
 ## # … with 22 more rows, and 2 more variables: name &lt;chr&gt;, model &lt;chr&gt;</code></pre>
 <p>You might notice that the estimates are not different from the plug-in estimate (only because we used <code>X = NULL</code>), but we have standard errors! That’s the real advantage of using DivNet :)</p>
-<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="no">bt_day_fixed_id_random</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/betta_random.html">betta_random</a></span>(<span class="kw">chats</span> <span class="kw">=</span> <span class="no">combined_shannon</span>$<span class="no">estimate</span>,
-                                       <span class="kw">ses</span> <span class="kw">=</span> <span class="no">combined_shannon</span>$<span class="no">error</span>,
-                                       <span class="kw">X</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix</a></span>(~<span class="no">Day</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">combined_shannon</span>),
-                                       <span class="kw">groups</span><span class="kw">=</span><span class="no">combined_shannon</span>$<span class="no">ID</span>)
-<span class="no">bt_day_fixed_id_random</span>$<span class="no">table</span></pre></body></html></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bt_day_fixed_id_random</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/betta_random.html">betta_random</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">estimate</span> <span class="op">~</span> <span class="va">Day</span> <span class="op">|</span> <span class="va">ID</span>, 
+               ses <span class="op">=</span> <span class="va">error</span>,  data <span class="op">=</span> <span class="va">combined_shannon</span><span class="op">)</span>
+<span class="va">bt_day_fixed_id_random</span><span class="op">$</span><span class="va">table</span></code></pre></div>
 <pre><code>##                Estimates Standard Errors p-values
-## (Intercept)  2.016009786     0.004723642    0.000
-## Day2        -0.007577227     0.006652701    0.255</code></pre>
+## (Intercept)  2.016085066     0.004695753    0.000
+## Day2        -0.007620836     0.006591627    0.248</code></pre>
 <p>and similarly for no random effects.</p>
+<p>If you are interested in generating confidence intervals for and testing hypotheses about linear combinations of fixed effects estimated in a <code>betta</code> or <code>betta_random</code> model, we recommend using the <code>betta_lincom</code> function.</p>
+<p>For example, to generate a confidence interval for <span class="math inline">\(\beta_0 + \beta_1\)</span> (i.e., intercept plus ‘Day2’ coefficient, or in other words, the mean Shannon diversity in soils on day 82 of the experiment) in the Shannon diversity model we fit in the previous code chunk, we run the following code:</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/betta_lincom.html">betta_lincom</a></span><span class="op">(</span>fitted_betta <span class="op">=</span> <span class="va">bt_day_fixed_id_random</span>,
+             linear_com <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,
+             signif_cutoff <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></code></pre></div>
+<pre><code>##   Estimates Standard Errors Lower CIs Upper CIs p-values
+## 1  2.008464     0.006591627  1.995545  2.021384  &lt; 1e-20</code></pre>
+<p>Here, we’ve set the <code>linear_com</code> argument equal to <code><a href="https://rdrr.io/r/base/c.html">c(1,1)</a></code> to tell <code>betta_lincom</code> to construct a confidence interval for <span class="math inline">\(1 \times \beta_0 + 1 \times \beta_1\)</span>. Because we set <code>signif_cutoff</code> equal to <span class="math inline">\(0.05\)</span>, <code>betta_lincom</code> returns a <span class="math inline">\(95\% = (1 - 0.05)*100\%\)</span> confidence interval. The p-value reported here is for a test of the null hypothesis that <span class="math inline">\(1 \times \beta_0 + 1 \times \beta_1 = 0\)</span> – unsurprisingly, this is small. (If you are confused about why this is “unsurprising,” remember that <span class="math inline">\(\beta_0 + \beta_1\)</span> represents a mean Shannon diversity in soils on day 82 of the experiment of Whitman et al. When can a Shannon diversity be zero?)</p>
+<p>The syntax and output using <code>betta_lincom</code> with a <code>betta</code> object as input is exactly the same as with a <code>betta_random</code> object, so we haven’t included a separate example for this case.</p>
 <p>And there you have it! That’s how to do hypothesis testing for diversity!</p>
 <p>If you use our tools, please don’t forget to cite them!</p>
 <ul>
@@ -269,11 +294,11 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Amy Willis, Bryan D Martin, Pauline Trinh, Kathryn Barger, John Bunge.</p>
+  <p>Developed by Amy Willis, Bryan D Martin, Pauline Trinh, Sarah Teichman, David Clausen, Kathryn Barger, John Bunge.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

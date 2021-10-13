@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Objective Bayes species richness estimate with the mixed-geometric model — objective_bayes_mixedgeo • breakaway</title>
+<title>Confidence intervals and testing for linear combinations of fixed effects estimated via betta() or betta_random() — betta_lincom • breakaway</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,11 @@
 
 
 
-<meta property="og:title" content="Objective Bayes species richness estimate with the mixed-geometric model — objective_bayes_mixedgeo" />
-<meta property="og:description" content="Objective Bayes species richness estimate with the mixed-geometric model" />
+<meta property="og:title" content="Confidence intervals and testing for linear combinations of fixed effects estimated via betta() or betta_random() — betta_lincom" />
+<meta property="og:description" content="This function provides point estimates, standard errors, and equal-tailed confidence intervals for
+linear combinations of fixed effects estimated via betta() or betta_random(). A p-value for a Wald
+test of the null that the linear combination of effects is equal to zero (against a general alternative)
+is also returned." />
 <meta property="og:image" content="http://adw96.github.io/breakaway/logo.png" />
 
 
@@ -134,89 +137,77 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Objective Bayes species richness estimate with the mixed-geometric model</h1>
-    <small class="dont-index">Source: <a href='https://github.com/adw96/breakaway/blob/master/R/richness_objective_bayes.R'><code>R/richness_objective_bayes.R</code></a></small>
-    <div class="hidden name"><code>objective_bayes_mixedgeo.Rd</code></div>
+    <h1>Confidence intervals and testing for linear combinations of fixed effects estimated via betta() or betta_random()</h1>
+    <small class="dont-index">Source: <a href='https://github.com/adw96/breakaway/blob/master/R/betta_lincom.R'><code>R/betta_lincom.R</code></a></small>
+    <div class="hidden name"><code>betta_lincom.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Objective Bayes species richness estimate with the mixed-geometric model</p>
+    <p>This function provides point estimates, standard errors, and equal-tailed confidence intervals for
+linear combinations of fixed effects estimated via betta() or betta_random(). A p-value for a Wald
+test of the null that the linear combination of effects is equal to zero (against a general alternative)
+is also returned.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>objective_bayes_mixedgeo</span><span class='op'>(</span>
-  <span class='va'>data</span>,
-  output <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  plot <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  answers <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  tau <span class='op'>=</span> <span class='fl'>10</span>,
-  burn.in <span class='op'>=</span> <span class='fl'>100</span>,
-  iterations <span class='op'>=</span> <span class='fl'>2500</span>,
-  Metropolis.stdev.N <span class='op'>=</span> <span class='fl'>100</span>,
-  Metropolis.start.T1 <span class='op'>=</span> <span class='fl'>1</span>,
-  Metropolis.stdev.T1 <span class='op'>=</span> <span class='fl'>2</span>,
-  Metropolis.start.T2 <span class='op'>=</span> <span class='fl'>3</span>,
-  Metropolis.stdev.T2 <span class='op'>=</span> <span class='fl'>2</span>,
-  bars <span class='op'>=</span> <span class='fl'>3</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>betta_lincom</span><span class='op'>(</span><span class='va'>fitted_betta</span>, <span class='va'>linear_com</span>, signif_cutoff <span class='op'>=</span> <span class='fl'>0.05</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>TODO(Kathryn)</p></td>
+      <th>fitted_betta</th>
+      <td><p>A fitted betta object -- i.e., the output of either betta() or
+betta_random() -- containing fixed effect estimates of interest.</p></td>
     </tr>
     <tr>
-      <th>output</th>
-      <td><p>TODO(Kathryn)</p></td>
+      <th>linear_com</th>
+      <td><p>The linear combination of fixed effects for which a point estimate,
+confidence interval, and hypothesis test are to be produced.</p></td>
     </tr>
     <tr>
-      <th>plot</th>
-      <td><p>TODO(Kathryn)</p></td>
-    </tr>
-    <tr>
-      <th>answers</th>
-      <td><p>TODO(Kathryn)</p></td>
-    </tr>
-    <tr>
-      <th>tau</th>
-      <td><p>TODO(Kathryn)</p></td>
-    </tr>
-    <tr>
-      <th>burn.in</th>
-      <td><p>TODO(Kathryn)</p></td>
-    </tr>
-    <tr>
-      <th>iterations</th>
-      <td><p>TODO(Kathryn)</p></td>
-    </tr>
-    <tr>
-      <th>Metropolis.stdev.N</th>
-      <td><p>TODO(Kathryn)</p></td>
-    </tr>
-    <tr>
-      <th>Metropolis.start.T1</th>
-      <td><p>TODO(Kathryn)</p></td>
-    </tr>
-    <tr>
-      <th>Metropolis.stdev.T1</th>
-      <td><p>TODO(Kathryn)</p></td>
-    </tr>
-    <tr>
-      <th>Metropolis.start.T2</th>
-      <td><p>TODO(Kathryn)</p></td>
-    </tr>
-    <tr>
-      <th>Metropolis.stdev.T2</th>
-      <td><p>TODO(Kathryn)</p></td>
-    </tr>
-    <tr>
-      <th>bars</th>
-      <td><p>TODO(Kathryn)</p></td>
+      <th>signif_cutoff</th>
+      <td><p>The type-I significance threshold for confidence intervals. Defaults
+to 0.05.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    
+
+<dt>table</dt><dd><p>A table containing a point estimate, standard error, lower and upper confidence bounds,
+and a p-value for the linear combination of fixed effects specified in input. The p-value is generated via a two-sided
+Wald test of the null that the linear combination of fixed effects is equal to zero.</p></dd>
+
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Willis, A., Bunge, J., and Whitman, T. (2015). Inference for
+changes in biodiversity. <em>arXiv preprint.</em></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='betta.html'>betta</a></code>;</p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>David Clausen</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='co'># generate example data</span>
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>chats <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2000</span>, <span class='fl'>3000</span>, <span class='fl'>4000</span>, <span class='fl'>3000</span><span class='op'>)</span>, ses <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>150</span>, <span class='fl'>180</span><span class='op'>)</span>,
+                 Cont_var <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>150</span>, <span class='fl'>100</span>, <span class='fl'>50</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'># fit betta()</span>
+<span class='va'>example_fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='betta.html'>betta</a></span><span class='op'>(</span>formula <span class='op'>=</span> <span class='va'>chats</span> <span class='op'>~</span> <span class='va'>Cont_var</span>, ses <span class='op'>=</span> <span class='va'>ses</span>, data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span>
+
+<span class='co'># generate point estimate and 95% CI for mean richness at Cont_var = 125</span>
+
+<span class='fu'>betta_lincom</span><span class='op'>(</span>fitted_betta <span class='op'>=</span> <span class='va'>example_fit</span>,
+linear_com <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>125</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># this tells betta_lincom to estimate value of beta_0 + 125*beta_1,</span>
+</div><div class='output co'>#&gt;   Estimates Standard Errors Lower CIs Upper CIs p-values
+#&gt; 1  2995.366        511.8334  1992.191  3998.541 2.43e-09</div><div class='input'><span class='co'># where beta_0 is the intercept, and beta_1 is the (true value of the) coefficient on Cont_var</span>
+
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">breakaway</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.7.5</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -117,7 +117,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/adw96/breakaway/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -135,7 +135,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>modelling total diversity with random effects</h1>
-    <small class="dont-index">Source: <a href='https://github.com/adw96/breakaway/blob/master/R/model_betta.R'><code>R/model_betta.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/adw96/breakaway/blob/master/R/model_betta_random.R'><code>R/model_betta_random.R</code></a></small>
     <div class="hidden name"><code>betta_random.Rd</code></div>
     </div>
 
@@ -143,7 +143,14 @@
     <p>This function extends betta() to permit random effects modelling.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>betta_random</span>(<span class='no'>chats</span>, <span class='no'>ses</span>, <span class='kw'>X</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>groups</span>)</pre>
+    <pre class="usage"><span class='fu'>betta_random</span><span class='op'>(</span>
+  chats <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>ses</span>,
+  X <span class='op'>=</span> <span class='cn'>NULL</span>,
+  groups <span class='op'>=</span> <span class='cn'>NULL</span>,
+  formula <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -151,21 +158,37 @@
     <tr>
       <th>chats</th>
       <td><p>A vector of estimates of total diversity at different sampling
-locations.</p></td>
+locations. Required with the <code>groups</code> argument, and optionally with the 
+<code>X</code> argument.</p></td>
     </tr>
     <tr>
       <th>ses</th>
-      <td><p>The standard errors in <samp>chats</samp>, the diversity estimates.</p></td>
+      <td><p>The standard errors in <code>chats</code>, the diversity estimates. This
+can either be a vector of standard errors (with the arguments <code>chats</code> and 
+<code>X</code>), or the name of the variable in the dataframe <code>data</code> that contains 
+the standard errors (with the arguments <code>formula</code> and <code>data</code>).</p></td>
     </tr>
     <tr>
       <th>X</th>
       <td><p>A numeric matrix of covariates corresponding to fixed effects. If
-not supplied, an intercept-only model will be fit.</p></td>
+not supplied, an intercept-only model will be fit. Optional with the <code>chats</code> 
+and <code>groups</code> arguments.</p></td>
     </tr>
     <tr>
       <th>groups</th>
       <td><p>A categorical variable representing the random-effects groups
-that each of the estimates belong to.</p></td>
+that each of the estimates belong to. Required with the <code>chats</code> argument and 
+optionally with the <code>X</code> argument.</p></td>
+    </tr>
+    <tr>
+      <th>formula</th>
+      <td><p>A formula object of the form \(y ~ x | group\). Required with 
+the <code>data</code> argument.</p></td>
+    </tr>
+    <tr>
+      <th>data</th>
+      <td><p>A dataframe containing the response, response standard errors, covariates, 
+and grouping variable. Required with the <code>formula</code> argument.</p></td>
     </tr>
     </table>
 
@@ -195,11 +218,46 @@ changes in biodiversity. <em>arXiv preprint.</em></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='betta.html'>betta</a></code>;</p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Amy Willis</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'>betta_random</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2000</span>, <span class='fl'>3000</span>, <span class='fl'>4000</span>, <span class='fl'>3000</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>150</span>, <span class='fl'>180</span>), <span class='kw'>X</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='kw'>Int</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-    <span class='kw'>Cont_var</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>100</span>, <span class='fl'>150</span>, <span class='fl'>100</span>, <span class='fl'>50</span>)), <span class='kw'>groups</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"a"</span>, <span class='st'>"a"</span>, <span class='st'>"b"</span>))</div><div class='output co'>#&gt; $table
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>chats <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2000</span>, <span class='fl'>3000</span>, <span class='fl'>4000</span>, <span class='fl'>3000</span><span class='op'>)</span>, ses <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>150</span>, <span class='fl'>180</span><span class='op'>)</span>, Cont_var <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>150</span>, <span class='fl'>100</span>, <span class='fl'>50</span><span class='op'>)</span>, groups <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"a"</span>, <span class='st'>"a"</span>, <span class='st'>"b"</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'># formula notation</span>
+<span class='fu'>betta_random</span><span class='op'>(</span>formula <span class='op'>=</span> <span class='va'>chats</span> <span class='op'>~</span> <span class='va'>Cont_var</span><span class='op'>|</span> <span class='va'>groups</span>, ses <span class='op'>=</span> <span class='va'>ses</span>,  data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span>    
+</div><div class='output co'>#&gt; $table
+#&gt;                 Estimates Standard Errors p-values
+#&gt; (Intercept) 3000.32999173       384.97695    0.000
+#&gt; Cont_var      -0.02907528         4.35074    0.995
+#&gt; 
+#&gt; $cov
+#&gt;             (Intercept)   Cont_var
+#&gt; (Intercept)  860819.418 -8851.3807
+#&gt; Cont_var      -8851.381   109.9433
+#&gt; 
+#&gt; $ssq_u
+#&gt;        
+#&gt; 241802 
+#&gt; 
+#&gt; $ssq_group
+#&gt;        a        b 
+#&gt; 701816.2      0.0 
+#&gt; 
+#&gt; $homogeneity
+#&gt; [1] 144.1595   0.0000
+#&gt; 
+#&gt; $global
+#&gt; [1] 6.064440e+01 6.883383e-15
+#&gt; 
+#&gt; $blups
+#&gt; [1] 2744.513 2996.960 3248.350 2999.867
+#&gt; </div><div class='input'>
+<span class='co'># direct input</span>
+<span class='fu'>betta_random</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2000</span>, <span class='fl'>3000</span>, <span class='fl'>4000</span>, <span class='fl'>3000</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>150</span>, <span class='fl'>180</span><span class='op'>)</span>, X <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span>Int <span class='op'>=</span> <span class='fl'>1</span>, Cont_var <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>150</span>, <span class='fl'>100</span>, <span class='fl'>50</span><span class='op'>)</span><span class='op'>)</span>, groups <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"a"</span>, <span class='st'>"a"</span>, <span class='st'>"b"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $table
 #&gt;              Estimates Standard Errors p-values
 #&gt; Int      3000.32999173       384.97695    0.000
 #&gt; Cont_var   -0.02907528         4.35074    0.995
@@ -225,10 +283,11 @@ changes in biodiversity. <em>arXiv preprint.</em></p>
 #&gt; 
 #&gt; $blups
 #&gt; [1] 2744.513 2996.960 3248.350 2999.867
-#&gt; </div><div class='input'>
+#&gt; </div><div class='input'>    
 <span class='co'>## handles missing data</span>
-<span class='fu'>betta_random</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2000</span>, <span class='fl'>3000</span>, <span class='fl'>4000</span>, <span class='fl'>3000</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>150</span>, <span class='fl'>NA</span>), <span class='kw'>groups</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a"</span>, <span class='fl'>NA</span>,
-    <span class='st'>"b"</span>, <span class='st'>"b"</span>))</div><div class='output co'>#&gt; $table
+<span class='fu'>betta_random</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2000</span>, <span class='fl'>3000</span>, <span class='fl'>4000</span>, <span class='fl'>3000</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>150</span>, <span class='cn'>NA</span><span class='op'>)</span>, groups <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='cn'>NA</span>, 
+    <span class='st'>"b"</span>, <span class='st'>"b"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $table
 #&gt;      Estimates Standard Errors p-values
 #&gt; [1,]      3000        1004.049    0.003
 #&gt; 
@@ -265,11 +324,11 @@ changes in biodiversity. <em>arXiv preprint.</em></p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Amy Willis, Bryan D Martin, Pauline Trinh, Kathryn Barger, John Bunge.</p>
+  <p>Developed by Amy Willis, Bryan D Martin, Pauline Trinh, Sarah Teichman, David Clausen, Kathryn Barger, John Bunge.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
