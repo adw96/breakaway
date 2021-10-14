@@ -96,7 +96,7 @@ bt_day_fixed <- betta(formula = estimate ~ Day,
 bt_day_fixed$table
 ```
 
-So we see an estimated increase in richness after 82 days of 122 taxa, with the standard error in the estimate of 171. A hypothesis test for a change in richness would *not be rejected* at any reasonable cut-off (p = 0.475).
+So we see an estimated increase in richness after 82 days of 122 taxa, with the standard error in the estimate of 171. A hypothesis test for a change in richness (i.e., testing a null hypothesis of _no_ change) would *not be rejected* at any reasonable cut-off (p = `r bt_day_fixed$table["Day2","p-values"]`).
 
 Alternatively, we could fit the model with plot ID as a random effect. Here's how we do that:
 
@@ -113,7 +113,7 @@ bt_day_fixed_id_random <-
 bt_day_fixed_id_random$table
 ```
 
-Under this different model, we see an estimated increase in richness after 82 days of 258 taxa, with the standard error in the estimate of 161. A hypothesis test for a change in richness still would *not be rejected* at any reasonable cut-off (p = 0.11).
+Under this different model, we see an estimated increase in richness after 82 days of 258 taxa, with the standard error in the estimate of 161. A hypothesis test for a change in richness still would *not be rejected* at any reasonable cut-off (p = `r bt_day_fixed_id_random$table["Day2","p-values"]`).
 
 If you choose to use the old way, the structure of `betta_random` is to input your design matrix as `X`, and your random effects as `groups`, where the latter is a categorical variable. Otherwise, the input looks like how you would hand this off to a regular mixed effects model in the package `lme4`!
 
