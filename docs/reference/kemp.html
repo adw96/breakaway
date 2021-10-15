@@ -82,7 +82,7 @@ model coefficients, model details and plot of the fitted model are returned." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">breakaway</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.7.5</span>
       </span>
     </div>
 
@@ -90,7 +90,7 @@ model coefficients, model details and plot of the fitted model are returned." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -119,7 +119,7 @@ model coefficients, model details and plot of the fitted model are returned." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/adw96/breakaway/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -147,15 +147,15 @@ in Willis &amp; Bunge (2015). The diversity estimate, standard error, estimated
 model coefficients, model details and plot of the fitted model are returned.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>kemp</span>(
-  <span class='no'>input_data</span>,
-  <span class='kw'>cutoff</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>output</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>answers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>print</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>kemp</span><span class='op'>(</span>
+  <span class='va'>input_data</span>,
+  cutoff <span class='op'>=</span> <span class='cn'>NA</span>,
+  output <span class='op'>=</span> <span class='cn'>NULL</span>,
+  plot <span class='op'>=</span> <span class='cn'>NULL</span>,
+  answers <span class='op'>=</span> <span class='cn'>NULL</span>,
+  print <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -220,14 +220,19 @@ Statistics</em>, <b>5</b>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='breakaway.html'>breakaway</a></code>; <code><a href='breakaway_nof1.html'>breakaway_nof1</a></code>; <code><a href='apples.html'>apples</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Amy Willis</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'>kemp</span>(<span class='no'>apples</span>)</div><div class='output co'>#&gt; Estimate of richness from method kemp:
+<span class='fu'>kemp</span><span class='op'>(</span><span class='va'>apples</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Estimate of richness from method kemp:
 #&gt;   Estimate is 1552
 #&gt;  with standard error 304.71
 #&gt;   Confidence interval: (1007, 47805)
-#&gt; </div><div class='input'><span class='fu'>kemp</span>(<span class='no'>apples</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>output</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>answers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; Estimate of richness from method kemp:
+#&gt; </div><div class='input'><span class='fu'>kemp</span><span class='op'>(</span><span class='va'>apples</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span>, output <span class='op'>=</span> <span class='cn'>FALSE</span>, answers <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Estimate of richness from method kemp:
 #&gt;   Estimate is 1552
 #&gt;  with standard error 304.71
 #&gt;   Confidence interval: (1007, 47805)
@@ -244,11 +249,11 @@ Statistics</em>, <b>5</b>.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Amy Willis, Bryan D Martin, Pauline Trinh, Kathryn Barger, John Bunge.</p>
+  <p>Developed by Amy Willis, Bryan D Martin, Pauline Trinh, Sarah Teichman, David Clausen, Kathryn Barger, John Bunge.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

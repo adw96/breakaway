@@ -1,11 +1,11 @@
-pandoc: 2.9.2.1
-pkgdown: 1.5.1
+pandoc: 2.11.4
+pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   breakaway: breakaway.html
   diversity-hypothesis-testing: diversity-hypothesis-testing.html
   intro-diversity-estimation: intro-diversity-estimation.html
-last_built: 2020-07-10T22:32Z
+last_built: 2021-10-07T21:44Z
 urls:
   reference: http://adw96.github.io/breakaway/reference
   article: http://adw96.github.io/breakaway/articles
