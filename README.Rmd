@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 # breakaway <img src="docs/breakaway-logo.png" align="right" width="165px"/>
 
 
-[![Travis-CI Build Status](https://travis-ci.org/adw96/breakaway.svg?branch=master)](https://travis-ci.org/adw96/breakaway)
+[![R-CMD-check](https://github.com/adw96/breakaway/workflows/R-CMD-check/badge.svg)](https://github.com/adw96/breakaway/actions)
 [![Coverage status](https://codecov.io/gh/adw96/breakaway/branch/master/graph/badge.svg)](https://codecov.io/github/adw96/breakaway?branch=master)
 
 Understanding the drivers of microbial diversity is an important frontier of microbial ecology, and investigating the diversity of samples from microbial ecosystems is a common step in any microbiome analysis.
