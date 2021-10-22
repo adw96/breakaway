@@ -143,7 +143,8 @@ betta_random <- function(chats = NULL, ses, X = NULL, groups = NULL, formula = N
        "X" = X,
        "groups" = groups,
        "formula" = formula,
-       "data" = data)
+       "data" = data,
+       "model_type" = "mixed")
 
   mytable$function.args <- function.args
 

@@ -10,15 +10,20 @@
 #' @param fitted_betta A fitted betta object -- i.e., the output of either betta() or
 #' betta_random() -- containing fixed effect estimates of interest.
 #' @param L An m x p matrix defining the null LB = 0. L must have full row rank.
-
+#' @param method A character variable indicating which method should be used to
+#' estimate the distribution of the test statistic under the null.
+#' @param nboot Number of bootstrap samples to use if method = "bootstrap".
+#' Ignored if method = "asymptotic".
 #
 #' @return A list containing
 #' \item{pval}{The p-value}
+#' \item{F_stat}{The calculated F statistic}
 #' @author David Clausen
 #'
 #' @seealso \code{\link{betta}};
 #' @seealso \code{\link{betta_random}};
 #' @seealso \code{\link{betta}};
+#' @seealso \code{\link{get_F_stat}}
 #' @references Willis, A., Bunge, J., and Whitman, T. (2015). Inference for
 #' changes in biodiversity. \emph{arXiv preprint.}
 #' @keywords diversity
@@ -45,24 +50,53 @@
 #'
 #' @export
 F_test <- function(fitted_betta,
-                           L){
-#store estimated covariance matrix for beta in C
-C <- fitted_betta$cov
-#pull estimate for beta out of betta output, format as column matrix
-beta_hat <- matrix(fitted_betta$table[,"Estimates"],ncol = 1)
-#compute LB
-LB <- L%*%beta_hat
-#determine numerator degrees of freedom
-q <- nrow(L)
-#determine denominator degrees of freedom
-v <- length(fitted_betta$blups) # is this always equal to n?
-v <- v - q
+                   L,
+                   method = "bootstrap",
+                   nboot = 1000){
 
-Fstat <-  t(LB)%*%solve(L%*%C%*%t(L))%*%LB/q
+  if(!(method %in% c("bootstrap","asymptotic"))){
+    stop("Value provided for argument `method` must be equal to `asymptotic` or `bootstrap.`")
+  }
 
+Fstat <- get_F_stat(fitted_betta,
+                    L)
+
+if(method == "asymptotic"){
 pval <- pf(Fstat,q,v,lower.tail = F)
+}
+
+if(method == "bootstrap"){
+if(fitted_betta$function.args$model_type == "fixed"){
+  sims <- simulate_betta(fitted_betta,
+                         nboot)
+  boot_F <- sapply(1:nboot,
+                   function(i){
+                    boot_fit <-  betta(chats = sims[[i]],
+                                       ses = fitted_betta$function.args$ses,
+                                       X = fitted_betta$function.args$X);
+                    return(get_F_stat(boot_fit,L))})
+
+}
+
+  if(fitted_betta$function.args$model_type == "mixed"){
+    sims <- simulate_betta_random(fitted_betta,
+                           nboot)
+    boot_F <- sapply(1:nboot,
+                     function(i){
+                       boot_fit <-  betta_random(chats = sims[[i]],
+                                          ses = fitted_betta$function.args$ses,
+                                          X = fitted_betta$function.args$X,
+                                          groups = fitted_betta$function.args$groups);
+                       return(get_F_stat(boot_fit,L))})
+
+  }
+  pval <- mean(boot_F>=Fstat)
+} else{
+  boot_F <- NULL
+}
 
 return(list("pval" = pval,
-            "Fstat" = Fstat))
+            "Fstat" = Fstat,
+            "boot_F" = boot_F))
 
 }

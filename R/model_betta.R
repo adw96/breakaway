@@ -265,7 +265,8 @@ betta <- function(chats = NULL, ses, X = NULL,
                         "X" = X,
                         "initial_est" = initial_est,
                         "formula" = formula,
-                        "data" = data)
+                        "data" = data,
+                        "model_type" = "fixed")
 
   mytable$function.args <- function.args
 
