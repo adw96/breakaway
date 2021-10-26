@@ -20,9 +20,10 @@ simulate_betta_random <- function(fitted_betta,
 
   fitted_values <- fitted_betta$function.args$X%*%fitted_betta$table[,1,drop = F]
   colnames(fitted_values) <- NULL
+
   sims <- lapply(1:nsim,
-                 function(x)  fitted_values + rnorm(length(obs_vars),0,obs_vars) +
-                   as.numeric(ssq_group %*% group_matrix)
+                 function(x)  as.numeric(fitted_values + rnorm(length(obs_vars),0,sqrt(obs_vars +
+                   as.numeric(ssq_group %*% group_matrix))))
                    )
   return(sims)
 }

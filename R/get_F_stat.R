@@ -6,7 +6,6 @@
 #' vector of p fixed effects returned by betta() or betta_random() and L is an
 #' m x p matrix with linearly independent rows.
 #'
-#'
 #' @param fitted_betta A fitted betta object -- i.e., the output of either betta() or
 #' betta_random() -- containing fixed effect estimates of interest.
 #' @param L An m x p matrix defining the null LB = 0. L must have full row rank.

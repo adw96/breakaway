@@ -96,9 +96,13 @@ bt_day_fixed <- betta(formula = estimate ~ Day,
 bt_day_fixed$table
 ```
 
+<<<<<<< HEAD
 So we see an estimated increase in richness after 82 days of 122 taxa, with the standard error in the estimate of 171. 
 A hypothesis test for a change in richness (i.e., a test of 
 a null of no change) would *not be rejected* at any reasonable cut-off (p = `r bt_day_fixed$table["Day2","p-values"]`).
+=======
+So we see an estimated increase in richness after 82 days of 122 taxa, with the standard error in the estimate of 171. A hypothesis test for a change in richness (i.e., testing a null hypothesis of _no_ change) would *not be rejected* at any reasonable cut-off (p = `r bt_day_fixed$table["Day2","p-values"]`).
+>>>>>>> ffd05aba43c891a7e26937ddb2e86ffaeb304e56
 
 Alternatively, we could fit the model with plot ID as a random effect. Here's how we do that:
 

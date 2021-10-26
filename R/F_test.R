@@ -18,6 +18,8 @@
 #' @return A list containing
 #' \item{pval}{The p-value}
 #' \item{F_stat}{The calculated F statistic}
+#' \item{boot_F}{A vector of bootstrapped F statistics if bootstrap has been used.
+#' Otherwise NULL.}
 #' @author David Clausen
 #'
 #' @seealso \code{\link{betta}};
@@ -60,6 +62,8 @@ F_test <- function(fitted_betta,
 
 Fstat <- get_F_stat(fitted_betta,
                     L)
+q <- nrow(L)
+v <- length(fitted_betta$blups) - nrow(fitted_betta$table)
 
 if(method == "asymptotic"){
 pval <- pf(Fstat,q,v,lower.tail = F)
@@ -67,7 +71,18 @@ pval <- pf(Fstat,q,v,lower.tail = F)
 
 if(method == "bootstrap"){
 if(fitted_betta$function.args$model_type == "fixed"){
-  sims <- simulate_betta(fitted_betta,
+  if(!all(sapply(as.numeric(unique(L)), function(x) x %in% c(0,1)))){
+    stop("Parametric bootstrap only implemented for tests of submodels
+         derived from full model by setting elements of beta to zero.
+         Use method = 'asymptotic.'")
+  }
+  null_X = fitted_betta$function.args$X[,which(apply(L,2,sum) == 0),drop = F]
+  null_fit <- betta(chats = fitted_betta$function.args$chats,
+                    ses = fitted_betta$function.args$ses,
+                    X = null_X,
+                    data = fitted_betta$function.args$data
+                    )
+  sims <- simulate_betta(null_fit,
                          nboot)
   boot_F <- sapply(1:nboot,
                    function(i){
@@ -79,7 +94,19 @@ if(fitted_betta$function.args$model_type == "fixed"){
 }
 
   if(fitted_betta$function.args$model_type == "mixed"){
-    sims <- simulate_betta_random(fitted_betta,
+    if(!all(sapply(as.numeric(unique(L)), function(x) x %in% c(0,1)))){
+      stop("Parametric bootstrap only implemented for tests of submodels
+         derived from full model by setting elements of beta to zero.
+         Use method = 'asymptotic.'")
+    }
+    null_X = fitted_betta$function.args$X[,which(apply(L,2,sum) == 0),drop = F]
+    null_fit <- betta_random(chats = fitted_betta$function.args$chats,
+                      ses = fitted_betta$function.args$ses,
+                      X = null_X,
+                      groups = fitted_betta$function.args$groups,
+                      data = fitted_betta$function.args$data
+    )
+    sims <- simulate_betta_random(null_fit,
                            nboot)
     boot_F <- sapply(1:nboot,
                      function(i){
