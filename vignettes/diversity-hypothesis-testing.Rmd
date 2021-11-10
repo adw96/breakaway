@@ -25,8 +25,8 @@ This tutorial will talk through hypothesis testing for alpha diversity indices u
 Download the latest version of the package from github.
 
 ```{r, include=FALSE}
-# install.packages("devtools")
-# devtools::install_github("adw96/breakaway")
+# install.packages("remotes")
+# remotes::install_github("adw96/breakaway")
 library(tidyverse)
 library(breakaway)
 library(magrittr)
@@ -36,7 +36,7 @@ library(phyloseq)
 Let's use the Whitman et al dataset from `corncob` as our example.
 
 ```{r}
-# devtools::install_github("bryandmartin/corncob")
+# remotes::install_github("bryandmartin/corncob")
 library(corncob)
 data("soil_phylo")
 soil_phylo %>% sample_data %>% head
@@ -128,7 +128,7 @@ If you choose to use the old way, the structure of `betta_random` is to input yo
 Maybe you don't care about richness... but you care about Shannon or Simpson diversity! [`DivNet`](https://github.com/adw96/DivNet) is our `R` package for estimating Shannon and Simpson diversity.
 
 ```{r, include=FALSE}
-devtools::install_github("adw96/DivNet")
+remotes::install_github("adw96/DivNet")
 library(DivNet)
 ```
 
