@@ -247,19 +247,26 @@ bt_day_1_2_fixed_id_random$table
 The output we get from `betta_random` gives us p-values for testing whether
 mean Shannon diversity is the same at day 12 as at day 0 and for whether it is the same at day 82 as at day 0, but we want to get a _single_ p-value for an 
 overall test of whether mean Shannon diversity varies with day at all! To do this, we can use the `test_submodel` function in `breakaway` to test our 
-full model against a null with no terms in `Day`.:
+full model against a null with no terms in `Day` using a parametric bootstrap:
 
 ```{r}
+set.seed(345)
 submodel_test <- test_submodel(bt_day_1_2_fixed_id_random,
                           submodel_formula = estimate~1,
                           method = "bootstrap",
-                          nboot = 1000)
+                          nboot = 100)
 
 submodel_test$pval
 
 ```
 
-
+This returns a p-value of `r submodel_test$pval` -- but recall that we obtained
+this p-value with a parametric bootstrap, and we've used only 100 bootstrap 
+iterations. Hence, we'll report $p \leq 0.01$ rather than $p = 0$. In any case,
+we have reasonably strong evidence of some difference in mean Shannon 
+diversity over time, so we reject the null (intercept-only) model. In practice,
+it's a good idea to use more than 100 bootstrap iterations -- 10,000 is a good
+choice for publication. (We use 100 here so the vignette loads in a reasonable amount of time.)
 
 And there you have it! That's how to do hypothesis testing for diversity!
 
