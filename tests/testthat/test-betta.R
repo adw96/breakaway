@@ -70,40 +70,40 @@ test_that("betta isn't stupid", {
     betta_random(ses = dayved,
                  formula = pooleen ~ brybry | sarsh, data = df_uncouth),
     "list")
-  
-  # issue 118 
+
+  # issue 118
   df_issue118 <- df_uncouth
   df_issue118$dayved[1] <- 0
   df_issue118$nutmeg <- c(1, 1, 1, 1)
   df_issue118_v2 <- df_issue118
   df_issue118_v2$dayved[1] <- NA
-  
+
   expect_warning(
     betta(ses = dayved,
           formula = pooleen ~ brybry, data = df_issue118),
-    "At least one of your standard errors is 0. Any observation with 
-            a standard error of 0 has been dropped from the analysis."
+    "At least one of your standard errors is 0 or NA. Any observation with
+            a standard error of 0 or NA has been dropped from the analysis."
   )
-  
+
   expect_equal(
     betta(ses = dayved,
-          formula = pooleen ~ brybry, data = df_issue118),
+          formula = pooleen ~ brybry, data = df_issue118)$table,
     betta(ses = dayved,
-          formula = pooleen ~ brybry, data = df_issue118_v2)
+          formula = pooleen ~ brybry, data = df_issue118_v2)$table
   )
-  
+
   expect_error(
     betta(ses = dayved,
           formula = pooleen ~ nutmeg, data = df_issue118_v2),
-    "Your design matrix is not full rank. We recommend that you 
+    "Your design matrix is not full rank. We recommend that you
          examine your design matrix for linear dependency and remove
          redundant columns."
   )
-  
+
   expect_error(
     betta_random(ses = dayved,
           formula = pooleen ~ nutmeg | sarsh, data = df_issue118_v2),
-    "Your design matrix is not full rank. We recommend that you 
+    "Your design matrix is not full rank. We recommend that you
          examine your design matrix for linear dependency and remove
          redundant columns."
   )

@@ -19,7 +19,7 @@ test_that("single p-value is low in univariate fixed-effects model under alterna
                                              ~1,
                                              nboot = 100)
 
-  expect_equal(parametric_bootstrap_test$pval, 0.03)
+  expect_equal(parametric_bootstrap_test$pval, 0.01)
 
 })
 

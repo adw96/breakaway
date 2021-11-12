@@ -91,11 +91,11 @@ betta_random <- function(chats = NULL, ses, X = NULL, groups = NULL, formula = N
   groups_effective <- groups[consider]
   n <- dim(X_effective)[1]; p <- dim(X_effective)[2]; gs <- length(unique(groups_effective))
 
-  
-  # check for design matrix that isn't full rank and throw error 
+
+  # check for design matrix that isn't full rank and throw error
   rank <- qr(X)$rank
   if (rank < ncol(X)) {
-    stop("Your design matrix is not full rank. We recommend that you 
+    stop(    "Your design matrix is not full rank. We recommend that you
          examine your design matrix for linear dependency and remove
          redundant columns.")
   }

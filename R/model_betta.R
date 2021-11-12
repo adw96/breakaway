@@ -147,20 +147,21 @@ betta <- function(chats = NULL, ses, X = NULL,
   }
   if (isTRUE(is.null(X))) { X <- matrix(rep(1,length(chats)),ncol = 1) }
 
-  
+
   consider <- !(is.na(chats) | is.na(ses) | apply(is.na(X), 1, sum) | ses == 0)
-  
-  # check for any standard errors of 0 and give warning 
+
+  # check for any standard errors of 0 and give warning
   ses_zero <- ses == 0
-  if (sum(ses_zero, na.rm = TRUE) > 0) {
-    warning("At least one of your standard errors is 0. Any observation with 
-            a standard error of 0 has been dropped from the analysis.")
+  if ((sum(ses_zero, na.rm = TRUE) > 0)|
+      (sum(is.na(ses) > 0))) {
+    warning("At least one of your standard errors is 0 or NA. Any observation with
+            a standard error of 0 or NA has been dropped from the analysis.")
   }
-  
-  # check for design matrix that isn't full rank and throw error 
+
+  # check for design matrix that isn't full rank and throw error
   rank <- qr(X)$rank
   if (rank < ncol(X)) {
-    stop("Your design matrix is not full rank. We recommend that you 
+    stop("Your design matrix is not full rank. We recommend that you
          examine your design matrix for linear dependency and remove
          redundant columns.")
   }
