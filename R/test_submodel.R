@@ -5,7 +5,7 @@
 #' vector of p fixed effects returned by betta() or betta_random() and L is an
 #' m x p matrix with linearly independent rows.
 #'
-#'#' @param fitted_betta A fitted betta object -- i.e., the output of either betta() or
+#' @param fitted_betta A fitted betta object -- i.e., the output of either betta() or
 #' betta_random() -- containing fixed effect estimates of interest.
 #' @param submodel_formula A formula defining which submodel to treat as the null.
 #' It is not necessary to include random effects in this formula (they will be ignored

@@ -13,6 +13,9 @@ test_submodel(
 )
 }
 \arguments{
+\item{fitted_betta}{A fitted betta object -- i.e., the output of either betta() or
+betta_random() -- containing fixed effect estimates of interest.}
+
 \item{submodel_formula}{A formula defining which submodel to treat as the null.
 It is not necessary to include random effects in this formula (they will be ignored
 if included -- the submodel will be fit with the same random effect structure
@@ -35,10 +38,6 @@ Otherwise NULL.}
 This function performs an F-test of a null hypothesis LB = 0 where B is a
 vector of p fixed effects returned by betta() or betta_random() and L is an
 m x p matrix with linearly independent rows.
-}
-\details{
-#' @param fitted_betta A fitted betta object -- i.e., the output of either betta() or
-betta_random() -- containing fixed effect estimates of interest.
 }
 \examples{
 
