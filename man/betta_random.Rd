@@ -52,24 +52,32 @@ The test statistic and p-value for the test of homogeneity.  }
 explanatory power.  } \item{blups}{ The conditional expected values of the
 diversity estimates (conditional on the random effects). Estimates of
 variability for the random effects case are unavailable at this time; please
-contact the maintainer if needed. \item{function.args}{A list containing
-values initially passed to betta_random.}  }
+contact the maintainer if needed.} \item{function.args}{A list containing
+values initially passed to betta_random.}
 }
 \description{
 This function extends betta() to permit random effects modelling.
 }
 \examples{
 
-df <- data.frame(chats = c(2000, 3000, 4000, 3000), ses = c(100, 200, 150, 180), Cont_var = c(100, 150, 100, 50), groups = c("a", "a", "a", "b"))
+df <- data.frame(chats = c(2000, 3000, 4000, 3000),
+ses = c(100, 200, 150, 180),
+Cont_var = c(100, 150, 100, 50),
+groups = c("a", "a", "a", "b"))
 
 # formula notation
-betta_random(formula = chats ~ Cont_var| groups, ses = ses,  data = df)
+betta_random(formula = chats ~ Cont_var| groups,
+ses = ses,
+ data = df)
 
 # direct input
-betta_random(c(2000, 3000, 4000, 3000), c(100, 200, 150, 180), X = cbind(Int = 1, Cont_var = c(100, 150, 100, 50)), groups = c("a", "a", "a", "b"))
+betta_random(c(2000, 3000, 4000, 3000), c(100, 200, 150, 180),
+X = cbind(Int = 1, Cont_var = c(100, 150, 100, 50)),
+groups = c("a", "a", "a", "b"))
 
 ## handles missing data
-betta_random(c(2000, 3000, 4000, 3000), c(100, 200, 150, NA), groups = c("a", NA,
+betta_random(c(2000, 3000, 4000, 3000), c(100, 200, 150, NA),
+groups = c("a", NA,
     "b", "b"))
 
 }
