@@ -4,7 +4,7 @@ author: "Amy Willis"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{getting-started}
+  %\VignetteIndexEntry{Getting started with breakaway}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -20,10 +20,7 @@ This vignette will lead you through the most basic way to use `breakaway`. For a
 Download the latest version of the package from github.
 
 ```{r}
-if(!("breakaway" %in% rownames(installed.packages()))){
-  install.packages("breakaway")
-}
-library(breakaway)
+require(breakaway)
 data(toy_otu_table)
 ## For historical reasons we're going to rename it:
 otu_data <- toy_otu_table
