@@ -121,9 +121,9 @@ Maybe you don't care about richness... but you care about Shannon or Simpson div
 ```{r, include=FALSE}
 # if(!("DivNet" %in% rownames(installed.packages()))){
 #   if(!("remotes" %in% rownames(installed.packages()))){
-    install.packages("remotes")
+    # install.packages("remotes")
   # }
-  remotes::install_github("adw96/DivNet", dependencies = FALSE)
+  remotes::install_github("adw96/DivNet", dependencies = "Depends")
 # }
 library(DivNet)
 ```
