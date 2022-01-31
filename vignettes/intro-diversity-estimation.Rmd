@@ -10,6 +10,10 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r, include=FALSE}
+options(rmarkdown.html_vignette.check_title = FALSE) 
+```
+
 `breakaway` is a package for estimating species richness. This vignette will lead you through how species richness estimation works, how to get an estimate of species richness using `breakaway`.
 
 We will also talk about diagnosing and fixing model misspecification. 
@@ -17,6 +21,7 @@ We will also talk about diagnosing and fixing model misspecification.
 ## Preliminaries
 
 Download the latest version of the package from github.
+
 
 ```{r}
 library(breakaway)

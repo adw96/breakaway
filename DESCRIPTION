@@ -40,6 +40,7 @@ Suggests: corncob,
     openxlsx,
     plyr,
     RCurl,
+    remotes,
     rmarkdown,
     tidyverse
 VignetteBuilder: knitr
