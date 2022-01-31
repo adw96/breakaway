@@ -19,8 +19,6 @@ We will also talk about diagnosing and fixing model misspecification.
 Download the latest version of the package from github.
 
 ```{r}
-# install.packages("remotes")
-# remotes::install_github("adw96/breakaway")
 library(breakaway)
 ```
 
@@ -30,7 +28,6 @@ Note that we are not continuing to maintain the CRAN version of `breakaway` at t
 If you are not accustomed to using the pipe in `R` (the operator `%>%`), I strongly encourage you to start using it. It will make your code easier to read and write. Here is how to install and load it:
 
 ```{r}
-# install.packages("magrittr")
 library(magrittr)
 ```
 
@@ -55,7 +52,6 @@ In their very cool paper "Extensive Unexplored Human Microbiome Diversity Reveal
 First, let's read in the data:
 
 ```{r}
-# install.packages("openxlsx")
 pasolli_et_al <- openxlsx::read.xlsx("https://ars.els-cdn.com/content/image/1-s2.0-S0092867419300017-mmc4.xlsx", sheet = 2)
 ```
 
