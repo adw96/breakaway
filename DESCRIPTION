@@ -18,7 +18,8 @@ LazyData: true
 RoxygenNote: 7.1.2
 Depends:
     R (>= 3.5.0)
-Imports: dplyr,
+Imports:     
+    dplyr,
     ggplot2,
     graphics,
     lme4,
