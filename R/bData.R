@@ -1,3 +1,11 @@
+#' A canonical QIIME2 dataset
+#'
+#' Data used for internal testing
+#' retrieved from https://raw.githubusercontent.com/paulinetrinh/data/master/otu_table_atacama.txt
+#'
+#' @format character vector
+"atacama"
+
 #' DivNet model fitted to soil_phylo dataset
 #'
 #' DivNet model fit via call
