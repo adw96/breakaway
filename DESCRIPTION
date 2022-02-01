@@ -35,7 +35,6 @@ Imports:
 Suggests: corncob,
     covr,
     devtools,
-    DivNet,
     DT,
     knitr,
     openxlsx,
