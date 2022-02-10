@@ -12,7 +12,7 @@ simulate_betta_random(fitted_betta, nsim)
 \item{nsim}{Number of times to simulate}
 }
 \value{
-A list of length nsim, each element of which is a vector of
+A list of length \code{nsim}, each element of which is a vector of
 simulated Y-values under the fitted betta model
 }
 \description{

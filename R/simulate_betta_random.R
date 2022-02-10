@@ -4,7 +4,7 @@
 #'
 #' @param fitted_betta A fitted betta_random object
 #' @param nsim Number of times to simulate
-#' @return A list of length nsim, each element of which is a vector of
+#' @return A list of length \code{nsim}, each element of which is a vector of
 #' simulated Y-values under the fitted betta model
 simulate_betta_random <- function(fitted_betta,
                            nsim){

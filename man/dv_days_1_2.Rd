@@ -3,9 +3,9 @@
 \docType{data}
 \name{dv_days_1_2}
 \alias{dv_days_1_2}
-\title{DivNet model fitted to soil_phylo dataset including observations on day 1}
+\title{DivNet model fitted to \code{soil_phylo} dataset including observations on day 1}
 \format{
-An object of class `diversityEstimates`
+An object of class \code{diversityEstimates}
 }
 \usage{
 dv_days_1_2
@@ -16,6 +16,6 @@ DivNet model fit via call
 Further details in diversity hypothesis testing vignette
 }
 \references{
-Whitman, T., Pepe-Ranney, C., Enders, A., Koechli, C., Campbell, A.,  Buckley, D. H., Lehmann, J. (2016). \emph{Dynamics of microbial community composi-tion and soil organic carbon mineralization in soil following addition of pyrogenic andfresh organic matter}. The ISME journal, 10(12):2918. <doi: 10.1038/ismej.2016.68>.
+Whitman, T., Pepe-Ranney, C., Enders, A., Koechli, C., Campbell, A.,  Buckley, D. H., Lehmann, J. (2016). \emph{Dynamics of microbial community composition and soil organic carbon mineralization in soil following addition of pyrogenic and fresh organic matter}. The ISME journal, 10(12):2918. <doi: 10.1038/ismej.2016.68>.
 }
 \keyword{datasets}

@@ -19,7 +19,7 @@
 #' the \code{data} argument.
 #' @param data A dataframe containing the response, response standard errors, covariates,
 #' and grouping variable. Required with the \code{formula} argument.
-#' @param initial_est (Optional) A vector of length 1 + ncol(X) giving the starting values for the likelihood maximisation search. The first element is the starting estimate for sigma^2_u, and the remaining elements are the starting elements for beta. Defaults to NULL, in which case the starting values outlined in the paper are used.
+#' @param initial_est (Optional) A vector of length 1 + \code{ncol}(X) giving the starting values for the likelihood maximisation search. The first element is the starting estimate for sigma^2_u, and the remaining elements are the starting elements for beta. Defaults to NULL, in which case the starting values outlined in the paper are used.
 #' @return \item{table}{ A coefficient table for the model parameters. The
 #' columns give the parameter estimates, standard errors, and p-values,
 #' respectively. This model is only as effective as your diversity estimation
@@ -56,7 +56,7 @@
 #' approach is taken, whereby the varying levels of confidence in the estimates
 #' contributes to a diagonal but heteroscedastic covariance matrix. Given
 #' covariates constitute the fixed effects in the mixed model, and significance
-#' of the random effect term ``sigsq_u'' reflects heterogeneity in the sample,
+#' of the random effect term \code{sigsq_u} reflects heterogeneity in the sample,
 #' that is, variability that cannot be explained by only the covariates. The
 #' authors believe this to be the first attempt at modelling total diversity in
 #' a way that accounts for its estimated nature.

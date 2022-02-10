@@ -85,7 +85,16 @@ betta_random <- function(chats = NULL, ses, X = NULL, groups = NULL, formula = N
   }
   if (!is.null(formula)) {
     ses <- data[,deparse(substitute(ses))]
-    group_var <- lme4:::barnames(lme4::findbars(lme4:::RHSForm(formula)))
+    ### next line of code is (the relevant part of) the
+    ### (unexported) "RHSFormula" function in lme4
+    ### (included here to avoid R CMD CHECK notes related to ::: operator)
+    rhsformula <- formula[[length(formula)]]
+    bars <- lme4::findbars(rhsformula)
+    ### next line of code is the (unexported) "barnames" function in lme4
+    group_var <- vapply(bars,
+                        function(x)
+                          deparse1(x[[3]]),
+                        "")
     groups <- data[,group_var]
     full_form <- lme4::subbars(formula)
     sm_form <- update(full_form, paste("~.-",group_var))

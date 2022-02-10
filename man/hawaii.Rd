@@ -13,7 +13,7 @@ A data frame with 198 rows and 2 variables:
 }
 }
 \source{
-\url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
+\url{https://onlinelibrary.wiley.com/doi/abs/10.1111/biom.12332}
 }
 \usage{
 hawaii
@@ -24,6 +24,6 @@ hawaii
 \references{
 Willis, A. and Bunge, J. (2015). Estimating diversity via
 frequency ratios. \emph{Biometrics}, \bold{71}(4), 1042--1049.
-\url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
+\url{https://onlinelibrary.wiley.com/doi/abs/10.1111/biom.12332}
 }
 \keyword{datasets}

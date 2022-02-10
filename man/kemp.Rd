@@ -32,7 +32,7 @@ kemp(
 \value{
 An object of class \code{alpha_estimate} \item{code}{ A category representing algorithm behaviour.
 \samp{code=1} indicates no nonlinear models converged and the transformed
-WLRM diversity estimate of Rocchetti et. al. (2011) is returned.
+\code{WLRM} diversity estimate of Rocchetti et. al. (2011) is returned.
 \samp{code=2} indicates that the iteratively reweighted model converged and
 was returned. \samp{code=3} indicates that iterative reweighting did not
 converge but a model based on a simplified variance structure was returned

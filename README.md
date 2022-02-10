@@ -58,7 +58,7 @@ implemented in breakaway? Submit a pull request or contact the
   - Documentation for functions can be found
     [here](https://adw96.github.io/breakaway/reference/index.html)
   - A pdf of all documentation can be found in the
-    [breakaway-manual.pdf](https://github.com/adw96/breakaway/tree/master/breakaway-manual.pdf)
+    [breakaway-manual.pdf](https://github.com/adw96/breakaway/blob/master/breakaway-manual.pdf)
   - We try to answer frequently asked questions on the
     [wiki](https://github.com/adw96/breakaway/wiki)
 
@@ -67,10 +67,10 @@ implemented in breakaway? Submit a pull request or contact the
 Maintainer: [Amy Willis](http://statisticaldiversitylab.com)
 
 Authors: [Amy Willis](http://statisticaldiversitylab.com), [John
-Bunge](https://stat.cornell.edu/people/faculty/john-bunge), [Bryan
+Bunge](https://stat.cornell.edu/people/emeritus-faculty/john-bunge), [Bryan
 Martin](https://bryandmartin.github.io/), [Pauline
 Trinh](https://twitter.com/paulinetrinh), [Kathryn
-Barger](http://hnrca.tufts.edu/kathryn-barger-ph-d/), [David
+Barger](https://hnrca.tufts.edu/biostatistics-unit/kathryn-barger-ph-d/), [David
 Clausen](https://www.biostat.washington.edu/people/david-clausen) and
 [Sarah Teichman](https://svteichman.github.io/).
 

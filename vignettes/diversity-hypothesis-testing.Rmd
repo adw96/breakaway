@@ -62,7 +62,7 @@ We can get a table of the estimates and their uncertainties as follows:
 summary(richness_soil) %>% as_tibble
 ```
 
-If you haven't seen a `tibble` before, it's like a `data.frame`, but way better. Already we can see that we only have 10 rows printed as opposed to the usual bagillion.
+If you haven't seen a `tibble` before, it's like a `data.frame`, but way better. Already we can see that we only have 10 rows printed as opposed to the usual bajillion.
 
 ## Inference
 
@@ -200,7 +200,7 @@ The syntax and output using `betta_lincom` with a `betta` object as input is exa
 as with a `betta_random` object, so we haven't included a separate example for this case.
 
 To look at a more complicated example of hypothesis testing, let's now
-include another date of obsercation in the Whitman et al. dataset -- `Day = 1`, 
+include another date of observation in the Whitman et al. dataset -- `Day = 1`, 
 or observations taken on day 12 of this study. We might be interested now
 in determining whether there is _any_ difference across observation times
 in Shannon diversity.

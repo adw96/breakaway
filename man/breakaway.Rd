@@ -40,9 +40,9 @@ for modern datasets
 \samp{breakaway} presents an estimator of species richness that is
 well-suited to the high-diversity/microbial setting. However, many microbial
 datasets display more diversity than the Kemp-type models can permit. In
-this case, the log-transformed WLRM diversity estimator of Rocchetti et. al.
+this case, the log-transformed \code{WLRM} diversity estimator of Rocchetti et. al.
 (2011) is returned. The authors' experience suggests that some datasets that
-require the log-transformed WLRM contain ``false'' diversity, that is,
+require the log-transformed \code{WLRM} contain ``false'' diversity, that is,
 diversity attributable to sequencing errors (via an inflated singleton
 count). The authors encourage judicious use of diversity estimators when the
 dataset may contain these errors, and recommend the use of

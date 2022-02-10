@@ -26,7 +26,7 @@ the standard errors (with the arguments \code{formula} and \code{data}).}
 \item{X}{A numeric matrix of covariates. If not supplied, an intercept-only
 model will be fit. This is optional with the \code{chats} argument.}
 
-\item{initial_est}{(Optional) A vector of length 1 + ncol(X) giving the starting values for the likelihood maximisation search. The first element is the starting estimate for sigma^2_u, and the remaining elements are the starting elements for beta. Defaults to NULL, in which case the starting values outlined in the paper are used.}
+\item{initial_est}{(Optional) A vector of length 1 + \code{ncol}(X) giving the starting values for the likelihood maximisation search. The first element is the starting estimate for sigma^2_u, and the remaining elements are the starting elements for beta. Defaults to NULL, in which case the starting values outlined in the paper are used.}
 
 \item{formula}{A formula object of the form \eqn{y ~ x | group}. Required with
 the \code{data} argument.}
@@ -79,7 +79,7 @@ In order to account for the estimated nature of the response, a mixed model
 approach is taken, whereby the varying levels of confidence in the estimates
 contributes to a diagonal but heteroscedastic covariance matrix. Given
 covariates constitute the fixed effects in the mixed model, and significance
-of the random effect term ``sigsq_u'' reflects heterogeneity in the sample,
+of the random effect term \code{sigsq_u} reflects heterogeneity in the sample,
 that is, variability that cannot be explained by only the covariates. The
 authors believe this to be the first attempt at modelling total diversity in
 a way that accounts for its estimated nature.

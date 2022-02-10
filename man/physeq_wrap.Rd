@@ -2,7 +2,7 @@
 % Please edit documentation in R/physeq_wrap.R
 \name{physeq_wrap}
 \alias{physeq_wrap}
-\title{Wrapper for phyloseq objects}
+\title{Wrapper for \code{phyloseq} objects}
 \usage{
 physeq_wrap(fn, physeq, ...)
 }
@@ -11,11 +11,11 @@ physeq_wrap(fn, physeq, ...)
 
 \item{physeq}{A \code{phyloseq} object, or an object of class \code{otu_table}}
 
-\item{...}{Additional arguments for fn}
+\item{...}{Additional arguments for \code{fn}}
 }
 \value{
 Object of class \code{alpha_estimates}
 }
 \description{
-Wrapper for phyloseq objects
+Wrapper for \code{phyloseq} objects
 }

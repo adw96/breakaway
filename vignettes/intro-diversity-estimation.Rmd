@@ -137,7 +137,7 @@ $$
 
 Therefore, as that intercept gets close to zero, the estimate of the number of unobserved species gets really large! Intuitively, this makes sense -- if there are so many rare species, we cannot reliably predict how many unobserved species there are. There is some minimal amount of information needed to estimate total species richness! 
 
-*Note: Last time we checked (September 2021), `breakaway`, with the default settings, produced an estimate of 7724. If this number has changed significantly since then, it's because we are constantly making improvements to the code base, which may change estimates -- usually by a little but sometimes by more. Please let me know or [log an issue](https://github.com/adw96/breakaway/issues) to let us know if this occured!*
+*Note: Last time we checked (September 2021), `breakaway`, with the default settings, produced an estimate of 7724. If this number has changed significantly since then, it's because we are constantly making improvements to the code base, which may change estimates -- usually by a little but sometimes by more. Please let me know or [log an issue](https://github.com/adw96/breakaway/issues) to let us know if this occurred!*
 
 ## Conclusions
 
