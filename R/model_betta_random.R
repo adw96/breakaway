@@ -20,6 +20,8 @@
 #' the \code{data} argument.
 #' @param data A dataframe containing the response, response standard errors, covariates,
 #' and grouping variable. Required with the \code{formula} argument.
+#' @param n_initializations A positive integer giving number of random
+#' initializations to be used in optimization (default 10)
 #' @return \item{table}{ A coefficient table for the model parameters. The
 #' columns give the parameter estimates, standard errors, and p-values,
 #' respectively. This model is only as effective as your diversity estimation
@@ -69,7 +71,14 @@
 #'     "b", "b"))
 #'
 #' @export
-betta_random <- function(chats = NULL, ses, X = NULL, groups = NULL, formula = NULL, data = NULL) {
+betta_random <- function(chats = NULL, ses, X = NULL, groups = NULL, formula = NULL, data = NULL,
+                         n_initializations = 10) {
+#   if(Sys.info()$sysname == "Darwin" & R.version$arch == "aarch64"){
+#     warning("In testing we have found betta_random() to return different values on Mac M1 systems than on any other system.
+# This problem appears to be related to behavior of optim() and/or linear algebra packages on M1 systems.
+# We therefore highly encourage re-running your analysis on a non-M1 system.")
+#   }
+
   if (!is.null(formula)) {
     if (is.null(data)) {
       stop("Please include a dataframe that corresponds with your formula.")
@@ -133,12 +142,46 @@ betta_random <- function(chats = NULL, ses, X = NULL, groups = NULL, formula = N
                    solve(t(X_effective) %*% X_effective) %*% t(X_effective) %*% chats_effective,
                    within_groups_start)
 
+  if(n_initializations == 1){
   output <- optim(initial_est,
                   likelihood,
                   hessian=FALSE,
                   control=list(fnscale=-1),
                   lower=c(0, rep(-Inf, p), rep(0, gs)),
                   method="L-BFGS-B")
+  } else{
+    lower=c(0, rep(-Inf, p), rep(0, gs))
+    which_positive <- lower ==0
+    initial_signs <- sign(initial_est)
+    log_init <- log(abs(initial_est + 1e-4))
+
+    initial_ests <- lapply(1:n_initializations, function(i)
+                           (log_init + rnorm(length(log_init),0,max(sd(log_init),1))) %>%
+                             (function(x){ x <- exp(x)
+                              x[!which_positive] <- x[!which_positive]*sample(c(-1,1),
+                                                                              sum(!which_positive),
+                                                                              replace = TRUE)
+                              return(x)}))
+
+    outputs <- lapply(1:n_initializations, function(i)
+                      try(  output <- optim(initial_ests[[i]],
+                                            likelihood,
+                                            hessian=FALSE,
+                                            control=list(fnscale=-1),
+                                            lower=c(0, rep(-Inf, p), rep(0, gs)),
+                                            method="L-BFGS-B")))
+
+    obj_values <- sapply(outputs,
+                         function(x) ifelse(is.list(x),x$value,-Inf))
+
+    best_model <- which.max(obj_values)
+
+
+    output <- outputs[[best_model[1]]]
+
+  }
+
+
   ssq_u <- output$par[1]
   beta <- output$par[2:(p+1)]
   ssq_group <- output$par[(p+2):(p+gs+1)]

@@ -63,7 +63,7 @@ betta_lincom <- function(fitted_betta,
   results <- as.data.frame(results)
 
   if(sum(pval ==0)>0){
-    results$`p-values` <- as.character(results$`p-values`)
+    results$`p-values` <- as.character(signif(results$`p-values`,3))
     results$`p-values`[pval == 0] <- " < 1e-20"
   } else{
     #so class of p-values column doesn't depend on value of p-values

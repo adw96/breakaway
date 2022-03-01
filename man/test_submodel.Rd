@@ -51,14 +51,17 @@ df <- data.frame(chats = c(2000, 3000, 4000, 3000,
                  50,200,25,125))
 
 # fit betta()
-example_fit <- betta(formula = chats ~ Cont_var + Cont_var_2, ses = ses, data = df)
+example_fit <- betta(formula = chats ~ Cont_var + Cont_var_2, ses = ses,
+data = df)
 
 
 # construct L for hypothesis that B_cont_var = B_cont_var_2 = 0
 L <- rbind(c(0,1,0),
            c(0,0,1))
 
-F_test_results <- F_test(example_fit, L)
+F_test_results <- F_test(example_fit,
+L,
+nboot = 10) #nboot = 10 for speed here; recommend >= 1000 in practice
 
 }
 \references{

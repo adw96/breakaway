@@ -1,6 +1,6 @@
 Package: breakaway
 Title: Species Richness Estimation and Modeling
-Version: 4.7.8
+Version: 4.7.9
 Date: 2022-02-09
 Authors@R: c(
     person("Amy", "Willis", email = "adwillis@uw.edu", role = c("aut", "cre"),
@@ -45,5 +45,4 @@ Suggests: corncob,
     rmarkdown,
     testthat,
     tidyverse
-VignetteBuilder: knitr
 URL: https://adw96.github.io/breakaway/

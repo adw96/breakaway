@@ -49,14 +49,14 @@ devtools::install_github("adw96/breakaway")
 
 - The best place to start is the [vignettes](https://adw96.github.io/breakaway/articles/).
 - Documentation for functions can be found [here](https://adw96.github.io/breakaway/reference/index.html)
-- A pdf of all documentation can be found in the [breakaway-manual.pdf](https://github.com/adw96/breakaway/tree/master/breakaway-manual.pdf) 
+- A pdf of all documentation can be found in the [breakaway-manual.pdf](https://github.com/adw96/breakaway/blob/master/breakaway-manual.pdf) 
 - We try to answer frequently asked questions on the [wiki](https://github.com/adw96/breakaway/wiki)
 
 ## Humans
 
 Maintainer: [Amy Willis](http://statisticaldiversitylab.com)
 
-Authors: [Amy Willis](http://statisticaldiversitylab.com),  [John Bunge](https://stat.cornell.edu/people/faculty/john-bunge), [Bryan Martin](https://bryandmartin.github.io/), [Pauline Trinh](https://twitter.com/paulinetrinh), [Kathryn Barger](http://hnrca.tufts.edu/kathryn-barger-ph-d/), [David Clausen](https://www.biostat.washington.edu/people/david-clausen) and [Sarah Teichman](https://svteichman.github.io/). 
+Authors: [Amy Willis](http://statisticaldiversitylab.com),  [John Bunge](https://stat.cornell.edu/people/emeritus-faculty/john-bunge), [Bryan Martin](https://bryandmartin.github.io/), [Pauline Trinh](https://twitter.com/paulinetrinh), [Kathryn Barger](https://hnrca.tufts.edu/people/staff/kathryn-barger-phd), [David Clausen](https://www.biostat.washington.edu/people/david-clausen) and [Sarah Teichman](https://svteichman.github.io/). 
 
 Do you have a request for us? Let us know! We want folks to use `breakaway` and are committed to making it as easy to use as possible. 
 

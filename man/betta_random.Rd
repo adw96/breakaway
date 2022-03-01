@@ -10,7 +10,8 @@ betta_random(
   X = NULL,
   groups = NULL,
   formula = NULL,
-  data = NULL
+  data = NULL,
+  n_initializations = 10
 )
 }
 \arguments{
@@ -36,6 +37,9 @@ the \code{data} argument.}
 
 \item{data}{A dataframe containing the response, response standard errors, covariates,
 and grouping variable. Required with the \code{formula} argument.}
+
+\item{n_initializations}{A positive integer giving number of random
+initializations to be used in optimization (default 10)}
 }
 \value{
 \item{table}{ A coefficient table for the model parameters. The
