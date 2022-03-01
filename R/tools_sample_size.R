@@ -1,8 +1,8 @@
 #' Estimate the sample size needed to do an unpaired one-way test using betta
-#' 
+#'
 #' Estimate the sample size needed to do an unpaired one-way test using betta
-#' 
-#' 
+#'
+#'
 #' @param control_group_est An estimate of the alpha diversity parameter for
 #' the control group
 #' @param se_est An estimate of the (common) standard deviation
@@ -16,12 +16,12 @@
 #' the power
 #' @return An estimate of the necessary sample size and some details
 #' @export sample_size_estimate
-sample_size_estimate <- function(control_group_est, se_est, diff = 5, 
-                                 alpha = 0.05, prop = 0.8, samples = 20, 
+sample_size_estimate <- function(control_group_est, se_est, diff = 5,
+                                 alpha = 0.05, prop = 0.8, samples = 20,
                                  precision = 5) {
   n <- 5
   pvalues <- rep(1, samples)
-  
+
   while (mean(pvalues < alpha) < prop) {
     iter <- 1
     while (iter <= samples) {
@@ -29,7 +29,7 @@ sample_size_estimate <- function(control_group_est, se_est, diff = 5,
       ses <- rep(se_est, 2*n)
       design_matrix <- cbind(1, c(rep(0, n), rep(1, n)))
       pp <- try(betta(create_ests, ses, design_matrix)$table[2,3], silent = T)
-      if (class(pp) == "numeric") {
+      if (inherits(pp, "numeric")) {
         pvalues[iter] <- pp
         iter <- iter + 1
       }
@@ -38,7 +38,7 @@ sample_size_estimate <- function(control_group_est, se_est, diff = 5,
     n <- n + precision
   }
   message(paste("Sample size needed: ", n - precision, "\n")) ## bc incremented
-  message(paste("Note: This is number of subjects *per group* i.e.", n-precision, "from the control", 
+  message(paste("Note: This is number of subjects *per group* i.e.", n-precision, "from the control",
       "group and", n-precision, "from the test group. It should be considered a lower bound",
       "at best! Please consult Amy with any questions. "))
 }
@@ -90,10 +90,10 @@ sample_size_estimate <- function(control_group_est, se_est, diff = 5,
 
 
 #' Plot the power obtained with sample size
-#' 
+#'
 #' Plot the power obtained with sample size
-#' 
-#' 
+#'
+#'
 #' @param control_group_est An estimate of the alpha diversity parameter for
 #' the control group
 #' @param se_est An estimate of the (common) standard deviation
@@ -106,7 +106,7 @@ sample_size_estimate <- function(control_group_est, se_est, diff = 5,
 sample_size_figure <- function(control_group_est, se_est, diff = 5, samples = 20) {
   nn <- seq(5, 50, length.out = 10)
   pvalues <- rep(NA, samples)
-  
+
   plot(0, 0, type="n", xlim = c(0, max(nn)), ylim = c(0, 0.3), xlab = "Sample Size", ylab = "p-value")
   for (n in nn) {
     iter <- 1
@@ -115,10 +115,10 @@ sample_size_figure <- function(control_group_est, se_est, diff = 5, samples = 20
       ses <- rep(se_est, 2*n)
       design_matrix <- cbind(1, c(rep(0, n), rep(1, n)))
       pp <- try(betta(create_ests, ses, design_matrix)$table[2,3])
-      if (class(pp) == "numeric") {
+      if (inherits(pp, "numeric")) {
         pvalues[iter] <- pp
         iter <- iter + 1
-      } 
+      }
     }
     points(rep(n, samples), pvalues)
   }
