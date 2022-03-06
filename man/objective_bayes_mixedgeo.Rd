@@ -16,36 +16,42 @@ objective_bayes_mixedgeo(
   Metropolis.start.T1 = 1,
   Metropolis.stdev.T1 = 2,
   Metropolis.start.T2 = 3,
-  Metropolis.stdev.T2 = 2,
-  bars = 3
+  Metropolis.stdev.T2 = 2
 )
 }
 \arguments{
-\item{data}{TODO(Kathryn)}
+\item{data}{A frequency count table}
 
-\item{output}{TODO(Kathryn)}
+\item{output}{Print summary of fitted model. Default is TRUE.}
 
-\item{plot}{TODO(Kathryn)}
+\item{plot}{Plot estimates? Default is TRUE.}
 
-\item{answers}{TODO(Kathryn)}
+\item{answers}{Return dataframe containing model summaries? Default is FALSE.}
 
-\item{tau}{TODO(Kathryn)}
+\item{tau}{Truncation cutoff for model fitting. (Counts above this cutoff
+are not used in model fitting.) Default is 10.}
 
-\item{burn.in}{TODO(Kathryn)}
+\item{burn.in}{Number of MCMC burn-in iterations. Default is 1000.}
 
-\item{iterations}{TODO(Kathryn)}
+\item{iterations}{Number of MCMC iterations after burn-in. Default is 5000.}
 
-\item{Metropolis.stdev.N}{TODO(Kathryn)}
+\item{Metropolis.stdev.N}{Standard deviation of proposal distribution
+parameter N within MCMC. Default is 100.}
 
-\item{Metropolis.start.T1}{TODO(Kathryn)}
+\item{Metropolis.start.T1}{Starting value of parameter T1. Default is 1.}
 
-\item{Metropolis.stdev.T1}{TODO(Kathryn)}
+\item{Metropolis.stdev.T1}{Standard deviation of proposal distribution
+parameter T1 within MCMC. Default is 2.}
 
-\item{Metropolis.start.T2}{TODO(Kathryn)}
+\item{Metropolis.start.T2}{Starting value of parameter T2. Default is 3.}
 
-\item{Metropolis.stdev.T2}{TODO(Kathryn)}
-
-\item{bars}{TODO(Kathryn)}
+\item{Metropolis.stdev.T2}{Standard deviation of proposal distribution
+parameter T2 within MCMC. Default is 2.}
+}
+\value{
+If answers set to TRUE, a list containing posterior median and
+95% posterior credible intervals for richness, fitted values, and
+MCMC diagnostics. If answers set to FALSE (default), no value is returned.
 }
 \description{
 Objective Bayes species richness estimate with the mixed-geometric model

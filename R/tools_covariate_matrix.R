@@ -2,7 +2,7 @@
 #'
 #' @param phyloseq_object A phyloseq object
 #' @param variables variable names
-#'
+#' @return A design matrix
 #' @importFrom phyloseq sample_data
 #' @importFrom phyloseq get_variable
 #'

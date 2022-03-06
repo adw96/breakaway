@@ -14,32 +14,38 @@ objective_bayes_poisson(
   iterations = 2500,
   Metropolis.stdev.N = 75,
   Metropolis.start.lambda = 1,
-  Metropolis.stdev.lambda = 0.3,
-  bars = 5
+  Metropolis.stdev.lambda = 0.3
 )
 }
 \arguments{
-\item{data}{TODO(Kathryn)}
+\item{data}{A frequency count table}
 
-\item{output}{TODO(Kathryn)}
+\item{output}{Print summary of fitted model. Default is TRUE.}
 
-\item{plot}{TODO(Kathryn)}
+\item{plot}{Plot estimates? Default is TRUE.}
 
-\item{answers}{TODO(Kathryn)}
+\item{answers}{Return dataframe containing model summaries? Default is FALSE.}
 
-\item{tau}{TODO(Kathryn)}
+\item{tau}{Truncation cutoff for model fitting. (Counts above this cutoff
+are not used in model fitting.) Default is 10.}
 
-\item{burn.in}{TODO(Kathryn)}
+\item{burn.in}{Number of MCMC burn-in iterations. Default is 100.}
 
-\item{iterations}{TODO(Kathryn)}
+\item{iterations}{Number of MCMC iterations after burn-in. Default is 2500.}
 
-\item{Metropolis.stdev.N}{TODO(Kathryn)}
+\item{Metropolis.stdev.N}{Standard deviation of proposal distribution
+parameter N within MCMC. Default is 75.}
 
-\item{Metropolis.start.lambda}{TODO(Kathryn)}
+\item{Metropolis.start.lambda}{Starting value of parameter lambda.
+Default is 1}
 
-\item{Metropolis.stdev.lambda}{TODO(Kathryn)}
-
-\item{bars}{TODO(Kathryn)}
+\item{Metropolis.stdev.lambda}{Standard deviation of proposal distribution
+parameter T1 within MCMC. Default is 0.3.}
+}
+\value{
+If answers set to TRUE, a dataframe containing posterior median and
+95% posterior credible intervals for richness, fitted values, and
+MCMC diagnostics. If answers set to FALSE (default), no value is returned.
 }
 \description{
 Objective Bayes species richness estimate with the Poisson model

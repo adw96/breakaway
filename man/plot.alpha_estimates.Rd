@@ -32,6 +32,10 @@
 
 \item{...}{See details}
 }
+\value{
+A ggplot object with samples on the x-axis and estimated
+alpha diversities on the y-axis
+}
 \description{
 Plot function for alpha_estimates class
 }

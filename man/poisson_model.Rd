@@ -11,6 +11,10 @@ poisson_model(input_data, cutoff = 10)
 
 \item{cutoff}{The largest frequency to use for predicting f0. Defaults to 10.}
 }
+\value{
+An object of class \code{alpha_estimate} containing a summary of the
+fitted model
+}
 \description{
 A model to estimate the number of missing taxa under a Poisson Model
 }

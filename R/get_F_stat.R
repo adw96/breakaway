@@ -9,8 +9,7 @@
 #' @param fitted_betta A fitted betta object -- i.e., the output of either betta() or
 #' betta_random() -- containing fixed effect estimates of interest.
 #' @param L An m x p matrix defining the null LB = 0. L must have full row rank.
-#' @return A list containing
-#' \item{F_stat}{The calculated F statistic}
+#' @return The calculated F-statistic
 get_F_stat <- function(fitted_betta,
                             L){
   #store estimated covariance matrix for beta in C

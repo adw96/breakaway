@@ -15,6 +15,9 @@ rztnbinomtable(C, size, probability)
 \item{probability}{probability parameter for the negative binomial
 distribution}
 }
+\value{
+A simulated frequency count table
+}
 \description{
 Simulate a frequency count table based on a negative binomial model.
 Zero-truncated, obviously.

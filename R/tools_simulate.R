@@ -1,13 +1,14 @@
 #' Negative binomially distributed frequency count tables.
-#' 
+#'
 #' Simulate a frequency count table based on a negative binomial model.
 #' Zero-truncated, obviously.
-#' 
-#' 
+#'
+#'
 #' @param C species richness
 #' @param size size parameter for the negative binomial distribution
 #' @param probability probability parameter for the negative binomial
 #' distribution
+#' @return A frequency count table
 #' @author Amy Willis
 #' @export rnbinomtable
 rnbinomtable <- function(C, size, probability) {
@@ -60,15 +61,16 @@ rnbinomtable <- function(C, size, probability) {
 
 #' beta version: Zero-truncated negative binomially distributed frequency count
 #' tables.
-#' 
+#'
 #' Simulate a frequency count table based on a negative binomial model.
 #' Zero-truncated, obviously.
-#' 
-#' 
+#'
+#'
 #' @param C species richness
 #' @param size size parameter for the negative binomial distribution
 #' @param probability probability parameter for the negative binomial
 #' distribution
+#' @return A simulated frequency count table
 #' @author Amy Willis
 #' @export rztnbinomtable
 rztnbinomtable <- function(C, size, probability) {
