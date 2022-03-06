@@ -50,7 +50,7 @@ parameter T2 within MCMC. Default is 2.}
 }
 \value{
 If answers set to TRUE, a list containing posterior median and
-95% posterior credible intervals for richness, fitted values, and
+95\% posterior credible intervals for richness, fitted values, and
 MCMC diagnostics. If answers set to FALSE (default), no value is returned.
 }
 \description{

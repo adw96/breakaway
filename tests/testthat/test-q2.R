@@ -2,6 +2,7 @@ context("qiime2 examples")
 library(breakaway)
 
 test_that("Canonical QIIME2 Example Datasets Work", {
+  skip_on_cran()
 
   data("atacama")
   x <- atacama

@@ -2,6 +2,7 @@ context("objective bayes")
 library(breakaway)
 
 test_that("objective bayes", {
+  skip_on_cran()
   set.seed(170709)
   z <- rnbinomtable(20, 5, 0.5)
   expect_is(z, "data.frame")

@@ -27,6 +27,7 @@ test_that("single p-value is low in univariate fixed-effects model under alterna
 
 test_that("single p-value is low in univariate mixed-effects model under alternative", {
   #generate data
+  skip_on_cran()
   set.seed(345)
   groups <- rep(1:5,each = 4)
   predictor <- rnorm(20)

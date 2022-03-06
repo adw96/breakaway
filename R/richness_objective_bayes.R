@@ -17,7 +17,7 @@
 #' @param Metropolis.stdev.T2 Standard deviation of proposal distribution
 #' parameter T2 within MCMC. Default is 0.01.
 #' @return If answers set to TRUE, a list containing posterior median and
-#' 95% posterior credible intervals for richness, fitted values, and
+#' 95\% posterior credible intervals for richness, fitted values, and
 #' MCMC diagnostics. If answers set to FALSE (default), no value is returned.
 #' @importFrom stats acf
 #' @importFrom graphics hist par plot
@@ -290,7 +290,7 @@ objective_bayes_negbin <- function(data,
 #' @param Metropolis.stdev.lambda Standard deviation of proposal distribution
 #' parameter T1 within MCMC. Default is 0.3.
 #' @return If answers set to TRUE, a dataframe containing posterior median and
-#' 95% posterior credible intervals for richness, fitted values, and
+#' 95\% posterior credible intervals for richness, fitted values, and
 #' MCMC diagnostics. If answers set to FALSE (default), no value is returned.
 #' @importFrom graphics hist par plot
 #'
@@ -526,7 +526,7 @@ objective_bayes_poisson <- function(data,
 #' @param Metropolis.stdev.T2 Standard deviation of proposal distribution
 #' parameter T2 within MCMC. Default is 2.
 #' @return If answers set to TRUE, a list containing posterior median and
-#' 95% posterior credible intervals for richness, fitted values, and
+#' 95\% posterior credible intervals for richness, fitted values, and
 #' MCMC diagnostics. If answers set to FALSE (default), no value is returned.
 #' @importFrom graphics hist par plot
 #'
@@ -792,7 +792,7 @@ objective_bayes_mixedgeo <- function(data, output=TRUE, plot=TRUE, answers=FALSE
 #' @param Metropolis.stdev.theta Standard deviation of proposal distribution
 #' parameter theta within MCMC. Default is 0.3.
 #' @return If answers set to TRUE, a list containing posterior median and
-#' 95% posterior credible intervals for richness, fitted values, and
+#' 95\% posterior credible intervals for richness, fitted values, and
 #' MCMC diagnostics. If answers set to FALSE (default), no value is returned.
 #' @importFrom graphics hist par plot
 #'

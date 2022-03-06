@@ -11,6 +11,7 @@ map1 <- sample_data(map1)
 exam1 <- phyloseq(OTU1, map1, tax1)
 
 test_that("sampling functions work", {
+  skip_on_cran()
   expect_is(sample_shannon(GlobalPatterns), "alpha_estimates")
   expect_is(sample_shannon_e(GlobalPatterns), "alpha_estimates")
   expect_is(sample_simpson(GlobalPatterns), "alpha_estimates")

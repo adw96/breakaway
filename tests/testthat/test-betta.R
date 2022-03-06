@@ -2,6 +2,7 @@ context("betta")
 library(breakaway)
 
 test_that("betta isn't stupid", {
+  skip_on_cran()
   n <- 25
 
   bb <- betta(c(rep(7, n), rep(8, n)),
@@ -114,6 +115,7 @@ test_that("betta isn't stupid", {
 })
 
 test_that("betta_lincom works with betta and betta_random", {
+  skip_on_cran()
   n <- 25
 
   bb <- betta(c(rep(7, n), rep(8, n)),
@@ -169,7 +171,7 @@ test_that("betta_lincom works with betta and betta_random", {
 })
 
 test_that("betta_random works",{
-
+  skip_on_cran()
   df <- data.frame(chats = c(2000, 3000, 4000, 3000,5000,4000),
                    ses = c(100, 200, 150, 180,250,130),
                    Cont_var = c(100, 150, 100, 50,150,100),

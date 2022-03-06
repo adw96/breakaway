@@ -44,7 +44,7 @@ parameter T1 within MCMC. Default is 0.3.}
 }
 \value{
 If answers set to TRUE, a dataframe containing posterior median and
-95% posterior credible intervals for richness, fitted values, and
+95\% posterior credible intervals for richness, fitted values, and
 MCMC diagnostics. If answers set to FALSE (default), no value is returned.
 }
 \description{

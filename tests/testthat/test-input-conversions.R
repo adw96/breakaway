@@ -7,17 +7,18 @@ data("apples")
 data("hawaii")
 
 test_that("Initial conversions work", {
-  
+  skip_on_cran()
+
   expect_equal(convert(apples), apples)
   expect_equal(convert(hawaii), hawaii)
   # convert("data/butterfly.csv")
   expect_error(convert(toy_otu_table))
   expect_error(convert(toy_metadata))
   expect_error(convert(toy_taxonomy))
-  
-  
+
+
   expect_error(suppressWarnings({convert(cbind(c(1:5,7,6), 20:14))}))
-  
+
 })
 
 datasets_to_test <- list(apples,
@@ -33,13 +34,14 @@ richness_estimates <- list(chao1,
                            chao1_bc)
 
 test_that("Richness estimates output the correct type", {
-  
+  skip_on_cran()
+
   ### apply all functions in richness_estimates to all datasets in datasets_to_test
-  
+
   for (dataset in datasets_to_test) {
     for (richness_estimate in richness_estimates) {
       expect_is(richness_estimate(dataset), "alpha_estimate")
     }
   }
-  
+
 })

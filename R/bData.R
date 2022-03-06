@@ -6,6 +6,12 @@
 #' @format character vector
 "atacama"
 
+#' Output from test_submodel() for use in hypothesis testing vignette
+#'
+#' @format A list containing the bootstrap p-value, the observed F-statistic,
+#' and a vector of bootstrapped F-statistics
+"submodel_test"
+
 #' DivNet model fitted to \code{soil_phylo} dataset
 #'
 #' DivNet model fit via call

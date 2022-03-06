@@ -5,9 +5,10 @@ data("toy_otu_table")
 
 set.seed(1)
 test_that("breakaway gives reasonable std errors", {
+  skip_on_cran()
   ### Sample 111 was a particular problem after change
   selected_samples <- c(111, sample(1:143, size = 20, replace = F))
-  
+
   # this failed before  any(is.infinite(ratiovars)) was added
   for (i in selected_samples) {
     y <- breakaway(toy_otu_table[, i])
@@ -17,15 +18,16 @@ test_that("breakaway gives reasonable std errors", {
 })
 
 test_that("previously crazy estimates are fine", {
-  
+  skip_on_cran()
+
   # this is fine: plot is just a disaster
   library(phyloseq)
   data(GlobalPatterns)
-  
+
   bad <- (GlobalPatterns %>% otu_table)[,1] %>% c
   ba <- bad %>% breakaway
-  
+
   expect_true(ba$error >= 5 | is.na(ba$estimate),
               info = paste("std error is too small for first GlobalPatterns"))
-  
+
 })
