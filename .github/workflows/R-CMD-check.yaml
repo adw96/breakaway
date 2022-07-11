@@ -28,7 +28,7 @@ jobs:
   # FLAG: this is throwing the error "ERROR: dependency ‘phyloseq’ is not available for package ‘breakaway’"
   # based on this commit to corncob in March https://github.com/bryandmartin/corncob/commit/b913a72d2c442bd9ba8d141e35b2221a2cc1c1de 
   # this was an error there too. 
-          - {os: ubuntu-20.04, r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+  #        - {os: ubuntu-20.04, r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
   # FLAG: Current open issue with r-devel: Bioconductor does not yet build and check packages for R version 4.2
   # ISSUE#471: https://github.com/r-hub/rhub/issues/471
     env:
@@ -72,6 +72,7 @@ jobs:
           remotes::install_github("bryandmartin/corncob")
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
+          remotes::install_github("mikemc/speedyseq")
         shell: Rscript {0}
 
       - name: Check

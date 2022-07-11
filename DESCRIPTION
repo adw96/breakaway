@@ -40,6 +40,7 @@ Suggests: corncob,
     plyr,
     RCurl,
     rmarkdown,
-    tidyverse
+    tidyverse,
+    speedyseq
 VignetteBuilder: knitr
 URL: https://adw96.github.io/breakaway/
