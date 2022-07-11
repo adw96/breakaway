@@ -17,14 +17,14 @@ BugReports: https://github.com/adw96/breakaway/issues
 LazyData: true
 RoxygenNote: 7.1.2
 Depends:
-    R (>= 3.5.0)
+    R (>= 3.5.0),
+    phyloseq (>= 1.18.0)
 Imports: dplyr,
     ggplot2,
     graphics,
     lme4,
     magrittr,
     MASS,
-    phyloseq,
     R.rsp,
     reshape2,
     stats,
