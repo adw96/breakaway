@@ -42,5 +42,7 @@ Suggests: corncob,
     rmarkdown,
     tidyverse,
     speedyseq
+Additional_repositories: https://github.com/mikemc/speedyseq,
+  https://github.com/bryandmartin/corncob
 VignetteBuilder: knitr
 URL: https://adw96.github.io/breakaway/
