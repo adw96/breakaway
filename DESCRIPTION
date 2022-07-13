@@ -30,7 +30,8 @@ Imports: dplyr,
     stats,
     testthat,
     tibble,
-    utils
+    utils,
+    remotes
 Suggests: corncob,
     covr,
     devtools,
