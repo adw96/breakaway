@@ -67,6 +67,7 @@ jobs:
         run: |
           if (!requireNamespace("BiocManager", quietly = TRUE)){install.packages("BiocManager")}; BiocManager::install(c("phyloseq"), ask = FALSE)
           BiocManager::install(c("phyloseq"), ask = FALSE)
+          remotes::install_github("joey711/phyloseq")
           remotes::install_github("bryandmartin/corncob")
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
