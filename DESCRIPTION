@@ -31,7 +31,8 @@ Imports: dplyr,
     testthat,
     tibble,
     utils,
-    remotes
+    remotes,
+    R.utils
 Suggests: corncob,
     covr,
     devtools,
