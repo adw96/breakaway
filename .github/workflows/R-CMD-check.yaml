@@ -65,8 +65,8 @@ jobs:
           done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
       - name: Install dependencies
         run: |
+          eval sudo apt install libcurl4-openssl-dev libssl-dev libssh2-1-dev libxml2-dev
           if (!requireNamespace("BiocManager", quietly = TRUE)){install.packages("BiocManager")}; BiocManager::install("phyloseq", version = "3.15")
-          source("https://bioconductor.org/biocLite.R"); biocLite("phyloseq")
           remotes::install_github("bryandmartin/corncob")
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
