@@ -8,10 +8,10 @@ on:
     branches:
       - main
 
-name: R-CMD-check
+name: ubuntu-check
 
 jobs:
-  R-CMD-check:
+  ubuntu-check:
     runs-on: ${{ matrix.config.os }}
 
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
@@ -20,13 +20,10 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: windows-latest, r: 'release'}
-          - {os: macOS-latest, r: 'release'}
-  #        - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
   # FLAG: this is throwing the error "ERROR: dependency ‘phyloseq’ is not available for package ‘breakaway’"
   # based on this commit to corncob in March https://github.com/bryandmartin/corncob/commit/b913a72d2c442bd9ba8d141e35b2221a2cc1c1de 
   # this was an error there too. 
-  # FLAG: removing this 07/18 temporarily to pass checks 
   #        - {os: ubuntu-20.04, r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
   # FLAG: Current open issue with r-devel: Bioconductor does not yet build and check packages for R version 4.2
   # ISSUE#471: https://github.com/r-hub/rhub/issues/471
@@ -67,7 +64,7 @@ jobs:
           done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
       - name: Install dependencies
         run: |
-          install.packages("igraph", type="binary")
+          install.packages("igraph")
           if (!requireNamespace("BiocManager", quietly = TRUE)){install.packages("BiocManager")}; BiocManager::install(c("phyloseq"), ask = FALSE)
           remotes::install_github("bryandmartin/corncob")
           remotes::install_deps(dependencies = TRUE)
@@ -82,9 +79,3 @@ jobs:
           rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 
-      - name: Upload check results
-        if: failure()
-        uses: actions/upload-artifact@main
-        with:
-          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
-          path: check
