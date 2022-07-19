@@ -124,14 +124,14 @@ Note: the rest of the vignette will not run when knit because each code chunk in
 
 Maybe you don't care about richness... but you care about Shannon or Simpson diversity! [`DivNet`](https://github.com/adw96/DivNet) is our `R` package for estimating Shannon and Simpson diversity.
 
-```{r, include=FALSE}
+```{r, include=FALSE, eval=FALSE}
 remotes::install_github("adw96/DivNet")
 library(DivNet)
 ```
 
 DivNet can be slow when you have a large number of taxa (but we are working on it!), so to illustrate we are going to estimate phylum-level Shannon diversity:
 
-```{r}
+```{r, eval=FALSE}
 soil_phylum <- subset_soil %>%
   tax_glom(taxrank="Phylum")
 ```
@@ -142,19 +142,19 @@ Let's treat all samples as independent observations (`X = NULL`) and fit the Div
 
 (Check out the full documentation for details, including how to run in parallel)
 
-```{r, include=TRUE, cache=TRUE, message=FALSE, results="hide"}
+```{r, include=TRUE, cache=TRUE, message=FALSE, results="hide", eval=FALSE}
 dv <- DivNet::divnet(soil_phylum, X = NULL)
 ```
 
 This produces an object containing common diversity estimates:
 
-```{r}
+```{r, eval=FALSE}
 dv
 ```
 
 We can look at the first few Shannon diversity estimates with the following:
 
-```{r}
+```{r, eval=FALSE}
 combined_shannon <- meta %>%
   dplyr::left_join(dv$shannon %>% summary,
             by = "sample_names")
@@ -164,7 +164,7 @@ combined_shannon
 You might notice that the estimates are not different from the plug-in estimate (only because we used `X = NULL`), but we have standard errors! That's the real advantage of using DivNet :)
 
 
-```{r}
+```{r, eval=FALSE}
 bt_day_fixed_id_random <- betta_random(formula = estimate ~ Day | ID, 
                ses = error,  data = combined_shannon)
 bt_day_fixed_id_random$table
@@ -180,7 +180,7 @@ For example, to generate a confidence interval for $\beta_0 + \beta_1$ (i.e., in
 'Day2' coefficient, or in other words, the mean Shannon diversity in soils on day 82 of the experiment) in the Shannon diversity model we fit in the previous code chunk,
 we run the following code:
 
-```{r}
+```{r, eval=FALSE}
 
 betta_lincom(fitted_betta = bt_day_fixed_id_random,
              linear_com = c(1,1),
@@ -209,7 +209,7 @@ We prepare data and fit a model essentially as we did above. First,
 we subset the soil data to only biochar-amended plots and allow
 `Day` to equal 0, 1, or 2.
 
-```{r}
+```{r, eval=FALSE}
 
 subset_soil_days_1_2 <- soil_phylo %>%
   subset_samples(Amdmt == 1) %>% # only biochar
@@ -218,7 +218,7 @@ subset_soil_days_1_2 <- soil_phylo %>%
 
 We extract metadata and aggregate to phylum level as above as well:
 
-```{r}
+```{r, eval=FALSE}
 meta_days_1_2 <- subset_soil_days_1_2 %>%
   sample_data %>%
   as_tibble %>%
@@ -231,7 +231,7 @@ soil_phylum_days_1_2 <- subset_soil_days_1_2 %>%
 
 We again run DivNet and extract estimates of Shannon diversity.
 
-```{r}
+```{r, eval=FALSE}
 dv_days_1_2 <- DivNet::divnet(soil_phylum_days_1_2, X = NULL)
 
 combined_shannon_days_1_2 <- meta_days_1_2 %>%
@@ -241,7 +241,7 @@ combined_shannon_days_1_2
 
 ```
 Now we fit another model with `betta_random`.
-```{r}
+```{r, eval=FALSE}
 bt_day_1_2_fixed_id_random <- betta_random(formula = estimate ~ Day | ID, 
                ses = error,  data = combined_shannon_days_1_2)
 bt_day_1_2_fixed_id_random$table
@@ -252,7 +252,7 @@ mean Shannon diversity is the same at day 12 as at day 0 and for whether it is t
 overall test of whether mean Shannon diversity varies with day at all! To do this, we can use the `test_submodel` function in `breakaway` to test our 
 full model against a null with no terms in `Day` using a parametric bootstrap:
 
-```{r}
+```{r, eval=FALSE}
 set.seed(345)
 submodel_test <- test_submodel(bt_day_1_2_fixed_id_random,
                           submodel_formula = estimate~1,
