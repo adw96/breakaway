@@ -8,7 +8,7 @@ on:
     branches:
       - main
 
-name: R-CMD-check
+name: ubuntu-check
 
 jobs:
   R-CMD-check:

@@ -22,7 +22,7 @@ jobs:
         config:
           - {os: windows-latest, r: 'release'}
           - {os: macOS-latest, r: 'release'}
-          - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+  #        - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
   # FLAG: this is throwing the error "ERROR: dependency ‘phyloseq’ is not available for package ‘breakaway’"
   # based on this commit to corncob in March https://github.com/bryandmartin/corncob/commit/b913a72d2c442bd9ba8d141e35b2221a2cc1c1de 
   # this was an error there too. 
