@@ -11,7 +11,7 @@ on:
 name: ubuntu-check
 
 jobs:
-  R-CMD-check:
+  ubuntu-check:
     runs-on: ${{ matrix.config.os }}
 
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
