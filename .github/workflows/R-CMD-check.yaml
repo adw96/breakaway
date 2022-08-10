@@ -75,7 +75,7 @@ jobs:
       - name: Install phyloseq dependencies on Linux 
         if: runner.os == 'Linux'
         run: |
-          install.packages("igraph", type="binary")
+          install.packages("igraph")
         shell: Rscript {0}
       
       - name: Install dependencies
