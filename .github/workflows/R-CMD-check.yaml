@@ -22,7 +22,7 @@ jobs:
         config:
           - {os: windows-latest, r: 'release'}
           - {os: macOS-latest, r: 'release'}
-  #        - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
   # FLAG: this is throwing the error "ERROR: dependency ‘phyloseq’ is not available for package ‘breakaway’"
   # based on this commit to corncob in March https://github.com/bryandmartin/corncob/commit/b913a72d2c442bd9ba8d141e35b2221a2cc1c1de 
   # this was an error there too. 
@@ -65,9 +65,27 @@ jobs:
           do
             eval sudo $cmd
           done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
-      - name: Install dependencies
+      
+      - name: Install phyloseq dependencies on Windows and Mac
+        if: runner.os != 'Linux'
         run: |
           install.packages("igraph", type="binary")
+        shell: Rscript {0}
+        
+      - name: Install phyloseq dependencies on Linux 
+        if: runner.os == 'Linux'
+        run: |
+          install.packages("igraph")
+        shell: Rscript {0}
+        
+      - name: Install Linux igraph dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y libglpk-dev
+      
+      - name: Install dependencies
+        run: |
           if (!requireNamespace("BiocManager", quietly = TRUE)){install.packages("BiocManager")}; BiocManager::install(c("phyloseq"), ask = FALSE)
           remotes::install_github("bryandmartin/corncob")
           remotes::install_deps(dependencies = TRUE)
