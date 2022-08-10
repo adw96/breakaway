@@ -78,7 +78,7 @@ jobs:
           install.packages("igraph")
         shell: Rscript {0}
         
-     - name: Install Linux igraph dependencies
+      - name: Install Linux igraph dependencies
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update -y
