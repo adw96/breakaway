@@ -75,6 +75,7 @@ jobs:
       - name: Install phyloseq dependencies on Linux 
         if: runner.os == 'Linux'
         run: |
+          sudo apt-get update -y
           sudo apt-get install -y r-cran-igraph
       
       - name: Install dependencies
