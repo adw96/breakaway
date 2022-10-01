@@ -41,6 +41,7 @@
 #' @importFrom stats coef dexp dgeom dnbinom dpois fitted lm model.matrix nls optim
 #' @importFrom stats pchisq pnorm predict quantile rbeta rbinom rnbinom rnorm runif sd var vcov
 #' @import lme4
+#' @importFrom lme4 barnames findbars RHSForm subbars
 #'
 #' @seealso \code{\link{betta}};
 #' @references Willis, A., Bunge, J., and Whitman, T. (2015). Inference for

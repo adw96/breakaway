@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">breakaway</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.7.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.7.6</span>
       </span>
     </div>
 
@@ -89,13 +89,13 @@
 
       
 
-      </header><script src="intro-diversity-estimation_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
+      </header><script src="intro-diversity-estimation_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to diversity estimation</h1>
                         <h4 class="author">Amy Willis</h4>
             
-            <h4 class="date">2021-10-07</h4>
+            <h4 class="date">2021-11-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/adw96/breakaway/blob/master/vignettes/intro-diversity-estimation.Rmd"><code>vignettes/intro-diversity-estimation.Rmd</code></a></small>
       <div class="hidden name"><code>intro-diversity-estimation.Rmd</code></div>
@@ -111,11 +111,11 @@
 <a href="#preliminaries" class="anchor"></a>Preliminaries</h2>
 <p>Download the latest version of the package from github.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="co"># devtools::install_github("adw96/breakaway")</span>
+<code class="sourceCode R"><span class="co"># install.packages("remotes")</span>
+<span class="co"># remotes::install_github("adw96/breakaway")</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://adw96.github.io/breakaway/">breakaway</a></span><span class="op">)</span></code></pre></div>
-<p>Note that we are not continuing to maintain the CRAN version of <code>breakaway</code> at this time, so avoid <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("breakaway")</a></code>.</p>
-<p>If you are not accustomed to using the pipe in <code>R</code> (the operator <code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code>), I strongly encourage you to start using it. It will make your code easier to read and write. Here is how to install and load it:</p>
+<p>Note that we are not continuing to maintain the CRAN version of <code>breakaway</code> at this time, so avoid <code>install.packages("breakaway")</code>.</p>
+<p>If you are not accustomed to using the pipe in <code>R</code> (the operator <code>%&gt;%</code>), I strongly encourage you to start using it. It will make your code easier to read and write. Here is how to install and load it:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("magrittr")</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span></code></pre></div>
@@ -143,8 +143,8 @@
 <span class="va">pasolli_et_al</span> <span class="op">&lt;-</span> <span class="fu">openxlsx</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/read.xlsx.html">read.xlsx</a></span><span class="op">(</span><span class="st">"https://ars.els-cdn.com/content/image/1-s2.0-S0092867419300017-mmc4.xlsx"</span>, sheet <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <p>The “frequency count table” is the basic data structure for estimating species richness. It is a table with two columns: the second column indicates the number of species observed <code>j</code> times, where the first column contains <code>j</code>. Let’s take a look at the first 10 columns of the frequency count table for the Pasolli et al dataset:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ft</span> <span class="op">&lt;-</span> <span class="va">pasolli_et_al</span><span class="op">$</span><span class="va">`#.Samples`</span> <span class="op">%&gt;%</span> <span class="va">make_frequency_count_table</span>
-<span class="va">ft</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">ft</span> <span class="op">&lt;-</span> <span class="va">pasolli_et_al</span><span class="op">$</span><span class="va">`#.Samples`</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">make_frequency_count_table</span>
+<span class="va">ft</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></code></pre></div>
 <pre><code>##    Var1 Freq
 ## 1     1 1972
 ## 2     2  692
@@ -158,7 +158,7 @@
 ## 10   10   52</code></pre>
 <p>So 1972 species were observed once, 692 were observed twice, and 52 were observed ten times.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ft</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">ft</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></code></pre></div>
 <pre><code>##     Var1 Freq
 ## 298 1584    1
 ## 299 1629    1
@@ -173,13 +173,13 @@
 <p>The common species are at the other end of the frequency count table: the most common species was observed 3453 times. There was only <code>ft[nrow(ft), 2]</code> species observed 3453 times.</p>
 <p>Let’s take a look to see how many species were observed in the dataset:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ft</span> <span class="op">%&gt;%</span> <span class="va">sample_richness</span></code></pre></div>
+<code class="sourceCode R"><span class="va">ft</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">sample_richness</span></code></pre></div>
 <pre><code>## Estimate of richness from method Plug-in:
 ##   Estimate is 4930
 ##  with standard error 0
 ##   Confidence interval: (4930, 4930)</code></pre>
 <p>Cool! We corroborated the abstract of the paper and saw that 4930 species level genome bins were identified.</p>
-<p>If you’re not accustomed to using <code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code>, here is a quick demo: <code>argument %&gt;% function</code>. It’s equivalent to executing <code>function(argument)</code>. So essentially we just ran <code><a href="../reference/sample_richness.html">sample_richness(ft)</a></code>, but we stated the argument first. The pipe operator <code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code> becomes especially useful when you want to compound multiple functions. <a href="https://www.datacamp.com/community/tutorials/pipe-r-tutorial">Here</a> is a great introduction, and <a href="https://github.com/adw96/biostat561/blob/master/lecture2/lecture2.pdf">here</a> is a lecture I gave to our department’s PhD students about it.</p>
+<p>If you’re not accustomed to using <code>%&gt;%</code>, here is a quick demo: <code>argument %&gt;% function</code>. It’s equivalent to executing <code>function(argument)</code>. So essentially we just ran <code>sample_richness(ft)</code>, but we stated the argument first. The pipe operator <code>%&gt;%</code> becomes especially useful when you want to compound multiple functions. <a href="https://www.datacamp.com/community/tutorials/pipe-r-tutorial">Here</a> is a great introduction, and <a href="https://github.com/adw96/biostat561/blob/master/lecture2/lecture2.pdf">here</a> is a lecture I gave to our department’s PhD students about it.</p>
 </div>
 <div id="species-richness-estimation-with-breakaway" class="section level2">
 <h2 class="hasAnchor">
@@ -238,7 +238,7 @@
 <a href="#postscript-on-model-selection" class="anchor"></a>Postscript on model selection</h2>
 <p>As mentioned previously, <code>breakaway</code> executes a model selection routine. We see that with the new cut-off, we have a different model:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">estimated_richness_10</span> <span class="op">%$%</span> <span class="va">model</span></code></pre></div>
+<code class="sourceCode R"><span class="va">estimated_richness_10</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/exposition.html">%$%</a></span> <span class="va">model</span></code></pre></div>
 <pre><code>## [1] "Negative Binomial"</code></pre>
 <p>So <code>breakaway</code> ended up choosing the <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/j.0006-341X.2002.00531.x?sid=nlm%3Apubmed">Chao-Bunge</a> estimator, which is based on a Negative Binomial model. This model is less flexible than the Kemp models discussed previously, but has lower variance in estimation. Essentially if the standard error exceeds the estimate in the Kemp model, <code>breakaway</code> moves on to less complex estimates which have lower variance. Unfortunately the Chao-Bunge doesn’t lend itself to diagnosing model misspecification.</p>
 <p>If you are happy to take on higher variance (e.g., because you have multiple samples and ultimately you will combine them together), you can do so with the following:</p>
@@ -251,7 +251,7 @@
 ##   Confidence interval: (4969, 16986096)</code></pre>
 <p>Kemp estimates always allow you to check for model misspecification:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">estimated_richness_kemp_10</span> <span class="op">%$%</span> <span class="va">plot</span></code></pre></div>
+<code class="sourceCode R"><span class="va">estimated_richness_kemp_10</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/exposition.html">%$%</a></span> <span class="va">plot</span></code></pre></div>
 <p><img src="intro-diversity-estimation_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
 <p>Now this looks pretty good!</p>
 </div>

@@ -7,7 +7,7 @@
 #' @export 
 good_turing  <- function(input_data) {
   
-  if (class(input_data) == "phyloseq") {
+  if ("phyloseq" %in% class(input_data)) {
     if (input_data %>% otu_table %>% taxa_are_rows) {
       return(input_data %>% 
                get_taxa %>%

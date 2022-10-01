@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>PoissonModel — poisson_model • breakaway</title>
+<title>Simulate from a fitted betta_random model — simulate_betta_random • breakaway</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="PoissonModel — poisson_model" />
-<meta property="og:description" content="A model to estimate the number of missing taxa under a Poisson Model" />
+<meta property="og:title" content="Simulate from a fitted betta_random model — simulate_betta_random" />
+<meta property="og:description" content="Simulate from a fitted betta_random model" />
 <meta property="og:image" content="http://adw96.github.io/breakaway/logo.png" />
 
 
@@ -134,30 +134,34 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>PoissonModel</h1>
-    <small class="dont-index">Source: <a href='https://github.com/adw96/breakaway/blob/master/R/richness_poisson.R'><code>R/richness_poisson.R</code></a></small>
-    <div class="hidden name"><code>poisson_model.Rd</code></div>
+    <h1>Simulate from a fitted betta_random model</h1>
+    <small class="dont-index">Source: <a href='https://github.com/adw96/breakaway/blob/master/R/simulate_betta_random.R'><code>R/simulate_betta_random.R</code></a></small>
+    <div class="hidden name"><code>simulate_betta_random.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A model to estimate the number of missing taxa under a Poisson Model</p>
+    <p>Simulate from a fitted betta_random model</p>
     </div>
 
-    <pre class="usage"><span class='fu'>poisson_model</span><span class='op'>(</span><span class='va'>input_data</span>, cutoff <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>simulate_betta_random</span><span class='op'>(</span><span class='va'>fitted_betta</span>, <span class='va'>nsim</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>input_data</th>
-      <td><p>A frequency count table</p></td>
+      <th>fitted_betta</th>
+      <td><p>A fitted betta_random object</p></td>
     </tr>
     <tr>
-      <th>cutoff</th>
-      <td><p>The largest frequency to use for predicting f0. Defaults to 10.</p></td>
+      <th>nsim</th>
+      <td><p>Number of times to simulate</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A list of length nsim, each element of which is a vector of
+simulated Y-values under the fitted betta model</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

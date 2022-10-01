@@ -194,10 +194,10 @@ breakaway_nof1.default <- function(input_data,
           
           run <- try ( minibreak_all(lhs, xs, ys, my_data, 1/ratiovars, withf1=FALSE), silent = 1)
           
-          if ( class(run) == "try-error") {
+          if ("try-error" %in% class(run)) {
             ratiovars <- (p[-1]^2/p[-cutoff]^3 + p[-1]/p[-cutoff]^2)/C
             run <- try ( minibreak_all(lhs,xs,ys,my_data,1/ratiovars, withf1=FALSE), silent = 1)
-            if ( class(run) == "try-error") {
+            if ("try-error" %in% class(run)) {
               # if(output) {print("Numerical errors result in non-convergence") }
               kemp_alpha_estimate <- alpha_estimate(estimand = "richness",
                                                     estimate = NA,
@@ -215,7 +215,7 @@ breakaway_nof1.default <- function(input_data,
           }
           
           choice <- list()
-          if (class(run) == "try-error") {
+          if ("try-error" %in% class(run)) {
             choice$outcome <- 0
           } else if (sum(as.numeric(run$useful[,5]))==0 | 
                      any(is.infinite(ratiovars)) |

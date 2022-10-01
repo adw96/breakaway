@@ -8,12 +8,11 @@
 #'   ...
 #' }
 #' 
-#' @source \url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
 #' 
 #' @references 
 #' Willis, A. and Bunge, J. (2015). Estimating diversity via
 #' frequency ratios. \emph{Biometrics}, \bold{71}(4), 1042--1049.
-#' \url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
+#' \url{https://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
 #'
 #' Walsh, F. et al. (2014). (2014). Restricted streptomycin use in apple 
 #' orchards did not adversely alter the soil bacteria communities. 
@@ -32,12 +31,10 @@
 #'   ...
 #' }
 #' 
-#' @source \url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
-#' 
 #' @references 
 #' Willis, A. and Bunge, J. (2015). Estimating diversity via
 #' frequency ratios. \emph{Biometrics}, \bold{71}(4), 1042--1049.
-#' \url{http://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
+#' \url{https://onlinelibrary.wiley.com/doi/10.1111/biom.12332/abstract}
 #'
 ################################################################################
 "hawaii"

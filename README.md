@@ -66,11 +66,9 @@ implemented in breakaway? Submit a pull request or contact the
 
 Maintainer: [Amy Willis](http://statisticaldiversitylab.com)
 
-Authors: [Amy Willis](http://statisticaldiversitylab.com), [John
-Bunge](https://stat.cornell.edu/people/faculty/john-bunge), [Bryan
-Martin](https://bryandmartin.github.io/), [Pauline
-Trinh](https://twitter.com/paulinetrinh), [Kathryn
-Barger](http://hnrca.tufts.edu/kathryn-barger-ph-d/), [David
+Authors: [Amy Willis](http://statisticaldiversitylab.com), John Bunge,
+[Bryan Martin](https://bryandmartin.github.io/), [Pauline
+Trinh](https://twitter.com/paulinetrinh), Kathryn Barger, [David
 Clausen](https://www.biostat.washington.edu/people/david-clausen) and
 [Sarah Teichman](https://svteichman.github.io/).
 
