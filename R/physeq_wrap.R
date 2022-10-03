@@ -7,9 +7,9 @@
 #' @return Object of class \code{alpha_estimates}
 physeq_wrap <- function(fn, physeq, ...) {
   
-  if (class(physeq) == "otu_table") {
+  if (inherits(physeq, "otu_table")) {
     ot <- physeq
-  } else if (class(physeq) == "phyloseq") {
+  } else if (inherits(physeq, "phyloseq")) {
     ot <- physeq %>% otu_table
   } else {
     stop(paste("Unknown type passed to physeq_wrap; object is of class",

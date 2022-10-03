@@ -84,9 +84,20 @@ betta_random <- function(chats = NULL, ses, X = NULL, groups = NULL, formula = N
     }
   }
   if (!is.null(formula)) {
-    ses <- data[,deparse(substitute(ses))]
-    group_var <- lme4:::barnames(lme4::findbars(lme4:::RHSForm(formula)))
-    groups <- data[,group_var]
+    if (inherits(substitute(ses), "character")) {
+      ses <- data[, ses]
+    } else {
+      ses <- data[,deparse(substitute(ses))]
+    }
+    # check that formula includes a conditional bar to specify random effect
+    if (formula[[3]][[1]] != "|") {
+      stop("Make sure that your formula includes `|` to specify a random effect if you'd like
+          to use `betta_random`. Otherwise, you can use `betta`.")
+    }
+    # get 3rd of variable attribute of terms(formula), which is the RHS of formula, 
+    # then get 3rd element of that, which is the object after the conditional bar
+    group_var <- deparse1((attr(terms(formula), "variables")[[3]])[[3]])
+    groups <- data[, group_var]
     full_form <- lme4::subbars(formula)
     sm_form <- update(full_form, paste("~.-",group_var))
     X <- stats::model.matrix(sm_form, data)
@@ -165,5 +176,104 @@ betta_random <- function(chats = NULL, ses, X = NULL, groups = NULL, formula = N
 
   mytable$function.args <- function.args
 
+  return(mytable)
+}
+
+betta_random_old <- function(chats = NULL, ses, X = NULL, groups = NULL, formula = NULL, data = NULL) {
+  if (!is.null(formula)) {
+    if (is.null(data)) {
+      stop("Please include a dataframe that corresponds with your formula.")
+    }
+  } else {
+    if (is.null(chats)) {
+      stop("Please include 'ses' along with either the arguments 'chats' and 'groups'
+           or the arguments 'formula' and 'data'.")
+    }
+    if (is.null(groups)) {
+      stop("Please include a vector of group memberships as 'groups'.")
+    }
+  }
+  if (!is.null(formula)) {
+    ses <- data[,deparse(substitute(ses))]
+    group_var <- lme4:::barnames(lme4::findbars(lme4:::RHSForm(formula)))
+    groups <- data[,group_var]
+    full_form <- lme4::subbars(formula)
+    sm_form <- update(full_form, paste("~.-",group_var))
+    X <- stats::model.matrix(sm_form, data)
+    chats <- stats::model.response(stats::model.frame(formula = sm_form, data = data))
+  }
+  if (isTRUE(is.null(X))) { X <- matrix(rep(1,length(chats)),ncol=1) }
+  consider <- !(is.na(chats) | is.na(ses) | is.na(groups) | apply(is.na(X),1,sum))
+  
+  chats_effective <- chats[consider]; ses_effective <- ses[consider]; X_effective <- as.matrix(X[consider,])
+  groups_effective <- groups[consider]
+  n <- dim(X_effective)[1]; p <- dim(X_effective)[2]; gs <- length(unique(groups_effective))
+  
+  
+  # check for design matrix that isn't full rank and throw error
+  rank <- qr(X)$rank
+  if (rank < ncol(X)) {
+    stop(    "Your design matrix is not full rank. We recommend that you
+         examine your design matrix for linear dependency and remove
+         redundant columns.")
+  }
+  
+  likelihood <- function(input) {
+    ssq_u <- input[1]
+    beta <- input[2:(p+1)]
+    ssq_group <- input[(p+2):(p+gs+1)]
+    group_variance <- ssq_group[groups_effective]
+    W <- diag(1/(ssq_u+ses_effective^2+group_variance))
+    -0.5*(sum(log(ssq_u+ses_effective^2+group_variance)+(chats_effective - X_effective %*% beta)^2/(ssq_u+ses_effective^2+group_variance)) + log(det(t(X_effective) %*% W %*% X_effective)))
+  }
+  
+  within_groups_start <- c(by(chats_effective, groups_effective, var, simplify = T))
+  within_groups_start[which(is.na(within_groups_start))]  <- 0
+  
+  initial_est <- c(var(chats_effective),
+                   solve(t(X_effective) %*% X_effective) %*% t(X_effective) %*% chats_effective,
+                   within_groups_start)
+  
+  output <- optim(initial_est,
+                  likelihood,
+                  hessian=FALSE,
+                  control=list(fnscale=-1),
+                  lower=c(0, rep(-Inf, p), rep(0, gs)),
+                  method="L-BFGS-B")
+  ssq_u <- output$par[1]
+  beta <- output$par[2:(p+1)]
+  ssq_group <- output$par[(p+2):(p+gs+1)]
+  
+  W <- diag(1/(ssq_u+ses_effective^2+ssq_group[groups_effective]))
+  vars <- 1/diag(t(X_effective) %*% W %*% X_effective)
+  
+  global <- t(beta) %*% (t(X_effective) %*% W %*% X_effective) %*% beta ## global test
+  
+  Q <- sum((chats_effective - X_effective %*% beta)^2/ses_effective^2)
+  
+  mytable <- list()
+  mytable$table <- cbind("Estimates"=beta,"Standard Errors"=sqrt(vars),"p-values"=round(2*(1-pnorm(abs(beta/sqrt(vars)))),3))
+  try(rownames(mytable$table) <- colnames(X), silent = T)
+  mytable$cov <- solve(t(X_effective) %*% W %*% X_effective)
+  mytable$ssq_u <- ssq_u
+  mytable$ssq_group <- ssq_group
+  mytable$homogeneity <- c(Q,1-pchisq(Q,n-p))
+  mytable$global <- c(global,1-pchisq(global,p-1))
+  
+  us <-  c(ssq_u*W %*% (chats_effective - X_effective %*% beta))
+  blups <- rep(NA, length(chats))
+  blups[consider] <- c(X_effective %*% beta + us)
+  mytable$blups <- blups
+  
+  function.args <- list("chats" = chats,
+                        "ses" = ses,
+                        "X" = X,
+                        "groups" = groups,
+                        "formula" = formula,
+                        "data" = data,
+                        "model_type" = "mixed")
+  
+  mytable$function.args <- function.args
+  
   return(mytable)
 }

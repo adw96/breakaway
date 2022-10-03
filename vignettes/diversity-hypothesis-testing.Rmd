@@ -25,19 +25,18 @@ This tutorial will talk through hypothesis testing for alpha diversity indices u
 Download the latest version of the package from github.
 
 ```{r, include=FALSE}
-# install.packages("devtools")
-# devtools::install_github("adw96/breakaway")
+# install.packages("remotes")
+# remotes::install_github("adw96/breakaway")
 library(tidyverse)
 library(breakaway)
 library(magrittr)
 library(phyloseq)
-library(remotes)
 ```
 
 Let's use the Whitman et al dataset from `corncob` as our example.
 
 ```{r}
-# devtools::install_github("bryandmartin/corncob")
+# remotes::install_github("bryandmartin/corncob")
 library(corncob)
 data("soil_phylo")
 soil_phylo %>% sample_data %>% head

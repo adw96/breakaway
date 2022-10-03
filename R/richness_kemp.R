@@ -195,11 +195,11 @@ kemp.default <- function(input_data,
           # run <- minibreak_all(lhs, xs, ys, my_data,
           #                            1/ratiovars, withf1 = TRUE)
           
-          if ( class(run) == "try-error") {
+          if (inherits(run, "try-error")) {
             ratiovars <- (p[-1]^2/p[-cutoff]^3 + p[-1]/p[-cutoff]^2)/C
             # stopifnot(all(ratiovars > 0))
             run <- try ( minibreak_all(lhs, xs, ys, my_data, 1/ratiovars, withf1 = TRUE), silent = 1)
-            if ( class(run) == "try-error") {
+            if (inherits(run, "try-error")) {
               
               kemp_alpha_estimate <- alpha_estimate(estimand = "richness",
                                                     estimate = NA,
@@ -217,7 +217,7 @@ kemp.default <- function(input_data,
           }
           
           choice <- list()
-          if ( class(run) == "try-error") {
+          if (inherits(run, "try-error")) {
             choice$outcome <- 0
           } else if (sum(as.numeric(run$useful[,5]))==0 | 
                      any(is.infinite(ratiovars)) |
@@ -392,7 +392,7 @@ minibreak_all <- function(lhs, xs, ys, input_data, myweights, withf1 = NULL) {
   result_1_0 <- try( nls( y ~ structure_1_0(x, beta0, beta1),
                           data = lhs2, start_1_0, weights=myweights),
                      silent=T )
-  if(class(result_1_0) == "try-error") {
+  if (inherits(result_1_0, "try-error")) {
     coef_1_0 <- c(start_1_0$beta0, start_1_0$beta1)
   } else {
     coef_1_0 <- coef(result_1_0)
@@ -406,7 +406,7 @@ minibreak_all <- function(lhs, xs, ys, input_data, myweights, withf1 = NULL) {
   start_1_1 <- list(beta0 = (beta0_tilde+beta1_tilde*xbar)/(1+xbar), beta1 = beta1_tilde/(1+xbar), alpha1 = 1/(1+xbar))
   result_1_1 <- try( nls( y ~ structure_1_1(x, beta0, beta1,alpha1), data = lhs, start_1_1, weights=myweights), silent=T )
   
-  if(class(result_1_1) == "try-error") {
+  if (inherits(result_1_1, "try-error")) {
     temp_lm <- lm(y ~ x + I(x^2), weights=myweights, data = lhs)$coef
     start_2_1 <- list(beta0 = temp_lm[1], beta1 = temp_lm[2], alpha1 = 0, beta2 = temp_lm[3])
   } else {
@@ -415,31 +415,31 @@ minibreak_all <- function(lhs, xs, ys, input_data, myweights, withf1 = NULL) {
   
   result_2_1 <- try(nls( y ~ structure_2_1(x, beta0, beta1,alpha1, beta2), data = lhs, start_2_1, weights=myweights), silent=T)
   
-  if(class(result_2_1) == "try-error") {
+  if (inherits(result_2_1, "try-error")) {
     temp_lm <- lm(y ~ x + I(x^2), weights=myweights, data = lhs)$coef
     start_2_2 <- list(beta0 = temp_lm[1], temp_lm[2], alpha1 = 0, beta2 = temp_lm[3], alpha2 = 0)
   } else start_2_2 <- as.list(c(summary(result_2_1)$coef[,1],"alpha2"=0))
   result_2_2 <- try(nls( y ~ structure_2_2(x, beta0, beta1,alpha1, beta2,alpha2), data = lhs, start_2_2, weights=myweights), silent=T)
   
-  if(class(result_2_2) == "try-error") {
+  if (inherits(result_2_2, "try-error")) {
     temp_lm <- lm(y ~ x + I(x^2)+I(x^3), weights=myweights, data = lhs)$coef
     start_3_2 <- list(beta0 = temp_lm[1], beta1 = temp_lm[2], alpha1 = 0, beta2 = temp_lm[3], alpha2 = 0, beta3 = temp_lm[4])
   } else start_3_2 <- as.list(c(summary(result_2_2)$coef[,1],"beta3"=0))
   result_3_2 <- try( nls( y ~ structure_3_2(x, beta0, beta1,alpha1, beta2,alpha2, beta3), data = lhs, start_3_2, weights=myweights), silent=T)
   
-  if(class(result_3_2) == "try-error") {
+  if (inherits(result_3_2, "try-error")) {
     temp_lm <- lm(y ~ x + I(x^2)+I(x^3), weights=myweights, data = lhs)$coef
     start_3_3 <- list(beta0 = temp_lm[1], beta1 = temp_lm[2], alpha1 = 0, beta2 = temp_lm[3], alpha2 = 0, beta3 = temp_lm[4], alpha3 = 0)
   } else start_3_3 <- as.list(c(summary(result_3_2)$coef[,1],"alpha3"=0))
   result_3_3 <- try( nls( y ~ structure_3_3(x, beta0, beta1,alpha1, beta2,alpha2, beta3,alpha3), data = lhs, start_3_3, weights=myweights), silent=T)
   
-  if(class(result_3_3) == "try-error") {
+  if (inherits(result_3_3, "try-error")) {
     temp_lm <- lm(y ~ x + I(x^2)+I(x^3)+I(x^4), weights=myweights, data = lhs)$coef
     start_4_3 <- list(beta0 = temp_lm[1], beta1 = temp_lm[2], alpha1 = 0, beta2 = temp_lm[3], alpha2 = 0, beta3 = temp_lm[4], alpha3 = 0, beta4 = temp_lm[5])
   } else start_4_3 <- as.list(c(summary(result_3_3)$coef[,1],"beta4"=0))
   result_4_3 <- try( nls( y ~ structure_4_3(x, beta0, beta1,alpha1, beta2,alpha2, beta3,alpha3, beta4), data = lhs, start_4_3, weights=myweights), silent=T)
   
-  if(class(result_4_3) == "try-error") {
+  if (inherits(result_4_3, "try-error")) {
     temp_lm <- lm(y ~ x + I(x^2)+I(x^3)+I(x^4), weights=myweights, data = lhs)$coef
     start_4_4 <- list(beta0 = temp_lm[1], beta1 = temp_lm[2], alpha1 = 0, beta2 = temp_lm[3], alpha2 = 0,
                       beta3 = temp_lm[4], alpha3 = 0, beta4 = temp_lm[5], alpha4 = 0)
