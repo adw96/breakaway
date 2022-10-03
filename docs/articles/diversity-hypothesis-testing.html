@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">breakaway</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.7.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.7.6</span>
       </span>
     </div>
 
@@ -89,13 +89,13 @@
 
       
 
-      </header><script src="diversity-hypothesis-testing_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
+      </header><script src="diversity-hypothesis-testing_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to hypothesis testing for diversity</h1>
                         <h4 class="author">Amy Willis</h4>
             
-            <h4 class="date">2021-10-07</h4>
+            <h4 class="date">2021-11-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/adw96/breakaway/blob/master/vignettes/diversity-hypothesis-testing.Rmd"><code>vignettes/diversity-hypothesis-testing.Rmd</code></a></small>
       <div class="hidden name"><code>diversity-hypothesis-testing.Rmd</code></div>
@@ -119,7 +119,7 @@
 <code class="sourceCode R"><span class="co"># devtools::install_github("bryandmartin/corncob")</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bryandmartin/corncob">corncob</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"soil_phylo"</span><span class="op">)</span>
-<span class="va">soil_phylo</span> <span class="op">%&gt;%</span> <span class="va">sample_data</span> <span class="op">%&gt;%</span> <span class="va">head</span></code></pre></div>
+<span class="va">soil_phylo</span> <span class="op"><a href="https://rdrr.io/pkg/corncob/man/pipe.html">%&gt;%</a></span> <span class="va">sample_data</span> <span class="op"><a href="https://rdrr.io/pkg/corncob/man/pipe.html">%&gt;%</a></span> <span class="va">head</span></code></pre></div>
 <pre><code>##      Plants DayAmdmt Amdmt ID Day
 ## S009      1       01     1  D   0
 ## S204      1       21     1  D   2
@@ -129,18 +129,18 @@
 ## S023      1       00     0  C   0</code></pre>
 <p>I’m only going to consider samples amended with biochar, and I want to look at the effect of <code>Day</code>. This will tell us how much diversity in the soil changed from Day 0 to Day 82. (Just to be confusing, Day 82 is called Day 2 in the dataset.)</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">subset_soil</span> <span class="op">&lt;-</span> <span class="va">soil_phylo</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_samples-methods.html">subset_samples</a></span><span class="op">(</span><span class="va">Amdmt</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># only biochar</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_samples-methods.html">subset_samples</a></span><span class="op">(</span><span class="va">Day</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>  <span class="co"># only Days 0 and 82</span></code></pre></div>
+<code class="sourceCode R"><span class="va">subset_soil</span> <span class="op">&lt;-</span> <span class="va">soil_phylo</span> <span class="op"><a href="https://rdrr.io/pkg/corncob/man/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_samples-methods.html">subset_samples</a></span><span class="op">(</span><span class="va">Amdmt</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/corncob/man/pipe.html">%&gt;%</a></span> <span class="co"># only biochar</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_samples-methods.html">subset_samples</a></span><span class="op">(</span><span class="va">Day</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>  <span class="co"># only Days 0 and 82</span></code></pre></div>
 <p>I now run breakaway on these samples to get richness estimates, and plot them.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">richness_soil</span> <span class="op">&lt;-</span> <span class="va">subset_soil</span> <span class="op">%&gt;%</span> <span class="va">breakaway</span>
+<code class="sourceCode R"><span class="va">richness_soil</span> <span class="op">&lt;-</span> <span class="va">subset_soil</span> <span class="op"><a href="https://rdrr.io/pkg/corncob/man/pipe.html">%&gt;%</a></span> <span class="va">breakaway</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">richness_soil</span>, physeq<span class="op">=</span><span class="va">subset_soil</span>, color<span class="op">=</span><span class="st">"Day"</span>, shape <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></code></pre></div>
 <p><img src="diversity-hypothesis-testing_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <p>Don’t freak out! Those are wide error bars, but nothing went wrong – it’s just really hard to estimate the true number of unknown species in soil. <code>breakaway</code> was developed to deal with this, and to make sure that we account for that uncertainty when we do inference.</p>
 <p>We can get a table of the estimates and their uncertainties as follows:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">richness_soil</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="va">as_tibble</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">richness_soil</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/corncob/man/pipe.html">%&gt;%</a></span> <span class="va">as_tibble</span></code></pre></div>
 <pre><code>## # A tibble: 32 × 7
 ##    estimate  error lower   upper sample_names name      model            
 ##       &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;            
@@ -162,14 +162,14 @@
 <a href="#inference" class="anchor"></a>Inference</h2>
 <p>The first step to doing inference is to decide on your design matrix. We need to grab our covariates into a data frame (or tibble), so let’s start by doing that:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">meta</span> <span class="op">&lt;-</span> <span class="va">subset_soil</span> <span class="op">%&gt;%</span>
-  <span class="va">sample_data</span> <span class="op">%&gt;%</span>
-  <span class="va">as_tibble</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span><span class="st">"sample_names"</span> <span class="op">=</span> <span class="va">subset_soil</span> <span class="op">%&gt;%</span> <span class="va">sample_names</span> <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">meta</span> <span class="op">&lt;-</span> <span class="va">subset_soil</span> <span class="op"><a href="https://rdrr.io/pkg/corncob/man/pipe.html">%&gt;%</a></span>
+  <span class="va">sample_data</span> <span class="op"><a href="https://rdrr.io/pkg/corncob/man/pipe.html">%&gt;%</a></span>
+  <span class="va">as_tibble</span> <span class="op"><a href="https://rdrr.io/pkg/corncob/man/pipe.html">%&gt;%</a></span>
+  <span class="fu">mutate</span><span class="op">(</span><span class="st">"sample_names"</span> <span class="op">=</span> <span class="va">subset_soil</span> <span class="op"><a href="https://rdrr.io/pkg/corncob/man/pipe.html">%&gt;%</a></span> <span class="va">sample_names</span> <span class="op">)</span></code></pre></div>
 <p>That warning is not a problem – it’s just telling us that it’s not a phyloseq object anymore.</p>
 <p>Suppose we want to fit the model with Day as a fixed effect. Here’s how we do that,</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">combined_richness</span> <span class="op">&lt;-</span> <span class="va">meta</span> <span class="op">%&gt;%</span>
+<code class="sourceCode R"><span class="va">combined_richness</span> <span class="op">&lt;-</span> <span class="va">meta</span> <span class="op"><a href="https://rdrr.io/pkg/corncob/man/pipe.html">%&gt;%</a></span>
   <span class="fu">left_join</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">richness_soil</span><span class="op">)</span>,
             by <span class="op">=</span> <span class="st">"sample_names"</span><span class="op">)</span>
 <span class="co"># Old way (still works)</span>
@@ -183,7 +183,7 @@
 <pre><code>##             Estimates Standard Errors p-values
 ## (Intercept) 4547.1078        125.8542    0.000
 ## Day2         139.5325        170.1855    0.412</code></pre>
-<p>So we see an estimated increase in richness after 82 days of 122 taxa, with the standard error in the estimate of 171. A hypothesis test for a change in richness would <em>not be rejected</em> at any reasonable cut-off (p = 0.475).</p>
+<p>So we see an estimated increase in richness after 82 days of 122 taxa, with the standard error in the estimate of 171. A hypothesis test for a change in richness (i.e., testing a null hypothesis of <em>no</em> change) would <em>not be rejected</em> at any reasonable cut-off (p = 0.412).</p>
 <p>Alternatively, we could fit the model with plot ID as a random effect. Here’s how we do that:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Old way (still works)</span>
@@ -208,7 +208,7 @@
 <p>Maybe you don’t care about richness… but you care about Shannon or Simpson diversity! <a href="https://github.com/adw96/DivNet"><code>DivNet</code></a> is our <code>R</code> package for estimating Shannon and Simpson diversity.</p>
 <p>DivNet can be slow when you have a large number of taxa (but we are working on it!), so to illustrate we are going to estimate phylum-level Shannon diversity:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">soil_phylum</span> <span class="op">&lt;-</span> <span class="va">subset_soil</span> <span class="op">%&gt;%</span>
+<code class="sourceCode R"><span class="va">soil_phylum</span> <span class="op">&lt;-</span> <span class="va">subset_soil</span> <span class="op"><a href="https://rdrr.io/pkg/corncob/man/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/tax_glom.html">tax_glom</a></span><span class="op">(</span>taxrank<span class="op">=</span><span class="st">"Phylum"</span><span class="op">)</span></code></pre></div>
 <p>Easter egg: <code><a href="https://rdrr.io/pkg/phyloseq/man/tax_glom.html">phyloseq::tax_glom</a></code> can be incredibly slow! <a href="https://github.com/mikemc">Mike McLaren</a> is a total champ and rewrote it faster – check out his package <a href="https://github.com/mikemc/speedyseq"><code>speedyseq</code></a> and <code><a href="https://mikemc.github.io/speedyseq/reference/tax_glom.html">speedyseq::tax_glom</a></code> in particular.</p>
 <p>Let’s treat all samples as independent observations (<code>X = NULL</code>) and fit the DivNet model:</p>
@@ -233,23 +233,23 @@
 ## Use function testDiversity() to test hypotheses about diversity</code></pre>
 <p>We can look at the first few Shannon diversity estimates with the following:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">combined_shannon</span> <span class="op">&lt;-</span> <span class="va">meta</span> <span class="op">%&gt;%</span>
-  <span class="fu">left_join</span><span class="op">(</span><span class="va">dv</span><span class="op">$</span><span class="va">shannon</span> <span class="op">%&gt;%</span> <span class="va">summary</span>,
+<code class="sourceCode R"><span class="va">combined_shannon</span> <span class="op">&lt;-</span> <span class="va">meta</span> <span class="op"><a href="https://rdrr.io/pkg/corncob/man/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">dv</span><span class="op">$</span><span class="va">shannon</span> <span class="op"><a href="https://rdrr.io/pkg/corncob/man/pipe.html">%&gt;%</a></span> <span class="va">summary</span>,
             by <span class="op">=</span> <span class="st">"sample_names"</span><span class="op">)</span>
 <span class="va">combined_shannon</span></code></pre></div>
 <pre><code>## # A tibble: 32 × 12
 ##    Plants DayAmdmt Amdmt ID    Day   sample_names estimate   error lower upper
 ##    &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;           &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 1      01       1     D     0     S009             2.04 0.00350  2.04  2.05
-##  2 1      21       1     D     2     S204             1.98 0.00113  1.98  1.98
-##  3 0      01       1     B     0     S012             2.00 0.00492  1.99  2.01
-##  4 0      21       1     B     2     S207             2.04 0.00307  2.04  2.05
-##  5 0      21       1     B     2     S202             2.01 0.00203  2.01  2.02
-##  6 0      01       1     B     0     S007             2.04 0.00483  2.03  2.05
-##  7 0      01       1     B     0     S022             2.04 0.00288  2.03  2.04
-##  8 1      01       1     D     0     S024             2.01 0.00377  2.00  2.01
-##  9 0      01       1     B     0     S032             1.99 0.00439  1.99  2.00
-## 10 0      21       1     B     2     S212             2.02 0.00235  2.02  2.03
+##  1 1      01       1     D     0     S009             2.04 0.00429  2.04  2.05
+##  2 1      21       1     D     2     S204             1.98 0.00219  1.98  1.98
+##  3 0      01       1     B     0     S012             2.00 0.00409  2.00  2.01
+##  4 0      21       1     B     2     S207             2.04 0.00297  2.04  2.05
+##  5 0      21       1     B     2     S202             2.01 0.00162  2.01  2.02
+##  6 0      01       1     B     0     S007             2.04 0.00472  2.04  2.05
+##  7 0      01       1     B     0     S022             2.04 0.00379  2.03  2.04
+##  8 1      01       1     D     0     S024             2.01 0.00544  2.00  2.02
+##  9 0      01       1     B     0     S032             1.99 0.00478  1.99  2.00
+## 10 0      21       1     B     2     S212             2.02 0.00459  2.01  2.03
 ## # … with 22 more rows, and 2 more variables: name &lt;chr&gt;, model &lt;chr&gt;</code></pre>
 <p>You might notice that the estimates are not different from the plug-in estimate (only because we used <code>X = NULL</code>), but we have standard errors! That’s the real advantage of using DivNet :)</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
@@ -257,8 +257,8 @@
                ses <span class="op">=</span> <span class="va">error</span>,  data <span class="op">=</span> <span class="va">combined_shannon</span><span class="op">)</span>
 <span class="va">bt_day_fixed_id_random</span><span class="op">$</span><span class="va">table</span></code></pre></div>
 <pre><code>##                Estimates Standard Errors p-values
-## (Intercept)  2.016085066     0.004695753    0.000
-## Day2        -0.007620836     0.006591627    0.248</code></pre>
+## (Intercept)  2.016278408     0.004678671    0.000
+## Day2        -0.007520152     0.006580671    0.253</code></pre>
 <p>and similarly for no random effects.</p>
 <p>If you are interested in generating confidence intervals for and testing hypotheses about linear combinations of fixed effects estimated in a <code>betta</code> or <code>betta_random</code> model, we recommend using the <code>betta_lincom</code> function.</p>
 <p>For example, to generate a confidence interval for <span class="math inline">\(\beta_0 + \beta_1\)</span> (i.e., intercept plus ‘Day2’ coefficient, or in other words, the mean Shannon diversity in soils on day 82 of the experiment) in the Shannon diversity model we fit in the previous code chunk, we run the following code:</p>
@@ -267,9 +267,156 @@
              linear_com <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,
              signif_cutoff <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></code></pre></div>
 <pre><code>##   Estimates Standard Errors Lower CIs Upper CIs p-values
-## 1  2.008464     0.006591627  1.995545  2.021384  &lt; 1e-20</code></pre>
-<p>Here, we’ve set the <code>linear_com</code> argument equal to <code><a href="https://rdrr.io/r/base/c.html">c(1,1)</a></code> to tell <code>betta_lincom</code> to construct a confidence interval for <span class="math inline">\(1 \times \beta_0 + 1 \times \beta_1\)</span>. Because we set <code>signif_cutoff</code> equal to <span class="math inline">\(0.05\)</span>, <code>betta_lincom</code> returns a <span class="math inline">\(95\% = (1 - 0.05)*100\%\)</span> confidence interval. The p-value reported here is for a test of the null hypothesis that <span class="math inline">\(1 \times \beta_0 + 1 \times \beta_1 = 0\)</span> – unsurprisingly, this is small. (If you are confused about why this is “unsurprising,” remember that <span class="math inline">\(\beta_0 + \beta_1\)</span> represents a mean Shannon diversity in soils on day 82 of the experiment of Whitman et al. When can a Shannon diversity be zero?)</p>
+## 1  2.008758     0.006580671   1.99586  2.021656  &lt; 1e-20</code></pre>
+<p>Here, we’ve set the <code>linear_com</code> argument equal to <code>c(1,1)</code> to tell <code>betta_lincom</code> to construct a confidence interval for <span class="math inline">\(1 \times \beta_0 + 1 \times \beta_1\)</span>. Because we set <code>signif_cutoff</code> equal to <span class="math inline">\(0.05\)</span>, <code>betta_lincom</code> returns a <span class="math inline">\(95\% = (1 - 0.05)*100\%\)</span> confidence interval. The p-value reported here is for a test of the null hypothesis that <span class="math inline">\(1 \times \beta_0 + 1 \times \beta_1 = 0\)</span> – unsurprisingly, this is small. (If you are confused about why this is “unsurprising,” remember that <span class="math inline">\(\beta_0 + \beta_1\)</span> represents a mean Shannon diversity in soils on day 82 of the experiment of Whitman et al. When can a Shannon diversity be zero?)</p>
 <p>The syntax and output using <code>betta_lincom</code> with a <code>betta</code> object as input is exactly the same as with a <code>betta_random</code> object, so we haven’t included a separate example for this case.</p>
+<p>To look at a more complicated example of hypothesis testing, let’s now include another date of obsercation in the Whitman et al. dataset – <code>Day = 1</code>, or observations taken on day 12 of this study. We might be interested now in determining whether there is <em>any</em> difference across observation times in Shannon diversity.</p>
+<p>We prepare data and fit a model essentially as we did above. First, we subset the soil data to only biochar-amended plots and allow <code>Day</code> to equal 0, 1, or 2.</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">subset_soil_days_1_2</span> <span class="op">&lt;-</span> <span class="va">soil_phylo</span> <span class="op"><a href="https://rdrr.io/pkg/corncob/man/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_samples-methods.html">subset_samples</a></span><span class="op">(</span><span class="va">Amdmt</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/corncob/man/pipe.html">%&gt;%</a></span> <span class="co"># only biochar</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_samples-methods.html">subset_samples</a></span><span class="op">(</span><span class="va">Day</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>  <span class="co"># only Days 0 and 82</span></code></pre></div>
+<p>We extract metadata and aggregate to phylum level as above as well:</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">meta_days_1_2</span> <span class="op">&lt;-</span> <span class="va">subset_soil_days_1_2</span> <span class="op"><a href="https://rdrr.io/pkg/corncob/man/pipe.html">%&gt;%</a></span>
+  <span class="va">sample_data</span> <span class="op"><a href="https://rdrr.io/pkg/corncob/man/pipe.html">%&gt;%</a></span>
+  <span class="va">as_tibble</span> <span class="op"><a href="https://rdrr.io/pkg/corncob/man/pipe.html">%&gt;%</a></span>
+  <span class="fu">mutate</span><span class="op">(</span><span class="st">"sample_names"</span> <span class="op">=</span> <span class="va">subset_soil_days_1_2</span> <span class="op"><a href="https://rdrr.io/pkg/corncob/man/pipe.html">%&gt;%</a></span> <span class="va">sample_names</span> <span class="op">)</span>
+
+<span class="va">soil_phylum_days_1_2</span> <span class="op">&lt;-</span> <span class="va">subset_soil_days_1_2</span> <span class="op"><a href="https://rdrr.io/pkg/corncob/man/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/tax_glom.html">tax_glom</a></span><span class="op">(</span>taxrank<span class="op">=</span><span class="st">"Phylum"</span><span class="op">)</span></code></pre></div>
+<p>We again run DivNet and extract estimates of Shannon diversity.</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dv_days_1_2</span> <span class="op">&lt;-</span> <span class="fu">DivNet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DivNet/man/divnet.html">divnet</a></span><span class="op">(</span><span class="va">soil_phylum_days_1_2</span>, X <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+<pre><code>## 
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |============                                                          |  17%
+  |                                                                            
+  |=======================                                               |  33%
+  |                                                                            
+  |===================================                                   |  50%
+  |                                                                            
+  |===============================================                       |  67%
+  |                                                                            
+  |==========================================================            |  83%
+  |                                                                            
+  |======================================================================| 100%
+## 
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |============                                                          |  17%
+  |                                                                            
+  |=======================                                               |  33%
+  |                                                                            
+  |===================================                                   |  50%
+  |                                                                            
+  |===============================================                       |  67%
+  |                                                                            
+  |==========================================================            |  83%
+  |                                                                            
+  |======================================================================| 100%
+## 
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |============                                                          |  17%
+  |                                                                            
+  |=======================                                               |  33%
+  |                                                                            
+  |===================================                                   |  50%
+  |                                                                            
+  |===============================================                       |  67%
+  |                                                                            
+  |==========================================================            |  83%
+  |                                                                            
+  |======================================================================| 100%
+## 
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |============                                                          |  17%
+  |                                                                            
+  |=======================                                               |  33%
+  |                                                                            
+  |===================================                                   |  50%
+  |                                                                            
+  |===============================================                       |  67%
+  |                                                                            
+  |==========================================================            |  83%
+  |                                                                            
+  |======================================================================| 100%
+## 
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |============                                                          |  17%
+  |                                                                            
+  |=======================                                               |  33%
+  |                                                                            
+  |===================================                                   |  50%
+  |                                                                            
+  |===============================================                       |  67%
+  |                                                                            
+  |==========================================================            |  83%
+  |                                                                            
+  |======================================================================| 100%
+## 
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |============                                                          |  17%
+  |                                                                            
+  |=======================                                               |  33%
+  |                                                                            
+  |===================================                                   |  50%
+  |                                                                            
+  |===============================================                       |  67%
+  |                                                                            
+  |==========================================================            |  83%
+  |                                                                            
+  |======================================================================| 100%</code></pre>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">combined_shannon_days_1_2</span> <span class="op">&lt;-</span> <span class="va">meta_days_1_2</span> <span class="op"><a href="https://rdrr.io/pkg/corncob/man/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">dv_days_1_2</span><span class="op">$</span><span class="va">shannon</span> <span class="op"><a href="https://rdrr.io/pkg/corncob/man/pipe.html">%&gt;%</a></span> <span class="va">summary</span>,
+            by <span class="op">=</span> <span class="st">"sample_names"</span><span class="op">)</span>
+<span class="va">combined_shannon_days_1_2</span></code></pre></div>
+<pre><code>## # A tibble: 48 × 12
+##    Plants DayAmdmt Amdmt ID    Day   sample_names estimate   error lower upper
+##    &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;           &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 1      01       1     D     0     S009             2.04 0.00396  2.04  2.05
+##  2 1      21       1     D     2     S204             1.98 0.00251  1.98  1.99
+##  3 0      11       1     B     1     S112             1.96 0.00572  1.95  1.97
+##  4 0      01       1     B     0     S012             2.00 0.00665  1.99  2.02
+##  5 1      11       1     D     1     S134             1.99 0.00163  1.98  1.99
+##  6 0      21       1     B     2     S207             2.04 0.00309  2.04  2.05
+##  7 0      21       1     B     2     S202             2.01 0.00246  2.01  2.02
+##  8 0      01       1     B     0     S007             2.04 0.00244  2.04  2.05
+##  9 1      11       1     D     1     S139             1.91 0.00304  1.90  1.92
+## 10 0      11       1     B     1     S122             1.99 0.00348  1.99  2.00
+## # … with 38 more rows, and 2 more variables: name &lt;chr&gt;, model &lt;chr&gt;</code></pre>
+<p>Now we fit another model with <code>betta_random</code>.</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bt_day_1_2_fixed_id_random</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/betta_random.html">betta_random</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">estimate</span> <span class="op">~</span> <span class="va">Day</span> <span class="op">|</span> <span class="va">ID</span>, 
+               ses <span class="op">=</span> <span class="va">error</span>,  data <span class="op">=</span> <span class="va">combined_shannon_days_1_2</span><span class="op">)</span>
+<span class="va">bt_day_1_2_fixed_id_random</span><span class="op">$</span><span class="va">table</span></code></pre></div>
+<pre><code>##                Estimates Standard Errors p-values
+## (Intercept)  2.018330156     0.006520905    0.000
+## Day1        -0.101563392     0.011291754    0.000
+## Day2        -0.007009816     0.011279091    0.534</code></pre>
+<p>The output we get from <code>betta_random</code> gives us p-values for testing whether mean Shannon diversity is the same at day 12 as at day 0 and for whether it is the same at day 82 as at day 0, but we want to get a <em>single</em> p-value for an overall test of whether mean Shannon diversity varies with day at all! To do this, we can use the <code>test_submodel</code> function in <code>breakaway</code> to test our full model against a null with no terms in <code>Day</code> using a parametric bootstrap:</p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">345</span><span class="op">)</span>
+<span class="va">submodel_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/test_submodel.html">test_submodel</a></span><span class="op">(</span><span class="va">bt_day_1_2_fixed_id_random</span>,
+                          submodel_formula <span class="op">=</span> <span class="va">estimate</span><span class="op">~</span><span class="fl">1</span>,
+                          method <span class="op">=</span> <span class="st">"bootstrap"</span>,
+                          nboot <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
+
+<span class="va">submodel_test</span><span class="op">$</span><span class="va">pval</span></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<p>This returns a p-value of 0 – but recall that we obtained this p-value with a parametric bootstrap, and we’ve used only 100 bootstrap iterations. Hence, we’ll report <span class="math inline">\(p \leq 0.01\)</span> rather than <span class="math inline">\(p = 0\)</span>. In any case, we have reasonably strong evidence of some difference in mean Shannon diversity over time, so we reject the null (intercept-only) model. In practice, it’s a good idea to use more than 100 bootstrap iterations – 10,000 is a good choice for publication. (We use 100 here so the vignette loads in a reasonable amount of time.)</p>
 <p>And there you have it! That’s how to do hypothesis testing for diversity!</p>
 <p>If you use our tools, please don’t forget to cite them!</p>
 <ul>

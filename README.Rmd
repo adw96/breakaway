@@ -56,7 +56,7 @@ devtools::install_github("adw96/breakaway")
 
 Maintainer: [Amy Willis](http://statisticaldiversitylab.com)
 
-Authors: [Amy Willis](http://statisticaldiversitylab.com),  [John Bunge](https://stat.cornell.edu/people/faculty/john-bunge), [Bryan Martin](https://bryandmartin.github.io/), [Pauline Trinh](https://twitter.com/paulinetrinh), [Kathryn Barger](http://hnrca.tufts.edu/kathryn-barger-ph-d/), [David Clausen](https://www.biostat.washington.edu/people/david-clausen) and [Sarah Teichman](https://svteichman.github.io/). 
+Authors: [Amy Willis](http://statisticaldiversitylab.com),  John Bunge, [Bryan Martin](https://bryandmartin.github.io/), [Pauline Trinh](https://twitter.com/paulinetrinh), Kathryn Barger, [David Clausen](https://www.biostat.washington.edu/people/david-clausen) and [Sarah Teichman](https://svteichman.github.io/). 
 
 Do you have a request for us? Let us know! We want folks to use `breakaway` and are committed to making it as easy to use as possible. 
 

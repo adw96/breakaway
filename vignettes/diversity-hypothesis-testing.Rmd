@@ -84,7 +84,7 @@ Suppose we want to fit the model with Day as a fixed effect. Here's how we do th
 
 ```{r}
 combined_richness <- meta %>%
-  left_join(summary(richness_soil),
+  dplyr::left_join(summary(richness_soil),
             by = "sample_names")
 # Old way (still works)
 bt_day_fixed <- betta(chats = combined_richness$estimate,

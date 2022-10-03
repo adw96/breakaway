@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Confidence intervals and testing for linear combinations of fixed effects estimated via betta() or betta_random() — betta_lincom • breakaway</title>
+<title>Conduct F test of null hypothesis LB = 0 using output from betta()
+or betta_random() — F_test • breakaway</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,11 +47,11 @@
 
 
 
-<meta property="og:title" content="Confidence intervals and testing for linear combinations of fixed effects estimated via betta() or betta_random() — betta_lincom" />
-<meta property="og:description" content="This function provides point estimates, standard errors, and equal-tailed confidence intervals for
-linear combinations of fixed effects estimated via betta() or betta_random(). A p-value for a Wald
-test of the null that the linear combination of effects is equal to zero (against a general alternative)
-is also returned." />
+<meta property="og:title" content="Conduct F test of null hypothesis LB = 0 using output from betta()
+or betta_random() — F_test" />
+<meta property="og:description" content="This function performs an F-test of a null hypothesis LB = 0 where B is a
+vector of p fixed effects returned by betta() or betta_random() and L is an
+m x p matrix with linearly independent rows." />
 <meta property="og:image" content="http://adw96.github.io/breakaway/logo.png" />
 
 
@@ -137,19 +138,19 @@ is also returned." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Confidence intervals and testing for linear combinations of fixed effects estimated via betta() or betta_random()</h1>
-    <small class="dont-index">Source: <a href='https://github.com/adw96/breakaway/blob/master/R/betta_lincom.R'><code>R/betta_lincom.R</code></a></small>
-    <div class="hidden name"><code>betta_lincom.Rd</code></div>
+    <h1>Conduct F test of null hypothesis LB = 0 using output from betta()
+or betta_random()</h1>
+    <small class="dont-index">Source: <a href='https://github.com/adw96/breakaway/blob/master/R/F_test.R'><code>R/F_test.R</code></a></small>
+    <div class="hidden name"><code>F_test.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function provides point estimates, standard errors, and equal-tailed confidence intervals for
-linear combinations of fixed effects estimated via betta() or betta_random(). A p-value for a Wald
-test of the null that the linear combination of effects is equal to zero (against a general alternative)
-is also returned.</p>
+    <p>This function performs an F-test of a null hypothesis LB = 0 where B is a
+vector of p fixed effects returned by betta() or betta_random() and L is an
+m x p matrix with linearly independent rows.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>betta_lincom</span><span class='op'>(</span><span class='va'>fitted_betta</span>, <span class='va'>linear_com</span>, signif_cutoff <span class='op'>=</span> <span class='fl'>0.05</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>F_test</span><span class='op'>(</span><span class='va'>fitted_betta</span>, <span class='va'>L</span>, method <span class='op'>=</span> <span class='st'>"bootstrap"</span>, nboot <span class='op'>=</span> <span class='fl'>1000</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -160,24 +161,28 @@ is also returned.</p>
 betta_random() -- containing fixed effect estimates of interest.</p></td>
     </tr>
     <tr>
-      <th>linear_com</th>
-      <td><p>The linear combination of fixed effects for which a point estimate,
-confidence interval, and hypothesis test are to be produced.</p></td>
+      <th>L</th>
+      <td><p>An m x p matrix defining the null LB = 0. L must have full row rank.</p></td>
     </tr>
     <tr>
-      <th>signif_cutoff</th>
-      <td><p>The type-I significance threshold for confidence intervals. Defaults
-to 0.05.</p></td>
+      <th>method</th>
+      <td><p>A character variable indicating which method should be used to
+estimate the distribution of the test statistic under the null.</p></td>
+    </tr>
+    <tr>
+      <th>nboot</th>
+      <td><p>Number of bootstrap samples to use if method = "bootstrap".
+Ignored if method = "asymptotic".</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
-
-<dt>table</dt><dd><p>A table containing a point estimate, standard error, lower and upper confidence bounds,
-and a p-value for the linear combination of fixed effects specified in input. The p-value is generated via a two-sided
-Wald test of the null that the linear combination of fixed effects is equal to zero.</p></dd>
+    <p>A list containing</p>
+<dt>pval</dt><dd><p>The p-value</p></dd>
+<dt>F_stat</dt><dd><p>The calculated F statistic</p></dd>
+<dt>boot_F</dt><dd><p>A vector of bootstrapped F statistics if bootstrap has been used.
+Otherwise NULL.</p></dd>
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -185,7 +190,10 @@ Wald test of the null that the linear combination of fixed effects is equal to z
 changes in biodiversity. <em>arXiv preprint.</em></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='betta.html'>betta</a></code>;</p></div>
+    <div class='dont-index'><p><code><a href='betta.html'>betta</a></code>;</p>
+<p><code><a href='betta_random.html'>betta_random</a></code>;</p>
+<p><code><a href='betta.html'>betta</a></code>;</p>
+<p><code><a href='get_F_stat.html'>get_F_stat</a></code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>David Clausen</p>
@@ -193,20 +201,23 @@ changes in biodiversity. <em>arXiv preprint.</em></p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='r-in'></span>
 <span class='r-in'><span class='co'># generate example data</span></span>
-<span class='r-in'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>chats <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2000</span>, <span class='fl'>3000</span>, <span class='fl'>4000</span>, <span class='fl'>3000</span><span class='op'>)</span>, ses <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>150</span>, <span class='fl'>180</span><span class='op'>)</span>,</span>
-<span class='r-in'>                 Cont_var <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>150</span>, <span class='fl'>100</span>, <span class='fl'>50</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>chats <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2000</span>, <span class='fl'>3000</span>, <span class='fl'>4000</span>, <span class='fl'>3000</span>,</span>
+<span class='r-in'><span class='fl'>2000</span>, <span class='fl'>3000</span>, <span class='fl'>4000</span>, <span class='fl'>3000</span><span class='op'>)</span>, ses <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>150</span>, <span class='fl'>180</span>,</span>
+<span class='r-in'><span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>150</span>, <span class='fl'>180</span><span class='op'>)</span>,</span>
+<span class='r-in'>                 Cont_var <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>150</span>, <span class='fl'>100</span>, <span class='fl'>50</span>,</span>
+<span class='r-in'>                 <span class='fl'>100</span>, <span class='fl'>150</span>, <span class='fl'>100</span>, <span class='fl'>50</span><span class='op'>)</span>,</span>
+<span class='r-in'>                 Cont_var_2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>50</span>,<span class='fl'>200</span>,<span class='fl'>25</span>,<span class='fl'>125</span>,</span>
+<span class='r-in'>                 <span class='fl'>50</span>,<span class='fl'>200</span>,<span class='fl'>25</span>,<span class='fl'>125</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># fit betta()</span></span>
-<span class='r-in'><span class='va'>example_fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='betta.html'>betta</a></span><span class='op'>(</span>formula <span class='op'>=</span> <span class='va'>chats</span> <span class='op'>~</span> <span class='va'>Cont_var</span>, ses <span class='op'>=</span> <span class='va'>ses</span>, data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>example_fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='betta.html'>betta</a></span><span class='op'>(</span>formula <span class='op'>=</span> <span class='va'>chats</span> <span class='op'>~</span> <span class='va'>Cont_var</span> <span class='op'>+</span> <span class='va'>Cont_var_2</span>, ses <span class='op'>=</span> <span class='va'>ses</span>, data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span></span>
 <span class='r-in'></span>
-<span class='r-in'><span class='co'># generate point estimate and 95% CI for mean richness at Cont_var = 125</span></span>
 <span class='r-in'></span>
-<span class='r-in'><span class='fu'>betta_lincom</span><span class='op'>(</span>fitted_betta <span class='op'>=</span> <span class='va'>example_fit</span>,</span>
-<span class='r-in'>linear_com <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>125</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># this tells betta_lincom to estimate value of beta_0 + 125*beta_1,</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   Estimates Standard Errors Lower CIs Upper CIs p-values</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  2995.366        511.8334  1992.191  3998.541 2.43e-09</span>
-<span class='r-in'><span class='co'># where beta_0 is the intercept, and beta_1 is the (true value of the) coefficient on Cont_var</span></span>
+<span class='r-in'><span class='co'># construct L for hypothesis that B_cont_var = B_cont_var_2 = 0</span></span>
+<span class='r-in'><span class='va'>L</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>0</span><span class='op'>)</span>,</span>
+<span class='r-in'>           <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-in'></span>
+<span class='r-in'><span class='va'>F_test_results</span> <span class='op'>&lt;-</span> <span class='fu'>F_test</span><span class='op'>(</span><span class='va'>example_fit</span>, <span class='va'>L</span><span class='op'>)</span></span>
 <span class='r-in'></span>
 </pre>
   </div>

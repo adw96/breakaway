@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>PoissonModel — poisson_model • breakaway</title>
+<title>Calculate F statistic under null hypothesis LB = 0 using output from betta()
+or betta_random() — get_F_stat • breakaway</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +47,12 @@
 
 
 
-<meta property="og:title" content="PoissonModel — poisson_model" />
-<meta property="og:description" content="A model to estimate the number of missing taxa under a Poisson Model" />
+<meta property="og:title" content="Calculate F statistic under null hypothesis LB = 0 using output from betta()
+or betta_random() — get_F_stat" />
+<meta property="og:description" content="This function calculates an F statistic for a test of null hypothesis LB = 0
+(against an unrestricted alternative) where B is a
+vector of p fixed effects returned by betta() or betta_random() and L is an
+m x p matrix with linearly independent rows." />
 <meta property="og:image" content="http://adw96.github.io/breakaway/logo.png" />
 
 
@@ -134,29 +139,39 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>PoissonModel</h1>
-    <small class="dont-index">Source: <a href='https://github.com/adw96/breakaway/blob/master/R/richness_poisson.R'><code>R/richness_poisson.R</code></a></small>
-    <div class="hidden name"><code>poisson_model.Rd</code></div>
+    <h1>Calculate F statistic under null hypothesis LB = 0 using output from betta()
+or betta_random()</h1>
+    <small class="dont-index">Source: <a href='https://github.com/adw96/breakaway/blob/master/R/get_F_stat.R'><code>R/get_F_stat.R</code></a></small>
+    <div class="hidden name"><code>get_F_stat.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A model to estimate the number of missing taxa under a Poisson Model</p>
+    <p>This function calculates an F statistic for a test of null hypothesis LB = 0
+(against an unrestricted alternative) where B is a
+vector of p fixed effects returned by betta() or betta_random() and L is an
+m x p matrix with linearly independent rows.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>poisson_model</span><span class='op'>(</span><span class='va'>input_data</span>, cutoff <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_F_stat</span><span class='op'>(</span><span class='va'>fitted_betta</span>, <span class='va'>L</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>input_data</th>
-      <td><p>A frequency count table</p></td>
+      <th>fitted_betta</th>
+      <td><p>A fitted betta object -- i.e., the output of either betta() or
+betta_random() -- containing fixed effect estimates of interest.</p></td>
     </tr>
     <tr>
-      <th>cutoff</th>
-      <td><p>The largest frequency to use for predicting f0. Defaults to 10.</p></td>
+      <th>L</th>
+      <td><p>An m x p matrix defining the null LB = 0. L must have full row rank.</p></td>
     </tr>
     </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A list containing</p>
+<dt>F_stat</dt><dd><p>The calculated F statistic</p></dd>
 
 
   </div>

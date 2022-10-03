@@ -29,7 +29,7 @@ sample_size_estimate <- function(control_group_est, se_est, diff = 5,
       ses <- rep(se_est, 2*n)
       design_matrix <- cbind(1, c(rep(0, n), rep(1, n)))
       pp <- try(betta(create_ests, ses, design_matrix)$table[2,3], silent = T)
-      if (inherits(pp, "numeric")) {
+      if ("numeric" %in% class(pp)) {
         pvalues[iter] <- pp
         iter <- iter + 1
       }
@@ -115,7 +115,7 @@ sample_size_figure <- function(control_group_est, se_est, diff = 5, samples = 20
       ses <- rep(se_est, 2*n)
       design_matrix <- cbind(1, c(rep(0, n), rep(1, n)))
       pp <- try(betta(create_ests, ses, design_matrix)$table[2,3])
-      if (inherits(pp, "numeric")) {
+      if ("numeric" %in% class(pp)) {
         pvalues[iter] <- pp
         iter <- iter + 1
       } 

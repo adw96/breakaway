@@ -83,7 +83,7 @@ explaining diversity and a hypothesis test for heterogeneity." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">breakaway</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.7.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">4.7.6</span>
       </span>
     </div>
 
@@ -170,8 +170,8 @@ case but not enforced.</p></td>
     <tr>
       <th>ses</th>
       <td><p>The standard errors in <code>chats</code>, the diversity estimates. This
-can either be a vector of standard errors (with the arguments <code>chats</code> and 
-<code>X</code>), or the name of the variable in the dataframe <code>data</code> that contains 
+can either be a vector of standard errors (with the arguments <code>chats</code> and
+<code>X</code>), or the name of the variable in the dataframe <code>data</code> that contains
 the standard errors (with the arguments <code>formula</code> and <code>data</code>).</p></td>
     </tr>
     <tr>
@@ -185,12 +185,12 @@ model will be fit. This is optional with the <code>chats</code> argument.</p></t
     </tr>
     <tr>
       <th>formula</th>
-      <td><p>A formula object of the form \(y ~ x | group\). Required with 
+      <td><p>A formula object of the form \(y ~ x | group\). Required with
 the <code>data</code> argument.</p></td>
     </tr>
     <tr>
       <th>data</th>
-      <td><p>A dataframe containing the response, response standard errors, covariates, 
+      <td><p>A dataframe containing the response, response standard errors, covariates,
 and grouping variable. Required with the <code>formula</code> argument.</p></td>
     </tr>
     </table>
@@ -220,6 +220,8 @@ blups.</p></dd>
 <dt>aic</dt><dd><p>The Akaike information criterion for the fitted model.</p></dd>
 <dt>aicc</dt><dd><p>The finite sample correction of the Akaike information criterion for the fitted model.</p></dd>
 <dt>r_squared_wls</dt><dd><p>The weighted R^2 statistic, appropriate for heteroskedastic linear models.</p></dd>
+<dt>function.args</dt><dd><p>A list containing
+values initially passed to betta_random.</p></dd>
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -255,203 +257,324 @@ changes in biodiversity. <em>arXiv preprint.</em></p>
     <p>Amy Willis</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>chats <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2000</span>, <span class='fl'>3000</span>, <span class='fl'>4000</span>, <span class='fl'>3000</span><span class='op'>)</span>, ses <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>150</span>, <span class='fl'>180</span><span class='op'>)</span>,
-                 Cont_var <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>150</span>, <span class='fl'>100</span>, <span class='fl'>50</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='co'># formula notation </span>
-<span class='fu'>betta</span><span class='op'>(</span>formula <span class='op'>=</span> <span class='va'>chats</span> <span class='op'>~</span> <span class='va'>Cont_var</span>, ses <span class='op'>=</span> <span class='va'>ses</span>, data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $table
-#&gt;                Estimates Standard Errors p-values
-#&gt; (Intercept) 2.995149e+03      416.145952        0
-#&gt; Cont_var    1.730997e-03        3.931275        1
-#&gt; 
-#&gt; $cov
-#&gt;             (Intercept)    Cont_var
-#&gt; (Intercept)  1575149.61 -14038.4223
-#&gt; Cont_var      -14038.42    140.5715
-#&gt; 
-#&gt; $ssq_u
-#&gt; [1] 666667.8
-#&gt; 
-#&gt; $homogeneity
-#&gt; [1] 143.9291   0.0000
-#&gt; 
-#&gt; $global
-#&gt; [1] 5.180787e+01 6.120660e-13
-#&gt; 
-#&gt; $blups
-#&gt; [1] 2014.709 2999.740 3967.199 2999.779
-#&gt; 
-#&gt; $blupses
-#&gt; [1]  99.44868 198.55147 148.15536 178.94475
-#&gt; 
-#&gt; $loglikelihood
-#&gt; [1] -32.03712
-#&gt; 
-#&gt; $aic
-#&gt; [1] 70.07423
-#&gt; 
-#&gt; $aicc
-#&gt; [1] Inf
-#&gt; 
-#&gt; $r_squared_wls
-#&gt; [1] -4.376681e-05
-#&gt; </div><div class='input'>
-<span class='co'># direct input </span>
-<span class='fu'>betta</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2000</span>, <span class='fl'>3000</span>, <span class='fl'>4000</span>, <span class='fl'>3000</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>150</span>, <span class='fl'>180</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>150</span>, <span class='fl'>100</span>, 
-    <span class='fl'>50</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $table
-#&gt;         Estimates Standard Errors p-values
-#&gt; [1,] 2.995149e+03      416.145952        0
-#&gt; [2,] 1.730997e-03        3.931275        1
-#&gt; 
-#&gt; $cov
-#&gt;            [,1]        [,2]
-#&gt; [1,] 1575149.61 -14038.4223
-#&gt; [2,]  -14038.42    140.5715
-#&gt; 
-#&gt; $ssq_u
-#&gt; [1] 666667.8
-#&gt; 
-#&gt; $homogeneity
-#&gt; [1] 143.9291   0.0000
-#&gt; 
-#&gt; $global
-#&gt; [1] 5.180787e+01 6.120660e-13
-#&gt; 
-#&gt; $blups
-#&gt; [1] 2014.709 2999.740 3967.199 2999.779
-#&gt; 
-#&gt; $blupses
-#&gt; [1]  99.44868 198.55147 148.15536 178.94475
-#&gt; 
-#&gt; $loglikelihood
-#&gt; [1] -32.03712
-#&gt; 
-#&gt; $aic
-#&gt; [1] 70.07423
-#&gt; 
-#&gt; $aicc
-#&gt; [1] Inf
-#&gt; 
-#&gt; $r_squared_wls
-#&gt; [1] -4.376681e-05
-#&gt; </div><div class='input'>
-<span class='co'>## handles missing data</span>
-<span class='fu'>betta</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2000</span>, <span class='fl'>3000</span>, <span class='fl'>4000</span>, <span class='fl'>3000</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>150</span>, <span class='cn'>NA</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $table
-#&gt;      Estimates Standard Errors p-values
-#&gt; [1,]      3000        584.2429        0
-#&gt; 
-#&gt; $cov
-#&gt;          [,1]
-#&gt; [1,] 341339.7
-#&gt; 
-#&gt; $ssq_u
-#&gt; [1] 1e+06
-#&gt; 
-#&gt; $homogeneity
-#&gt; [1] 144.4444   0.0000
-#&gt; 
-#&gt; $global
-#&gt; [1] 26.36669  0.00000
-#&gt; 
-#&gt; $blups
-#&gt; [1] 2009.901 3000.000 3977.995       NA
-#&gt; 
-#&gt; $blupses
-#&gt; [1]  99.67172 197.39929 148.89651        NA
-#&gt; 
-#&gt; $loglikelihood
-#&gt; [1] -24.49984
-#&gt; 
-#&gt; $aic
-#&gt; [1] 52.99968
-#&gt; 
-#&gt; $aicc
-#&gt; [1] Inf
-#&gt; 
-#&gt; $r_squared_wls
-#&gt; [1] -2.220446e-16
-#&gt; </div><div class='input'>
-<span class='co'>## A test for heterogeneity of apples diversity estimates vs butterfly estimates</span>
-<span class='fu'>betta</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1552</span>, <span class='fl'>1500</span>, <span class='fl'>884</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>305</span>, <span class='fl'>675</span>, <span class='fl'>205</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $table
-#&gt;      Estimates Standard Errors p-values
-#&gt; [1,]      1526        294.0600     0.00
-#&gt; [2,]      -642        424.3689     0.13
-#&gt; 
-#&gt; $cov
-#&gt;           [,1]      [,2]
-#&gt; [1,]  166341.7 -166341.7
-#&gt; [2,] -166341.7  346430.7
-#&gt; 
-#&gt; $ssq_u
-#&gt; [1] 138064
-#&gt; 
-#&gt; $homogeneity
-#&gt; [1] 0.008750509 0.925471271
-#&gt; 
-#&gt; $global
-#&gt; [1] 1.833863e+01 1.849194e-05
-#&gt; 
-#&gt; $blups
-#&gt; [1] 1541.534 1519.954  884.000
-#&gt; 
-#&gt; $blupses
-#&gt; [1] 287.2854 451.5839 205.0000
-#&gt; 
-#&gt; $loglikelihood
-#&gt; [1] -21.63179
-#&gt; 
-#&gt; $aic
-#&gt; [1] 49.26357
-#&gt; 
-#&gt; $aicc
-#&gt; [1] 25.26357
-#&gt; 
-#&gt; $r_squared_wls
-#&gt; [1] 0.9951037
-#&gt; </div><div class='input'>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>chats <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2000</span>, <span class='fl'>3000</span>, <span class='fl'>4000</span>, <span class='fl'>3000</span><span class='op'>)</span>, ses <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>150</span>, <span class='fl'>180</span><span class='op'>)</span>,</span>
+<span class='r-in'>                 Cont_var <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>150</span>, <span class='fl'>100</span>, <span class='fl'>50</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># formula notation</span></span>
+<span class='r-in'><span class='fu'>betta</span><span class='op'>(</span>formula <span class='op'>=</span> <span class='va'>chats</span> <span class='op'>~</span> <span class='va'>Cont_var</span>, ses <span class='op'>=</span> <span class='va'>ses</span>, data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $table</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                Estimates Standard Errors p-values</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept) 2.995149e+03      416.145952        0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Cont_var    1.730997e-03        3.931275        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $cov</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             (Intercept)    Cont_var</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept)  1575149.61 -14038.4223</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Cont_var      -14038.42    140.5715</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ssq_u</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 666667.8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $homogeneity</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 143.9291   0.0000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $global</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 5.180787e+01 6.120660e-13</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $blups</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 2014.709 2999.740 3967.199 2999.779</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $blupses</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1]  99.44868 198.55147 148.15536 178.94475</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $loglikelihood</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] -32.03712</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $aic</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 70.07423</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $aicc</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] Inf</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $r_squared_wls</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] -4.376681e-05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$chats</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    1    2    3    4 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2000 3000 4000 3000 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$ses</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 100 200 150 180</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$X</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   (Intercept) Cont_var</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1           1      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2           1      150</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3           1      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4           1       50</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> attr(,"assign")</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$initial_est</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 6.666667e+05 3.000000e+03 7.105427e-15</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$formula</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> chats ~ Cont_var</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;environment: 0x7f87bd4ae270&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$data</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   chats ses Cont_var</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  2000 100      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  3000 200      150</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  4000 150      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4  3000 180       50</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$model_type</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "fixed"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># direct input</span></span>
+<span class='r-in'><span class='fu'>betta</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2000</span>, <span class='fl'>3000</span>, <span class='fl'>4000</span>, <span class='fl'>3000</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>150</span>, <span class='fl'>180</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>150</span>, <span class='fl'>100</span>,</span>
+<span class='r-in'>    <span class='fl'>50</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $table</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         Estimates Standard Errors p-values</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1,] 2.995149e+03      416.145952        0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [2,] 1.730997e-03        3.931275        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $cov</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            [,1]        [,2]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1,] 1575149.61 -14038.4223</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [2,]  -14038.42    140.5715</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ssq_u</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 666667.8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $homogeneity</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 143.9291   0.0000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $global</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 5.180787e+01 6.120660e-13</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $blups</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 2014.709 2999.740 3967.199 2999.779</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $blupses</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1]  99.44868 198.55147 148.15536 178.94475</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $loglikelihood</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] -32.03712</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $aic</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 70.07423</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $aicc</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] Inf</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $r_squared_wls</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] -4.376681e-05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$chats</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 2000 3000 4000 3000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$ses</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 100 200 150 180</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$X</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      [,1] [,2]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1,]    1  100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [2,]    1  150</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [3,]    1  100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [4,]    1   50</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$initial_est</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 6.666667e+05 3.000000e+03 7.105427e-15</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$formula</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$data</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$model_type</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "fixed"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## handles missing data</span></span>
+<span class='r-in'><span class='fu'>betta</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2000</span>, <span class='fl'>3000</span>, <span class='fl'>4000</span>, <span class='fl'>3000</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>150</span>, <span class='cn'>NA</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>At least one of your standard errors is 0 or NA. Any observation with</span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span>             a standard error of 0 or NA has been dropped from the analysis.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $table</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      Estimates Standard Errors p-values</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1,]      3000        584.2429        0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $cov</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          [,1]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1,] 341339.7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ssq_u</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 1e+06</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $homogeneity</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 144.4444   0.0000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $global</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 26.36669  0.00000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $blups</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 2009.901 3000.000 3977.995       NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $blupses</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1]  99.67172 197.39929 148.89651        NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $loglikelihood</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] -24.49984</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $aic</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 52.99968</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $aicc</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] Inf</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $r_squared_wls</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] -2.220446e-16</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$chats</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 2000 3000 4000 3000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$ses</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 100 200 150  NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$X</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      [,1]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1,]    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [2,]    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [3,]    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [4,]    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$initial_est</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 1e+06 3e+03</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$formula</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$data</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$model_type</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "fixed"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## A test for heterogeneity of apples diversity estimates vs butterfly estimates</span></span>
+<span class='r-in'><span class='fu'>betta</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1552</span>, <span class='fl'>1500</span>, <span class='fl'>884</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>305</span>, <span class='fl'>675</span>, <span class='fl'>205</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $table</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      Estimates Standard Errors p-values</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1,]      1526        294.0600     0.00</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [2,]      -642        424.3689     0.13</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $cov</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           [,1]      [,2]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1,]  166341.7 -166341.7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [2,] -166341.7  346430.7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $ssq_u</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 138064</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $homogeneity</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.008750509 0.925471271</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $global</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 1.833863e+01 1.849194e-05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $blups</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 1541.534 1519.954  884.000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $blupses</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 287.2854 451.5839 205.0000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $loglikelihood</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] -21.63179</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $aic</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 49.26357</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $aicc</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 25.26357</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $r_squared_wls</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.9951037</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$chats</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 1552 1500  884</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$ses</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 305 675 205</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$X</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      [,1] [,2]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1,]    1    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [2,]    1    0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [3,]    1    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$initial_est</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 138064   1526   -642</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$formula</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$data</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $function.args$model_type</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "fixed"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

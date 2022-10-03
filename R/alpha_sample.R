@@ -22,7 +22,7 @@ fc_to_proportions <- function(fc) {
 #' @export 
 sample_shannon <- function(input_data) {
   
-  if (inherits(input_data, "phyloseq")) {
+  if ("phyloseq" %in% class(input_data)) {
     if (input_data %>% otu_table %>% taxa_are_rows) {
       return(input_data %>% 
                get_taxa %>%
@@ -67,7 +67,7 @@ sample_shannon <- function(input_data) {
 #' @export 
 sample_shannon_e <- function(input_data) {
   
-  if (inherits(input_data, "phyloseq")) {
+  if ("phyloseq" %in% class(input_data)) {
     if (input_data %>% otu_table %>% taxa_are_rows) {
       return(input_data %>% 
                get_taxa %>%
@@ -112,7 +112,7 @@ sample_shannon_e <- function(input_data) {
 #' @export 
 sample_simpson <- function(input_data) {
   
-  if (inherits(input_data, "phyloseq")) {
+  if ("phyloseq" %in% class(input_data)) {
     if (input_data %>% otu_table %>% taxa_are_rows) {
       return(input_data %>% 
                get_taxa %>%
@@ -157,7 +157,7 @@ sample_simpson <- function(input_data) {
 #' @export 
 sample_inverse_simpson <- function(input_data) {
   
-  if (inherits(input_data, "phyloseq")) {
+  if ("phyloseq" %in% class(input_data)) {
     if (input_data %>% otu_table %>% taxa_are_rows) {
       return(input_data %>% 
                get_taxa %>%

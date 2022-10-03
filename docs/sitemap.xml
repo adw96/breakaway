@@ -4,6 +4,9 @@
     <loc>http://adw96.github.io/breakaway/index.html</loc>
   </url>
   <url>
+    <loc>http://adw96.github.io/breakaway/reference/F_test.html</loc>
+  </url>
+  <url>
     <loc>http://adw96.github.io/breakaway/reference/alpha_estimate.html</loc>
   </url>
   <url>
@@ -53,6 +56,9 @@
   </url>
   <url>
     <loc>http://adw96.github.io/breakaway/reference/cutoff_wrap.html</loc>
+  </url>
+  <url>
+    <loc>http://adw96.github.io/breakaway/reference/get_F_stat.html</loc>
   </url>
   <url>
     <loc>http://adw96.github.io/breakaway/reference/good_turing.html</loc>
@@ -122,6 +128,15 @@
   </url>
   <url>
     <loc>http://adw96.github.io/breakaway/reference/sample_size_figure.html</loc>
+  </url>
+  <url>
+    <loc>http://adw96.github.io/breakaway/reference/simulate_betta.html</loc>
+  </url>
+  <url>
+    <loc>http://adw96.github.io/breakaway/reference/simulate_betta_random.html</loc>
+  </url>
+  <url>
+    <loc>http://adw96.github.io/breakaway/reference/test_submodel.html</loc>
   </url>
   <url>
     <loc>http://adw96.github.io/breakaway/reference/toy_metadata.html</loc>

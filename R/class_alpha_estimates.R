@@ -15,7 +15,7 @@ alpha_estimates <- function(...) {
   alpha_ests_object <- list(...)
   
   if (alpha_ests_object %>% length == 1) {
-    if (inherits(alpha_ests_object[[1]], "list")) {
+    if ("list" %in% class(alpha_ests_object[[1]])) {
       alpha_ests_object <- alpha_ests_object[[1]]
     }
   } 
