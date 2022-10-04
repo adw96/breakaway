@@ -2,7 +2,7 @@ Package: breakaway
 Title: Species Richness Estimation and Modeling
 Version: 4.8.0
 Date: 2022-09-30
-Authors@R: as.person(c(
+Authors@R: c(
     person("Amy D", "Willis", email = "adwillis@uw.edu", role = c("aut", "cre")),
     person("Bryan D", "Martin", role = "aut"),
     person("Pauline", "Trinh", role = "aut"),
@@ -10,7 +10,7 @@ Authors@R: as.person(c(
     person("David", "Clausen", role = "aut"),
     person("Kathryn", "Barger", role = "aut"),
     person("John", "Bunge", role = "aut")
-  ))
+  )
 Description: Understanding the drivers of microbial diversity is an important frontier of microbial ecology, and investigating the diversity of samples from microbial ecosystems is a common step in any microbiome analysis. `breakaway` is the premier package for statistical analysis of microbial diversity. `breakaway` implements the latest and greatest estimates of species richness, as well as the most commonly used estimates.
 License: GPL-2
 BugReports: https://github.com/adw96/breakaway/issues
@@ -31,7 +31,6 @@ Imports:
 Suggests: corncob,
     devtools,
     knitr,
-    openxlsx,
     plyr,
     RCurl,
     rmarkdown,

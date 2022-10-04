@@ -71,3 +71,24 @@
 ################################################################################
 "toy_taxonomy"
 ################################################################################
+################################################################################
+#' (Data) Data frame of covariate information about pasolli_et_al.
+#'
+#' @format A data frame with 4930 rows and 9 variables:
+#' \describe{
+#'   \item{SGB.ID}{sample ID}
+#'   \item{AverageAbundance}{average abundance in the sample}
+#'   \item{std}{standard deviation}
+#'   \item{q1}{first quartile}
+#'   \item{MedianAbundance}{median abundance}
+#'   \item{q3}{third quartile}
+#'   \item{min}{minimum}
+#'   \item{max}{maximum}
+#'   \item{#.Samples}{number of samples}
+#'   ...
+#' }
+#' 
+#'
+################################################################################
+"pasolli_et_al"
+################################################################################
