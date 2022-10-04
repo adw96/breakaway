@@ -56,7 +56,8 @@ First, let's read in the data:
 
 ```{r}
 # install.packages("openxlsx")
-pasolli_et_al <- openxlsx::read.xlsx("https://ars.els-cdn.com/content/image/1-s2.0-S0092867419300017-mmc4.xlsx", sheet = 2)
+# pasolli_et_al <- openxlsx::read.xlsx("https://ars.els-cdn.com/content/image/1-s2.0-S0092867419300017-mmc4.xlsx", sheet = 2)
+data("pasolli_et_al")
 ```
 
 The "frequency count table" is the basic data structure for estimating species richness. It is a table with two columns: the second column indicates the number of species observed `j` times, where the first column contains `j`. Let's take a look at the first 10 columns of the frequency count table for the Pasolli et al dataset:

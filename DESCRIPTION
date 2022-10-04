@@ -31,7 +31,6 @@ Imports:
 Suggests: corncob,
     devtools,
     knitr,
-    openxlsx,
     plyr,
     RCurl,
     rmarkdown,

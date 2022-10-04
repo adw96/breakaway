@@ -49,7 +49,7 @@
 #' L <- rbind(c(0,1,0),
 #'            c(0,0,1))
 #'
-#' F_test_results <- F_test(example_fit, L)
+#' F_test_results <- F_test(example_fit, L, nboot = 100)
 #'
 #' @export
 test_submodel <- function(fitted_betta,

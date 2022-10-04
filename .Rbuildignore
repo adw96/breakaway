@@ -1,0 +1,10 @@
+.gitignore
+^\.github$
+^.*\.Rproj$
+^\.Rproj\.user$
+README.Rmd
+TODO.md
+_config.yml
+_pkgdown.yml
+breakaway-manual.pdf
+^docs$

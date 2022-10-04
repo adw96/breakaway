@@ -13,7 +13,8 @@ stashed/*
 # R files #
 ###########
 *.Rhistory
-*.Rbuildignore
+#*.Rbuildignore  
+# Tracking .Rbuildignore file to clear R-CMD-Check notes for non-standard files in CRAN submission.
 *.Rapp.history
 
 # Packages #
