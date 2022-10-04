@@ -25,19 +25,18 @@ This tutorial will talk through hypothesis testing for alpha diversity indices u
 Download the latest version of the package from github.
 
 ```{r, include=FALSE}
-# install.packages("devtools")
-# devtools::install_github("adw96/breakaway")
+# install.packages("remotes")
+# remotes::install_github("adw96/breakaway")
 library(tidyverse)
 library(breakaway)
 library(magrittr)
 library(phyloseq)
-library(remotes)
 ```
 
 Let's use the Whitman et al dataset from `corncob` as our example.
 
 ```{r}
-# devtools::install_github("bryandmartin/corncob")
+# remotes::install_github("bryandmartin/corncob")
 library(corncob)
 data("soil_phylo")
 soil_phylo %>% sample_data %>% head
@@ -129,7 +128,7 @@ betta_lincom(fitted_betta = bt_day_fixed_id_random,
              signif_cutoff = 0.05)
 ```
 
-Here, we've set the `linear_com` argument equal to `c(1,1)` to tell `betta_lincom` to construct a confidence interval for $1 \times \beta_0 + 1 \times \beta_1$. Because we set `signif_cutoff` equal to $0.05$, `betta_lincom` returns a $95\%  = (1 - 0.05)*100\%$ confidence interval. The p-value reported here is for a test of the null hypothesis that $1 \times \beta_0 + 1 \times \beta_1 = 0$ -- unsurprisingly, this is small. (If you are confused about why this is "unsurprising," remember that $\beta_0 + \beta_1$ represents a mean richness in soils on day 82 of the experiment of Whitman et al. When can richness be zero?)
+Here, we've set the `linear_com` argument equal to `c(1,1)` to tell `betta_lincom` to construct a confidence interval for $1 \times \beta_0 + 1 \times \beta_1$. Because we set `signif_cutoff` equal to 0.05, `betta_lincom` returns a $95\%  = (1 - 0.05)*100\%$ confidence interval. The p-value reported here is for a test of the null hypothesis that $1 \times \beta_0 + 1 \times \beta_1 = 0$ -- unsurprisingly, this is small. (If you are confused about why this is "unsurprising," remember that $\beta_0 + \beta_1$ represents a mean richness in soils on day 82 of the experiment of Whitman et al. When can richness be zero?)
 
 The syntax and output using `betta_lincom` with a `betta` object as input is exactly the same
 as with a `betta_random` object, so we haven't included a separate example for this case.
@@ -192,7 +191,7 @@ submodel_test <- test_submodel(bt_day_1_2_fixed_id_random,
 submodel_test$pval
 ```
 
-This returns a p-value of `r submodel_test$pval`, which means that the null hypothesis would not be rejected at a cut-off of $0.05$. This means that we do not have strong enough evidence to reject some difference in mean richness over time. In practice, it's a good idea to use more than 100 bootstrap iterations -- 10,000 is a good choice for publication. (We use 100 here so the vignette loads in a reasonable amount of time.)
+This returns a p-value of `r submodel_test$pval`, which means that the null hypothesis would not be rejected at a cut-off of 0.05. This means that we do not have strong enough evidence to reject some difference in mean richness over time. In practice, it's a good idea to use more than 100 bootstrap iterations -- 10,000 is a good choice for publication. (We use 100 here so the vignette loads in a reasonable amount of time.)
 
 And there you have it! That's how to do hypothesis testing for diversity!
 

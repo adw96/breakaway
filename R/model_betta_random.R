@@ -41,7 +41,7 @@
 #' @importFrom stats coef dexp dgeom dnbinom dpois fitted lm model.matrix nls optim
 #' @importFrom stats pchisq pnorm predict quantile rbeta rbinom rnbinom rnorm runif sd var vcov
 #' @import lme4
-#' @importFrom lme4 barnames findbars RHSForm subbars
+#' @importFrom lme4 subbars
 #'
 #' @seealso \code{\link{betta}};
 #' @references Willis, A., Bunge, J., and Whitman, T. (2015). Inference for
@@ -85,9 +85,20 @@ betta_random <- function(chats = NULL, ses, X = NULL, groups = NULL, formula = N
     }
   }
   if (!is.null(formula)) {
-    ses <- data[,deparse(substitute(ses))]
-    group_var <- lme4:::barnames(lme4::findbars(lme4:::RHSForm(formula)))
-    groups <- data[,group_var]
+    if (inherits(substitute(ses), "character")) {
+      ses <- data[, ses]
+    } else {
+      ses <- data[,deparse(substitute(ses))]
+    }
+    # check that formula includes a conditional bar to specify random effect
+    if (formula[[3]][[1]] != "|") {
+      stop("Make sure that your formula includes `|` to specify a random effect if you'd like
+          to use `betta_random`. Otherwise, you can use `betta`.")
+    }
+    # get 3rd of variable attribute of terms(formula), which is the RHS of formula, 
+    # then get 3rd element of that, which is the object after the conditional bar
+    group_var <- deparse1((attr(terms(formula), "variables")[[3]])[[3]])
+    groups <- data[, group_var]
     full_form <- lme4::subbars(formula)
     sm_form <- update(full_form, paste("~.-",group_var))
     X <- stats::model.matrix(sm_form, data)

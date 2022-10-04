@@ -18,13 +18,13 @@ LazyData: true
 RoxygenNote: 7.2.1
 Depends:
     R (>= 3.5.0)
-Imports: ggplot2,
+Imports: 
+    ggplot2,
     graphics,
     lme4,
     magrittr,
     MASS,
     phyloseq,
-    remotes,
     stats,
     tibble,
     utils
@@ -36,7 +36,8 @@ Suggests: corncob,
     RCurl,
     rmarkdown,
     testthat,
-    tidyverse
+    tidyverse,
+    dplyr
 VignetteBuilder: knitr
 URL: https://adw96.github.io/breakaway/
 Encoding: UTF-8

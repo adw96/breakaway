@@ -67,10 +67,18 @@ test_that("betta isn't stupid", {
                  formula = pooleen ~ brybry | sarsh, data = df_uncouth),
     "list")
   expect_is(
-    betta_random(ses = dayved,
+    betta_random(ses = "dayved",
                  formula = pooleen ~ brybry | sarsh, data = df_uncouth),
     "list")
 
+  expect_error(
+    betta_random(ses = "dayved",
+                 formula = pooleen ~ brybry + sarsh, data = df_uncouth),
+    "Make sure that your formula includes `|` to specify a random effect if you'd like
+          to use `betta_random`. Otherwise, you can use `betta`."
+    
+  )
+  
   # issue 118
   df_issue118 <- df_uncouth
   df_issue118$dayved[1] <- 0
@@ -79,22 +87,30 @@ test_that("betta isn't stupid", {
   df_issue118_v2$dayved[1] <- NA
 
   expect_warning(
-    betta(ses = dayved,
+    betta(ses = "dayved",
           formula = pooleen ~ brybry, data = df_issue118),
     "At least one of your standard errors is 0 or NA. Any observation with
             a standard error of 0 or NA has been dropped from the analysis."
   )
 
   expect_equal(
-    betta(ses = dayved,
-          formula = pooleen ~ brybry, data = df_issue118)$table,
-    betta(ses = dayved,
-          formula = pooleen ~ brybry, data = df_issue118_v2)$table
+    # suppressing warnings here because they are the same warnings as in the test
+    # directly above and we want to test if two output tables are the same when a 
+    # standard error is 0 versus when a standard error is NA
+    suppressWarnings({
+      betta(ses = dayved,
+          formula = pooleen ~ brybry, data = df_issue118)$table}),
+    suppressWarnings({
+      betta(ses = dayved,
+          formula = pooleen ~ brybry, data = df_issue118_v2)$table})
   )
 
+  df_issue118_v3 <- df_issue118_v2
+  df_issue118_v3$dayved[1] <- 100
+  
   expect_error(
     betta(ses = dayved,
-          formula = pooleen ~ nutmeg, data = df_issue118_v2),
+          formula = pooleen ~ nutmeg, data = df_issue118_v3),
     "Your design matrix is not full rank. We recommend that you
          examine your design matrix for linear dependency and remove
          redundant columns."

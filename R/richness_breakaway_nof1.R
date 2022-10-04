@@ -193,7 +193,6 @@ breakaway_nof1.default <- function(input_data,
           # }
           
           run <- try ( minibreak_all(lhs, xs, ys, my_data, 1/ratiovars, withf1=FALSE), silent = 1)
-          
           if ("try-error" %in% class(run)) {
             ratiovars <- (p[-1]^2/p[-cutoff]^3 + p[-1]/p[-cutoff]^2)/C
             run <- try ( minibreak_all(lhs,xs,ys,my_data,1/ratiovars, withf1=FALSE), silent = 1)
