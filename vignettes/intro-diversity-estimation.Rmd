@@ -83,7 +83,7 @@ ft %>% sample_richness
 
 Cool! We corroborated the abstract of the paper and saw that 4930 species level genome bins were identified.
 
-If you're not accustomed to using `%>%`, here is a quick demo: `argument %>% function`. It's equivalent to executing `function(argument)`. So essentially we just ran `sample_richness(ft)`, but we stated the argument first. The pipe operator `%>%` becomes especially useful when you want to compound multiple functions. [Here](https://www.datacamp.com/community/tutorials/pipe-r-tutorial) is a great introduction, and [here](https://github.com/adw96/biostat561/blob/master/lecture2/lecture2.pdf) is a lecture I gave to our department's PhD students about it. 
+If you're not accustomed to using `%>%`, here is a quick demo: `argument %>% function`. It's equivalent to executing `function(argument)`. So essentially we just ran `sample_richness(ft)`, but we stated the argument first. The pipe operator `%>%` becomes especially useful when you want to compound multiple functions. [Here](https://www.datacamp.com/tutorial/pipe-r-tutorial) is a great introduction, and [here](https://github.com/adw96/biostat561/blob/master/lecture2/lecture2.pdf) is a lecture I gave to our department's PhD students about it. 
 
 ## Species richness estimation with `breakaway`
 
