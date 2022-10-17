@@ -20,6 +20,7 @@
 #' the \code{data} argument.
 #' @param data A dataframe containing the response, response standard errors, covariates,
 #' and grouping variable. Required with the \code{formula} argument.
+#' @param p.digits (Optional) A number that specifies the number of digits to which p-values will be rounded. The default value is 3 digits.
 #' @return \item{table}{ A coefficient table for the model parameters. The
 #' columns give the parameter estimates, standard errors, and p-values,
 #' respectively. This model is only as effective as your diversity estimation
@@ -70,7 +71,7 @@
 #'     "b", "b"))
 #'
 #' @export
-betta_random <- function(chats = NULL, ses, X = NULL, groups = NULL, formula = NULL, data = NULL) {
+betta_random <- function(chats = NULL, ses, X = NULL, groups = NULL, formula = NULL, data = NULL, p.digits = 3) {
   if (!is.null(formula)) {
     if (is.null(data)) {
       stop("Please include a dataframe that corresponds with your formula.")
@@ -154,7 +155,7 @@ betta_random <- function(chats = NULL, ses, X = NULL, groups = NULL, formula = N
   Q <- sum((chats_effective - X_effective %*% beta)^2/ses_effective^2)
 
   mytable <- list()
-  mytable$table <- cbind("Estimates"=beta,"Standard Errors"=sqrt(vars),"p-values"=round(2*(1-pnorm(abs(beta/sqrt(vars)))),3))
+  mytable$table <- cbind("Estimates"=beta,"Standard Errors"=sqrt(vars),"p-values"=round(2*(1-pnorm(abs(beta/sqrt(vars)))),p.digits))
   try(rownames(mytable$table) <- colnames(X), silent = T)
   mytable$cov <- solve(t(X_effective) %*% W %*% X_effective)
   mytable$ssq_u <- ssq_u
