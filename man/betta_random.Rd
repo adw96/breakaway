@@ -10,7 +10,8 @@ betta_random(
   X = NULL,
   groups = NULL,
   formula = NULL,
-  data = NULL
+  data = NULL,
+  p.digits = 3
 )
 }
 \arguments{
@@ -36,6 +37,8 @@ the \code{data} argument.}
 
 \item{data}{A dataframe containing the response, response standard errors, covariates,
 and grouping variable. Required with the \code{formula} argument.}
+
+\item{p.digits}{(Optional) A number that specifies the number of digits to which p-values will be rounded. The default value is 3 digits.}
 }
 \value{
 \item{table}{ A coefficient table for the model parameters. The
