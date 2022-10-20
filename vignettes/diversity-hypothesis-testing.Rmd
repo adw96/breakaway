@@ -27,10 +27,10 @@ Download the latest version of the package from github.
 ```{r, include=FALSE}
 # install.packages("remotes")
 # remotes::install_github("adw96/breakaway")
-if (requireNamespace('tidyverse', quietly = TRUE)) {
-  library(tidyverse)
+if (requireNamespace('dplyr', quietly = TRUE)) {
+  library(dplyr)
 } else {
-  message("'tidyverse' is not installed!")
+  message("'dplyr' is not installed!")
 }
 library(breakaway)
 library(magrittr)
@@ -70,7 +70,7 @@ Don't freak out! Those are wide error bars, but nothing went wrong -- it's just 
 We can get a table of the estimates and their uncertainties as follows:
 
 ```{r}
-summary(richness_soil) %>% as_tibble
+summary(richness_soil) %>% tibble::as_tibble()
 ```
 
 If you haven't seen a `tibble` before, it's like a `data.frame`, but way better. Already we can see that we only have 10 rows printed as opposed to the usual bagillion.
@@ -82,8 +82,8 @@ The first step to doing inference is to decide on your design matrix. We need to
 ```{r}
 meta <- subset_soil %>%
   sample_data %>%
-  as_tibble %>%
-  mutate("sample_names" = subset_soil %>% sample_names )
+  tibble::as_tibble() %>%
+  dplyr::mutate("sample_names" = subset_soil %>% sample_names )
 ```
 
 That warning is not a problem -- it's just telling us that it's not a phyloseq object anymore.
@@ -162,8 +162,8 @@ We extract metadata and aggregate to phylum level as above as well:
 ```{r}
 meta_days_1_2 <- subset_soil_days_1_2 %>%
   sample_data %>%
-  as_tibble %>%
-  mutate("sample_names" = subset_soil_days_1_2 %>% sample_names )
+  tibble::as_tibble() %>%
+  dplyr::mutate("sample_names" = subset_soil_days_1_2 %>% sample_names )
 ```
 
 We again run DivNet and extract estimates of Shannon diversity.

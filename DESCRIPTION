@@ -35,7 +35,6 @@ Suggests: corncob,
     RCurl,
     rmarkdown,
     testthat,
-    tidyverse,
     dplyr
 VignetteBuilder: knitr
 URL: https://adw96.github.io/breakaway/
