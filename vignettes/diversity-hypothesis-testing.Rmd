@@ -27,7 +27,11 @@ Download the latest version of the package from github.
 ```{r, include=FALSE}
 # install.packages("remotes")
 # remotes::install_github("adw96/breakaway")
-library(tidyverse)
+if (requireNamespace('tidyverse', quietly = TRUE)) {
+  library(tidyverse)
+} else {
+  message("'tidyverse' is not installed!")
+}
 library(breakaway)
 library(magrittr)
 library(phyloseq)
@@ -37,7 +41,11 @@ Let's use the Whitman et al dataset from `corncob` as our example.
 
 ```{r}
 # remotes::install_github("bryandmartin/corncob")
-library(corncob)
+if (requireNamespace('corncob', quietly = TRUE)) {
+  library(corncob)
+} else {
+  message("'corncob' is not installed!")
+}
 data("soil_phylo")
 soil_phylo %>% sample_data %>% head
 ```
