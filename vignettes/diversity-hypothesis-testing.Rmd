@@ -37,15 +37,9 @@ library(magrittr)
 library(phyloseq)
 ```
 
-Let's use the Whitman et al dataset from `corncob` as our example.
+Let's use the Whitman et al dataset as our example.
 
 ```{r}
-# remotes::install_github("bryandmartin/corncob")
-if (requireNamespace('corncob', quietly = TRUE)) {
-  library(corncob)
-} else {
-  message("'corncob' is not installed!")
-}
 data("soil_phylo")
 soil_phylo %>% sample_data %>% head
 ```
