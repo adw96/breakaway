@@ -14,6 +14,10 @@
 #' @param Metropolis.stdev.T2 TODO(Kathryn)
 #' @param bars TODO(Kathryn)
 #'  
+#' @return A list of results, including \item{est}{the median of estimates of N}, \item{ci}{a confidence interval for N},
+#' \item{mean}{the mean of estimates of N}, \item{semeanest}{the standard error of mean estimates},
+#' \item{dic}{the DIC of the model}, \item{fits}{fitted values}, and \item{diagnostics}{model diagonstics}.  
+#'  
 #' @importFrom stats acf
 #' @importFrom graphics hist par plot
 #' 
@@ -282,6 +286,10 @@ objective_bayes_negbin <- function(data,
 #' @param Metropolis.stdev.lambda TODO(Kathryn)
 #' @param bars TODO(Kathryn)
 #' 
+#' @return A list of results, including \item{est}{the median of estimates of N}, \item{ci}{a confidence interval for N},
+#' \item{mean}{the mean of estimates of N}, \item{semeanest}{the standard error of mean estimates},
+#' \item{dic}{the DIC of the model}, \item{fits}{fitted values}, and \item{diagnostics}{model diagonstics}.  
+#' 
 #' @importFrom graphics hist par plot
 #' 
 #' @export
@@ -510,6 +518,10 @@ objective_bayes_poisson <- function(data,
 #' @param Metropolis.start.T2 TODO(Kathryn)
 #' @param Metropolis.stdev.T2 TODO(Kathryn)
 #' @param bars TODO(Kathryn)
+#' 
+#' @return A list of results, including \item{est}{the median of estimates of N}, \item{ci}{a confidence interval for N},
+#' \item{mean}{the mean of estimates of N}, \item{semeanest}{the standard error of mean estimates},
+#' \item{dic}{the DIC of the model}, \item{fits}{fitted values}, and \item{diagnostics}{model diagonstics}.  
 #' 
 #' @importFrom graphics hist par plot
 #' 
@@ -769,6 +781,10 @@ objective_bayes_mixedgeo <- function(data, output=TRUE, plot=TRUE, answers=FALSE
 #' @param Metropolis.stdev.N TODO(Kathryn)
 #' @param Metropolis.start.theta TODO(Kathryn)
 #' @param Metropolis.stdev.theta TODO(Kathryn)
+#' 
+#' @return A list of results, including \item{est}{the median of estimates of N}, \item{ci}{a confidence interval for N},
+#' \item{mean}{the mean of estimates of N}, \item{semeanest}{the standard error of mean estimates},
+#' \item{dic}{the DIC of the model}, \item{fits}{fitted values}, and \item{diagnostics}{model diagonstics}.  
 #' 
 #' @importFrom graphics hist par plot
 #' 

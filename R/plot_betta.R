@@ -18,6 +18,9 @@
 #' @param labs Deprecated, for backwards compatibility
 #' @param mypch Deprecated, for backwards compatibility
 #' @param myxlim Deprecated, for backwards compatibility
+#' 
+#' @return A ggplot object.
+#' 
 #' @author Amy Willis
 #' @seealso \code{\link{betta}}
 #' @references Willis, A., Bunge, J., and Whitman, T. (2015). Inference for
