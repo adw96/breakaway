@@ -253,6 +253,9 @@ objective_bayes_negbin <- function(data,
   
   if (plot) {
     
+    oldpar <- par(no.readonly = TRUE)
+    on.exit(par(oldpar))
+    
     par(mfrow=c(1,2))
     
     ## posterior histogram
@@ -485,6 +488,9 @@ objective_bayes_poisson <- function(data,
   }
   
   if (plot) {
+    
+    oldpar <- par(no.readonly = TRUE)
+    on.exit(par(oldpar))
     
     par(mfrow=c(1,2))
     
@@ -751,6 +757,9 @@ objective_bayes_mixedgeo <- function(data, output=TRUE, plot=TRUE, answers=FALSE
   
   if (plot) {
     
+    oldpar <- par(no.readonly = TRUE)
+    on.exit(par(oldpar))
+    
     par(mfrow=c(1,2))
     
     ## posterior histogram
@@ -984,6 +993,10 @@ objective_bayes_geometric <- function(data,
   }
   
   if (plot) {
+    
+    oldpar <- par(no.readonly = TRUE)
+    on.exit(par(oldpar))
+    
     par(mfrow=c(2,2))
     
     # trace plot for C
