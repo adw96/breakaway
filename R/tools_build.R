@@ -42,7 +42,8 @@ build_frequency_count_tables <- function(the_table) {
 #' Draw frequency count subtables from an OTU table
 #' 
 #' @param labels A vector of counts of the taxa; i.e. a vector giving the number of times each taxon was observed.
-#' 
+#' @return A frequency count table.
+#'
 #' @export make_frequency_count_table
 make_frequency_count_table <- function(labels) {
   x <- as.data.frame(table(labels[labels != 0]))

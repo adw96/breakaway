@@ -14,7 +14,7 @@
 #' @import magrittr
 #' 
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(phyloseq)
 #' data(GlobalPatterns)
 #' alphas <- breakaway(GlobalPatterns)

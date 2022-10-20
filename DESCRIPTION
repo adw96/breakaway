@@ -11,7 +11,7 @@ Authors@R: c(
     person("Kathryn", "Barger", role = "aut"),
     person("John", "Bunge", role = "aut")
   )
-Description: Understanding the drivers of microbial diversity is an important frontier of microbial ecology, and investigating the diversity of samples from microbial ecosystems is a common step in any microbiome analysis. `breakaway` is the premier package for statistical analysis of microbial diversity. `breakaway` implements the latest and greatest estimates of species richness, as well as the most commonly used estimates.
+Description: Understanding the drivers of microbial diversity is an important frontier of microbial ecology, and investigating the diversity of samples from microbial ecosystems is a common step in any microbiome analysis. 'breakaway' is the premier package for statistical analysis of microbial diversity. 'breakaway' implements the latest and greatest estimates of species richness, described in Willis and Bunge (2015) <doi:10.1111/biom.12332>, Willis et al. (2017) <doi:10.1111/rssc.12206>, and Willis (2016) <arXiv:1604.02598>, as well as the most commonly used estimates, including the objective Bayes approach described in Barger and Bunge (2010) <doi:10.1214/10-BA527>.
 License: GPL-2
 BugReports: https://github.com/adw96/breakaway/issues
 LazyData: true
@@ -35,7 +35,6 @@ Suggests: corncob,
     RCurl,
     rmarkdown,
     testthat,
-    tidyverse,
     dplyr
 VignetteBuilder: knitr
 URL: https://adw96.github.io/breakaway/

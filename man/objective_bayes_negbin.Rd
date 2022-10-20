@@ -47,6 +47,11 @@ objective_bayes_negbin(
 
 \item{bars}{TODO(Kathryn)}
 }
+\value{
+A list of results, including \item{est}{the median of estimates of N}, \item{ci}{a confidence interval for N},
+\item{mean}{the mean of estimates of N}, \item{semeanest}{the standard error of mean estimates},
+\item{dic}{the DIC of the model}, \item{fits}{fitted values}, and \item{diagnostics}{model diagonstics}.
+}
 \description{
 Objective Bayes species richness estimate with the Negative Binomial model
 }

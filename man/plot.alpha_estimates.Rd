@@ -39,7 +39,7 @@ Plot function for alpha_estimates class
 ... does not currently have any implemented options. Optional arguments currently include "trim_plot", a  Optional
 }
 \examples{
-\dontrun{
+\donttest{
 library(phyloseq)
 data(GlobalPatterns)
 alphas <- breakaway(GlobalPatterns)

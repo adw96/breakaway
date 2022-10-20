@@ -38,6 +38,11 @@ objective_bayes_geometric(
 
 \item{Metropolis.stdev.theta}{TODO(Kathryn)}
 }
+\value{
+A list of results, including \item{est}{the median of estimates of N}, \item{ci}{a confidence interval for N},
+\item{mean}{the mean of estimates of N}, \item{semeanest}{the standard error of mean estimates},
+\item{dic}{the DIC of the model}, \item{fits}{fitted values}, and \item{diagnostics}{model diagonstics}.
+}
 \description{
 Estimate species richness with an objective Bayes method using a geometric model
 }

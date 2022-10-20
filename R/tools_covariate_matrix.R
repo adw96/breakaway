@@ -3,6 +3,8 @@
 #' @param phyloseq_object A phyloseq object
 #' @param variables variable names
 #' 
+#' @return A matrix object giving the design matrix from the desired variables.
+#' 
 #' @importFrom phyloseq sample_data
 #' @importFrom phyloseq get_variable
 #' 

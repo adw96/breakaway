@@ -9,6 +9,9 @@ make_frequency_count_table(labels)
 \arguments{
 \item{labels}{A vector of counts of the taxa; i.e. a vector giving the number of times each taxon was observed.}
 }
+\value{
+A frequency count table.
+}
 \description{
 Draw frequency count subtables from an OTU table
 }
