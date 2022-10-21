@@ -93,7 +93,7 @@
 "pasolli_et_al"
 ################################################################################
 ################################################################################
-#' Soil data.
+#' (Data) Data frame of soil data from whitman_et_al.
 #'
 #' A phyloseq object with an OTU table and sample data from a soil microbiome study.
 #'
