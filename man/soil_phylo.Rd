@@ -3,7 +3,7 @@
 \docType{data}
 \name{soil_phylo}
 \alias{soil_phylo}
-\title{Soil data.}
+\title{(Data) Data frame of soil data from whitman_et_al.}
 \format{
 A phyloseq-class experiment-level object with an OTU table and sample data.
 \describe{
