@@ -8,3 +8,5 @@ _config.yml
 _pkgdown.yml
 breakaway-manual.pdf
 ^docs$
+^doc$
+^Meta$
