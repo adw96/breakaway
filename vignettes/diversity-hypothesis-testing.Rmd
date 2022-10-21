@@ -40,7 +40,7 @@ library(phyloseq)
 Let's use the Whitman et al dataset as our example.
 
 ```{r}
-data(soil_phylo)
+data("soil_phylo")
 soil_phylo %>% sample_data %>% head
 ```
 
