@@ -39,7 +39,6 @@ jobs:
         run: |
           install.packages(c("remotes"))
           if (!requireNamespace("BiocManager", quietly = TRUE)){install.packages("BiocManager")}; BiocManager::install(c("phyloseq"), ask = FALSE)
-          remotes::install_github("bryandmartin/corncob")
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("covr")
         shell: Rscript {0}
