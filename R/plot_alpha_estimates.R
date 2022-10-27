@@ -9,6 +9,8 @@
 #' @param trim_plot (Optional). Default \code{FALSE}. Boolean indicator for whether you want the plot to include the full confidence intervals. 
 #' @param ... See details
 #' 
+#' @return A ggplot object.
+#' 
 #' @details ... does not currently have any implemented options. Optional arguments currently include "trim_plot", a  Optional
 #' 
 #' @import magrittr

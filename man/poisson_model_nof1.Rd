@@ -11,6 +11,9 @@ poisson_model_nof1(input_data, cutoff = 10)
 
 \item{cutoff}{The largest frequency to use for predicting f0 and f1. Defaults to 10.}
 }
+\value{
+An object of class \code{alpha_estimate}.
+}
 \description{
 A model to estimate the number of missing taxa under a zero- and one-truncated Poisson Model
 }

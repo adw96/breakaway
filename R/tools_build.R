@@ -55,6 +55,9 @@ make_frequency_count_table <- function(labels) {
 #' OTU table to relative abundances
 #' 
 #' @param the_table An OTU table
+#' 
+#' @return A proportion table or vector.
+#' 
 #' @export
 proportions_instead <- function(the_table) {
   if (!(is.null(dim(the_table)) | is.vector(the_table))) {
