@@ -5,6 +5,8 @@
 #' @param input_data A frequency count table
 #' @param cutoff The largest frequency to use for predicting f0. Defaults to 10.
 #' 
+#' @return An object of class \code{alpha_estimate}.
+#' 
 #' @import magrittr 
 #' @importFrom stats uniroot
 #' 

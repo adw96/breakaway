@@ -8,6 +8,9 @@
 #' @param size size parameter for the negative binomial distribution
 #' @param probability probability parameter for the negative binomial
 #' distribution
+#' 
+#' @return A simulated frequency count table.
+#' 
 #' @author Amy Willis
 #' @export rnbinomtable
 rnbinomtable <- function(C, size, probability) {
@@ -69,6 +72,9 @@ rnbinomtable <- function(C, size, probability) {
 #' @param size size parameter for the negative binomial distribution
 #' @param probability probability parameter for the negative binomial
 #' distribution
+#' 
+#' @return A simulated frequency count table.
+#' 
 #' @author Amy Willis
 #' @export rztnbinomtable
 rztnbinomtable <- function(C, size, probability) {

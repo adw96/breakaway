@@ -9,6 +9,9 @@ proportions_instead(the_table)
 \arguments{
 \item{the_table}{An OTU table}
 }
+\value{
+A proportion table or vector.
+}
 \description{
 OTU table to relative abundances
 }

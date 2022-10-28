@@ -32,6 +32,9 @@
 
 \item{...}{See details}
 }
+\value{
+A ggplot object.
+}
 \description{
 Plot function for alpha_estimates class
 }
