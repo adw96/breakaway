@@ -2,8 +2,7 @@
 title: "Introduction to diversity estimation"
 author: "Amy Willis"
 date: "`r Sys.Date()`"
-output: 
-  output: rmarkdown::github_document
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{intro-diversity-estimation}
   %\VignetteEngine{knitr::rmarkdown}
