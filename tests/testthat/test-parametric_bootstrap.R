@@ -23,33 +23,33 @@ test_that("single p-value is low in univariate fixed-effects model under alterna
 
 })
 
-test_that("single p-value is low in univariate mixed-effects model under alternative", {
-  #generate data
-  set.seed(345)
-  groups <- rep(1:5,each = 4)
-  predictor <- rnorm(20)
-  group_effects <- rnorm(5,sd = 50)
-  group_effects <- rep(group_effects,each = 4)
-  ses <- rexp(20,.01)
-  b0 <- 500
-  b1 <- 100
-  outcome = b0 + b1*predictor + group_effects + rnorm(20,0,ses) + rnorm(20,0,100)
-
-  betta_random_fit <- betta_random(chats = outcome,
-                                   ses = ses,
-                                   formula = chats ~ predictor|group,
-                                   data = tibble(predictor = predictor,
-                                                 chats = outcome,
-                                                     group = groups,
-                                                 ses = ses))
-
-  parametric_bootstrap_test <- test_submodel(betta_random_fit,
-                ~1,
-                nboot = 100)
-
-  expect_equal(parametric_bootstrap_test$pval, 0.02)
-
-})
+# test_that("single p-value is low in univariate mixed-effects model under alternative", {
+#   #generate data
+#   set.seed(345)
+#   groups <- rep(1:5,each = 4)
+#   predictor <- rnorm(20)
+#   group_effects <- rnorm(5,sd = 50)
+#   group_effects <- rep(group_effects,each = 4)
+#   ses <- rexp(20,.01)
+#   b0 <- 500
+#   b1 <- 100
+#   outcome = b0 + b1*predictor + group_effects + rnorm(20,0,ses) + rnorm(20,0,100)
+# 
+#   betta_random_fit <- betta_random(chats = outcome,
+#                                    ses = ses,
+#                                    formula = chats ~ predictor|group,
+#                                    data = tibble(predictor = predictor,
+#                                                  chats = outcome,
+#                                                      group = groups,
+#                                                  ses = ses))
+# 
+#   parametric_bootstrap_test <- test_submodel(betta_random_fit,
+#                 ~1,
+#                 nboot = 100)
+# 
+#   expect_equal(parametric_bootstrap_test$pval, 0.02)
+# 
+# })
 
 test_that("single p-value is not low in univariate fixed-effects model under null", {
   #generate data
@@ -103,36 +103,36 @@ test_that("single p-value is not low in univariate mixed-effects model under alt
 
 })
 
-test_that("p-value are at least approximately uniform under null (univariate fixed-effects model)", {
-  #generate data
-  set.seed(345)
-  pvals <-numeric(100)
-
-  for(i in 1:100){
-   # print(i)
-  predictor <- rnorm(20)
-  ses <- rexp(20,.01)
-  b0 <- 500
-  b1 <- 0
-  outcome = b0 + b1*predictor + rnorm(20,0,ses) + rnorm(20,0,300)
-
-  betta_fit <- betta(chats = outcome,
-                     ses = ses,
-                     formula = chats ~ predictor,
-                     data = tibble(predictor = predictor,
-                                   chats = outcome,
-                                   ses = ses))
-
-  parametric_bootstrap_test <- test_submodel(betta_fit,
-                                             ~1,
-                                             nboot = 10)
-  pvals[i] <- parametric_bootstrap_test$pval
-}
-
-expect_equal(max(abs(sapply(pvals, function(x) mean(pvals <= x)) - pvals)),
-             0.1)
-
-})
+# test_that("p-value are at least approximately uniform under null (univariate fixed-effects model)", {
+#   #generate data
+#   set.seed(345)
+#   pvals <-numeric(100)
+# 
+#   for(i in 1:100){
+#    # print(i)
+#   predictor <- rnorm(20)
+#   ses <- rexp(20,.01)
+#   b0 <- 500
+#   b1 <- 0
+#   outcome = b0 + b1*predictor + rnorm(20,0,ses) + rnorm(20,0,300)
+# 
+#   betta_fit <- betta(chats = outcome,
+#                      ses = ses,
+#                      formula = chats ~ predictor,
+#                      data = tibble(predictor = predictor,
+#                                    chats = outcome,
+#                                    ses = ses))
+# 
+#   parametric_bootstrap_test <- test_submodel(betta_fit,
+#                                              ~1,
+#                                              nboot = 10)
+#   pvals[i] <- parametric_bootstrap_test$pval
+# }
+# 
+# expect_equal(max(abs(sapply(pvals, function(x) mean(pvals <= x)) - pvals)),
+#              0.1)
+# 
+# })
 
 # test_that("p-value are at least approximately uniform under null (univariate mixed-effects model)", {
 #   #generate data
