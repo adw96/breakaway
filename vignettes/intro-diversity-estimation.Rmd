@@ -82,7 +82,7 @@ ft %>% sample_richness
 
 Cool! We corroborated the abstract of the paper and saw that 4930 species level genome bins were identified.
 
-If you're not accustomed to using `%>%`, here is a quick demo: `argument %>% function`. It's equivalent to executing `function(argument)`. So essentially we just ran `sample_richness(ft)`, but we stated the argument first. The pipe operator `%>%` becomes especially useful when you want to compound multiple functions. [Here](https://www.datacamp.com/tutorial/pipe-r-tutorial) is a great introduction, and [here](https://github.com/adw96/biostat561/blob/master/lecture2/lecture2.pdf) is a lecture I gave to our department's PhD students about it. 
+If you're not accustomed to using `%>%`, here is a quick demo: `argument %>% function`. It's equivalent to executing `function(argument)`. So essentially we just ran `sample_richness(ft)`, but we stated the argument first. The pipe operator `%>%` becomes especially useful when you want to compound multiple functions. [Here](https://www.r-bloggers.com/2022/03/how-to-use-pipes-to-clean-up-your-r-code/) is a great introduction, and [here](https://github.com/adw96/biostat561/blob/master/lecture2/lecture2.pdf) is a lecture I gave to our department's PhD students about it. 
 
 ## Species richness estimation with `breakaway`
 
@@ -99,7 +99,7 @@ So `breakaway` estimates that there are `r round(estimated_richness$estimate)` s
 
 ## Investigating model misspecification
 
-The method `breakaway` actually fits a suite of models, and then selects which is the best amongst them. Check out [the paper](https://onlinelibrary.wiley.com/doi/full/10.1111/biom.12332) for more details. But how can we diagnose if the model is reasonable?
+The method `breakaway` actually fits a suite of models, and then selects which is the best amongst them. Check out [the paper](https://onlinelibrary.wiley.com/doi/abs/10.1111/biom.12332) for more details. But how can we diagnose if the model is reasonable?
 
 First, we need to find out what model was fit:
 
@@ -150,7 +150,7 @@ As mentioned previously, `breakaway` executes a model selection routine. We see 
 estimated_richness_10 %$% model
 ```
 
-So `breakaway` ended up choosing the [Chao-Bunge](https://onlinelibrary.wiley.com/doi/abs/10.1111/j.0006-341X.2002.00531.x?sid=nlm%3Apubmed) estimator, which is based on a Negative Binomial model. This model is less flexible than the Kemp models discussed previously, but has lower variance in estimation. Essentially if the standard error exceeds the estimate in the Kemp model, `breakaway` moves on to less complex estimates which have lower variance. Unfortunately the Chao-Bunge doesn't lend itself to diagnosing model misspecification. 
+So `breakaway` ended up choosing the [Chao-Bunge](https://onlinelibrary.wiley.com/doi/abs/10.1111/j.0006-341X.2002.00531.x) estimator, which is based on a Negative Binomial model. This model is less flexible than the Kemp models discussed previously, but has lower variance in estimation. Essentially if the standard error exceeds the estimate in the Kemp model, `breakaway` moves on to less complex estimates which have lower variance. Unfortunately the Chao-Bunge doesn't lend itself to diagnosing model misspecification. 
 
 If you are happy to take on higher variance (e.g., because you have multiple samples and ultimately you will combine them together), you can do so with the following:
 
