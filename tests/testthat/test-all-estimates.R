@@ -81,15 +81,15 @@ test_that("All estimates", {
     unlist(recursive = F)})
   
   # correct_class
-  lapply(X = mm, 
+  check_alpha_estimate <- lapply(X = mm, 
          FUN = expect_is, class = "alpha_estimate")
   
-  lapply(X = mm_ps, 
+  check_alpha_estimates <- lapply(X = mm_ps, 
          FUN = expect_is, class = "alpha_estimates")
   
   # valid estimates
-  summaries <- lapply(X = c(mm_ps, mm), 
-                      FUN = summary)
+  #summaries <- lapply(X = c(mm_ps, mm), 
+  #                    FUN = summary)
   
   expect_true(lapply(FUN = satisfies_bound, mm) %>%
                 unlist %>% all)
