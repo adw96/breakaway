@@ -2,7 +2,7 @@ context("breakaway_reasonable")
 library(breakaway)
 
 data("toy_otu_table")
-
+set.seed(1)
 test_that("breakaway gives reasonable std errors", {
   ### Sample 111 was a particular problem after change
   selected_samples <- c(111, sample(1:143, size = 20, replace = F))

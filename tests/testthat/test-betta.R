@@ -1,5 +1,6 @@
 context("betta")
 library(breakaway)
+set.seed(1)
 
 test_that("betta isn't stupid", {
   n <- 25

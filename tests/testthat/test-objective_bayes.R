@@ -1,5 +1,6 @@
 context("objective bayes")
 library(breakaway)
+set.seed(1)
 
 test_that("objective bayes", {
   z <- rnbinomtable(20, 5, 0.5)

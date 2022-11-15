@@ -1,4 +1,4 @@
-
+set.seed(1)
 test_that("test_submodel returns a p-value", {
  #generate data
   predictor <- rnorm(20)
@@ -115,7 +115,6 @@ test_that("F-statistic is numeric", {
 
 test_that("F-test returns a list", {
   #generate data
-  set.seed(345)
   predictor <- rnorm(20)
   ses <- rep(.01,20)
   b0 <- 500
@@ -139,6 +138,38 @@ test_that("F-test returns a list", {
                              method = "bootstrap",
                              nboot = 10)))
 
+})
+
+test_that("F-test returns a list for betta random", {
+  #generate data
+  groups <- rep(1:5,each = 4)
+  predictor <- rnorm(20)
+  group_effects <- rnorm(5,sd = 5)
+  group_effects <- rep(group_effects,each = 4)
+  ses <- rexp(20,.01)
+  b0 <- 500
+  b1 <- 100
+  outcome = b0 + b1*predictor + group_effects + rnorm(20,0,ses) + rnorm(20,0,10)
+  
+  betta_random_fit <- betta_random(chats = outcome,
+                                   ses = ses,
+                                   formula = chats ~ predictor|group,
+                                   data = tibble(predictor = predictor,
+                                                 chats = outcome,
+                                                 group = groups,
+                                                 ses = ses))
+  
+  
+  L <- matrix(c(0,1),nrow = 1)
+  
+  expect_true( is.list(F_test(betta_random_fit,
+                              L,
+                              method = "asymptotic")))
+  expect_true(is.list(F_test(betta_random_fit,
+                             L,
+                             method = "bootstrap",
+                             nboot = 10)))
+  
 })
 
 test_that("simulate_betta returns a reasonable thing", {
