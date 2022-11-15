@@ -194,6 +194,6 @@ And there you have it! That's how to do hypothesis testing for diversity!
 
 If you use our tools, please don't forget to cite them!
 
-- `breakaway`: Willis & Bunge. (2015). *Estimating diversity via frequency ratios*. Biometrics. [doi:10.1111/biom.12332](https://doi.org/10.1111/biom.12332).
+- `breakaway`: Willis & Bunge. (2015). *Estimating diversity via frequency ratios*. Biometrics. [doi:10.1111/biom.12332](https://onlinelibrary.wiley.com/doi/abs/10.1111/biom.12332).
 - `DivNet`: Willis & Martin. (2020). *DivNet: Estimating diversity in networked communities*. Biostatistics. [doi:10.1093/biostatistics/kxaa015](https://doi.org/10.1093/biostatistics/kxaa015).
-- `betta`: Willis, Bunge & Whitman. (2016). *Improved detection of changes in species richness in high diversity microbial communities*. Journal of the Royal Statistical Society: Series C. [doi:10.1111/rssc.12206](https://doi.org/10.1111/rssc.12206).
+- `betta`: Willis, Bunge & Whitman. (2016). *Improved detection of changes in species richness in high diversity microbial communities*. Journal of the Royal Statistical Society: Series C. [doi:10.1111/rssc.12206](https://rss.onlinelibrary.wiley.com/doi/10.1111/rssc.12206).
