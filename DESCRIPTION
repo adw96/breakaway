@@ -1,7 +1,7 @@
 Package: breakaway
 Title: Species Richness Estimation and Modeling
 Version: 4.8.4
-Date: 2022-11-14
+Date: 2022-11-17
 Authors@R: c(
     person("Amy D", "Willis", email = "adwillis@uw.edu", role = c("aut", "cre")),
     person("Bryan D", "Martin", role = "aut"),
