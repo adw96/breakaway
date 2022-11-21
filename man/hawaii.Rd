@@ -21,6 +21,6 @@ hawaii
 \references{
 Willis, A. and Bunge, J. (2015). Estimating diversity via
 frequency ratios. \emph{Biometrics}, \bold{71}(4), 1042--1049.
-\url{https://doi.org/10.1111/biom.12332}
+\doi{doi:10.1111/biom.12332}
 }
 \keyword{datasets}
