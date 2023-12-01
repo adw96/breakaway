@@ -35,7 +35,11 @@
 #' explanatory power.  } \item{blups}{ The conditional expected values of the
 #' diversity estimates (conditional on the random effects). Estimates of
 #' variability for the random effects case are unavailable at this time; please
-#' contact the maintainer if needed.} \item{function.args}{A list containing
+#' contact the maintainer if needed.} 
+#' \item{loglikelihood}{ The log likelihood of the fitted model.}
+#' \item{aic}{ The Akaike information criterion for the fitted model. }
+#' \item{aicc}{ The finite sample correction of the Akaike information criterion for the fitted model.  }
+#' \item{function.args}{A list containing
 #' values initially passed to betta_random.}
 #' @author Amy Willis
 #'
@@ -146,6 +150,7 @@ betta_random <- function(chats = NULL, ses, X = NULL, groups = NULL, formula = N
   ssq_u <- output$par[1]
   beta <- output$par[2:(p+1)]
   ssq_group <- output$par[(p+2):(p+gs+1)]
+  logLhat <- output$value
 
   W <- diag(1/(ssq_u+ses_effective^2+ssq_group[groups_effective]))
   vars <- 1/diag(t(X_effective) %*% W %*% X_effective)
@@ -167,6 +172,15 @@ betta_random <- function(chats = NULL, ses, X = NULL, groups = NULL, formula = N
   blups <- rep(NA, length(chats))
   blups[consider] <- c(X_effective %*% beta + us)
   mytable$blups <- blups
+  
+  mytable$loglikelihood <- logLhat
+  
+  # AIC = 2k - 2 log L(theta = MLE)
+  # k = # fitted parameters = 1+ p + gs  (one variance term; p regression terms; gs variance terms for groups)
+  mytable$aic <- -2 * logLhat + 2 * (1 + p + gs)
+  
+  # AICc = AIC + (2k^2+2k)/(n-k-1)
+  mytable$aicc <- mytable$aic + (2*(1 + p + gs)^2 + 2*(1 + p + gs))/(n - (1 + p + gs) - 1)
 
   function.args <- list("chats" = chats,
        "ses" = ses,

@@ -15,7 +15,7 @@ Description: Understanding the drivers of microbial diversity is an important fr
 License: GPL-2
 BugReports: https://github.com/adw96/breakaway/issues
 LazyData: true
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Depends:
     R (>= 3.5.0)
 Imports: 
