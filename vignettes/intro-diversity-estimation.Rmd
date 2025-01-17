@@ -107,7 +107,9 @@ First, we need to find out what model was fit:
 estimated_richness$model
 ```
 
-Kemp models were originally described in the breakaway paper. They are based on fitting flexible non-linear models (that have a probabilistic interpretation!) to ratios of contiguous frequency counts. We can therefore investigate model specification by looking at the plot of fitted ratios:
+Kemp models were originally described in the breakaway paper. They are based on fitting flexible non-linear models (that have a probabilistic interpretation!) to ratios of contiguous frequency counts. We can therefore investigate model specification by looking at the plot of fitted ratios. 
+
+Note that this plot will only be made for some of the models (including the Kemp model), and some of the other models will not include a plot and instead `plot(breakaway_results)` will return `NULL`. 
 
 ```{r}
 plot(estimated_richness)
