@@ -128,7 +128,7 @@ test_that("betta isn't stupid", {
 
 })
 
-test_that("betta_lincom works with betta and betta_random", {
+test_that("betta_lincom works", {
   n <- 25
 
   bb <- betta(c(rep(7, n), rep(8, n)),
@@ -145,44 +145,24 @@ test_that("betta_lincom works with betta and betta_random", {
   expect_equal(as.numeric(bb_lincom[,2]), 0.4,
                tolerance = 0.02)
 
-  expect_equal(as.numeric(bb_lincom[,3]),  7.216014,
-               tolerance = 0.02)
+})
 
-  expect_equal(as.numeric(bb_lincom[,4]),  8.783986,
-               tolerance = 0.02)
-
-  expect_equal(as.numeric(bb_lincom[,5]),  2.753624e-89,
-               tolerance = 0.02)
-
-  # commenting out this test, since we've already checked that betta and 
-  # betta_random work as expected, and above we show that betta_lincom
-  # works as expected 
+test_that("betta_lincom gives same results to betta when it should", {
+  n <- 25
   
-  # df <- data.frame(chats = c(2000, 3000, 4000, 3000),
-  #                  ses = c(100, 200, 150, 180),
-  #                  Cont_var = c(100, 150, 100, 50),
-  #                  groups = c("a", "a", "a", "b"))
-  # 
-  # b_formula <- betta_random(ses = ses,
-  #                           formula = chats ~ Cont_var | groups, data = df)
-  # 
-  # b_lincom <- betta_lincom(b_formula, c(1,1))
-  # 
-  # expect_is(b_lincom, "data.frame")
-  # 
-  # expect_equal(as.numeric(b_lincom[,1]), 3000.301,
-  #              tolerance = 1e-3)
-  # 
-  # expect_equal(as.numeric(as.numeric(b_lincom[,2])), 918.2737)
-  # 
-  # expect_equal(as.numeric(as.numeric(b_lincom[,3])),  1200.518,
-  #              tolerance = 1e-5)
-  # 
-  # expect_equal(as.numeric(b_lincom[,4]),  4800.084,
-  #              tolerance = 1e-5)
-  # 
-  # expect_equal(as.numeric(b_lincom[,5]),  0.0005428401,
-  #              tolerance = 1e-5)
-
-
+  bb <- betta(c(rep(7, n), rep(8, n)),
+              c(rep(2, n), rep(2, n)),
+              cbind(1, c(rep(0, n), rep(1, n))))
+  
+  bb_lincom <- betta_lincom(bb,c(0,1))
+  
+  expect_equal(unname(bb$table[2, 1]), bb_lincom$Estimates,
+               tolerance = 0.001)
+  
+  expect_equal(unname(bb$table[2, 2]), bb_lincom$`Standard Errors`,
+               tolerance = 0.001)
+  
+  expect_equal(unname(bb$table[2, 3]), as.numeric(bb_lincom$`p-values`),
+               tolerance = 0.01)
+  
 })

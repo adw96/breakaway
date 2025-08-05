@@ -1,6 +1,6 @@
 Package: breakaway
 Title: Species Richness Estimation and Modeling
-Version: 4.8.4
+Version: 4.8.5
 Date: 2022-11-17
 Authors@R: c(
     person("Amy D", "Willis", email = "adwillis@uw.edu", role = c("aut", "cre")),
@@ -15,7 +15,7 @@ Description: Understanding the drivers of microbial diversity is an important fr
 License: GPL-2
 BugReports: https://github.com/adw96/breakaway/issues
 LazyData: true
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 Depends:
     R (>= 3.5.0)
 Imports: 

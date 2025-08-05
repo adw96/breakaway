@@ -2,7 +2,7 @@
 #'
 #' This function provides point estimates, standard errors, and equal-tailed confidence intervals for
 #' linear combinations of fixed effects estimated via betta() or betta_random(). A p-value for a Wald
-#' test of the null that the linear combination of effects is equal to zero (against a general alternative)
+#' test of the null that the linear combination of effects is equal to zero (against a two-sided alternative)
 #' is also returned.
 #'
 #'
@@ -53,7 +53,7 @@ betta_lincom <- function(fitted_betta,
 
   upper <- est + qnorm(1 - signif_cutoff/2)*se
   lower <- est - qnorm(1 - signif_cutoff/2)*se
-  pval <- pnorm(abs(est/se),lower.tail = FALSE)
+  pval <- 2*(1-pnorm(abs(est/se)))
 
 
   results <- matrix( c(est, se, lower, upper, pval), nrow = 1)

@@ -153,7 +153,8 @@ betta_random <- function(chats = NULL, ses, X = NULL, groups = NULL, formula = N
   logLhat <- output$value
 
   W <- diag(1/(ssq_u+ses_effective^2+ssq_group[groups_effective]))
-  vars <- 1/diag(t(X_effective) %*% W %*% X_effective)
+  cov_mat <- solve(t(X_effective) %*% W %*% X_effective)
+  vars <- diag(cov_mat)
 
   global <- t(beta) %*% (t(X_effective) %*% W %*% X_effective) %*% beta ## global test
 
@@ -162,7 +163,7 @@ betta_random <- function(chats = NULL, ses, X = NULL, groups = NULL, formula = N
   mytable <- list()
   mytable$table <- cbind("Estimates"=beta,"Standard Errors"=sqrt(vars),"p-values"=round(2*(1-pnorm(abs(beta/sqrt(vars)))),p.digits))
   try(rownames(mytable$table) <- colnames(X), silent = T)
-  mytable$cov <- solve(t(X_effective) %*% W %*% X_effective)
+  mytable$cov <- cov_mat
   mytable$ssq_u <- ssq_u
   mytable$ssq_group <- ssq_group
   mytable$homogeneity <- c(Q,1-pchisq(Q,n-p))
