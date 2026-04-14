@@ -52,9 +52,9 @@ You should get some output to screen, including your estimate & s.e. You can als
 plot(breakaway(frequencytablelist[[1]]))
 ``` 
 
-Note that it is not a fit to the frequencies, it is a fit to the ratios of frequencies. You would never need to include this type of plot in one of your papers. It is solely for you to check for model misspecification. What's model misspecification? If the model fit (pink circles) don't remotely follow the pattern of the observed ratios (green triangles), that's model misspecification.
+Note that it is not a fit to the frequencies, it is a fit to the ratios of frequencies. You would never need to include this type of plot in one of your papers. It is solely for you to check for model misspecification. What's model misspecification? If the model fit (pink circles) don't remotely follow the pattern of the observed ratios (green triangles), that's model misspecification. 
 
-Sometimes, breakaway's usual procedure doesn't work, that is, it gives a negative estimate, which is of course silly. In that case, breakaway returns a different model's result. It's called the WLRM. There isn't a picture. Here is an example of a case where breakaway returns the WLRM.
+Sometimes, breakaway's usual procedure doesn't work, that is, it gives a negative estimate, which is of course silly. In that case, breakaway returns a different model's result. It's called the WLRM. There isn't a picture. Only some of the models will provide plots, and if the model chosen does not include a plot, the plot function will instead return `NULL`. Here is an example of a case where breakaway returns the WLRM.
 
 ```{r}
 breakaway(frequencytablelist[[2]])

@@ -55,7 +55,11 @@ The test statistic and p-value for the test of homogeneity.  }
 explanatory power.  } \item{blups}{ The conditional expected values of the
 diversity estimates (conditional on the random effects). Estimates of
 variability for the random effects case are unavailable at this time; please
-contact the maintainer if needed.} \item{function.args}{A list containing
+contact the maintainer if needed.} 
+\item{loglikelihood}{ The log likelihood of the fitted model.}
+\item{aic}{ The Akaike information criterion for the fitted model. }
+\item{aicc}{ The finite sample correction of the Akaike information criterion for the fitted model.  }
+\item{function.args}{A list containing
 values initially passed to betta_random.}
 }
 \description{

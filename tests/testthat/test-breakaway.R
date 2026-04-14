@@ -65,7 +65,7 @@ test_that("All estimates", {
   
   mm_ps <- lapply(X = datasets_ps, breakaway)
   
-  lapply(X = mm_ps, 
+  check_class <- lapply(X = mm_ps, 
          FUN = expect_is, class = "alpha_estimates")
   
   # valid estimates

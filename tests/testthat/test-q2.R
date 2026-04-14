@@ -3,8 +3,9 @@ library(breakaway)
 
 test_that("Canonical QIIME2 Example Datasets Work", {
   
-  x <- RCurl::getURL("https://raw.githubusercontent.com/paulinetrinh/data/master/otu_table_atacama.txt")
-  a_table <- read.table(text =x,
+  x <- readLines("https://raw.githubusercontent.com/paulinetrinh/data/master/otu_table_atacama.txt",
+                 warn = FALSE)
+  a_table <- read.table(text = x,
                         skip = 0, 
                         header = F, 
                         row.names = NULL)[,-1]

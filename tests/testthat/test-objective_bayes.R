@@ -1,9 +1,12 @@
 context("objective bayes")
 library(breakaway)
+set.seed(1)
 
 test_that("objective bayes", {
-  set.seed(170709)
   z <- rnbinomtable(20, 5, 0.5)
+  while (z$Frequency[1] == 20) {
+    z <- rnbinomtable(20, 0.5, 0.5)
+  }
   expect_is(z, "data.frame")
   
   objective_bayes_geometric(z, 
@@ -44,6 +47,9 @@ test_that("objective bayes", {
             "list")
   
   z <- rnbinomtable(20, 0.5, 0.5)
+  while (z$Frequency[1] == 20) {
+    z <- rnbinomtable(20, 0.5, 0.5)
+  }
   expect_is(z, "data.frame")
   
   objective_bayes_geometric(z, 

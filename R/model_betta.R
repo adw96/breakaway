@@ -228,7 +228,8 @@ betta <- function(chats = NULL, ses, X = NULL,
   beta <- output$par[2:length(output$par)]
 
   W <- diag(1/(ssq_u + ses_effective^2))
-  vars <- 1/diag(t(X_effective) %*% W %*% X_effective)
+  cov_mat <- solve(t(X_effective) %*% W %*% X_effective)
+  vars <- diag(cov_mat)
 
   global <- t(beta) %*% (t(X_effective) %*% W %*% X_effective) %*% beta ## global test
 
@@ -240,7 +241,7 @@ betta <- function(chats = NULL, ses, X = NULL,
   mytable$table <- cbind("Estimates"=beta,
                          "Standard Errors"=sqrt(vars),
                          "p-values"=round(2*(1-pnorm(abs(beta/sqrt(vars)))), p.digits))
-  mytable$cov <- solve(t(X_effective) %*% W %*% X_effective)
+  mytable$cov <- cov_mat
   mytable$ssq_u <- ssq_u
   mytable$homogeneity <- c(Q, 1-pchisq(Q, n-p))
   mytable$global <- c(global, 1-pchisq(global, p-1))
