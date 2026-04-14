@@ -306,7 +306,7 @@ breakaway_nof1.default <- function(input_data,
         parameter_table <-  coef(summary(choice$full))[,1:2]
         colnames(parameter_table) <- c("Coef estimates","Coef std errors")
         
-        d <- exp(1.96*sqrt(log(1 + diversity_se^2/f0_pred)))
+        d <- exp(1.96*sqrt(log(1 + diversity_se^2/f0_pred^2)))
         
         yhats <- fitted(choice$full)
         

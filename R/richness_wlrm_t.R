@@ -102,7 +102,7 @@ wlrm_transformed <- function(input_data,
         d <- NaN
       } else {
         diversity_se <- sqrt(f0_se^2+n*f0/(n+f0))
-        d <- exp(1.96*sqrt(log(1+diversity_se^2/f0)))
+        d <- exp(1.96*sqrt(log(1+diversity_se^2/f0^2)))
         my_warning <- NULL
       }
       
