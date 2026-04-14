@@ -77,7 +77,7 @@ poisson_model <- function(input_data,
     ccc_se <- sqrt(ccc_subset/(exp(lambda_hat)-1-lambda_hat))
     
     f0 <- ccc_subset - cc # previously ccc_hat - (cc + cc_excluded)
-    d <- exp(1.96*sqrt(log(1+ccc_se^2/f0)))
+    d <- exp(1.96*sqrt(log(1+ccc_se^2/f0^2)))
   }
   
   

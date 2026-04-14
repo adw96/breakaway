@@ -39,7 +39,7 @@ alpha_estimate <- function(estimate = NULL,
   
   # if (is.null(ci) & !is.null(error)) {
   # # TODO need f0
-  #   d <- exp(1.96*sqrt(log(1 + error^2 / f0)))
+  #   d <- exp(1.96*sqrt(log(1 + error^2 / f0^2)))
   #   
   # }
   

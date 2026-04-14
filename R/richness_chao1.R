@@ -45,7 +45,7 @@ chao1 <- function(input_data, output=NULL, answers=NULL) {
     diversity_se <- sqrt(f2*(0.5*(f1/f2)^2 + (f1/f2)^3 + 0.25*(f1/f2)^4))
     
     # TODO: write a function to do this
-    d <- exp(1.96*sqrt(log(1 + diversity_se^2 / f0)))
+    d <- exp(1.96*sqrt(log(1 + diversity_se^2 / f0^2)))
     a_chao <- alpha_estimate(estimate = diversity,
                              error = diversity_se,
                              estimand = "richness",
