@@ -24,7 +24,7 @@ Wald test of the null that the linear combination of fixed effects is equal to z
 \description{
 This function provides point estimates, standard errors, and equal-tailed confidence intervals for
 linear combinations of fixed effects estimated via betta() or betta_random(). A p-value for a Wald
-test of the null that the linear combination of effects is equal to zero (against a general alternative)
+test of the null that the linear combination of effects is equal to zero (against a two-sided alternative)
 is also returned.
 }
 \examples{
