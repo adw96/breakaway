@@ -104,7 +104,7 @@ betta_random <- function(chats = NULL, ses, X = NULL, groups = NULL, formula = N
     # then get 3rd element of that, which is the object after the conditional bar
     group_var <- deparse1((attr(terms(formula), "variables")[[3]])[[3]])
     groups <- data[, group_var]
-    full_form <- lme4::subbars(formula)
+    full_form <- reformulas::subbars(formula)
     sm_form <- update(full_form, paste("~.-",group_var))
     X <- stats::model.matrix(sm_form, data)
     chats <- stats::model.response(stats::model.frame(formula = sm_form, data = data))

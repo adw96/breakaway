@@ -25,6 +25,7 @@ Imports:
     magrittr,
     MASS,
     phyloseq,
+    reformulas,
     stats,
     tibble,
     utils
