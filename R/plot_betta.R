@@ -41,11 +41,11 @@ betta_pic <- function(y, se,
   
   df <- data.frame("x" = x, "y" = y, "lower" = y - 1.96*se, "upper" = y + 1.96*se)
   
-  ggplot(df, aes_string(x = "x")) +
+  ggplot(df, ggplot2::aes(x = .data[["x"]])) +
     ylab("Alpha-diversity estimate") +
-    geom_point(aes_string(y = "y")) +
-    geom_linerange(aes_string(ymin = "lower", 
-                              ymax = "upper")) +
+    geom_point(ggplot2::aes(y = .data[["y"]])) +
+    geom_linerange(ggplot2::aes(ymin = .data[["lower"]], 
+                              ymax = .data[["upper"]])) +
     theme_bw()
     
 }

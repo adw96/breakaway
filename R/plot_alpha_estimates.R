@@ -81,18 +81,18 @@ plot.alpha_estimates <- function(x, physeq = NULL, measure = NULL,
   if (is.null(shape) & is.null(color)) {
     my_gg <- ggplot2::ggplot(df)
   } else if (is.null(shape) & !is.null(color)) {
-    aes_map <- ggplot2::aes_string(color = "color")
+    aes_map <- ggplot2::aes(color = .data[["color"]])
     my_gg <- ggplot2::ggplot(df, aes_map)
   } else if (!is.null(shape) & is.null(color)) {
-    aes_map <- ggplot2::aes_string(shape = "shape")
+    aes_map <- ggplot2::aes(shape = .data[["shape"]])
     my_gg <- ggplot2::ggplot(df, aes_map)
   } else if (!is.null(shape) & !is.null(color)) {
-    aes_map <- ggplot2::aes_string(color = "color", shape = "shape")
+    aes_map <- ggplot2::aes(color = .data[["color"]], shape = .data[["shape"]])
     my_gg <- ggplot2::ggplot(df, aes_map)
   }
   
   my_gg <- my_gg +
-    ggplot2::geom_point(ggplot2::aes_string(x = "sample_names", y = "estimate")) + 
+    ggplot2::geom_point(ggplot2::aes(x = .data[["sample_names"]], y = .data[["estimate"]])) + 
     ggplot2::ylab(paste(yname1, "estimate of", yname2)) +
     ggplot2::xlab("") +
     ggplot2::labs(title = title) +
@@ -101,8 +101,10 @@ plot.alpha_estimates <- function(x, physeq = NULL, measure = NULL,
   
   if (!(all(is.na(df$lower)) || all(is.na(df$upper)))) {
     my_gg <- my_gg + 
-      ggplot2::geom_segment(ggplot2::aes_string(x = "sample_names", xend = "sample_names", 
-                                                y = "lower", yend = "upper"))
+      ggplot2::geom_segment(ggplot2::aes(x = .data[["sample_names"]], 
+                                         xend = .data[["sample_names"]],
+                                         y = .data[["lower"]], 
+                                         yend = .data[["upper"]]))
   }
   
   if (!trim_plot) {
