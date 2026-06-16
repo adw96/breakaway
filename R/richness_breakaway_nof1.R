@@ -306,7 +306,7 @@ breakaway_nof1.default <- function(input_data,
         parameter_table <-  coef(summary(choice$full))[,1:2]
         colnames(parameter_table) <- c("Coef estimates","Coef std errors")
         
-        d <- exp(1.96*sqrt(log(1 + diversity_se^2/f0_pred)))
+        d <- exp(1.96*sqrt(log(1 + diversity_se^2/f0_pred^2)))
         
         yhats <- fitted(choice$full)
         
@@ -319,10 +319,11 @@ breakaway_nof1.default <- function(input_data,
                                       "type" = "Prediction"))
         
         my_plot <- ggplot(plot_data, 
-                          aes_string(x = "x", 
-                                     y = "y",
-                                     col = "type", 
-                                     pch = "type")) +
+                          ggplot2::aes(
+                            x = .data$x,
+                            y = .data$y,
+                            col = .data$type,
+                            pch = .data$type)) +
           geom_point() +
           labs(x = "x", y = "f(x+1)/f(x)", title = "Plot of ratios and fitted values: Kemp models (no f1)") +
           theme_bw()
