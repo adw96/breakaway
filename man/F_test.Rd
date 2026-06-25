@@ -62,8 +62,6 @@ changes in biodiversity. \emph{arXiv preprint.}
 
 \code{\link{betta_random}};
 
-\code{\link{betta}};
-
 \code{\link{get_F_stat}}
 }
 \author{

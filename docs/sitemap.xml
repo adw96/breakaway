@@ -1,183 +1,96 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>http://adw96.github.io/breakaway/index.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/F_test.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/alpha_estimate.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/alpha_estimates.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/apples.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/betta.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/betta_lincom.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/betta_pic.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/betta_random.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/breakaway.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/breakaway_nof1.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/build_frequency_count_tables.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/chao1.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/chao1_bc.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/chao_bunge.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/chao_shen.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/check_format.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/convert.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/cutoff_wrap.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/get_F_stat.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/good_turing.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/hawaii.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/kemp.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/make_design_matrix.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/make_frequency_count_table.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/objective_bayes_geometric.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/objective_bayes_mixedgeo.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/objective_bayes_negbin.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/objective_bayes_poisson.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/physeq_wrap.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/plot.alpha_estimates.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/poisson_model.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/poisson_model_nof1.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/proportions_instead.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/rnbinomtable.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/rztnbinomtable.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/sample_inverse_simpson.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/sample_richness.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/sample_shannon.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/sample_shannon_e.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/sample_simpson.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/sample_size_estimate.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/sample_size_figure.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/simulate_betta.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/simulate_betta_random.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/test_submodel.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/toy_metadata.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/toy_otu_table.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/toy_taxonomy.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/true_gini.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/true_hill.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/true_inverse_simpson.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/true_shannon.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/true_shannon_e.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/true_simpson.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/wlrm_transformed.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/reference/wlrm_untransformed.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/articles/breakaway.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/articles/diversity-hypothesis-testing.html</loc>
-  </url>
-  <url>
-    <loc>http://adw96.github.io/breakaway/articles/intro-diversity-estimation.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>http://adw96.github.io/breakaway/404.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/TODO.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/articles/alpha-better.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/articles/betta-figure.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/articles/breakaway.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/articles/diversity-hypothesis-testing.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/articles/extended-tutorial.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/articles/getting-started.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/articles/index.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/articles/intro-diversity-estimation.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/articles/phyloseq.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/articles/resample-estimates.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/articles/sample-size-calculations.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/authors.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/index.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/news/index.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/F_test.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/alpha.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/alpha_better.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/alpha_estimate.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/alpha_estimates.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/apples.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/betta.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/betta_lincom.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/betta_pic.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/betta_random.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/breakaway.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/breakaway_nof1.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/build_frequency_count_tables.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/chao1.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/chao1_bc.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/chao_bunge.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/chao_shen.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/check_format.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/convert.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/cutoff_wrap.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/estimate_alpha_better.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/get_F_stat.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/gini.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/gini_better.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/good_turing.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/hawaii.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/hill.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/hill_better.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/hill_se.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/index.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/inverse_simpson.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/kemp.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/make_design_matrix.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/make_frequency_count_table.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/objective_bayes_geometric.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/objective_bayes_mixedgeo.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/objective_bayes_negbin.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/objective_bayes_poisson.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/pasolli_et_al.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/physeq_wrap.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/pipe.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/plot.alpha_estimates.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/plot_alpha.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/poisson_model.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/poisson_model_nof1.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/proportions_instead.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/resample_estimate.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/rnbinomtable.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/rztnbinomtable.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/sample_inverse_simpson.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/sample_richness.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/sample_shannon.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/sample_shannon_e.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/sample_simpson.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/sample_size_estimate.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/sample_size_figure.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/shannon.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/shannon_better.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/simpson.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/simpson_better.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/simulate_betta.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/simulate_betta_random.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/soil_phylo.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/subsample_otu.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/test_submodel.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/to_proportions.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/toy_metadata.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/toy_otu_table.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/toy_taxonomy.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/true_gini.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/true_hill.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/true_inverse_simpson.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/true_shannon.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/true_shannon_e.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/true_simpson.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/wlrm_transformed.html</loc></url>
+<url><loc>http://adw96.github.io/breakaway/reference/wlrm_untransformed.html</loc></url>
 </urlset>
+

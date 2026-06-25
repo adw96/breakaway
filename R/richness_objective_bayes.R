@@ -1,18 +1,18 @@
 #' Objective Bayes species richness estimate with the Negative Binomial model
 #' 
-#' @param data TODO(Kathryn)
-#' @param output TODO(Kathryn)
-#' @param plot  TODO(Kathryn)
-#' @param answers TODO(Kathryn)
-#' @param tau TODO(Kathryn)
-#' @param burn.in TODO(Kathryn)
-#' @param iterations TODO(Kathryn)
-#' @param Metropolis.stdev.N TODO(Kathryn)
-#' @param Metropolis.start.T1 TODO(Kathryn)
-#' @param Metropolis.stdev.T1 TODO(Kathryn)
-#' @param Metropolis.start.T2 TODO(Kathryn)
-#' @param Metropolis.stdev.T2 TODO(Kathryn)
-#' @param bars TODO(Kathryn)
+#' @param data A \code{\link[base]{data.frame}} or tibble containing the frequency of frequencies data.
+#' @param output A logical value indicating whether the function should return the full posterior samples and diagnostic plots. Defaults to \code{TRUE}.
+#' @param plot A logical value indicating whether to print a plot of the Markov Chain Monte Carlo diagnostic chains and posterior distribution. Defaults to \code{TRUE}.
+#' @param answers A logical value indicating whether to return print-ready summary statistics and credible intervals. Defaults to \code{FALSE}.
+#' @param tau An integer indicating the maximum frequency of the data to be analyzed. Defaults to \code{10}.
+#' @param burn.in An integer indicating the number of burn-in iterations for the Markov Chain Monte Carlo sampler. Defaults to \code{1000}.
+#' @param iterations An integer indicating the number of additional iterations for the Markov Chain Monte Carlo sampler after the burn-in iterations. Defaults to \code{5000}.
+#' @param Metropolis.stdev.N A numeric value specifying the standard deviation for the Metropolis-Hastings proposal distribution of the parameter N. Defaults to \code{100}.
+#' @param Metropolis.start.T1 Starting value in the Metropolis algorithm for the parameter theta1. Defaults to \code{-0.8}.
+#' @param Metropolis.stdev.T1 A numeric value specifying the standard deviation for the Metropolis-Hastings proposal distribution of the parameter theta1. Defaults to \code{0.01}.
+#' @param Metropolis.start.T2 Starting value in the Metropolis algorithm for the parameter theta2. Defaults to \code{0.8}.
+#' @param Metropolis.stdev.T2 A numeric value specifying the standard deviation for the Metropolis-Hastings proposal distribution of the parameter theta2. Defaults to \code{0.01}.
+#' @param bars An integer indicating the width of bars in the histogram contained in \code{output}. Defaults to \code{5}.
 #'  
 #' @return A list of results, including \item{est}{the median of estimates of N}, \item{ci}{a confidence interval for N},
 #' \item{mean}{the mean of estimates of N}, \item{semeanest}{the standard error of mean estimates},
@@ -277,17 +277,17 @@ objective_bayes_negbin <- function(data,
 
 #' Objective Bayes species richness estimate with the Poisson model
 #' 
-#' @param data TODO(Kathryn)
-#' @param output TODO(Kathryn)
-#' @param plot  TODO(Kathryn)
-#' @param answers TODO(Kathryn)
-#' @param tau TODO(Kathryn)
-#' @param burn.in TODO(Kathryn)
-#' @param iterations TODO(Kathryn)
-#' @param Metropolis.stdev.N TODO(Kathryn)
-#' @param Metropolis.start.lambda TODO(Kathryn)
-#' @param Metropolis.stdev.lambda TODO(Kathryn)
-#' @param bars TODO(Kathryn)
+#' @param data A \code{\link[base]{data.frame}} or tibble containing the frequency of frequencies data.
+#' @param output A logical value indicating whether the function should return the full posterior samples and diagnostic plots. Defaults to \code{TRUE}.
+#' @param plot A logical value indicating whether to print a plot of the Markov Chain Monte Carlo diagnostic chains and posterior distribution. Defaults to \code{TRUE}.
+#' @param answers A logical value indicating whether to return print-ready summary statistics and credible intervals. Defaults to \code{FALSE}.
+#' @param tau An integer indicating the maximum frequency of the data to be analyzed. Defaults to \code{10}.
+#' @param burn.in An integer indicating the number of burn-in iterations for the Markov Chain Monte Carlo sampler. Defaults to \code{100}.
+#' @param iterations An integer indicating the number of additional iterations for the Markov Chain Monte Carlo sampler after the burn-in iterations. Defaults to \code{2500}.
+#' @param Metropolis.stdev.N A numeric value specifying the standard deviation for the Metropolis-Hastings proposal distribution of the parameter N. Defaults to \code{75}.
+#' @param Metropolis.start.lambda Starting value in the Metropolis algorithm for the parameter lambda. Defaults to \code{1}.
+#' @param Metropolis.stdev.lambda A numeric value specifying the standard deviation for the Metropolis-Hastings proposal distribution of the parameter lambda. Defaults to \code{0.3}.
+#' @param bars An integer indicating the width of bars in the histogram contained in \code{output}. Defaults to \code{5}.
 #' 
 #' @return A list of results, including \item{est}{the median of estimates of N}, \item{ci}{a confidence interval for N},
 #' \item{mean}{the mean of estimates of N}, \item{semeanest}{the standard error of mean estimates},
@@ -511,19 +511,19 @@ objective_bayes_poisson <- function(data,
 
 #' Objective Bayes species richness estimate with the mixed-geometric model
 #' 
-#' @param data TODO(Kathryn)
-#' @param output TODO(Kathryn)
-#' @param plot  TODO(Kathryn)
-#' @param answers TODO(Kathryn)
-#' @param tau TODO(Kathryn)
-#' @param burn.in TODO(Kathryn)
-#' @param iterations TODO(Kathryn)
-#' @param Metropolis.stdev.N TODO(Kathryn)
-#' @param Metropolis.start.T1 TODO(Kathryn)
-#' @param Metropolis.stdev.T1 TODO(Kathryn)
-#' @param Metropolis.start.T2 TODO(Kathryn)
-#' @param Metropolis.stdev.T2 TODO(Kathryn)
-#' @param bars TODO(Kathryn)
+#' @param data A \code{\link[base]{data.frame}} or tibble containing the frequency of frequencies data.
+#' @param output A logical value indicating whether the function should return the full posterior samples and diagnostic plots. Defaults to \code{TRUE}.
+#' @param plot A logical value indicating whether to print a plot of the Markov Chain Monte Carlo diagnostic chains and posterior distribution. Defaults to \code{TRUE}.
+#' @param answers A logical value indicating whether to return print-ready summary statistics and credible intervals. Defaults to \code{FALSE}.
+#' @param tau An integer indicating the maximum frequency of the data to be analyzed. Defaults to \code{10}.
+#' @param burn.in An integer indicating the number of burn-in iterations for the Markov Chain Monte Carlo sampler. Defaults to \code{100}.
+#' @param iterations An integer indicating the number of additional iterations for the Markov Chain Monte Carlo sampler after the burn-in iterations. Defaults to \code{2500}.
+#' @param Metropolis.stdev.N A numeric value specifying the standard deviation for the Metropolis-Hastings proposal distribution of the parameter N. Defaults to \code{100}.
+#' @param Metropolis.start.T1 Starting value in the Metropolis algorithm for the parameter theta1. Defaults to \code{1}.
+#' @param Metropolis.stdev.T1 A numeric value specifying the standard deviation for the Metropolis-Hastings proposal distribution of the parameter theta1. Defaults to \code{2}.
+#' @param Metropolis.start.T2 Starting value in the Metropolis algorithm for the parameter theta2. Defaults to \code{3}.
+#' @param Metropolis.stdev.T2 A numeric value specifying the standard deviation for the Metropolis-Hastings proposal distribution of the parameter theta2. Defaults to \code{2}.
+#' @param bars An integer indicating the width of bars in the histogram contained in \code{output}. Defaults to \code{3}.
 #' 
 #' @return A list of results, including \item{est}{the median of estimates of N}, \item{ci}{a confidence interval for N},
 #' \item{mean}{the mean of estimates of N}, \item{semeanest}{the standard error of mean estimates},
@@ -780,16 +780,16 @@ objective_bayes_mixedgeo <- function(data, output=TRUE, plot=TRUE, answers=FALSE
 
 #' Estimate species richness with an objective Bayes method using a geometric model
 #' 
-#' @param data TODO(Kathryn)(Kathryn)
-#' @param output TODO(Kathryn)(Kathryn)
-#' @param plot TODO(Kathryn)(Kathryn)
-#' @param answers TODO(Kathryn)(Kathryn)
-#' @param tau TODO(Kathryn)
-#' @param burn.in TODO(Kathryn)
-#' @param iterations TODO(Kathryn)
-#' @param Metropolis.stdev.N TODO(Kathryn)
-#' @param Metropolis.start.theta TODO(Kathryn)
-#' @param Metropolis.stdev.theta TODO(Kathryn)
+#' @param data A \code{\link[base]{data.frame}} or tibble containing the frequency of frequencies data.
+#' @param output A logical value indicating whether the function should return the full posterior samples and diagnostic plots. Defaults to \code{TRUE}.
+#' @param plot A logical value indicating whether to print a plot of the Markov Chain Monte Carlo diagnostic chains and posterior distribution. Defaults to \code{TRUE}.
+#' @param answers A logical value indicating whether to return print-ready summary statistics and credible intervals. Defaults to \code{FALSE}.
+#' @param tau An integer indicating the maximum frequency of the data to be analyzed. Defaults to \code{10}.
+#' @param burn.in An integer indicating the number of burn-in iterations for the Markov Chain Monte Carlo sampler. Defaults to \code{100}.
+#' @param iterations An integer indicating the number of additional iterations for the Markov Chain Monte Carlo sampler after the burn-in iterations. Defaults to \code{2500}.
+#' @param Metropolis.stdev.N A numeric value specifying the standard deviation for the Metropolis-Hastings proposal distribution of the parameter N. Defaults to \code{75}.
+#' @param Metropolis.start.theta Starting value in the Metropolis algorithm for the parameter theta. Defaults to \code{1}.
+#' @param Metropolis.stdev.theta A numeric value specifying the standard deviation for the Metropolis-Hastings proposal distribution of the parameter theta. Defaults to \code{0.3}.
 #' 
 #' @return A list of results, including \item{est}{the median of estimates of N}, \item{ci}{a confidence interval for N},
 #' \item{mean}{the mean of estimates of N}, \item{semeanest}{the standard error of mean estimates},

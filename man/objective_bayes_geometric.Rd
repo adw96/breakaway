@@ -18,25 +18,25 @@ objective_bayes_geometric(
 )
 }
 \arguments{
-\item{data}{TODO(Kathryn)(Kathryn)}
+\item{data}{A \code{\link[base]{data.frame}} or tibble containing the frequency of frequencies data.}
 
-\item{output}{TODO(Kathryn)(Kathryn)}
+\item{output}{A logical value indicating whether the function should return the full posterior samples and diagnostic plots. Defaults to \code{TRUE}.}
 
-\item{plot}{TODO(Kathryn)(Kathryn)}
+\item{plot}{A logical value indicating whether to print a plot of the Markov Chain Monte Carlo diagnostic chains and posterior distribution. Defaults to \code{TRUE}.}
 
-\item{answers}{TODO(Kathryn)(Kathryn)}
+\item{answers}{A logical value indicating whether to return print-ready summary statistics and credible intervals. Defaults to \code{FALSE}.}
 
-\item{tau}{TODO(Kathryn)}
+\item{tau}{An integer indicating the maximum frequency of the data to be analyzed. Defaults to \code{10}.}
 
-\item{burn.in}{TODO(Kathryn)}
+\item{burn.in}{An integer indicating the number of burn-in iterations for the Markov Chain Monte Carlo sampler. Defaults to \code{100}.}
 
-\item{iterations}{TODO(Kathryn)}
+\item{iterations}{An integer indicating the number of additional iterations for the Markov Chain Monte Carlo sampler after the burn-in iterations. Defaults to \code{2500}.}
 
-\item{Metropolis.stdev.N}{TODO(Kathryn)}
+\item{Metropolis.stdev.N}{A numeric value specifying the standard deviation for the Metropolis-Hastings proposal distribution of the parameter N. Defaults to \code{75}.}
 
-\item{Metropolis.start.theta}{TODO(Kathryn)}
+\item{Metropolis.start.theta}{Starting value in the Metropolis algorithm for the parameter theta. Defaults to \code{1}.}
 
-\item{Metropolis.stdev.theta}{TODO(Kathryn)}
+\item{Metropolis.stdev.theta}{A numeric value specifying the standard deviation for the Metropolis-Hastings proposal distribution of the parameter theta. Defaults to \code{0.3}.}
 }
 \value{
 A list of results, including \item{est}{the median of estimates of N}, \item{ci}{a confidence interval for N},
